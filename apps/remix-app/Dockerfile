@@ -27,8 +27,8 @@ FROM node:16-bullseye-slim AS runner
 RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV DATABASE_URL "mysql://root@host.docker.internal:3306/turborepo"
+# ENV NODE_ENV production
+# ENV DATABASE_URL "mysql://root@host.docker.internal:3306/turborepo"
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs

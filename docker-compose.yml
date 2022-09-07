@@ -17,3 +17,24 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
       - database:/var/lib/mysql
+    networks:
+      - app_network
+  remix-app:
+    environment:
+      DATABASE_URL: mysql://root@mysql:3306/turborepo
+    container_name: remix-app
+    build:
+      context: .
+      dockerfile: ./apps/remix-app/Dockerfile
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+
+
+networks:
+  app_network:
+    external: false
