@@ -20,7 +20,7 @@
     "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "database": "*"
+    "business": "*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",

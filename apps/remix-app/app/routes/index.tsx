@@ -1,10 +1,10 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import prisma from "~/db.server";
+import Service from "~/services.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
-  const users = await prisma.user.findMany();
+  const users = await Service.userRepository.getUsers();
   return json({ users });
 };
 
@@ -15,7 +15,7 @@ export default function Index() {
       <h1>Welcome to Remix</h1>
       <h2>Users from database</h2>
       {users.map((user) => (
-        <div>{JSON.stringify(user)}</div>
+        <div key={user.id}>{JSON.stringify(user)}</div>
       ))}
       <ul>
         <li>

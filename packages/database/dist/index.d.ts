@@ -1,5 +1,6 @@
 import * as _prisma_client from '.prisma/client';
 import { PrismaClient } from '@prisma/client';
+export { PrismaClient } from '@prisma/client';
 
 declare global {
     var prisma: PrismaClient | undefined;
