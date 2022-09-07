@@ -1,5 +1,4 @@
 *.log
-postgres-data
 .git
 .github
 # editor

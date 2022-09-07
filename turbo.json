@@ -15,7 +15,8 @@
       "outputs": []
     },
     "db:seed": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "dev": {
       "cache": false
