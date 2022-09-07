@@ -8,6 +8,9 @@
     "db:migrate:deploy": {
       "outputs": []
     },
+    "db:migrate:dev": {
+      "outputs": []
+    },
     "db:push": {
       "outputs": []
     },

@@ -1,34 +1,48 @@
 version: "3"
 
-volumes:
-  database:
-    driver: local
+# volumes:
+#   database:
+#     driver: local
 
 services:
-  mysql:
-    platform: linux/amd64
-    image: mysql:8.0.28
-    container_name: turborepo_mysql
+  db:
+    image: postgres:latest
+    container_name: turborepo_postgres
     restart: always
-    ports:
-      - 3306:3306
     environment:
-      MYSQL_DATABASE: turborepo
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
     volumes:
-      - database:/var/lib/mysql
+      - ./postgres-data:/var/lib/postgresql/data
     networks:
       - app_network
+  # mysql:
+  #   platform: linux/amd64
+  #   image: mysql:8.0.28
+  #   container_name: turborepo_mysql
+  #   restart: always
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     MYSQL_DATABASE: turborepo
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  #   volumes:
+  #     - database:/var/lib/mysql
+  #   networks:
+  #     - app_network
   remix-app:
     environment:
-      DATABASE_URL: mysql://root@mysql:3306/turborepo
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
     container_name: remix-app
     build:
       context: .
       dockerfile: ./apps/remix-app/Dockerfile
     restart: always
     depends_on:
-      - mysql
+      - db
     ports:
       - 3000:3000
     networks:
@@ -37,4 +51,4 @@ services:
 
 networks:
   app_network:
-    external: false
+    external: true
