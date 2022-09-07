@@ -1,15 +1,13 @@
+# Builder phase prune monorepo to keep only necessary
 FROM node:16-bullseye-slim AS builder
-# Set working directory
 WORKDIR /app
 RUN yarn global add turbo
 COPY . .
 RUN turbo prune --scope=remix-app --docker
 
+# Installer
 FROM node:16-bullseye-slim AS installer
 RUN apt-get update && apt-get install -y openssl
-
-# ENV NODE_ENV production
-
 WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
@@ -19,10 +17,12 @@ RUN yarn install
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=remix-app...
-
+# Remove all node_modules, keep generated prisma cli only
 RUN find ./node_modules -mindepth 1 ! -regex '^./node_modules/.prisma\(/.*\)?' -delete
+# Rebuild node_modules for production
 RUN yarn install --production
 
+# Runner
 FROM node:16-bullseye-slim AS runner
 RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
