@@ -13,5 +13,8 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-config-turbo": "latest",
     "typescript": "^4.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -26,6 +26,11 @@
     },
     "lint": {
       "outputs": []
+    },
+    "docker:build": {
+      "outputs": [],
+      "cache": false
     }
-  }
+  },
+  "globalDependencies": [".env", "$NODE_ENV"]
 }
