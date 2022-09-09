@@ -8,7 +8,7 @@ PORT = "8080"
 PRIMARY_REGION = "cdg"
 
 [deploy]
-release_command = "./packages/database/node_modules/.bin/prisma migrate deploy --schema=/app/packages/database/prisma/schema.prisma"
+release_command = "npx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 
 [experimental]
 allowed_public_ports = [ ]
