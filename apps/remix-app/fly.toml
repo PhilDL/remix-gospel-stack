@@ -4,7 +4,7 @@ kill_timeout = 5
 processes = [ ]
 
 [env]
-PORT = "8080"
+REMIX_APP_PORT = "8080"
 PRIMARY_REGION = "cdg"
 
 [deploy]
@@ -15,7 +15,7 @@ allowed_public_ports = [ ]
 auto_rollback = true
 
 [[services]]
-internal_port = 8_080
+internal_port = 8080
 processes = [ "app" ]
 protocol = "tcp"
 script_checks = [ ]

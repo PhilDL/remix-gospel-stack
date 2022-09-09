@@ -1,5 +1,6 @@
 # Builder phase prune monorepo to keep only necessary
 FROM node:16-bullseye-slim AS base
+RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
 RUN yarn global add turbo
 COPY . .
