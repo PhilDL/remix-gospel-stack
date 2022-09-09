@@ -30,7 +30,10 @@
     "docker:build": {
       "outputs": [],
       "cache": false
+    },
+    "test": {
+      "outputs": []
     }
   },
-  "globalDependencies": [".env", "$NODE_ENV"]
+  "globalDependencies": [".env", "$NODE_ENV", "$REMIX_APP_PORT"]
 }

@@ -19,7 +19,8 @@
     "generate": "turbo run generate",
     "lint": "turbo run lint",
     "docker:build": "turbo run docker:build",
-    "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile ."
+    "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
