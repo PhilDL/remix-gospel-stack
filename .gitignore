@@ -32,3 +32,8 @@ yarn-error.log*
 
 # turbo
 .turbo
+.vercel
+.cache
+.env
+.output
+apps/**/public/build

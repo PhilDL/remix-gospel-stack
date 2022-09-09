@@ -19,3 +19,9 @@ build
 # misc
 .DS_Store
 *.pem
+
+.turbo
+.vercel
+.cache
+.output
+apps/**/public/build
