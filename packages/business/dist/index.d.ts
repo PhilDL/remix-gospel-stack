@@ -9,8 +9,10 @@ interface UserRepository {
     getUsers(): Promise<User[]>;
 }
 
+declare function helloWorld(name?: string): string;
+
 declare const Service: {
     userRepository: UserRepository;
 };
 
-export { Service };
+export { Service, User, helloWorld };

@@ -37,11 +37,17 @@ container.register("PrismaClient", {
 });
 container.register("UserRepository", { useClass: PrismaUserRepository }, { lifecycle: Lifecycle.Singleton });
 
+// src/shared/utils.ts
+function helloWorld(name) {
+  return `Hello World to ${name}`;
+}
+
 // src/index.ts
 var Service = {
   userRepository: container.resolve("UserRepository")
 };
 export {
-  Service
+  Service,
+  helloWorld
 };
 //# sourceMappingURL=index.mjs.map

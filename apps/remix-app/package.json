@@ -33,7 +33,8 @@
     "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "business": "*"
+    "business": "*",
+    "ui": "*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",

@@ -1,11 +1,12 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import Service from "~/services.server";
+import Service, { helloWorld } from "~/services.server";
+import { Button, helloFromUILibrary } from "ui";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();
-  return json({ users });
+  return json({ users, serverValue: helloWorld() });
 };
 
 export default function Index() {
@@ -28,9 +29,11 @@ export default function Index() {
                 <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack</span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Check the README.md file for instructions on how to get this project deployed.
+                Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
+                {helloFromUILibrary()}
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
+                <Button />
                 {users.map((user) => (
                   <div key={user.id}>{JSON.stringify(user)}</div>
                 ))}
@@ -38,9 +41,9 @@ export default function Index() {
               <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
                 <a href="https://turborepo.org" className="flex-1 flex justify-end items-center">
                   <img
-                    src="https://user-images.githubusercontent.com/4941205/189403947-cc0b25f3-bfde-4039-9eef-49e4d5343e62.svg"
+                    src="https://user-images.githubusercontent.com/4941205/189468691-7b1f3967-2470-4bd2-923f-0be0041151dc.svg"
                     alt="Turborepo"
-                    className="max-w-[3rem] md:max-w-[3rem]"
+                    className="max-w-[15rem] md:max-w-[19rem] fill-white"
                   />
                 </a>
                 <a href="https://remix.run" className="flex-1 flex justify-start items-center">

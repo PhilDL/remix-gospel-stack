@@ -5,6 +5,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "remix-app#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["public/build/**"]
+    },
     "db:migrate:deploy": {
       "outputs": []
     },

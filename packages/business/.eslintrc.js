@@ -1,1 +1,1 @@
-module.exports = require("eslint-config-custom/eslint-preset");
+module.exports = require("eslint-config-vite/eslint-preset");

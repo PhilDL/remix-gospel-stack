@@ -25,6 +25,7 @@
   "devDependencies": {
     "prettier": "^2.5.1",
     "tsx": "^3.7.1",
-    "turbo": "latest"
+    "turbo": "latest",
+    "eslint-config-custom": "*"
   }
 }

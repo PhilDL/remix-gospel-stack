@@ -30,7 +30,8 @@ var __decorateParam = (index, decorator) => (target, key) => decorator(target, k
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  Service: () => Service
+  Service: () => Service,
+  helloWorld: () => helloWorld
 });
 module.exports = __toCommonJS(src_exports);
 
@@ -60,12 +61,18 @@ import_tsyringe2.container.register("PrismaClient", {
 });
 import_tsyringe2.container.register("UserRepository", { useClass: PrismaUserRepository }, { lifecycle: import_tsyringe2.Lifecycle.Singleton });
 
+// src/shared/utils.ts
+function helloWorld(name) {
+  return `Hello World to ${name}`;
+}
+
 // src/index.ts
 var Service = {
   userRepository: import_tsyringe2.container.resolve("UserRepository")
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  Service
+  Service,
+  helloWorld
 });
 //# sourceMappingURL=index.js.map

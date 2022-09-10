@@ -16,7 +16,10 @@
     "skipLibCheck": true,
     "strict": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "resolveJsonModule": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*/lib", "**/*/dist"],
+  "references": [{ "path": "../utils/" }]
 }
