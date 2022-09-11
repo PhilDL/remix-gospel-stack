@@ -45,8 +45,8 @@ COPY --from=production-deps --chown=remixjs:nodejs /app/node_modules ./node_modu
 COPY --from=builder --chown=remixjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
 
 COPY --from=builder --chown=remixjs:nodejs /app/packages ./packages
-COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/server.js ./server.js
+COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js ./server.js
 COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./build
 COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./public
 
-CMD ["node", "./server.js"]
+CMD ["node", "./build/server.js"]

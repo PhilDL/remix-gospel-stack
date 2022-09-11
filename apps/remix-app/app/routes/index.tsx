@@ -10,7 +10,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 };
 
 export default function Index() {
-  const { users } = useLoaderData<typeof loader>();
+  const { serverValue, users } = useLoaderData<typeof loader>();
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
       <div className="relative sm:pb-16 sm:pt-8">
@@ -29,8 +29,9 @@ export default function Index() {
                 <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack</span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
+                Remix Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
                 {helloFromUILibrary()}
+                Server Value: {serverValue}
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 <Button />

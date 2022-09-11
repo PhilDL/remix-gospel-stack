@@ -7,10 +7,12 @@
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
-    "dev": "remix build && run-p \"dev:*\"",
-    "dev:node": "cross-env NODE_ENV=development nodemon ./server.js --watch ./server.js",
+    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
+    "dev": "run-p dev:*",
+    "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
     "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
-    "dev:remix": "remix watch",
+    "dev:remix": "cross-env NODE_ENV=development remix watch",
+    "dev:server": "cross-env NODE_ENV=development node --inspect --require ../../node_modules/dotenv/config ./build/server.js",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
@@ -41,6 +43,11 @@
     "@remix-run/eslint-config": "^1.7.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/compression": "^1.7.2",
+    "@types/eslint": "^8.4.6",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^18.7.13",
     "eslint": "^8.20.0",
     "nodemon": "^2.0.19",
     "npm-run-all": "^4.1.5",
@@ -58,7 +65,9 @@
     "vitest": "^0.22.1",
     "postcss": "^8.4.16",
     "autoprefixer": "^10.4.8",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "dotenv": "^16.0.1",
+    "esbuild": "^0.15.5"
   },
   "engines": {
     "node": ">=14"

@@ -39,7 +39,7 @@ container.register("UserRepository", { useClass: PrismaUserRepository }, { lifec
 
 // src/shared/utils.ts
 function helloWorld(name) {
-  return `Hello World to ${name}`;
+  return `Server Hello World to ${name}`;
 }
 
 // src/index.ts

@@ -102,3 +102,22 @@ Learn more about the power of Turborepo:
 - [Scoped Tasks](https://turborepo.org/docs/features/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+
+
+## Deployement
+
+### Build Fly.io Dockerfile and App
+
+```bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+```
+
+#### Run the Docker Image directly
+
+```bash
+docker run -it --init --rm -p 3000:3000 --env DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres" --network=app_network turborepo-remix-app
+```
+
+- Replace the `@db` with the name of the postgres container.
+- Here a network was created called `app_network`
+  - To create a network docker `network create app_network`
