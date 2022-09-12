@@ -67,6 +67,7 @@
     "autoprefixer": "^10.4.8",
     "tailwindcss": "^3.1.8",
     "dotenv": "^16.0.1",
+    "cypress": "^10.6.0",
     "esbuild": "^0.15.5"
   },
   "engines": {

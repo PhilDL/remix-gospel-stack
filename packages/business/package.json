@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "eslint-config-vite": "*",
-    "eslint": "^8.20.0",
     "rimraf": "^3.0.2",
     "tsconfig": "*",
     "tsup": "^5.11.13",
