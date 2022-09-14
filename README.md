@@ -36,7 +36,7 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.
 ### (Optional) If you want to build the Dockerfile in isolation
 
 ```bash
-DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+docker build -t turborepo-remix-app -f apps/remix-app/Dockerfile .
 ```
 
 #### Run the Docker Image directly
