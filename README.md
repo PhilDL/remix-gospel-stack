@@ -52,7 +52,7 @@ docker run -it --init --rm -p 3000:3000 --env DATABASE_URL="postgresql://postgre
 ---
 
 > **Note**
-> The rest of this README is copy pasted from official turbo repo examples:
+> The rest of this README is basically copy pasted from official turbo repo examples:
 
 
 ## What's inside?
@@ -61,9 +61,11 @@ This turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `web`: a [Next.js](https://nextjs.org) app
+- `nextjs-app`: a [Next.js](https://nextjs.org) app
+- `remix-app`: a [Remix](https://remix.run) app
 - `config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `database`: [Prisma](https://prisma.io/) ORM wrapper to manage & access your database
+- `business`: Business package consuming the database package and using Tsyringe for dependency injection.
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
