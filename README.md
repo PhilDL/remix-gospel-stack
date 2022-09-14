@@ -1,6 +1,59 @@
-# Turborepo starter
+# Turborepo with Remix.run App
 
-This is an official starter turborepo.
+This is a work-in-progress turborepo with a Remix app building into a Dockerfile and deployed to fly.io
+
+
+
+## Deployement
+
+### Deploy to fly.io
+
+> **Warning**
+> All the following commands should be launched from the **monorepo root directory**
+
+#### First singup the fly CLI
+
+```bash
+fly auth signup
+```
+
+#### Create the Fly apps
+
+This monorepo uses postgresql Database so we have to create a database and attach it to our app
+
+```bash
+fly apps create turborepo-remix
+fly postgres create --name turborepo-remix-db
+fly postgres attach --postgres-app turborepo-remix-db --app turborepo-remix
+```
+
+#### Build and deploy image to Fly.io
+
+```bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+```
+
+### (Optional) If you want to build the Dockerfile in isolation
+
+```bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+```
+
+#### Run the Docker Image directly
+
+```bash
+docker run -it --init --rm -p 3000:3000 --env DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres" --network=app_network turborepo-remix-app
+```
+
+- Replace the `@db` with the name of the postgres container.
+- Here a network was created called `app_network`
+  - To create a network docker `network create app_network`
+
+---
+
+> **Note**
+> The rest of this README is copy pasted from official turbo repo examples:
+
 
 ## What's inside?
 
@@ -102,22 +155,3 @@ Learn more about the power of Turborepo:
 - [Scoped Tasks](https://turborepo.org/docs/features/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
-
-
-## Deployement
-
-### Build Fly.io Dockerfile and App
-
-```bash
-DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
-```
-
-#### Run the Docker Image directly
-
-```bash
-docker run -it --init --rm -p 3000:3000 --env DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres" --network=app_network turborepo-remix-app
-```
-
-- Replace the `@db` with the name of the postgres container.
-- Here a network was created called `app_network`
-  - To create a network docker `network create app_network`
