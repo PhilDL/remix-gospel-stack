@@ -2,7 +2,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
-import { Button, helloFromUILibrary } from "ui";
+import { Button, helloFromUILibrary } from "@my-company/ui";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();

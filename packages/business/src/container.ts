@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { container, Lifecycle } from "tsyringe";
-import { prisma } from "database";
+import { prisma } from "@my-company/database";
 import { PrismaUserRepository } from "./repositories/user-repository";
 
 container.register("PrismaClient", {

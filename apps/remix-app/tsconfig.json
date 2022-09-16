@@ -14,10 +14,10 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "ui/*": ["../../packages/ui/src/*"],
-      "ui": ["../../packages/ui/src/index"],
-      "business/*": ["../../packages/business/src/*"],
-      "business": ["../../packages/business/src/index"],
+      "@my-company/ui/*": ["../../packages/ui/src/*"],
+      "@my-company/ui": ["../../packages/ui/src/index"],
+      "@my-company/business/*": ["../../packages/business/src/*"],
+      "@my-company/business": ["../../packages/business/src/index"],
     },
 
     // Remix takes care of building everything in `remix build`.

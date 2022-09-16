@@ -1,5 +1,5 @@
 import { autoInjectable, inject } from "tsyringe";
-import type { PrismaClient } from "database";
+import type { PrismaClient } from "@my-company/database";
 import type { UserRepository } from "./iuser-repository";
 import type { User } from "../shared/dtos";
 

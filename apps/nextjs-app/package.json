@@ -17,9 +17,9 @@
     "@types/node": "^17.0.12",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
-    "database": "*",
+    "@my-company/database": "*",
     "eslint-config-custom-next": "*",
-    "tsconfig": "*",
+    "@my-company/tsconfig": "*",
     "typescript": "^4.5.3"
   }
 }

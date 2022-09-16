@@ -1,5 +1,5 @@
 {
-  "name": "business",
+  "name": "@my-company/business",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -18,12 +18,12 @@
     "tiny-invariant": "^1.2.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
-    "database": "*"
+    "@my-company/database": "*"
   },
   "devDependencies": {
     "eslint-config-vite": "*",
     "rimraf": "^3.0.2",
-    "tsconfig": "*",
+    "@my-company/tsconfig": "*",
     "tsup": "^5.11.13",
     "tsx": "^3.7.1",
     "typescript": "^4.5.5"
