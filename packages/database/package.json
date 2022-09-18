@@ -27,10 +27,11 @@
     "@prisma/client": "^4.2.1"
   },
   "devDependencies": {
-    "prisma": "^4.2.1",
-    "eslint-config-vite": "*",
-    "rimraf": "^3.0.2",
     "@my-company/tsconfig": "*",
+    "@types/node": "^18.7.18",
+    "eslint-config-vite": "*",
+    "prisma": "^4.2.1",
+    "rimraf": "^3.0.2",
     "tsup": "^5.11.13",
     "tsx": "^3.7.1",
     "typescript": "^4.5.5"

@@ -2,51 +2,53 @@
 FROM node:16-bullseye-slim AS base
 RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
-RUN yarn global add turbo
-COPY . .
-RUN turbo prune --scope=remix-app --docker
-
-FROM node:16-bullseye-slim AS intermediate
-RUN apt-get update && apt-get install -y openssl
-WORKDIR /app
 COPY .gitignore .gitignore
-COPY --from=base /app/out/json/ .
-COPY --from=base /app/out/yarn.lock ./yarn.lock
-COPY --from=base /app/out/full/ .
+COPY ./out/json/ .
+COPY ./out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./out/full/ .
+RUN find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 
-FROM intermediate AS deps
-WORKDIR /app
-RUN yarn install
 
-FROM intermediate AS production-deps
+FROM base AS builder
 WORKDIR /app
-RUN yarn install --production
-
-# Installer
-FROM intermediate AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+RUN corepack enable
+RUN pnpm install
 COPY turbo.json turbo.json
-RUN yarn turbo run build --filter=remix-app...
+RUN pnpm run generate --filter=database
+RUN pnpm run build --filter=remix-app...
+
+FROM base AS production-deps
+WORKDIR /app
+RUN corepack enable
+RUN pnpm install --prod
 
 
 # Runner
 FROM node:16-bullseye-slim AS runner
 RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
-# ENV NODE_ENV production
+RUN corepack enable
+ENV NODE_ENV production
 # ENV DATABASE_URL "mysql://root@host.docker.internal:3306/turborepo"
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 remixjs
+RUN chown -R remixjs:nodejs /app
 USER remixjs
 
-COPY --from=production-deps --chown=remixjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=remixjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=production-deps --chown=remixjs:nodejs /app .
+COPY --from=builder --chown=remixjs:nodejs /app/packages/database/node_modules/*prisma* /app/packages/database/node_modules/
+# COPY --from=builder --chown=remixjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+# COPY --from=builder --chown=remixjs:nodejs /app/node_modules/prisma ./node_modules/prisma
+# RUN rm -rf ./node_modules/.pnpm
 
-COPY --from=builder --chown=remixjs:nodejs /app/packages ./packages
-COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js ./server.js
-COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./build
-COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./public
+# COPY --from=builder --chown=remixjs:nodejs /app/packages ./packages
+# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js ./server.js
+# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./build
+# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./public
 
-CMD ["node", "./build/server.js"]
+RUN pnpx prisma generate --schema /app/packages/database/prisma/schema.prisma
+# RUN pnpx prisma migrate deploy --schema /app/packages/database/prisma/schema.prisma
+
+CMD ["pnpm", "--filter", "remix-app", "run", "start"]

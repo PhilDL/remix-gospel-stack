@@ -20,12 +20,13 @@
     "lint": "turbo run lint",
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "start": "turbo run start"
   },
   "devDependencies": {
+    "eslint-config-custom": "*",
     "prettier": "^2.5.1",
     "tsx": "^3.7.1",
-    "turbo": "latest",
-    "eslint-config-custom": "*"
+    "turbo": "^1.4.7"
   }
 }

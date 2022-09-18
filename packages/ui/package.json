@@ -20,7 +20,6 @@
     "concurrently": "^7.2.2",
     "eslint-config-custom": "*",
     "react": "^17.0.2",
-    "tailwind-config": "*",
     "tailwindcss": "^3.1.8",
     "@my-company/tsconfig": "*",
     "tsup": "^6.1.3",

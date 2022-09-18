@@ -14,7 +14,7 @@ var __decorateParam = (index, decorator) => (target, key) => decorator(target, k
 // src/container.ts
 import "reflect-metadata";
 import { container, Lifecycle } from "tsyringe";
-import { prisma } from "database";
+import { prisma } from "@my-company/database";
 
 // src/repositories/user-repository.ts
 import { autoInjectable, inject } from "tsyringe";
