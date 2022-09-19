@@ -583,9 +583,9 @@ video {
   border-color: transparent;
 }
 
-.bg-red-300 {
+.bg-orange-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(252 165 165 / var(--tw-bg-opacity));
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -636,8 +636,7 @@ video {
 }
 
 .no-underline {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
+  text-decoration-line: none;
 }
 
 .hover\:bg-gray-700:hover {

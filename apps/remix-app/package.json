@@ -5,16 +5,15 @@
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
-    "build:css": "npm run generate:css -- --minify",
+    "build:css": "tailwindcss -m -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "dev": "run-p dev:*",
-    "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
-    "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
+    "dev:build": "cross-env NODE_ENV=development pnpm run build:server -- --watch",
+    "dev:css": "tailwindcss -w -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
-    "dev:server": "cross-env NODE_ENV=development node --inspect --require ../../node_modules/dotenv/config ./build/server.js",
-    "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
-    "start": "cross-env NODE_ENV=production node ./server.js",
+    "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
+    "start": "cross-env NODE_ENV=production node ./build/server.js",
     "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "test": "vitest run",
@@ -36,7 +35,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@my-company/business": "*",
-    "@my-company/ui": "*"
+    "@my-company/database": "*",
+    "@my-company/ui": "*",
+    "@my-company/internal-nobuild": "*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",
@@ -52,7 +53,6 @@
     "nodemon": "^2.0.19",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.7.4",
-    "@testing-library/cypress": "^8.0.3",
     "@testing-library/dom": "^8.17.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -63,12 +63,9 @@
     "vite": "^3.0.9",
     "vite-tsconfig-paths": "^3.5.0",
     "vitest": "^0.22.1",
-    "postcss": "^8.4.16",
-    "autoprefixer": "^10.4.8",
-    "tailwindcss": "^3.1.8",
     "dotenv": "^16.0.1",
-    "cypress": "^10.6.0",
-    "esbuild": "^0.15.5"
+    "esbuild": "^0.15.5",
+    "@my-company/tailwind-config": "*"
   },
   "engines": {
     "node": ">=14"

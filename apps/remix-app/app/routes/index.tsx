@@ -3,10 +3,12 @@ import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
 import { Button, helloFromUILibrary } from "@my-company/ui";
+import { internalFunc } from "@my-company/internal-nobuild";
+import React from "react";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();
-  return json({ users, serverValue: helloWorld() });
+  return json({ users, serverValue: helloWorld("Remix Turborepo") });
 };
 
 export default function Index() {
@@ -30,15 +32,7 @@ export default function Index() {
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
                 Remix Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
-                {helloFromUILibrary()}
-                Server Value: {serverValue}
               </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                <Button />
-                {users.map((user) => (
-                  <div key={user.id}>{JSON.stringify(user)}</div>
-                ))}
-              </div>
               <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
                 <a href="https://turborepo.org" className="flex-1 flex justify-end items-center">
                   <img
@@ -131,6 +125,81 @@ export default function Index() {
                 <img alt={img.alt} src={img.src} className="object-contain" />
               </a>
             ))}
+          </div>
+        </div>
+        <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8 flex-col flex gap-8 mt-12">
+          <div>
+            <h2>
+              <span className="block text-lg font-semibold text-orange-600">packages/business, packages/database</span>
+              <span className="mt-1 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+                Server packages
+              </span>
+            </h2>
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              Display prisma users from the business function{" "}
+              <code className="text-orange-600 bg-gray-200 px-1">Service.userRepository.getUsers()</code>.
+            </h3>
+            <div className="prose prose-lg mt-4">
+              <blockquote className="prose">
+                {users.length > 0 ? (
+                  <React.Fragment>
+                    {users.map((user) => (
+                      <div key={user.id}>{JSON.stringify(user)}</div>
+                    ))}
+                  </React.Fragment>
+                ) : (
+                  <div>No user in the database</div>
+                )}
+              </blockquote>
+            </div>
+
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              Regular server value passed from Loader here{" "}
+              <code className="text-orange-600 bg-gray-200 px-1">serverValue</code>:
+            </h3>
+            <div className="prose prose-lg mt-4">
+              <blockquote className="prose">
+                <p>{serverValue}</p>
+              </blockquote>
+            </div>
+          </div>
+          <div>
+            <h2 className="mt-4">
+              <span className="block text-lg font-semibold text-orange-600">packages/ui</span>
+              <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+                Ui packages
+              </span>
+            </h2>
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              This is an example Button Component from "ui" packages
+            </h3>
+            <div className="mx-auto max-w-sm sm:flex flex flex-col sm:max-w-none items-start">
+              <Button />
+            </div>
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              Result of function <code className="text-orange-600 bg-gray-200 px-1">helloFromUILibrary</code>:
+            </h3>
+            <div className="prose prose-lg mt-4">
+              <blockquote className="prose">
+                <p>{helloFromUILibrary()}</p>
+              </blockquote>
+            </div>
+          </div>
+          <div>
+            <h2 className="mt-4">
+              <span className="block text-lg font-semibold text-orange-600">packages/internal-nobuild</span>
+              <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+                Internal TS Package with no build step
+              </span>
+            </h2>
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              Result of function <code className="text-orange-600 bg-gray-200 px-1">internalFunc</code>:
+            </h3>
+            <div className="prose prose-lg mt-4">
+              <blockquote className="prose">
+                <p>{internalFunc()}</p>
+              </blockquote>
+            </div>
           </div>
         </div>
       </div>

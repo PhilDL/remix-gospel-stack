@@ -38,7 +38,7 @@ module.exports = __toCommonJS(src_exports);
 // src/container.ts
 var import_reflect_metadata = require("reflect-metadata");
 var import_tsyringe2 = require("tsyringe");
-var import_database = require("database");
+var import_database = require("@my-company/database");
 
 // src/repositories/user-repository.ts
 var import_tsyringe = require("tsyringe");

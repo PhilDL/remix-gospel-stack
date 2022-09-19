@@ -20,12 +20,18 @@
     "lint": "turbo run lint",
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "start": "turbo run start",
+    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.7",
+    "autoprefixer": "^10.4.8",
+    "eslint-config-custom": "*",
+    "postcss": "^8.4.16",
     "prettier": "^2.5.1",
+    "tailwindcss": "^3.1.8",
     "tsx": "^3.7.1",
-    "turbo": "latest",
-    "eslint-config-custom": "*"
+    "turbo": "^1.4.7"
   }
 }

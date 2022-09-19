@@ -9,6 +9,14 @@
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },
+    "remix-app#start": {
+      "dependsOn": ["^build"],
+      "outputs": ["public/build/**"]
+    },
+    "start": {
+      "dependsOn": ["^build"],
+      "outputs": ["public/build/**"]
+    },
     "db:migrate:deploy": {
       "outputs": []
     },
