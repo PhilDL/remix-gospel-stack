@@ -5,15 +5,14 @@
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
-    "build:css": "pnpm run generate:css -- --minify",
+    "build:css": "tailwindcss -m -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "dev": "run-p dev:*",
     "dev:build": "cross-env NODE_ENV=development pnpm run build:server -- --watch",
-    "dev:css": "cross-env NODE_ENV=development pnpm run generate:css -- --watch",
+    "dev:css": "tailwindcss -w -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
-    "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -64,11 +63,9 @@
     "vite": "^3.0.9",
     "vite-tsconfig-paths": "^3.5.0",
     "vitest": "^0.22.1",
-    "postcss": "^8.4.16",
-    "autoprefixer": "^10.4.8",
-    "tailwindcss": "^3.1.8",
     "dotenv": "^16.0.1",
-    "esbuild": "^0.15.5"
+    "esbuild": "^0.15.5",
+    "@my-company/tailwind-config": "*"
   },
   "engines": {
     "node": ">=14"
