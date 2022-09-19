@@ -38,17 +38,14 @@ RUN chown -R remixjs:nodejs /app
 USER remixjs
 
 COPY --from=production-deps --chown=remixjs:nodejs /app .
-COPY --from=builder --chown=remixjs:nodejs /app/packages/database/node_modules/*prisma* /app/packages/database/node_modules/
-# COPY --from=builder --chown=remixjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
-# COPY --from=builder --chown=remixjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-# RUN rm -rf ./node_modules/.pnpm
-
-# COPY --from=builder --chown=remixjs:nodejs /app/packages ./packages
-# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js ./server.js
-# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./build
-# COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./public
+# COPY --from=builder --chown=remixjs:nodejs /app/packages/database/node_modules/*prisma* ./packages/database/node_modules/
+COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js ./apps/remix-app/build/server.js
+COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./apps/remix-app/build
+COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./apps/remix-app/public
 
 RUN pnpx prisma generate --schema /app/packages/database/prisma/schema.prisma
 # RUN pnpx prisma migrate deploy --schema /app/packages/database/prisma/schema.prisma
+RUN rm -rf /home/remixjs/.cache/pnpm
+RUN rm -rf /home/remixjs/.cache/prisma
 
 CMD ["pnpm", "--filter", "remix-app", "run", "start"]
