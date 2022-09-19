@@ -54,4 +54,4 @@ COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./apps/remi
 COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./apps/remix-app/public
 
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
-CMD ["pnpm", "--filter", "remix-app", "run", "start"]
+CMD ["node", "/apps/remix-app/build/server.js"]

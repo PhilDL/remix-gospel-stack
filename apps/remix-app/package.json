@@ -37,7 +37,8 @@
     "react-dom": "^18.2.0",
     "@my-company/business": "*",
     "@my-company/database": "*",
-    "@my-company/ui": "*"
+    "@my-company/ui": "*",
+    "@my-company/internal-nobuild": "*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",

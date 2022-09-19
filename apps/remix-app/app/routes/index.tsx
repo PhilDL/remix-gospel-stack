@@ -3,6 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
 import { Button, helloFromUILibrary } from "@my-company/ui";
+import { internalFunc } from "@my-company/internal-nobuild";
+import React from "react";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();
@@ -26,19 +28,13 @@ export default function Index() {
             </div>
             <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack</span>
+                <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack {internalFunc()}</span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
                 Remix Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
                 {helloFromUILibrary()}
                 Server Value: {serverValue}
               </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                <Button />
-                {users.map((user) => (
-                  <div key={user.id}>{JSON.stringify(user)}</div>
-                ))}
-              </div>
               <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
                 <a href="https://turborepo.org" className="flex-1 flex justify-end items-center">
                   <img
@@ -131,6 +127,27 @@ export default function Index() {
                 <img alt={img.alt} src={img.src} className="object-contain" />
               </a>
             ))}
+          </div>
+        </div>
+        <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8">
+          <h2>Presentation</h2>
+          <h3>Server code</h3>
+          Display prisma users from the business package:
+          <div className="mx-auto max-w-sm sm:flex flex flex-col sm:max-w-none">
+            {users.length > 0 ? (
+              <React.Fragment>
+                {users.map((user) => (
+                  <div key={user.id}>{JSON.stringify(user)}</div>
+                ))}
+              </React.Fragment>
+            ) : (
+              <div>No user in the database</div>
+            )}
+          </div>
+          <h3 className="text-red-500">UI Package</h3>
+          <div className="mx-auto max-w-sm sm:flex flex flex-col sm:max-w-none items-start">
+            <Button />
+            Dynamic message
           </div>
         </div>
       </div>

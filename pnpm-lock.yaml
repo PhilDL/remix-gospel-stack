@@ -43,6 +43,7 @@ importers:
     specifiers:
       '@my-company/business': '*'
       '@my-company/database': '*'
+      '@my-company/internal-nobuild': '*'
       '@my-company/ui': '*'
       '@remix-run/dev': ^1.7.0
       '@remix-run/eslint-config': ^1.7.0
@@ -84,6 +85,7 @@ importers:
     dependencies:
       '@my-company/business': link:../../packages/business
       '@my-company/database': link:../../packages/database
+      '@my-company/internal-nobuild': link:../../packages/internal-nobuild
       '@my-company/ui': link:../../packages/ui
       '@remix-run/express': 1.7.1_nawawpklwqjvxe6axdd7matlce
       '@remix-run/node': 1.7.1_biqbaboplfbrettd7655fr4n2y
@@ -217,6 +219,9 @@ importers:
       eslint-config-prettier: 8.5.0_eslint@8.23.1
       eslint-config-turbo: 0.0.3_eslint@8.23.1
       typescript: 4.8.3
+
+  packages/internal-nobuild:
+    specifiers: {}
 
   packages/tailwind-config:
     specifiers:
