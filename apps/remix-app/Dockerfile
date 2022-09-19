@@ -2,29 +2,23 @@
 FROM node:16-bullseye-slim AS base
 RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
-RUN yarn global add turbo
-COPY . .
-RUN turbo prune --scope=remix-app --docker
-
-FROM node:16-bullseye-slim AS intermediate
-RUN apt-get update && apt-get install -y openssl
-WORKDIR /app
 COPY .gitignore .gitignore
-COPY --from=base /app/out/json/ .
-COPY --from=base /app/out/yarn.lock ./yarn.lock
-COPY --from=base /app/out/full/ .
+COPY ./out/json/ .
+COPY ./out/yarn.lock ./yarn.lock
 
-FROM intermediate AS deps
+
+FROM base AS deps
 WORKDIR /app
 RUN yarn install
 
-FROM intermediate AS production-deps
+FROM base AS production-deps
 WORKDIR /app
 RUN yarn install --production
 
 # Installer
-FROM intermediate AS builder
+FROM base AS builder
 WORKDIR /app
+COPY ./out/full/ .
 COPY --from=deps /app/node_modules ./node_modules
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=remix-app...
