@@ -6,14 +6,13 @@
   "files": [
     "eslint-preset.js"
   ],
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "eslint": "^8.20.0",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-config-turbo": "latest"
-  },
-  "devDependencies": {
+    "eslint-config-turbo": "latest",
     "typescript": "^4.5.3"
   },
   "publishConfig": {

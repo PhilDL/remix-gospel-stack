@@ -21,7 +21,8 @@
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "test": "turbo run test",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
