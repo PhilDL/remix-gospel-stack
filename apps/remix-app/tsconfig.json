@@ -22,6 +22,8 @@
       "@my-company/ui": ["../../packages/ui/src/index"],
       "@my-company/business/*": ["../../packages/business/src/*"],
       "@my-company/business": ["../../packages/business/src/index"],
+      "@my-company/database/*": ["../../packages/database/src/*"],
+      "@my-company/database": ["../../packages/database/src/index"],
       "@my-company/internal-nobuild": ["../../packages/internal-nobuild/src/index"],
       "@my-company/internal-nobuild/*": ["../../packages/internal-nobuild/src/*"],
     },

@@ -5,7 +5,12 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
-  serverDependenciesToBundle: ["@my-company/internal-nobuild"],
+  serverDependenciesToBundle: [
+    "@my-company/internal-nobuild",
+    "@my-company/database",
+    "@my-company/business",
+    "@my-company/ui",
+  ],
   watchPaths: async () => {
     return [
       "../../packages/ui/src/**/*",
