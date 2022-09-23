@@ -39,3 +39,8 @@ yarn-error.log*
 .env
 .output
 apps/**/public/build
+
+cypress/screenshots
+cypress/videos
+
+/**/styles/tailwind.css

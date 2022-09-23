@@ -24,3 +24,8 @@ build
 .cache
 .output
 apps/**/public/build
+
+cypress/screenshots
+cypress/videos
+
+/**/styles/tailwind.css
