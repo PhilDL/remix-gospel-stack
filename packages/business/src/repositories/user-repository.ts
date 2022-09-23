@@ -9,4 +9,8 @@ export class PrismaUserRepository implements UserRepository {
   async getUsers(): Promise<User[]> {
     return this.prisma.user.findMany();
   }
+
+  async getUsersCount(): Promise<number> {
+    return this.prisma.user.count();
+  }
 }

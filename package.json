@@ -21,6 +21,7 @@
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "test": "turbo run test",
+    "test:dev": "turbo run test:dev",
     "start": "turbo run start",
     "clean": "turbo run clean",
     "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
@@ -36,6 +37,6 @@
     "prettier": "^2.5.1",
     "tailwindcss": "^3.1.8",
     "tsx": "^3.7.1",
-    "turbo": "^1.4.7"
+    "turbo": "^1.5.0"
   }
 }

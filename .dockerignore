@@ -15,6 +15,11 @@ coverage
 .next/
 build
 
+# packages
+build
+dist
+packages/**/dist
+
 # misc
 .DS_Store
 *.pem
@@ -28,4 +33,5 @@ apps/**/public/build
 cypress/screenshots
 cypress/videos
 
-/**/styles/tailwind.css
+apps/**/styles/tailwind.css
+packages/**/styles/tailwind.css

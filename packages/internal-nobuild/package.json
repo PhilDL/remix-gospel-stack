@@ -8,6 +8,7 @@
     "clean": "rimraf .turbo node_modules dist",
     "lint": "eslint ./src --fix",
     "test": "vitest run",
+    "test:dev": "vitest",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {},

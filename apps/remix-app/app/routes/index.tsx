@@ -3,7 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
 import { Button, helloFromUILibrary } from "@my-company/ui";
-import { internalFunc } from "@my-company/internal-nobuild";
+import { lookUpSalesPersonForZipcode } from "@my-company/internal-nobuild";
+import type { SalesPersonDirectory } from "@my-company/internal-nobuild";
 import React from "react";
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -13,6 +14,31 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function Index() {
   const { serverValue, users } = useLoaderData<typeof loader>();
+  const salesPersons: SalesPersonDirectory = [
+    {
+      name: "mark",
+      email: "mark@my-company.com",
+      regexp: /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
+    },
+    {
+      name: "coltrane",
+      email: "coltrane@my-company.com",
+      regexp: /^62|^59|^80|^60|^02|^08|^77|^51|^10|^89|^21|^52|^55|^71|^39|^25|^70|^90|^88|^54|^57|^67|^68/,
+    },
+    {
+      name: "philippe",
+      regexp:
+        /^33|^24|^16|^17|^87|^23|^36|^18|^41|^37|^86|^79|^85|^86|^18|^58|^03|^23|^63|^15|^19|^23|^87|^19|^46|^15|^46|^82|^81|^34|^66|^11|^09|^31|^32|^65|^64|^40|^47|^82/,
+      email: "philippe@my-company.com",
+    },
+    {
+      name: "lance",
+      email: "lance@my-company.com",
+      regexp: /^76|^27|^78|^95|^94|^93|^92|^91|^45|^28|^41|^37|^72|^61|^14|^50|^35|^56|^22|^29|^44|^49|^53/,
+    },
+    { name: "john", email: "john@my-company.com", regexp: /^974|^976/ },
+    { name: "mike", email: "mike@my-company.com", regexp: /^971|^972|^973|^975|^984|^986|^987|^988/ },
+  ];
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
       <div className="relative sm:pb-16 sm:pt-8">
@@ -193,11 +219,27 @@ export default function Index() {
               </span>
             </h2>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Result of function <code className="text-orange-600 bg-gray-200 px-1">internalFunc</code>:
+              Result of function{" "}
+              <code className="text-orange-600 bg-gray-200 px-1 text-md">
+                lookUpSalesPersonForZipcode("97", salesPersons)
+              </code>
+              :
             </h3>
             <div className="prose prose-lg mt-4">
               <blockquote className="prose">
-                <p>{internalFunc()}</p>
+                <p>{lookUpSalesPersonForZipcode("974", salesPersons)?.email}</p>
+              </blockquote>
+            </div>
+            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
+              Result of function{" "}
+              <code className="text-orange-600 bg-gray-200 px-1 text-md">
+                lookUpSalesPersonForZipcode("63", salesPersons)
+              </code>
+              :
+            </h3>
+            <div className="prose prose-lg mt-4">
+              <blockquote className="prose">
+                <p>{lookUpSalesPersonForZipcode("63", salesPersons)?.email}</p>
               </blockquote>
             </div>
           </div>

@@ -17,7 +17,11 @@
     "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
+    "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
+    "test:e2e:ci": "npx cypress run",
+    "typecheck": "tsc -b && tsc -b cypress"
   },
   "eslintIgnore": [
     "/node_modules",

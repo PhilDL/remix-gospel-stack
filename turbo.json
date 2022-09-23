@@ -3,11 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "remix-app#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["public/build/**"]
+      "outputs": ["dist/**", ".next/**", "public/build/**", "build/**", "app/styles/tailwind.css", ".cache"]
     },
     "remix-app#start": {
       "dependsOn": ["^build"],
@@ -45,6 +41,10 @@
     },
     "test": {
       "outputs": []
+    },
+    "test:dev": {
+      "outputs": [],
+      "cache": false
     },
     "test:e2e:dev": {
       "outputs": [],
