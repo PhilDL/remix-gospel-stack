@@ -26,6 +26,9 @@
       "outputs": [],
       "cache": false
     },
+    "db:migrate:force": {
+      "outputs": []
+    },
     "dev": {
       "cache": false
     },
@@ -47,13 +50,16 @@
       "cache": false
     },
     "test:e2e:dev": {
+      "dependsOn": ["^build"],
       "outputs": [],
       "cache": false
     },
     "test:e2e:ci": {
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "typecheck": {
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "clean": {

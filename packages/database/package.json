@@ -15,6 +15,7 @@
     "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:seed": "tsx src/seed.ts",
+    "db:migrate:force": "prisma migrate reset --force",
     "dev": "tsup --watch",
     "format": "prisma format",
     "generate": "prisma generate",
