@@ -15,7 +15,7 @@
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint": "eslint .",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",

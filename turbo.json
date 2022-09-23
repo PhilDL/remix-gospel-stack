@@ -67,5 +67,5 @@
     }
   },
   "globalDependencies": [".env"],
-  "globalEnv": ["NODE_ENV", "REMIX_APP_PORT", "FLY_REGION", "PRIMARY_REGION"]
+  "globalEnv": ["NODE_ENV", "REMIX_APP_PORT", "FLY_REGION", "PRIMARY_REGION", "CI"]
 }
