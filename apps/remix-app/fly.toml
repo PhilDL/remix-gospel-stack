@@ -40,12 +40,12 @@ script_checks = [ ]
   restart_limit = 0
   timeout = "2s"
 
-#   [[services.http_checks]]
-#   interval = "10s"
-#   grace_period = "5s"
-#   method = "get"
-#   path = "/healthcheck"
-#   protocol = "http"
-#   timeout = "2s"
-#   tls_skip_verify = false
-#   headers = { }
+  [[services.http_checks]]
+  interval = "10s"
+  grace_period = "5s"
+  method = "get"
+  path = "/healthcheck"
+  protocol = "http"
+  timeout = "2s"
+  tls_skip_verify = false
+  headers = { }

@@ -19,21 +19,24 @@ COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 FROM base AS dev-deps
 WORKDIR /app
 RUN corepack enable
-RUN pnpm install
+RUN pnpm install --ignore-scripts --frozen-lockfile
 
 FROM base AS production-deps
 WORKDIR /app
 RUN corepack enable
-RUN pnpm install --prod
+ENV NODE_ENV production
+RUN pnpm install --prod --frozen-lockfile
 COPY --from=pruner /app/out/full/packages/database/prisma/schema.prisma /app/packages/database/prisma/schema.prisma
 RUN pnpx prisma generate --schema /app/packages/database/prisma/schema.prisma
 
 FROM base AS builder
 WORKDIR /app
 RUN corepack enable
+# ENV NODE_ENV production
 COPY --from=pruner /app/out/full/ .
 COPY --from=dev-deps /app/ .
 COPY turbo.json turbo.json
+RUN pnpm run generate
 RUN pnpm run build --filter=remix-app...
 
 # Runner

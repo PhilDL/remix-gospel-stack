@@ -1,0 +1,55 @@
+{
+  "exclude": [
+    "../node_modules/@types/jest",
+    "../node_modules/@testing-library/jest-dom"
+  ],
+  "include": [
+    "e2e/**/*",
+    "support/**/*",
+    "../node_modules/cypress",
+    "../node_modules/@testing-library/cypress"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "types": ["node", "cypress", "@testing-library/cypress"],
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["../types", "../node_modules/@types"],
+
+    "paths": {
+      "~/*": ["../app/*"],
+      "@shuken/ui/*": ["../../../packages/ui/src/*"],
+      "@shuken/ui": ["../../../packages/ui/src/index"],
+      "@shuken/time-utils/*": ["../../../packages/time-utils/src/*"],
+      "@shuken/time-utils": ["../../../packages/time-utils/src/index"],
+      "@shuken/core/*": ["../../../packages/core/src/*"],
+      "@shuken/core": ["../../../packages/core/src/index"],
+      "@shuken/database/*": ["../../../packages/database/src/*"],
+      "@shuken/database": ["../../../packages/database/src/index"],
+      "@shuken/shared/*": ["../../../packages/shared/src/*"],
+      "@shuken/shared": ["../../../packages/shared/src/index"],
+      "@shuken/calendar-providers/*": ["../../../packages/calendar-providers/src/*"],
+      "@shuken/calendar-providers": ["../../../packages/calendar-providers/src/index"],
+      "@shuken/admin/*": ["../../../packages/admin/src/*"],
+      "@shuken/admin": ["../../../packages/admin/src/index"],
+      "@shuken/users/*": ["../../../packages/users/src/*"],
+      "@shuken/users": ["../../../packages/users/src/index"],
+      "@shuken/booking/*": ["../../../packages/booking/src/*"],
+      "@shuken/booking": ["../../../packages/booking/src/index"],
+      "@shuken/notifications/*": ["../../../packages/notifications/src/*"],
+      "@shuken/notifications": ["../../../packages/notifications/src/index"],
+      "@shuken/remix/*": ["../../../packages/shuken/src/*"],
+      "@shuken/remix": ["../../../packages/shuken/src/index"],
+      "@shuken/index.server": ["../../../packages/shuken/src/index.server"]
+    }
+  },
+  "ts-node": {
+    "swc": true
+  }
+}
