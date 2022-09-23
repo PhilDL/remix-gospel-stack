@@ -5,13 +5,13 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
-  serverDependenciesToBundle: [/@my-business\/.*/, "@my-company/internal-nobuild"],
+  serverDependenciesToBundle: ["@my-company/internal-nobuild"],
   watchPaths: async () => {
     return [
       "../../packages/ui/src/**/*",
       "../../packages/business/src/**/*",
       "../../packages/database/src/**/*",
-      "../../packages/shukenternal/src/**/*",
+      "../../packages/internal-nobuild/src/**/*",
     ];
   },
 };

@@ -22,7 +22,11 @@
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
     "test": "turbo run test",
     "start": "turbo run start",
-    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+    "clean": "turbo run clean",
+    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "typecheck": "turbo run typecheck",
+    "test:e2e:dev": "turbo run test:e2e:dev",
+    "test:e2e:ci": "turbo run test:e2e:ci"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.7",

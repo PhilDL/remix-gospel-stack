@@ -45,6 +45,19 @@
     },
     "test": {
       "outputs": []
+    },
+    "test:e2e:dev": {
+      "outputs": [],
+      "cache": false
+    },
+    "test:e2e:ci": {
+      "outputs": []
+    },
+    "typecheck": {
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
     }
   },
   "globalDependencies": [".env", "$NODE_ENV", "$REMIX_APP_PORT", "$FLY_REGION", "$PRIMARY_REGION"]

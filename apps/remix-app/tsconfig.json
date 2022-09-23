@@ -18,6 +18,8 @@
       "@my-company/ui": ["../../packages/ui/src/index"],
       "@my-company/business/*": ["../../packages/business/src/*"],
       "@my-company/business": ["../../packages/business/src/index"],
+      "@my-company/internal-nobuild": ["../../packages/internal-nobuild/src/index"],
+      "@my-company/internal-nobuild/*": ["../../packages/internal-nobuild/src/*"],
     },
 
     // Remix takes care of building everything in `remix build`.

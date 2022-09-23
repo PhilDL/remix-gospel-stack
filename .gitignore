@@ -16,6 +16,10 @@ build
 dist
 packages/**/dist
 
+# Tailwind
+apps/**/styles/tailwind.css
+packages/**/styles/tailwind.css
+
 # misc
 .DS_Store
 *.pem
@@ -26,6 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env.docker
 .env.local
 .env.development.local
 .env.test.local
@@ -39,8 +44,3 @@ yarn-error.log*
 .env
 .output
 apps/**/public/build
-
-cypress/screenshots
-cypress/videos
-
-/**/styles/tailwind.css
