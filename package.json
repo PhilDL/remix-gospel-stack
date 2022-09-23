@@ -21,6 +21,7 @@
     "lint": "turbo run lint",
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
+    "docker:run:remix-app": "docker run -it --init --rm -p 3000:3000 --env-file .env --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network turborepo-remix-app",
     "test": "turbo run test",
     "test:dev": "turbo run test:dev",
     "start": "turbo run start",
