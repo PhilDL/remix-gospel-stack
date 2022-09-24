@@ -19,7 +19,7 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "concurrently": "^7.2.2",
-    "eslint-config-custom": "*",
+    "eslint-config-vite": "*",
     "react": "^17.0.2",
     "@remix-gospel-stack/tsconfig": "*",
     "tsup": "^6.1.3",
