@@ -2,10 +2,11 @@
 
 ![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-Learn more about [Remix Stacks](https://remix.run/stacks), this is a Monorepo powered by Turborepo that contains a Remix App.
+This stack his is a Monorepo powered by Turborepo that contains a Remix App. Unfortunately due to the fact that `pnpx create-remix` cli replace the `"*"` in your package.json it messes up the monorepo workspace package references by replacing them to the current Remix version. So for now you will have to:
 
 ```
-pnpx create-remix@latest --template PhilDL/remix-gospel-stack
+git clone git@github.com:PhilDL/remix-gospel-stack.git
+cd remix-gospel-stack
 ```
 
 ## What's in the stack
@@ -44,11 +45,15 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
 > :warning: **All the following commands are supposed to be run from the root of the Monorepo, they are mostly turbo pipeline commands.**. If you need to install any packages you should also do so from the root with filter. For exemple to install `dayjs` to the Remix app: `pnpm add dayjs --filter remix-app`.
 
 ## Developement
-- This step only applies if the remix CLI didn't install everything for you.
+- Install the dependencies.
     ```bash
     pnpm install
     ```
     You also have to copy the example .env.example:
+    ```sh
+    cp .env.example .env
+    cp .env.example .env.docker
+    ```
 - Start the postgresql docker container
     ```bash
     pnpm run docker:db
