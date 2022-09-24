@@ -2,18 +2,20 @@
 
 ![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-This stack his is a Monorepo powered by Turborepo that contains a Remix App. Unfortunately due to the fact that `pnpx create-remix` cli replace the `"*"` in your package.json it messes up the monorepo workspace package references by replacing them to the current Remix version. So for now you will have to:
+Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, TailwindCSS and Tsyringe for DI.
 
 ```
 git clone git@github.com:PhilDL/remix-gospel-stack.git
 cd remix-gospel-stack
 ```
 
+> :minidisc: Unfortunately due to the fact that `pnpx create-remix` cli replace the `"*"` in your package.json, it messes up the monorepo workspace package references by replacing them to the current Remix version, meaning that **you can't** use this template with `create-remix` and the `--template` flag. So for now you will have to clone and install.
+
 ## What's in the stack
 
 This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container. 
 
-> :warning: **The Package uses Typescript and pnpm as the package manager of choice.**: This means that it doesn't work with yarn, npm and with pure JavaScript.
+*This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee.*
 
 ### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
 - `apps` Folder containing the applications
@@ -27,9 +29,9 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
     - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
 
 - `config-packages`:
-    - Eslint packages with different preset configs
-    - TS Configs, also with different presets
-    - [Tailwind](https://tailwindcss.com/) configs
+    - Eslint packages with different preset configs.
+    - TS Configs, also with different presets.
+    - [Tailwind](https://tailwindcss.com/) configs.
  
 ### What else ?
 
@@ -42,7 +44,8 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
 - Code formatting with [Prettier](https://prettier.io)
 - Static Types with [TypeScript](https://typescriptlang.org)
 
-> :warning: **All the following commands are supposed to be run from the root of the Monorepo, they are mostly turbo pipeline commands.**. If you need to install any packages you should also do so from the root with filter. For exemple to install `dayjs` to the Remix app: `pnpm add dayjs --filter remix-app`.
+> **Warning**
+> All the following commands should be launched from the **monorepo root directory**
 
 ## Developement
 - Install the dependencies.
@@ -77,10 +80,16 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
     ```bash
     pnpm run dev --filter=remix-app
     ```
+## Tests, Typechecks, Lint, Install packages...
+Check the `turbo.json` file to see the available pipelines.
 - Run the Cypress tests and Dev
     ```bash
     pnpm run test:e2e:dev --filter=remix-app
     ```
+- Lint everything
+    ```bash
+    pnpm run lint
+    ``` 
 - Typecheck the whole monorepo
     ```bash
     pnpm run typecheck
@@ -91,6 +100,13 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
     or
     pnpm run test:dev 
     ``` 
+- How to install an npm package in the Remix app ?
+    ```bash
+    pnpm add dayjs --filter remix-app
+    ```
+- Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
+
+
 ## Deployement
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
