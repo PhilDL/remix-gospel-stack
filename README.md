@@ -1,159 +1,187 @@
-# Turborepo with Remix.run App
+# Remix Gospel stack with Turborepo
 
-This is a work-in-progress turborepo with a Remix app building into a Dockerfile and deployed to fly.io
+![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
+Learn more about [Remix Stacks](https://remix.run/stacks), this is a Monorepo powered by Turborepo that contains a Remix App.
 
+```
+pnpx create-remix@latest --template PhilDL/remix-gospel-stack
+```
 
+## What's in the stack
+
+This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container. 
+
+> :warning: **The Package uses Typescript and pnpm as the package manager of choice.**: This means that it doesn't work with yarn, npm and with pure JavaScript.
+
+### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
+- `apps` Folder containing the applications
+    - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app
+    - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
+- `packages` Folder containing examples
+    - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
+    - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using [Tsyringe](https://github.com/microsoft/tsyringe) to inject the Prisma `database` as a dependency and using a *repository pattern* like example.
+    - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild).  This packages also contains unit test with Vitest.
+    Remix uses `tsconfig.json` paths to reference to that project and its types. *I would recommend these types of **internal** packages when you don't plan on publishing the package.*
+    - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
+
+- `config-packages`:
+    - Eslint packages with different preset configs
+    - TS Configs, also with different presets
+    - [Tailwind](https://tailwindcss.com/) configs
+ 
+### What else ?
+
+- Remix App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
+- Database [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
+- Remix App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
+- [GitHub Actions](https://github.com/features/actions) for deploy the Remix App on merge to production and staging environments.
+- End-to-end testing with [Cypress](https://cypress.io) in the Remix App
+- Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com) inside the different packages.
+- Code formatting with [Prettier](https://prettier.io)
+- Static Types with [TypeScript](https://typescriptlang.org)
+
+> :warning: **All the following commands are supposed to be run from the root of the Monorepo, they are mostly turbo pipeline commands.**. If you need to install any packages you should also do so from the root with filter. For exemple to install `dayjs` to the Remix app: `pnpm add dayjs --filter remix-app`.
+
+## Developement
+- This step only applies if the remix CLI didn't install everything for you.
+    ```bash
+    pnpm install
+    ```
+    You also have to copy the example .env.example:
+- Start the postgresql docker container
+    ```bash
+    pnpm run docker:db
+    ```
+    > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
+
+- Generate prisma schema 
+    ```bash
+    pnpm run generate
+    ```
+- Run the Prisma migration to the database
+    ```bash
+    pnpm run db:migrate:deploy
+    ```
+- Run the first build (with dependencies via the `...` option)
+    ```bash
+    pnpm run build --filter=remix-app...
+    ```
+    **Running simply `pnpm run build` will build everything, including the NextJS app.**
+- Run the Remix dev server
+    ```bash
+    pnpm run dev --filter=remix-app
+    ```
+- Run the Cypress tests and Dev
+    ```bash
+    pnpm run test:e2e:dev --filter=remix-app
+    ```
+- Typecheck the whole monorepo
+    ```bash
+    pnpm run typecheck
+    ```  
+- Test the whole monorepo
+    ```bash
+    pnpm run test
+    or
+    pnpm run test:dev 
+    ``` 
 ## Deployement
-
-### Deploy to fly.io
-
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
 
-#### First singup the fly CLI
+### Setup Deployement to fly.io
+Prior to your first deployment, you'll need to do a few things:
+- First singup the fly CLI
+    ```bash
+    fly auth signup
+    ```
+- Create two apps on Fly, one for staging and one for production:
+  ```sh
+  fly apps create remix-gospel-stack
+  fly apps create remix-gospel-stack-staging
+  ```
+  > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
 
-```bash
-fly auth signup
-```
+- Initialize Git.
 
-#### Create the Fly apps
+  ```sh
+  git init
+  ```
 
-This monorepo uses postgresql Database so we have to create a database and attach it to our app
+- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
 
-```bash
-fly apps create turborepo-remix
-fly postgres create --name turborepo-remix-db
-fly postgres attach --postgres-app turborepo-remix-db --app turborepo-remix
-```
+  ```sh
+  git remote add origin <ORIGIN_URL>
+  ```
+- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
+- Create a database for both your staging and production environments. Run the following:
 
-#### Build and deploy image to Fly.io
+  ```sh
+  fly postgres create --name remix-gospel-stack-db
+  fly postgres attach --app remix-gospel-stack remix-gospel-stack-db
 
-```bash
-DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
-```
+  fly postgres create --name remix-gospel-stack-staging-db
+  fly postgres attach --app remix-gospel-stack-staging remix-gospel-stack-staging-db
+  ```
 
-### (Optional) If you want to build the Dockerfile in isolation
+  > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
 
-```bash
-docker build -t turborepo-remix-app -f apps/remix-app/Dockerfile .
-```
+Fly will take care of setting the `DATABASE_URL` secret for you.
 
-#### Run the Docker Image directly
+Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
-```bash
-docker run -it --init --rm -p 3000:3000 --env DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres" --network=app_network turborepo-remix-app
-```
+If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
 
-- Replace the `@db` with the name of the postgres container.
-- Here a network was created called `app_network`
-  - To create a network docker `network create app_network`
+### Multi-region deploys
 
----
+Once you have your site and database running in a single region, you can add more regions by following [Fly's Scaling](https://fly.io/docs/reference/scaling/) and [Multi-region PostgreSQL](https://fly.io/docs/getting-started/multi-region-databases/) docs.
 
-> **Note**
-> The rest of this README is basically copy pasted from official turbo repo examples:
+Make certain to set a `PRIMARY_REGION` environment variable for your app. You can use `[env]` config in the `fly.toml` to set that to the region you want to use as the primary region for both your app and database.
+
+#### Testing your app in other regions
+
+Install the [ModHeader](https://modheader.com/) browser extension (or something similar) and use it to load your app with the header `fly-prefer-region` set to the region name you would like to test.
+
+You can check the `x-fly-region` header on the response to know which region your request was handled by.
+
+## GitHub Actions
+
+We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+
+## Manually Build The Docker Image to deploy with Fly.io
+- Create a docker network
+    ```
+    docker network create app_network
+    ```
+- Build the docker image
+    ```sh
+    pnpm docker:build:remix-app
+    ```
+- Run the docker Image
+    ```sh
+    pnpm docker:run:remix-app
+    ```
+- (Optionnal) If you want to manually deploy to fly.io: 
+    ```bash
+    DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+    ```
 
 
-## What's inside?
-
-This turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `nextjs-app`: a [Next.js](https://nextjs.org) app
-- `remix-app`: a [Remix](https://remix.run) app
-- `config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `database`: [Prisma](https://prisma.io/) ORM wrapper to manage & access your database
-- `business`: Business package consuming the database package and using Tsyringe for dependency injection.
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-- [Prisma](https://prisma.io/) for database ORM
-- [Docker Compose](https://docs.docker.com/compose/) for local database
-
-### Database
-
-We use [Prisma](https://prisma.io/) to manage & access our database. As such you will need a database for this project, either locally or hosted in the cloud.
-
-To make this process easier, we offer a [`docker-compose.yml`](https://docs.docker.com/compose/) file to deploy a MySQL server locally with a new database named `turborepo` (To change this update the `MYSQL_DATABASE` environment variable in the `docker-compose.yml` file):
-
-```bash
-cd my-turborepo
-docker-compose up -d
-```
-
-Once deployed you will need to copy the `.env.example` file to `.env` in order for Prisma to have a `DATABASE_URL` environment variable to access.
-
-```bash
-cp .env.example .env
-```
-
-If you added a custom database name, or use a cloud based database, you will need to update the `DATABASE_URL` in your `.env` accordingly.
-
-Once deployed & up & running, you will need to create & deploy migrations to your database to add the necessary tables. This can be done using [Prisma Migrate](https://www.prisma.io/migrate):
-
-```bash
-npx prisma migrate dev
-```
-
-If you need to push any existing migrations to the database, you can use either the Prisma db push or the Prisma migrate deploy command(s):
-
-```bash
-pnpm run db:push
-
-# OR
-
-pnpm run db:migrate:deploy
-```
-
-There is slight difference between the two commands & [Prisma offers a breakdown on which command is best to use](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push#choosing-db-push-or-prisma-migrate).
-
-An optional additional step is to seed some initial or fake data to your database using [Prisma's seeding functionality](https://www.prisma.io/docs/guides/database/seed-database).
-
-To do this update check the seed script located in `packages/database/src/seed.ts` & add or update any users you wish to seed to the database.
-
-Once edited run the following command to run tell Prisma to run the seed script defined in the Prisma configuration:
-
-```bash
-pnpm run db:seed
-```
-
-For further more information on migrations, seeding & more, we recommend reading through the [Prisma Documentation](https://www.prisma.io/docs/).
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```bash
-cd my-turborepo
-pnpm run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```bash
-cd my-turborepo
-pnpm run dev
-```
-
-## Useful Links
-
+## Useful Turborepo Links
 Learn more about the power of Turborepo:
-
 - [Pipelines](https://turborepo.org/docs/features/pipelines)
 - [Caching](https://turborepo.org/docs/features/caching)
 - [Remote Caching (Beta)](https://turborepo.org/docs/features/remote-caching)
 - [Scoped Tasks](https://turborepo.org/docs/features/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+
+
+## Support
+
+If you found the template useful, please consider giving it a [Star ⭐](https://github.com/PhilDL/remix-gospel-stack). Thanks you!
+
+## Disclaimer
+
+I am in no way an expert on Monorepo, Docker or CI. The setup proposed here is one of many and probably could be improved 10x, but I am learning by myself along the way, so if you see any possible improvement please submit a PR. I will appreciate it greatly !

@@ -18,14 +18,14 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "@my-company/ui/*": ["../../packages/ui/src/*"],
-      "@my-company/ui": ["../../packages/ui/src/index"],
-      "@my-company/business/*": ["../../packages/business/src/*"],
-      "@my-company/business": ["../../packages/business/src/index"],
-      "@my-company/database/*": ["../../packages/database/src/*"],
-      "@my-company/database": ["../../packages/database/src/index"],
-      "@my-company/internal-nobuild": ["../../packages/internal-nobuild/src/index"],
-      "@my-company/internal-nobuild/*": ["../../packages/internal-nobuild/src/*"],
+      "@remix-gospel-stack/ui/*": ["../../packages/ui/src/*"],
+      "@remix-gospel-stack/ui": ["../../packages/ui/src/index"],
+      "@remix-gospel-stack/business/*": ["../../packages/business/src/*"],
+      "@remix-gospel-stack/business": ["../../packages/business/src/index"],
+      "@remix-gospel-stack/database/*": ["../../packages/database/src/*"],
+      "@remix-gospel-stack/database": ["../../packages/database/src/index"],
+      "@remix-gospel-stack/internal-nobuild": ["../../packages/internal-nobuild/src/index"],
+      "@remix-gospel-stack/internal-nobuild/*": ["../../packages/internal-nobuild/src/*"],
     },
 
     // Remix takes care of building everything in `remix build`.

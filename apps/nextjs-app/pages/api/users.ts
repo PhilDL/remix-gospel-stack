@@ -1,4 +1,4 @@
-import { prisma } from "@my-company/database";
+import { prisma } from "@remix-gospel-stack/database";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 

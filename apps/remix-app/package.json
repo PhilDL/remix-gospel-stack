@@ -14,8 +14,8 @@
     "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
-    "docker:build": "cd ../.. & docker build -t turborepo-remix-app -f ./apps/remix-app/Dockerfile .",
-    "lint": "eslint .",
+    "docker:build": "cd ../.. & docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
@@ -29,10 +29,10 @@
     "/public/build"
   ],
   "dependencies": {
-    "@my-company/business": "*",
-    "@my-company/database": "*",
-    "@my-company/internal-nobuild": "*",
-    "@my-company/ui": "*",
+    "@remix-gospel-stack/business": "*",
+    "@remix-gospel-stack/database": "*",
+    "@remix-gospel-stack/internal-nobuild": "*",
+    "@remix-gospel-stack/ui": "*",
     "@remix-run/express": "^1.7.0",
     "@remix-run/node": "^1.7.0",
     "@remix-run/react": "^1.7.0",
@@ -44,7 +44,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@my-company/tailwind-config": "*",
+    "@remix-gospel-stack/tailwind-config": "*",
     "@remix-run/dev": "^1.7.0",
     "@remix-run/eslint-config": "^1.7.0",
     "@swc/core": "^1.3.2",

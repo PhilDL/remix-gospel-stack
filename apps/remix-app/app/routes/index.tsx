@@ -2,9 +2,9 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
-import { Button, helloFromUILibrary } from "@my-company/ui";
-import { lookUpSalesPersonForZipcode } from "@my-company/internal-nobuild";
-import type { SalesPersonDirectory } from "@my-company/internal-nobuild";
+import { Button, helloFromUILibrary } from "@remix-gospel-stack/ui";
+import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild";
+import type { SalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild";
 import React from "react";
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -17,27 +17,27 @@ export default function Index() {
   const salesPersons: SalesPersonDirectory = [
     {
       name: "mark",
-      email: "mark@my-company.com",
+      email: "mark@remix-gospel-stack.com",
       regexp: /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
     },
     {
       name: "coltrane",
-      email: "coltrane@my-company.com",
+      email: "coltrane@remix-gospel-stack.com",
       regexp: /^62|^59|^80|^60|^02|^08|^77|^51|^10|^89|^21|^52|^55|^71|^39|^25|^70|^90|^88|^54|^57|^67|^68/,
     },
     {
       name: "philippe",
       regexp:
         /^33|^24|^16|^17|^87|^23|^36|^18|^41|^37|^86|^79|^85|^86|^18|^58|^03|^23|^63|^15|^19|^23|^87|^19|^46|^15|^46|^82|^81|^34|^66|^11|^09|^31|^32|^65|^64|^40|^47|^82/,
-      email: "philippe@my-company.com",
+      email: "philippe@remix-gospel-stack.com",
     },
     {
       name: "lance",
-      email: "lance@my-company.com",
+      email: "lance@remix-gospel-stack.com",
       regexp: /^76|^27|^78|^95|^94|^93|^92|^91|^45|^28|^41|^37|^72|^61|^14|^50|^35|^56|^22|^29|^44|^49|^53/,
     },
-    { name: "john", email: "john@my-company.com", regexp: /^974|^976/ },
-    { name: "mike", email: "mike@my-company.com", regexp: /^971|^972|^973|^975|^984|^986|^987|^988/ },
+    { name: "john", email: "john@remix-gospel-stack.com", regexp: /^974|^976/ },
+    { name: "mike", email: "mike@remix-gospel-stack.com", regexp: /^971|^972|^973|^975|^984|^986|^987|^988/ },
   ];
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
@@ -56,7 +56,7 @@ export default function Index() {
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
                 <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack</span>
               </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
+              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl mb-6">
                 Remix Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
               </p>
               <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
@@ -113,9 +113,9 @@ export default function Index() {
                 href: "https://www.cypress.io",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157772386-75444196-0604-4340-af28-53b236faa182.svg",
-                alt: "MSW",
-                href: "https://mswjs.io",
+                src: "https://user-images.githubusercontent.com/4941205/192078609-3f08928d-2811-4a33-ab32-062a77836d57.svg",
+                alt: "pNPM",
+                href: "https://pnpm.io/",
               },
               {
                 src: "https://user-images.githubusercontent.com/1500684/157772447-00fccdce-9d12-46a3-8bb4-fac612cdc949.svg",

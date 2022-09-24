@@ -6,10 +6,10 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   serverDependenciesToBundle: [
-    "@my-company/internal-nobuild",
-    "@my-company/database",
-    "@my-company/business",
-    "@my-company/ui",
+    "@remix-gospel-stack/internal-nobuild",
+    "@remix-gospel-stack/database",
+    "@remix-gospel-stack/business",
+    "@remix-gospel-stack/ui",
   ],
   watchPaths: async () => {
     return [

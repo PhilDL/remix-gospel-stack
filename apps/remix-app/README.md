@@ -2,28 +2,31 @@
 
 - [Remix Docs](https://remix.run/docs)
 
+This Remix app lives inside a Monorepo powered by turborepo, the scripts should be launched
+from the root of your Monorepo.
+
 ## Development
 
 Start the Remix development asset server and the Express server by running:
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
 
 ## Deployment
 
-First, build your app for production:
+Buil thi App for production:
 
 ```sh
-npm run build
+pnpm run build --filter=remix-app...
 ```
 
 Then run the app in production mode:
 
 ```sh
-npm start
+pnpm run start --filter=remix-app
 ```
 
 Now you'll need to pick a host to deploy it to.

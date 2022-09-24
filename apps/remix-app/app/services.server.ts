@@ -1,3 +1,3 @@
-import { Service } from "@my-company/business";
+import { Service } from "@remix-gospel-stack/business";
 export default Service;
-export { helloWorld } from "@my-company/business";
+export { helloWorld } from "@remix-gospel-stack/business";

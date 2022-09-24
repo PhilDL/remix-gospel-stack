@@ -1,5 +1,5 @@
 {
-  "name": "@my-company/business",
+  "name": "@remix-gospel-stack/business",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -19,12 +19,12 @@
     "tiny-invariant": "^1.2.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
-    "@my-company/database": "*"
+    "@remix-gospel-stack/database": "*"
   },
   "devDependencies": {
     "eslint-config-vite": "*",
     "rimraf": "^3.0.2",
-    "@my-company/tsconfig": "*",
+    "@remix-gospel-stack/tsconfig": "*",
     "@types/node": "^18.7.18",
     "tsup": "^5.11.13",
     "tsx": "^3.7.1",

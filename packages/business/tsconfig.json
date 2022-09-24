@@ -1,9 +1,13 @@
 {
-  "extends": "@my-company/tsconfig/node16.json",
+  "extends": "@remix-gospel-stack/tsconfig/node16.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "paths": {
+      "@remix-gospel-stack/database/*": ["../database/src/*"],
+      "@remix-gospel-stack/database": ["../database/src/index"],
+    }
   },
   "exclude": ["node_modules"]
 }
