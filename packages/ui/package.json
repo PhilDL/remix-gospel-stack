@@ -16,13 +16,13 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
+    "@remix-gospel-stack/tsconfig": "*",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "concurrently": "^7.2.2",
     "eslint-config-vite": "*",
-    "react": "^17.0.2",
-    "@remix-gospel-stack/tsconfig": "*",
-    "tsup": "^6.1.3",
-    "typescript": "^4.5.2"
+    "react": "^18.2.0",
+    "tsup": "^6.2.3",
+    "typescript": "^4.7.4"
   }
 }

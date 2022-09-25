@@ -16,18 +16,18 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "tiny-invariant": "^1.2.0",
+    "@remix-gospel-stack/database": "*",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.7.0",
-    "@remix-gospel-stack/database": "*"
+    "tiny-invariant": "^1.2.0",
+    "tsyringe": "^4.7.0"
   },
   "devDependencies": {
+    "@remix-gospel-stack/tsconfig": "*",
+    "@types/node": "^18.7.21",
     "eslint-config-vite": "*",
     "rimraf": "^3.0.2",
-    "@remix-gospel-stack/tsconfig": "*",
-    "@types/node": "^18.7.18",
-    "tsup": "^5.11.13",
+    "tsup": "^6.2.3",
     "tsx": "^3.7.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.7.4"
   }
 }
