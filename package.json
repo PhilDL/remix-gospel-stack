@@ -35,6 +35,7 @@
     "setup": "turbo run generate db:migrate:force db:seed"
   },
   "devDependencies": {
+    "@manypkg/cli": "^0.19.1",
     "@tailwindcss/typography": "^0.5.7",
     "autoprefixer": "^10.4.8",
     "eslint-config-custom": "*",
