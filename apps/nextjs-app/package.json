@@ -16,10 +16,10 @@
   "devDependencies": {
     "@remix-gospel-stack/database": "*",
     "@remix-gospel-stack/tsconfig": "*",
-    "@types/node": "^18.7.23",
+    "@types/node": "^18.8.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "eslint-config-custom-next": "*",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.4"
   }
 }
