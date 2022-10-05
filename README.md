@@ -24,7 +24,7 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
 - `packages` Folder containing examples
     - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
     - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using [Tsyringe](https://github.com/microsoft/tsyringe) to inject the Prisma `database` as a dependency and using a *repository pattern* like example.
-    - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild).  This packages also contains unit test with Vitest.
+    - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild).  This packages also contains unit test with Vitest.
     Remix uses `tsconfig.json` paths to reference to that project and its types. *I would recommend these types of **internal** packages when you don't plan on publishing the package.*
     - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
 
