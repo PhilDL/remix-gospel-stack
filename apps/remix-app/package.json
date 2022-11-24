@@ -8,7 +8,7 @@
     "build:css": "tailwindcss -m -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:build dev:css dev:remix dev:server",
     "dev:build": "cross-env NODE_ENV=development pnpm run build:server -- --watch",
     "dev:css": "tailwindcss -w -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
