@@ -8,8 +8,8 @@
     "build:css": "tailwindcss -m -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
-    "dev": "run-p dev:build dev:css dev:remix dev:server",
-    "dev:build": "cross-env NODE_ENV=development pnpm run build:server -- --watch",
+    "dev": "concurrently \"pnpm run dev:build\" \"pnpm run dev:css\" \"pnpm run dev:remix\" \"pnpm run dev:server\"",
+    "dev:build": "cross-env NODE_ENV=development esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --watch",
     "dev:css": "tailwindcss -w -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
@@ -76,7 +76,8 @@
     "typescript": "^4.9.4",
     "vite": "^4.0.0",
     "vite-tsconfig-paths": "^4.0.2",
-    "vitest": "^0.25.7"
+    "vitest": "^0.25.7",
+    "concurrently": "^7.6.0"
   },
   "engines": {
     "node": ">=14"
