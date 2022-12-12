@@ -18,12 +18,12 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
 
@@ -47,12 +47,12 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
 
@@ -79,7 +79,7 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
@@ -90,7 +90,7 @@ jobs:
       - name: 🏄 Copy test env vars to Package
         run: cp .env.example packages/database/.env
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
 
@@ -117,7 +117,7 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
@@ -128,7 +128,7 @@ jobs:
       - name: 🏄 Copy test env vars to Package
         run: cp .env.example packages/database/.env
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
 
@@ -174,13 +174,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.0
+        uses: SebRollen/toml-action@v1.0.2
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
@@ -236,13 +236,13 @@ jobs:
 
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.0
+        uses: SebRollen/toml-action@v1.0.2
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
