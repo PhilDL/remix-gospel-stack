@@ -21,7 +21,7 @@ describe("Testing internal package.", () => {
 
   it("Should get john", async () => {
     const commercial = lookUpSalesPersonForZipcode("97490", salesPersons);
-    expect(commercial).toBeDefined;
+    expect(commercial).toBeDefined();
     expect(commercial?.name).toBe("john");
   });
 });

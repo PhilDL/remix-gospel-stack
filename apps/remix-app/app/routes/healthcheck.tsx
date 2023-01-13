@@ -10,7 +10,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     const url = new URL("/", `http://${host}`);
     // if we can connect to the database and make a simple query
     // and make a HEAD request to ourselves, then we're good.
-    const [count, _test] = await Promise.all([
+    const [count] = await Promise.all([
       Service.userRepository.getUsersCount(),
       fetch(url.toString(), { method: "HEAD" }).then((r) => {
         if (!r.ok) return Promise.reject(r);
