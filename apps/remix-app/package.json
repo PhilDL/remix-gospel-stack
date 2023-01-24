@@ -63,11 +63,11 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.0.1",
-    "@vitest/coverage-c8": "^0.27.1",
+    "@vitest/coverage-c8": "^0.28.0",
     "concurrently": "^7.6.0",
     "cypress": "^12.3.0",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.16.17",
+    "esbuild": "^0.17.0",
     "eslint": "^8.31.0",
     "eslint-plugin-cypress": "^2.12.1",
     "happy-dom": "^8.1.4",
@@ -77,7 +77,7 @@
     "typescript": "^4.9.4",
     "vite": "^4.0.4",
     "vite-tsconfig-paths": "^4.0.3",
-    "vitest": "^0.27.1"
+    "vitest": "^0.28.0"
   },
   "engines": {
     "node": ">=14"

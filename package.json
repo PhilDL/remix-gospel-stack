@@ -36,7 +36,7 @@
     "validate": "turbo run lint typecheck test"
   },
   "devDependencies": {
-    "@manypkg/cli": "^0.19.2",
+    "@manypkg/cli": "^0.20.0",
     "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
