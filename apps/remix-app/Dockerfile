@@ -19,13 +19,13 @@ COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 FROM base AS dev-deps
 WORKDIR /app
 RUN corepack enable
-RUN pnpm install --ignore-scripts --frozen-lockfile
+RUN pnpm install --ignore-scripts --no-frozen-lockfile
 
 FROM base AS production-deps
 WORKDIR /app
 RUN corepack enable
 ENV NODE_ENV production
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --no-frozen-lockfile
 COPY --from=pruner /app/out/full/packages/database/prisma/schema.prisma /app/packages/database/prisma/schema.prisma
 RUN pnpx prisma generate --schema /app/packages/database/prisma/schema.prisma
 
