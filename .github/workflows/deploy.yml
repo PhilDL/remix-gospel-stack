@@ -208,7 +208,7 @@ jobs:
           password: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🐳 Docker build
-        uses: docker/build-push-action@v3git a
+        uses: docker/build-push-action@v3git
         with:
           context: .
           file: apps/remix-app/Dockerfile
