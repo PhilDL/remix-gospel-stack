@@ -208,7 +208,7 @@ jobs:
           password: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🐳 Docker build
-        uses: docker/build-push-action@v3git
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: apps/remix-app/Dockerfile
@@ -216,7 +216,7 @@ jobs:
           tags: registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}
           build-args: |
             COMMIT_SHA=${{ github.sha }}
-          # cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
       # This ugly bit is necessary if you don't want your cache to grow forever
