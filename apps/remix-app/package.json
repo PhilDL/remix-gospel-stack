@@ -67,7 +67,7 @@
     "concurrently": "^7.6.0",
     "cypress": "^12.5.1",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.16.3",
+    "esbuild": "^0.17.5",
     "eslint": "^8.33.0",
     "eslint-plugin-cypress": "^2.12.1",
     "happy-dom": "^8.2.3",
