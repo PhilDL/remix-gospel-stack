@@ -11,7 +11,7 @@
     "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-config-turbo": "^0.0.7",
+    "eslint-config-turbo": "^0.0.9",
     "typescript": "^4.9.5"
   },
   "publishConfig": {
