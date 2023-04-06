@@ -1,5 +1,9 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import {
+  useLoaderData,
+  useRouteError,
+  isRouteErrorResponse,
+} from "@remix-run/react";
 import { json } from "@remix-run/node";
 import Service, { helloWorld } from "~/services.server";
 import { Button, helloFromUILibrary } from "@remix-gospel-stack/ui";
@@ -18,12 +22,14 @@ export default function Index() {
     {
       name: "mark",
       email: "mark@remix-gospel-stack.com",
-      regexp: /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
+      regexp:
+        /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
     },
     {
       name: "coltrane",
       email: "coltrane@remix-gospel-stack.com",
-      regexp: /^62|^59|^80|^60|^02|^08|^77|^51|^10|^89|^21|^52|^55|^71|^39|^25|^70|^90|^88|^54|^57|^67|^68/,
+      regexp:
+        /^62|^59|^80|^60|^02|^08|^77|^51|^10|^89|^21|^52|^55|^71|^39|^25|^70|^90|^88|^54|^57|^67|^68/,
     },
     {
       name: "philippe",
@@ -34,10 +40,15 @@ export default function Index() {
     {
       name: "lance",
       email: "lance@remix-gospel-stack.com",
-      regexp: /^76|^27|^78|^95|^94|^93|^92|^91|^45|^28|^41|^37|^72|^61|^14|^50|^35|^56|^22|^29|^44|^49|^53/,
+      regexp:
+        /^76|^27|^78|^95|^94|^93|^92|^91|^45|^28|^41|^37|^72|^61|^14|^50|^35|^56|^22|^29|^44|^49|^53/,
     },
     { name: "john", email: "john@remix-gospel-stack.com", regexp: /^974|^976/ },
-    { name: "mike", email: "mike@remix-gospel-stack.com", regexp: /^971|^972|^973|^975|^984|^986|^987|^988/ },
+    {
+      name: "mike",
+      email: "mike@remix-gospel-stack.com",
+      regexp: /^971|^972|^973|^975|^984|^986|^987|^988/,
+    },
   ];
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
@@ -54,20 +65,29 @@ export default function Index() {
             </div>
             <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-amber-500 drop-shadow-md">Gospel Stack</span>
+                <span className="block uppercase text-amber-500 drop-shadow-md">
+                  Gospel Stack
+                </span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl mb-6">
-                Remix Monorepo Check the README.md file for instructions on how to get this project deployed.{" "}
+                Remix Monorepo Check the README.md file for instructions on how
+                to get this project deployed.{" "}
               </p>
               <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
-                <a href="https://turborepo.org" className="flex-1 flex justify-end items-center">
+                <a
+                  href="https://turborepo.org"
+                  className="flex-1 flex justify-end items-center"
+                >
                   <img
                     src="https://user-images.githubusercontent.com/4941205/189468691-7b1f3967-2470-4bd2-923f-0be0041151dc.svg"
                     alt="Turborepo"
                     className="max-w-[15rem] md:max-w-[19rem] fill-white"
                   />
                 </a>
-                <a href="https://remix.run" className="flex-1 flex justify-start items-center">
+                <a
+                  href="https://remix.run"
+                  className="flex-1 flex justify-start items-center"
+                >
                   <img
                     src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
                     alt="Remix"
@@ -156,14 +176,19 @@ export default function Index() {
         <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8 flex-col flex gap-8 mt-12">
           <div>
             <h2>
-              <span className="block text-lg font-semibold text-orange-600">packages/business, packages/database</span>
+              <span className="block text-lg font-semibold text-orange-600">
+                packages/business, packages/database
+              </span>
               <span className="mt-1 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
                 Server packages
               </span>
             </h2>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Display prisma users from the business function{" "}
-              <code className="text-orange-600 bg-gray-200 px-1">Service.userRepository.getUsers()</code>.
+              <code className="text-orange-600 bg-gray-200 px-1">
+                Service.userRepository.getUsers()
+              </code>
+              .
             </h3>
             <div className="prose prose-lg mt-4">
               <blockquote className="prose">
@@ -181,7 +206,10 @@ export default function Index() {
 
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Regular server value passed from Loader here{" "}
-              <code className="text-orange-600 bg-gray-200 px-1">serverValue</code>:
+              <code className="text-orange-600 bg-gray-200 px-1">
+                serverValue
+              </code>
+              :
             </h3>
             <div className="prose prose-lg mt-4">
               <blockquote className="prose">
@@ -191,7 +219,9 @@ export default function Index() {
           </div>
           <div>
             <h2 className="mt-4">
-              <span className="block text-lg font-semibold text-orange-600">packages/ui</span>
+              <span className="block text-lg font-semibold text-orange-600">
+                packages/ui
+              </span>
               <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
                 Ui packages
               </span>
@@ -203,7 +233,11 @@ export default function Index() {
               <Button />
             </div>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Result of function <code className="text-orange-600 bg-gray-200 px-1">helloFromUILibrary</code>:
+              Result of function{" "}
+              <code className="text-orange-600 bg-gray-200 px-1">
+                helloFromUILibrary
+              </code>
+              :
             </h3>
             <div className="prose prose-lg mt-4">
               <blockquote className="prose">
@@ -213,7 +247,9 @@ export default function Index() {
           </div>
           <div>
             <h2 className="mt-4">
-              <span className="block text-lg font-semibold text-orange-600">packages/internal-nobuild</span>
+              <span className="block text-lg font-semibold text-orange-600">
+                packages/internal-nobuild
+              </span>
               <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
                 Internal TS Package with no build step
               </span>
@@ -246,5 +282,39 @@ export default function Index() {
         </div>
       </div>
     </main>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  // when true, this is what used to go to `CatchBoundary`
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>Oops</h1>
+        <p>Status: {error.status}</p>
+        <p>{error.data.message}</p>
+      </div>
+    );
+  }
+
+  // Don't forget to typecheck with your own logic.
+  // Any value can be thrown, not just errors!
+  let errorMessage = "Unknown error";
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+
+  return (
+    <div className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
+      <div className="bg-slate-50 rounded-md max-w-2xl mx-auto p-12 flex flex-col gap-4">
+        <h1 className="text-slate-900 text-3xl font-bold">Uh oh ...</h1>
+        <p className="text-slate-700">Something went wrong.</p>
+        <pre className="overflow-scroll border-slate-300 bg-white text-red-500 border rounded-md p-4">
+          {errorMessage}
+        </pre>
+      </div>
+    </div>
   );
 }
