@@ -25,7 +25,7 @@
     "@remix-gospel-stack/tsconfig": "*",
     "@types/node": "^18.15.11",
     "eslint-config-vite": "*",
-    "rimraf": "^4.4.1",
+    "rimraf": "^5.0.0",
     "tsup": "^6.7.0",
     "tsx": "^3.12.6",
     "typescript": "^5.0.3"

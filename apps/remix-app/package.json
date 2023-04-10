@@ -63,7 +63,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
-    "@vitest/coverage-c8": "^0.29.8",
+    "@vitest/coverage-c8": "^0.30.0",
     "concurrently": "^8.0.1",
     "cypress": "^12.9.0",
     "dotenv": "^16.0.3",
@@ -77,7 +77,7 @@
     "typescript": "^5.0.3",
     "vite": "^4.2.1",
     "vite-tsconfig-paths": "^4.0.8",
-    "vitest": "^0.29.8"
+    "vitest": "^0.30.0"
   },
   "engines": {
     "node": ">=14"
