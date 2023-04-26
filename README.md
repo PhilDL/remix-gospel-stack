@@ -13,26 +13,28 @@ cd remix-gospel-stack
 
 ## What's in the stack
 
-This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container. 
+This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container.
 
-*This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee.*
+_This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee._
 
 ### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
+
 - `apps` Folder containing the applications
-    - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app
-    - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
+  - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app
+  - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
-    - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
-    - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using [Tsyringe](https://github.com/microsoft/tsyringe) to inject the Prisma `database` as a dependency and using a *repository pattern* like example.
-    - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild).  This packages also contains unit test with Vitest.
-    Remix uses `tsconfig.json` paths to reference to that project and its types. *I would recommend these types of **internal** packages when you don't plan on publishing the package.*
-    - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
+
+  - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
+  - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using [Tsyringe](https://github.com/microsoft/tsyringe) to inject the Prisma `database` as a dependency and using a _repository pattern_ like example.
+  - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
+    Remix uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
+  - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
 
 - `config-packages`:
-    - Eslint packages with different preset configs.
-    - TS Configs, also with different presets.
-    - [Tailwind](https://tailwindcss.com/) configs.
- 
+  - Eslint packages with different preset configs.
+  - TS Configs, also with different presets.
+  - [Tailwind](https://tailwindcss.com/) configs.
+
 ### What else ?
 
 - Remix App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
@@ -48,80 +50,90 @@ This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspace
 > All the following commands should be launched from the **monorepo root directory**
 
 ## Developement
-- Install the dependencies.
-    ```bash
-    pnpm install
-    ```
-    You also have to copy the example .env.example:
-    ```sh
-    cp .env.example .env
-    cp .env.example .env.docker
-    ```
-- Start the postgresql docker container
-    ```bash
-    pnpm run docker:db
-    ```
-    > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
 
-- Generate prisma schema 
-    ```bash
-    pnpm run generate
-    ```
+- Install the dependencies.
+  ```bash
+  pnpm install
+  ```
+  You also have to copy the example .env.example:
+  ```sh
+  cp .env.example .env
+  cp .env.example .env.docker
+  ```
+- Start the postgresql docker container
+
+  ```bash
+  pnpm run docker:db
+  ```
+
+  > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
+
+- Generate prisma schema
+  ```bash
+  pnpm run generate
+  ```
 - Run the Prisma migration to the database
-    ```bash
-    pnpm run db:migrate:deploy
-    ```
+  ```bash
+  pnpm run db:migrate:deploy
+  ```
 - Run the first build (with dependencies via the `...` option)
-    ```bash
-    pnpm run build --filter=remix-app...
-    ```
-    **Running simply `pnpm run build` will build everything, including the NextJS app.**
+  ```bash
+  pnpm run build --filter=remix-app...
+  ```
+  **Running simply `pnpm run build` will build everything, including the NextJS app.**
 - Run the Remix dev server
-    ```bash
-    pnpm run dev --filter=remix-app
-    ```
+  ```bash
+  pnpm run dev --filter=remix-app
+  ```
+
 ## Tests, Typechecks, Lint, Install packages...
+
 Check the `turbo.json` file to see the available pipelines.
+
 - Run the Cypress tests and Dev
-    ```bash
-    pnpm run test:e2e:dev --filter=remix-app
-    ```
+  ```bash
+  pnpm run test:e2e:dev --filter=remix-app
+  ```
 - Lint everything
-    ```bash
-    pnpm run lint
-    ``` 
+  ```bash
+  pnpm run lint
+  ```
 - Typecheck the whole monorepo
-    ```bash
-    pnpm run typecheck
-    ```  
+  ```bash
+  pnpm run typecheck
+  ```
 - Test the whole monorepo
-    ```bash
-    pnpm run test
-    or
-    pnpm run test:dev 
-    ``` 
+  ```bash
+  pnpm run test
+  or
+  pnpm run test:dev
+  ```
 - How to install an npm package in the Remix app ?
-    ```bash
-    pnpm add dayjs --filter remix-app
-    ```
+  ```bash
+  pnpm add dayjs --filter remix-app
+  ```
 - Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
 
-
 ## Deployement
+
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
 
 ### Setup Deployement to fly.io
+
 Prior to your first deployment, you'll need to do a few things:
+
 - First singup the fly CLI
-    ```bash
-    fly auth signup
-    ```
+  ```bash
+  fly auth signup
+  ```
 - Create two apps on Fly, one for staging and one for production:
+
   ```sh
   fly apps create remix-gospel-stack
   fly apps create remix-gospel-stack-staging
   ```
+
   > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
 
 - Initialize Git.
@@ -135,6 +147,7 @@ Prior to your first deployment, you'll need to do a few things:
   ```sh
   git remote add origin <ORIGIN_URL>
   ```
+
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 - Create a database for both your staging and production environments. Run the following:
 
@@ -171,33 +184,34 @@ You can check the `x-fly-region` header on the response to know which region you
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
 ## Manually Build The Docker Image to deploy with Fly.io
-- Create a docker network
-    ```
-    docker network create app_network
-    ```
-- Build the docker image
-    ```sh
-    pnpm docker:build:remix-app
-    ```
-- Run the docker Image
-    ```sh
-    pnpm docker:run:remix-app
-    ```
-- (Optionnal) If you want to manually deploy to fly.io: 
-    ```bash
-    DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
-    ```
 
+- Create a docker network
+  ```
+  docker network create app_network
+  ```
+- Build the docker image
+  ```sh
+  pnpm docker:build:remix-app
+  ```
+- Run the docker Image
+  ```sh
+  pnpm docker:run:remix-app
+  ```
+- (Optionnal) If you want to manually deploy to fly.io:
+  ```bash
+  DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+  ```
 
 ## Useful Turborepo Links
+
 Learn more about the power of Turborepo:
+
 - [Pipelines](https://turborepo.org/docs/features/pipelines)
 - [Caching](https://turborepo.org/docs/features/caching)
 - [Remote Caching (Beta)](https://turborepo.org/docs/features/remote-caching)
 - [Scoped Tasks](https://turborepo.org/docs/features/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
-
 
 ## Support
 

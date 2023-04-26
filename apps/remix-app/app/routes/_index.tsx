@@ -1,15 +1,18 @@
-import type { LoaderArgs } from "@remix-run/node";
+import React from "react";
+import { json, type LoaderArgs } from "@remix-run/node";
 import {
+  isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-  isRouteErrorResponse,
 } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import Service, { helloWorld } from "~/services.server";
+
+import {
+  lookUpSalesPersonForZipcode,
+  type SalesPersonDirectory,
+} from "@remix-gospel-stack/internal-nobuild";
 import { Button, helloFromUILibrary } from "@remix-gospel-stack/ui";
-import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild";
-import type { SalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild";
-import React from "react";
+
+import Service, { helloWorld } from "~/services.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();
@@ -256,7 +259,7 @@ export default function Index() {
             </h2>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Result of function{" "}
-              <code className="text-orange-600 bg-gray-200 px-1 text-md">
+              <code className="text-md bg-gray-200 px-1 text-orange-600">
                 lookUpSalesPersonForZipcode("97", salesPersons)
               </code>
               :

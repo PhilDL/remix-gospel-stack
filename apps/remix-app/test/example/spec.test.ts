@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild";
-import type { SalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild";
+
+import {
+  lookUpSalesPersonForZipcode,
+  type SalesPersonDirectory,
+} from "@remix-gospel-stack/internal-nobuild";
 
 describe("Example test.", () => {
   it("It should pass successfully.", () => {
@@ -14,7 +17,8 @@ describe("Testing internal package.", () => {
     {
       name: "mark",
       email: "mark@remix-gospel-stack.com",
-      regexp: /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
+      regexp:
+        /^01|^73|^74|^05|^38|^69|^42|^43|^07|^26|^04|^06|^83|^13|^84|^30|^07|^48|^12|^2B|^2A/,
     },
     { name: "john", email: "john@remix-gospel-stack.com", regexp: /^974|^976/ },
   ];

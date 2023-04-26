@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
-  // This tells ESLint to load the config from the package `@remix-gospel-stack/eslint`
-  extends: ["custom"],
+  // This tells ESLint to load the config from the package `@remix-gospel-stack/eslint-config`
+  extends: ["@remix-gospel-stack/eslint-config"],
   settings: {
     next: {
       rootDir: ["apps/*/"],

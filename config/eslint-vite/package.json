@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/eslint-vite",
+  "name": "@remix-gospel-stack/eslint-config-vite",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -12,6 +12,7 @@
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-turbo": "^1.9.3",
+    "eslint-plugin-tailwindcss": "^3.11.0",
     "typescript": "^5.0.4"
   },
   "publishConfig": {

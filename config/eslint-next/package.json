@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/eslint-next",
+  "name": "@remix-gospel-stack/eslint-config-next",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

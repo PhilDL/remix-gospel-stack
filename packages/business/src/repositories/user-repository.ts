@@ -1,7 +1,9 @@
 import { autoInjectable, container } from "tsyringe";
+
 import type { PrismaClient } from "@remix-gospel-stack/database";
-import type { UserRepository } from "./iuser-repository";
+
 import type { User } from "../shared/dtos";
+import type { UserRepository } from "./iuser-repository";
 
 @autoInjectable()
 export class PrismaUserRepository implements UserRepository {

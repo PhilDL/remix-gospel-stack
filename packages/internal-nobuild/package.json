@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@remix-gospel-stack/tsconfig": "*",
-    "@remix-gospel-stack/eslint-vite": "*",
+    "@remix-gospel-stack/eslint-config-vite": "*",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4",
     "vite": "^4.3.2",

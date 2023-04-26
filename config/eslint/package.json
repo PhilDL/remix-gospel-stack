@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/eslint",
+  "name": "@remix-gospel-stack/eslint-config",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -9,6 +9,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-turbo": "^1.9.3",
     "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-tailwindcss": "^3.11.0",
     "typescript": "^5.0.4"
   },
   "publishConfig": {

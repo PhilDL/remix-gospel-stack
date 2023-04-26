@@ -24,7 +24,7 @@
   "devDependencies": {
     "@remix-gospel-stack/tsconfig": "*",
     "@types/node": "^18.16.0",
-    "@remix-gospel-stack/eslint-vite": "*",
+    "@remix-gospel-stack/eslint-config-vite": "*",
     "rimraf": "^5.0.0",
     "tsup": "^6.7.0",
     "tsx": "^3.12.6",

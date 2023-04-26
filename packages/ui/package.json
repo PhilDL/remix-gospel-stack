@@ -21,7 +21,8 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "concurrently": "^8.0.1",
-    "@remix-gospel-stack/eslint-vite": "*",
+    "eslint": "^8.39.0",
+    "@remix-gospel-stack/eslint-config-vite": "*",
     "react": "^18.2.0",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4"
