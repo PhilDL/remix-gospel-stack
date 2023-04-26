@@ -5,11 +5,11 @@
   "license": "MIT",
   "main": "index.js",
   "devDependencies": {
-    "eslint": "^8.37.0",
+    "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-config-turbo": "^1.8.8",
+    "eslint-config-turbo": "^1.9.3",
     "eslint-plugin-react": "7.32.2",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "publishConfig": {
     "access": "public"
