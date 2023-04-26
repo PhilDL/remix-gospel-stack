@@ -66,30 +66,30 @@ export default function Index() {
               />
               <div className="absolute inset-0 bg-[color:#6a3f077d] mix-blend-multiply" />
             </div>
-            <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
+            <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
                 <span className="block uppercase text-amber-500 drop-shadow-md">
                   Gospel Stack
                 </span>
               </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl mb-6">
+              <p className="mx-auto mb-6 mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
                 Remix Monorepo Check the README.md file for instructions on how
                 to get this project deployed.{" "}
               </p>
-              <div className="flex flex-row mx-auto w-full justify-between items-center gap-8">
+              <div className="mx-auto flex w-full flex-row items-center justify-between gap-8">
                 <a
                   href="https://turborepo.org"
-                  className="flex-1 flex justify-end items-center"
+                  className="flex flex-1 items-center justify-end"
                 >
                   <img
                     src="https://user-images.githubusercontent.com/4941205/189468691-7b1f3967-2470-4bd2-923f-0be0041151dc.svg"
                     alt="Turborepo"
-                    className="max-w-[15rem] md:max-w-[19rem] fill-white"
+                    className="max-w-[15rem] fill-white md:max-w-[19rem]"
                   />
                 </a>
                 <a
                   href="https://remix.run"
-                  className="flex-1 flex justify-start items-center"
+                  className="flex flex-1 items-center justify-start"
                 >
                   <img
                     src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
@@ -102,7 +102,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
           <div className="mt-6 flex flex-wrap justify-center gap-8">
             {[
               {
@@ -176,7 +176,7 @@ export default function Index() {
             ))}
           </div>
         </div>
-        <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8 flex-col flex gap-8 mt-12">
+        <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-8 px-4 py-2 sm:px-6 lg:px-8">
           <div>
             <h2>
               <span className="block text-lg font-semibold text-orange-600">
@@ -188,7 +188,7 @@ export default function Index() {
             </h2>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Display prisma users from the business function{" "}
-              <code className="text-orange-600 bg-gray-200 px-1">
+              <code className="bg-gray-200 px-1 text-orange-600">
                 Service.userRepository.getUsers()
               </code>
               .
@@ -209,7 +209,7 @@ export default function Index() {
 
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Regular server value passed from Loader here{" "}
-              <code className="text-orange-600 bg-gray-200 px-1">
+              <code className="bg-gray-200 px-1 text-orange-600">
                 serverValue
               </code>
               :
@@ -232,12 +232,12 @@ export default function Index() {
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               This is an example Button Component from "ui" packages
             </h3>
-            <div className="mx-auto max-w-sm sm:flex flex flex-col sm:max-w-none items-start">
+            <div className="mx-auto flex max-w-sm flex-col items-start sm:flex sm:max-w-none">
               <Button />
             </div>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Result of function{" "}
-              <code className="text-orange-600 bg-gray-200 px-1">
+              <code className="bg-gray-200 px-1 text-orange-600">
                 helloFromUILibrary
               </code>
               :
@@ -271,7 +271,7 @@ export default function Index() {
             </div>
             <h3 className="mt-3 block text-lg font-semibold text-gray-600">
               Result of function{" "}
-              <code className="text-orange-600 bg-gray-200 px-1 text-md">
+              <code className="text-md bg-gray-200 px-1 text-orange-600">
                 lookUpSalesPersonForZipcode("63", salesPersons)
               </code>
               :
@@ -311,10 +311,10 @@ export function ErrorBoundary() {
 
   return (
     <div className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      <div className="bg-slate-50 rounded-md max-w-2xl mx-auto p-12 flex flex-col gap-4">
-        <h1 className="text-slate-900 text-3xl font-bold">Uh oh ...</h1>
+      <div className="mx-auto flex max-w-2xl flex-col gap-4 rounded-md bg-slate-50 p-12">
+        <h1 className="text-3xl font-bold text-slate-900">Uh oh ...</h1>
         <p className="text-slate-700">Something went wrong.</p>
-        <pre className="overflow-scroll border-slate-300 bg-white text-red-500 border rounded-md p-4">
+        <pre className="overflow-scroll rounded-md border border-slate-300 bg-white p-4 text-red-500">
           {errorMessage}
         </pre>
       </div>
