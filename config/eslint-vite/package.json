@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-vite",
+  "name": "@remix-gospel-stack/eslint-vite",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

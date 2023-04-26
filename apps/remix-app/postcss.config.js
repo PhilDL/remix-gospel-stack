@@ -1,1 +1,1 @@
-module.exports = require("@remix-gospel-stack/tailwind-config/postcss.config");
+module.exports = require("../../config/tailwind-config/postcss.config");

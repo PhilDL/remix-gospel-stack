@@ -38,12 +38,10 @@
   "devDependencies": {
     "@manypkg/cli": "^0.20.0",
     "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.14",
-    "eslint-config-custom": "*",
-    "postcss": "^8.4.23",
+    "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
+    "@remix-gospel-stack/eslint": "*",
     "prettier": "^2.8.8",
     "tailwindcss": "3.3.1",
-    "tsx": "^3.12.6",
     "turbo": "^1.9.3"
   }
 }

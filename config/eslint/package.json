@@ -1,11 +1,11 @@
 {
-  "name": "eslint-config-custom-next",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@remix-gospel-stack/eslint",
+  "version": "0.0.0",
+  "private": true,
   "license": "MIT",
+  "main": "index.js",
   "devDependencies": {
     "eslint": "^8.39.0",
-    "eslint-config-next": "^13.3.1",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-turbo": "^1.9.3",
     "eslint-plugin-react": "7.32.2",
