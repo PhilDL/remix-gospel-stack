@@ -1,3 +1,0 @@
-{
-  "extends": ["@remix-gospel-stack/eslint-config-vite"]
-}

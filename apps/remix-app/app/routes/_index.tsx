@@ -72,7 +72,7 @@ export default function Index() {
                   Gospel Stack
                 </span>
               </h1>
-              <p className="mx-auto mb-6 mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
+              <p className="mx-auto my-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
                 Remix Monorepo Check the README.md file for instructions on how
                 to get this project deployed.{" "}
               </p>
