@@ -1,8 +1,8 @@
 import path from "path";
-import express from "express";
-import compression from "compression";
-import morgan from "morgan";
 import { createRequestHandler } from "@remix-run/express";
+import compression from "compression";
+import express from "express";
+import morgan from "morgan";
 
 const app = express();
 
@@ -30,7 +30,8 @@ app.all("*", function getReplayResponse(req, res, next) {
   const { PRIMARY_REGION, FLY_REGION } = process.env;
 
   const isMethodReplayable = !["GET", "OPTIONS", "HEAD"].includes(method);
-  const isReadOnlyRegion = FLY_REGION && PRIMARY_REGION && FLY_REGION !== PRIMARY_REGION;
+  const isReadOnlyRegion =
+    FLY_REGION && PRIMARY_REGION && FLY_REGION !== PRIMARY_REGION;
 
   const shouldReplay = isMethodReplayable && isReadOnlyRegion;
 
@@ -53,7 +54,10 @@ app.use(compression());
 app.disable("x-powered-by");
 
 // Remix fingerprints its assets so we can cache forever.
-app.use("/build", express.static("public/build", { immutable: true, maxAge: "1y" }));
+app.use(
+  "/build",
+  express.static("public/build", { immutable: true, maxAge: "1y" })
+);
 
 // Everything else (like favicon.ico) is cached for an hour. You may want to be
 // more aggressive with this caching.

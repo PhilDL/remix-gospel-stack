@@ -1,13 +1,16 @@
-import { prisma } from "@remix-gospel-stack/database";
-
 import type { NextApiRequest, NextApiResponse } from "next";
+
+import { prisma } from "@remix-gospel-stack/database";
 
 /**
  * Users
  *
  * @description A basic API endpoint to retrieve all the users in the database
  */
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "GET") {
     res.setHeader("Allow", ["GET"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);

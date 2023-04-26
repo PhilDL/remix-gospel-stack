@@ -13,16 +13,24 @@
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react && tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "dev": "tsup src/index.tsx --format esm,cjs --dts --external react --watch & tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
     "clean": "rm -rf dist",
+    "lint": "eslint ./src --fix",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
+    "@remix-gospel-stack/eslint-config-vite": "*",
+    "@remix-gospel-stack/tailwind-config": "*",
     "@remix-gospel-stack/tsconfig": "*",
-    "@types/react": "^18.0.33",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "concurrently": "^8.0.1",
-    "eslint-config-vite": "*",
+    "eslint": "^8.39.0",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.1",
+    "autoprefixer": "^10.4.14",
+    "@tailwindcss/typography": "^0.5.9",
+    "postcss": "^8.4.23",
     "tsup": "^6.7.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   }
 }

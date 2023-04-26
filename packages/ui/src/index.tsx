@@ -1,4 +1,3 @@
-import * as React from "react";
 export * from "./Button";
 
 // To be able to use that we need to add that lib to

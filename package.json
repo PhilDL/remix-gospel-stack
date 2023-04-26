@@ -35,15 +35,13 @@
     "setup": "turbo run generate db:migrate:force db:seed",
     "validate": "turbo run lint typecheck test"
   },
-  "devDependencies": {
-    "@manypkg/cli": "^0.20.0",
-    "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.14",
-    "eslint-config-custom": "*",
-    "postcss": "^8.4.21",
-    "prettier": "^2.8.7",
-    "tailwindcss": "3.3.1",
-    "tsx": "^3.12.6",
-    "turbo": "^1.8.8"
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
+    "@remix-gospel-stack/eslint-config": "*",
+    "eslint": "^8.39.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.7",
+    "turbo": "^1.9.3",
+    "typescript": "^5.0.4"
   }
 }
