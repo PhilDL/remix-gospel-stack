@@ -16,7 +16,7 @@
   "devDependencies": {
     "@remix-gospel-stack/database": "*",
     "@remix-gospel-stack/tsconfig": "*",
-    "@types/node": "^18.16.0",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@remix-gospel-stack/eslint-config-next": "*",
