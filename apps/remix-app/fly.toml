@@ -7,7 +7,7 @@ kill_timeout = "5s"
   auto_rollback = true
 
 [deploy]
-  release_command = "bash ./apps/remix-app/scripts/migrate.sh"
+  release_command = "npx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 
 [env]
   PRIMARY_REGION = "cdg"
