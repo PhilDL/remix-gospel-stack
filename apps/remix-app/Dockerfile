@@ -57,5 +57,12 @@ COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build/server.js .
 COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/build ./apps/remix-app/build
 COPY --from=builder --chown=remixjs:nodejs /app/apps/remix-app/public ./apps/remix-app/public
 
+# COPY --from=pruner /app/out/full/ .
+# COPY --from=production-deps /app .
+# COPY --from=builder /app/apps/remix-app/app/styles/tailwind.css ./apps/remix-app/app/styles/tailwind.css
+# COPY --from=builder /app/apps/remix-app/build/server.js ./apps/remix-app/build/server.js
+# COPY --from=builder /app/apps/remix-app/build ./apps/remix-app/build
+# COPY --from=builder /app/apps/remix-app/public ./apps/remix-app/public
+
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 CMD ["pnpm", "--filter", "remix-app", "run", "start"]
