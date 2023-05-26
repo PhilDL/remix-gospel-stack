@@ -1,51 +1,47 @@
 app = "turborepo-remix"
+primary_region = "cdg"
 kill_signal = "SIGINT"
-kill_timeout = 5
-processes = [ ]
-
-[env]
-REMIX_APP_PORT = "8080"
-PRIMARY_REGION = "cdg"
-
-[deploy]
-release_command = "npx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
+kill_timeout = "5s"
 
 [experimental]
-allowed_public_ports = [ ]
-auto_rollback = true
+  auto_rollback = true
+
+[deploy]
+  release_command = "npx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
+
+[env]
+  PRIMARY_REGION = "cdg"
+  REMIX_APP_PORT = "8080"
 
 [[services]]
-internal_port = 8080
-processes = [ "app" ]
-protocol = "tcp"
-script_checks = [ ]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
 
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
   [services.concurrency]
-  hard_limit = 25
-  soft_limit = 20
-  type = "connections"
-
-  [[services.ports]]
-  handlers = [ "http" ]
-  port = 80
-  force_https = true
-
-  [[services.ports]]
-  handlers = [ "tls", "http" ]
-  port = 443
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
 
   [[services.tcp_checks]]
-  grace_period = "1s"
-  interval = "15s"
-  restart_limit = 0
-  timeout = "2s"
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
 
   [[services.http_checks]]
-  interval = "10s"
-  grace_period = "5s"
-  method = "get"
-  path = "/healthcheck"
-  protocol = "http"
-  timeout = "2s"
-  tls_skip_verify = false
-  headers = { }
+    interval = "10s"
+    timeout = "2s"
+    grace_period = "5s"
+    restart_limit = 0
+    method = "get"
+    path = "/healthcheck"
+    protocol = "http"
