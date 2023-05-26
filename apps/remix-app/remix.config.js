@@ -25,4 +25,5 @@ module.exports = {
     v2_meta: true,
     v2_errorBoundary: true,
   },
+  serverModuleFormat: "cjs",
 };
