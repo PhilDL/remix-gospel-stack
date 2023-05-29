@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { Lifecycle, container } from "tsyringe";
+
+import { container, Lifecycle } from "tsyringe";
 
 import { prisma } from "@remix-gospel-stack/database";
 
