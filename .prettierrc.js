@@ -23,10 +23,5 @@ module.exports = {
     "^~/(.*)$",
     "^[./]",
   ],
-  importOrderBuiltinModulesToTop: true,
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
-  importOrderSeparation: false,
-  importOrderSortSpecifiers: true,
-  importOrderMergeDuplicateImports: true,
-  importOrderCombineTypeAndValueImports: true,
 };
