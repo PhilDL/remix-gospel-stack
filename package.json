@@ -36,7 +36,7 @@
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
+    "@ianvs/prettier-plugin-sort-imports": "^4.0.0",
     "@remix-gospel-stack/eslint-config": "*",
     "eslint": "^8.41.0",
     "prettier": "^2.8.8",
