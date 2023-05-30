@@ -17,9 +17,9 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config-vite": "*",
-    "@remix-gospel-stack/tailwind-config": "*",
-    "@remix-gospel-stack/tsconfig": "*",
+    "@remix-gospel-stack/eslint-config-vite": "workspace:*",
+    "@remix-gospel-stack/tailwind-config": "workspace:*",
+    "@remix-gospel-stack/tsconfig": "workspace:*",
     "@tailwindcss/typography": "^0.5.9",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
