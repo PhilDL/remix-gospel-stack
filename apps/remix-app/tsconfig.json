@@ -1,8 +1,19 @@
 {
-  "exclude": ["./cypress","./cypress.config.ts"],
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "./cypress",
+    "./cypress.config.ts"
+  ],
+  "include": [
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019"
+    ],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -17,19 +28,34 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"],
-      "@remix-gospel-stack/ui/*": ["../../packages/ui/src/*"],
-      "@remix-gospel-stack/ui": ["../../packages/ui/src/index"],
-      "@remix-gospel-stack/business/*": ["../../packages/business/src/*"],
-      "@remix-gospel-stack/business": ["../../packages/business/src/index"],
-      "@remix-gospel-stack/database/*": ["../../packages/database/src/*"],
-      "@remix-gospel-stack/database": ["../../packages/database/src/index"],
-      "@remix-gospel-stack/internal-nobuild": ["../../packages/internal-nobuild/src/index"],
-      "@remix-gospel-stack/internal-nobuild/*": ["../../packages/internal-nobuild/src/*"],
+      "~/*": [
+        "./app/*"
+      ],
+      "@remix-gospel-stack/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@remix-gospel-stack/ui": [
+        "../../packages/ui/src/index"
+      ],
+      "@remix-gospel-stack/business/*": [
+        "../../packages/business/src/*"
+      ],
+      "@remix-gospel-stack/business": [
+        "../../packages/business/src/index"
+      ],
+      "@remix-gospel-stack/database/*": [
+        "../../packages/database/src/*"
+      ],
+      "@remix-gospel-stack/database": [
+        "../../packages/database/src/index"
+      ],
+      "@remix-gospel-stack/internal-nobuild": [
+        "../../packages/internal-nobuild/src/index"
+      ],
+      "@remix-gospel-stack/internal-nobuild/*": [
+        "../../packages/internal-nobuild/src/*"
+      ]
     },
-
-    // Remix takes care of building everything in `remix build`.
     "noEmit": true
-  },
-  // "references": [{ "path": "../../packages/ui/tsconfig.json" }],
+  }
 }

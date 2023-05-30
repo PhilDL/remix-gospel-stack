@@ -54,7 +54,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           .filter((p) => p.name === answers.package)[0].path;
         try {
           const mod = await loadFile<{ default: AppConfig }>(
-            "./apps/remix-app/remix.config.js"
+            "./apps/remix-app/remix.config.mjs"
           );
 
           if (
@@ -71,8 +71,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             );
           }
           // @ts-ignore
-          await writeFile(mod, "./apps/remix-app/remix.config.js");
-          return "updated remix.config.js";
+          await writeFile(mod, "./apps/remix-app/remix.config.mjs");
+          return "updated remix.config.mjs";
         } catch (err) {
           console.log(err);
           return "failed";

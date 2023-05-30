@@ -29,10 +29,10 @@
     "/public/build"
   ],
   "dependencies": {
+    "@remix-gospel-stack/ui": "workspace:*",
     "@remix-gospel-stack/internal-nobuild": "workspace:*",
     "@remix-gospel-stack/business": "workspace:*",
     "@remix-gospel-stack/database": "workspace:*",
-    "@remix-gospel-stack/ui": "workspace:*",
     "@remix-run/express": "^1.16.1",
     "@remix-run/node": "^1.16.1",
     "@remix-run/react": "^1.16.1",
