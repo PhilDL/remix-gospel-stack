@@ -1,5 +1,7 @@
-/** @type {import('@remix-run/dev').AppConfig} */
-module.exports = {
+/**
+ * @type {import('@remix-run/dev').AppConfig}
+ */
+export default {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
@@ -11,14 +13,12 @@ module.exports = {
     "@remix-gospel-stack/business",
     "@remix-gospel-stack/ui",
   ],
-  watchPaths: async () => {
-    return [
-      "../../packages/ui/src/**/*",
-      "../../packages/business/src/**/*",
-      "../../packages/database/src/**/*",
-      "../../packages/internal-nobuild/src/**/*",
-    ];
-  },
+  watchPaths: [
+    "../../packages/ui/src/**/*",
+    "../../packages/business/src/**/*",
+    "../../packages/database/src/**/*",
+    "../../packages/internal-nobuild/src/**/*",
+  ],
   future: {
     v2_routeConvention: true,
     v2_normalizeFormMethod: true,

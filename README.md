@@ -86,6 +86,16 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   pnpm run dev --filter=remix-app
   ```
 
+## Create packages
+
+### Internal package
+
+```bash
+turbo gen workspace --name @remix-gospel-stack/foobarbaz --type package --copy
+```
+
+Then follow the prompts
+
 ## Tests, Typechecks, Lint, Install packages...
 
 Check the `turbo.json` file to see the available pipelines.

@@ -12,8 +12,8 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config-vite": "*",
-    "@remix-gospel-stack/tsconfig": "*",
+    "@remix-gospel-stack/eslint-config-vite": "workspace:*",
+    "@remix-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "^5.0.1",
     "typescript": "^5.0.4",
     "vite": "^4.3.9",
