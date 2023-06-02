@@ -1,5 +1,5 @@
 {
-  "name": "remix-gospel-stack",
+  "name": "@remix-gospel-stack/root",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -44,6 +44,7 @@
     "magicast": "^0.2.8",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
+    "replace-in-file": "^7.0.1",
     "turbo": "^1.9.9",
     "typescript": "^5.0.4"
   },

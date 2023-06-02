@@ -7,7 +7,7 @@ volumes:
 services:
   db:
     image: postgres:latest
-    container_name: remix_gospel_postgres
+    container_name: "remix-gospel-stack-postgres"
     restart: always
     environment:
       - POSTGRES_USER=postgres

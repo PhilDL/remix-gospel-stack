@@ -3,9 +3,16 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "public/build/**", "build/**", "app/styles/tailwind.css", ".cache"]
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "public/build/**",
+        "build/**",
+        "app/styles/tailwind.css",
+        ".cache"
+      ]
     },
-    "remix-app#start": {
+    "@remix-gospel-stack/remix-app#start": {
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },
@@ -67,5 +74,11 @@
     }
   },
   "globalDependencies": [".env"],
-  "globalEnv": ["NODE_ENV", "REMIX_APP_PORT", "FLY_REGION", "PRIMARY_REGION", "CI"]
+  "globalEnv": [
+    "NODE_ENV",
+    "REMIX_APP_PORT",
+    "FLY_REGION",
+    "PRIMARY_REGION",
+    "CI"
+  ]
 }

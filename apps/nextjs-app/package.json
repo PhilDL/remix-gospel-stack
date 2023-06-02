@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "nextjs-app",
+  "name": "@remix-gospel-stack/nextjs-app",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev -p 3001",

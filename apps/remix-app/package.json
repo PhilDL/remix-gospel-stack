@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "remix-app",
+  "name": "@remix-gospel-stack/remix-app",
   "version": "1.0.0",
   "sideEffects": false,
   "scripts": {

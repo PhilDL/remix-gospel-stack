@@ -20,13 +20,13 @@ This starts your app in development mode, which will purge the server require ca
 Buil thi App for production:
 
 ```sh
-pnpm run build --filter=remix-app...
+pnpm run build --filter=@remix-gospel-stack/remix-app...
 ```
 
 Then run the app in production mode:
 
 ```sh
-pnpm run start --filter=remix-app
+pnpm run start --filter=@remix-gospel-stack/remix-app
 ```
 
 Now you'll need to pick a host to deploy it to.
