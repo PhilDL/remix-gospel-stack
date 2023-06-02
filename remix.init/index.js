@@ -70,16 +70,21 @@ const main = async ({ isTypeScript, rootDirectory }) => {
   cd ${rootDirectory}
 
 - Start the database:
-  pnpm run docker
+  pnpm run docker:db
 
 - Run setup (this generate prisma client and seed db):
   pnpm run setup
 
-- Run the first build (this generates the server you will run):
+- Build all the packages and apps,:
   pnpm run build
 
-- You're now ready to go
+- Run all the apps/packages dev scripts concurrently:
   pnpm run dev
+
+OR
+
+- Run only the Remix app:
+  pnpm run dev --filter=${ORG_NAME}/remix-app
     `.trim()
   );
 };

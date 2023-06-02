@@ -89,12 +89,12 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   ```
 - Run the first build (with dependencies via the `...` option)
   ```bash
-  pnpm run build --filter=remix-app...
+  pnpm run build --filter=@remix-gospel-stack/remix-app...
   ```
   **Running simply `pnpm run build` will build everything, including the NextJS app.**
 - Run the Remix dev server
   ```bash
-  pnpm run dev --filter=remix-app
+  pnpm run dev --filter=@remix-gospel-stack/remix-app
   ```
 
 ## Create packages
@@ -113,7 +113,7 @@ Check the `turbo.json` file to see the available pipelines.
 
 - Run the Cypress tests and Dev
   ```bash
-  pnpm run test:e2e:dev --filter=remix-app
+  pnpm run test:e2e:dev --filter=@remix-gospel-stack/remix-app
   ```
 - Lint everything
   ```bash
