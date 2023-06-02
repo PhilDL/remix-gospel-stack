@@ -151,7 +151,7 @@ jobs:
         run: pnpm run db:migrate:force
 
       - name: ⚙️ Build
-        run: pnpm run build --filter=remix-app...
+        run: pnpm run build --filter=@remix-gospel-stack/remix-app...
 
       - name: Cypress PNPM Patch
         run: cp pnpm-lock.yaml package-lock.json
@@ -160,7 +160,7 @@ jobs:
         uses: cypress-io/github-action@v3
         with:
           install: false
-          start: pnpm run start --filter=remix-app
+          start: pnpm run start --filter=@remix-gospel-stack/remix-app
           wait-on: "http://localhost:8811"
           working-directory: apps/remix-app
         env:
