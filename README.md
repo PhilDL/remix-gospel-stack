@@ -4,12 +4,23 @@
 
 Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, TailwindCSS and Tsyringe for DI.
 
+```bash
+pnpx create-remix@latest --install --typescript --template https://github.com/PhilDL/remix-gospel-stack
+```
+
+> :minidisc: This repository is opiniated:
+>
+> - **TypeScript** only, if you choose JavaScript nothing will happen.
+> - Only compatible with **pnpm** package manager to handle monorepo workspaces.
+
+### (Alternative) Cloning the repository
+
 ```
 git clone git@github.com:PhilDL/remix-gospel-stack.git
 cd remix-gospel-stack
+pnpm add -w @remix-run/dev
+pnpm remix init
 ```
-
-> :minidisc: Unfortunately due to the fact that `pnpx create-remix` cli replace the `"*"` in your package.json, it messes up the monorepo workspace package references by replacing them to the current Remix version, meaning that **you can't** use this template with `create-remix` and the `--template` flag. So for now you will have to clone and install.
 
 ## What's in the stack
 

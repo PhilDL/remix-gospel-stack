@@ -13,10 +13,8 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
 const main = async ({ isTypeScript, rootDirectory }) => {
   if (!isTypeScript) {
-    // not throwing an error because the stack trace doesn't do anything to help the user
-    console.log(
-      `❌ Sorry, this template only supports TypeScript. Please run the command again and select "TypeScript"`
-    );
+    // isTypeScript is always false here... not sure why.
+    console.log(`This template only supports TypeScript`);
   }
 
   const appNameRegex = escapeRegExp("remix-gospel-stack");
