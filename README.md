@@ -4,6 +4,8 @@
 
 Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, TailwindCSS and Tsyringe for DI.
 
+### Quickstart (recommended)
+
 ```bash
 pnpx create-remix@latest --install --typescript --template https://github.com/PhilDL/remix-gospel-stack
 ```
@@ -15,7 +17,7 @@ pnpx create-remix@latest --install --typescript --template https://github.com/Ph
 
 ### (Alternative) Cloning the repository
 
-```
+```bash
 git clone git@github.com:PhilDL/remix-gospel-stack.git
 cd remix-gospel-stack
 pnpm add -w @remix-run/dev
