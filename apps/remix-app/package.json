@@ -5,12 +5,10 @@
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
-    "build:css": "tailwindcss -m -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
-    "dev": "concurrently \"pnpm run dev:build\" \"pnpm run dev:css\" \"pnpm run dev:remix\" \"pnpm run dev:server\"",
+    "dev": "concurrently \"pnpm run dev:build\" \"pnpm run dev:remix\" \"pnpm run dev:server\"",
     "dev:build": "cross-env NODE_ENV=development esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --watch",
-    "dev:css": "tailwindcss -w -i ./app/styles/app.css -o ./app/styles/tailwind.css",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
     "start": "cross-env NODE_ENV=production node ./build/server.js",

@@ -7,5 +7,3 @@ node_modules
 
 /cypress/screenshots
 /cypress/videos
-
-/app/styles/tailwind.css
