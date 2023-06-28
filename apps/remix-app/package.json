@@ -6,11 +6,10 @@
   "scripts": {
     "build": "run-s build:*",
     "build:remix": "remix build",
-    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
+    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents",
     "dev": "concurrently \"pnpm run dev:build\" \"pnpm run dev:remix\" \"pnpm run dev:server\"",
-    "dev:build": "cross-env NODE_ENV=development esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --watch",
-    "dev:remix": "cross-env NODE_ENV=development remix watch",
-    "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config ./build/server.js",
+    "dev:build": "cross-env NODE_ENV=development esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents --watch",
+    "dev:server": "remix dev --no-restart -c 'node ./build/server.js'",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "docker:build": "cd ../.. & docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -39,7 +38,8 @@
     "express": "^4.18.2",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "chokidar": "^3.5.3"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
