@@ -1,5 +1,7 @@
 import path from "path";
 import { createRequestHandler } from "@remix-run/express";
+import { broadcastDevReady } from "@remix-run/node";
+import chokidar from "chokidar";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
@@ -67,39 +69,54 @@ app.use(morgan("tiny"));
 
 const MODE = process.env.NODE_ENV;
 const BUILD_DIR = path.join(process.cwd(), "build");
+let build = require(BUILD_DIR);
 
 app.all(
   "*",
   MODE === "production"
-    ? createRequestHandler({ build: require(BUILD_DIR) })
-    : (...args) => {
-        purgeRequireCache();
-        const requestHandler = createRequestHandler({
-          build: require(BUILD_DIR),
-          mode: MODE,
-        });
-        return requestHandler(...args);
-      }
+    ? createRequestHandler({ build: require(BUILD_DIR), mode: MODE })
+    : createDevRequestHandler()
 );
 
 const port = process.env.REMIX_APP_PORT || 3000;
 
 app.listen(port, () => {
   // require the built app so we're ready when the first request comes in
-  require(BUILD_DIR);
+  if (process.env.NODE_ENV === "development") {
+    broadcastDevReady(build);
+  }
   console.log(`✅ app ready: http://localhost:${port}`);
 });
 
-function purgeRequireCache() {
-  // purge require cache on requests for "server side HMR" this won't let
-  // you have in-memory objects between requests in development,
-  // alternatively you can set up nodemon/pm2-dev to restart the server on
-  // file changes, we prefer the DX of this though, so we've included it
-  // for you by default
-  for (const key in require.cache) {
-    if (key.startsWith(BUILD_DIR)) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete require.cache[key];
+function createDevRequestHandler() {
+  const watcher = chokidar.watch(BUILD_DIR, { ignoreInitial: true });
+
+  watcher.on("all", async () => {
+    // 1. purge require cache && load updated server build
+    for (const key in require.cache) {
+      if (key.startsWith(BUILD_DIR)) {
+        delete require.cache[key];
+      }
     }
-  }
+    build = require(BUILD_DIR);
+
+    // 2. tell dev server that this app server is now ready
+    broadcastDevReady(build);
+  });
+
+  return async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      //
+      return createRequestHandler({
+        build: await build,
+        mode: "development",
+      })(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
