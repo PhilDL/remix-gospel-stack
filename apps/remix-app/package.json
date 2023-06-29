@@ -7,9 +7,8 @@
     "build": "run-s build:*",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents",
-    "dev": "concurrently \"pnpm run dev:build\" \"pnpm run dev:remix\" \"pnpm run dev:server\"",
-    "dev:build": "cross-env NODE_ENV=development esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents --watch",
-    "dev:server": "remix dev --no-restart -c 'node ./build/server.js'",
+    "dev": "remix dev -c \"npm run dev:server\" --no-restart",
+    "dev:server": "cross-env nodemon --exec 'ts-node --require dotenv/config ./server.ts' --watch ./server.ts",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "docker:build": "cd ../.. & docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -80,7 +79,8 @@
     "typescript": "^5.1.5",
     "vite": "^4.3.9",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.32.2"
+    "vitest": "^0.32.2",
+    "ts-node": "^10.9.1"
   },
   "engines": {
     "node": ">=18"

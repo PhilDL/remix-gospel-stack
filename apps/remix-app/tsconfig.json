@@ -8,6 +8,9 @@
     "**/*.ts",
     "**/*.tsx"
   ],
+  "ts-node": {
+		"swc": true
+	},
   "compilerOptions": {
     "lib": [
       "DOM",
