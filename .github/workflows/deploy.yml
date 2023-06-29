@@ -63,7 +63,7 @@ jobs:
           cache: "pnpm"
 
       - name: 📥 Download deps
-        run: pnpm install --ignore-scripts
+        run: pnpm install
 
       - name: 🛠 Setup PrismaClient
         run: npm run generate
