@@ -66,10 +66,10 @@ jobs:
         run: pnpm install
 
       - name: 🛠 Setup PrismaClient
-        run: npm run generate
+        run: pnpm generate
 
       - name: 🔎 Type check
-        run: pnpm run typecheck
+        run: pnpm typecheck
 
   vitest:
     name: ⚡ Vitest
