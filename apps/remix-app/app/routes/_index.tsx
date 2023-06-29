@@ -12,7 +12,7 @@ import {
 } from "@remix-gospel-stack/internal-nobuild";
 import { Button, helloFromUILibrary } from "@remix-gospel-stack/ui";
 
-import Service, { helloWorld } from "~/services.server";
+import Service, { helloWorld } from "~/services.server.ts";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();

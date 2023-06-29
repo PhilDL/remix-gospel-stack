@@ -3,13 +3,13 @@
   "name": "@remix-gospel-stack/remix-app",
   "version": "1.0.0",
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "run-s build:*",
     "build:remix": "remix build",
-    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents",
-    "dev": "remix dev -c \"npm run dev:server\" --no-restart",
-    "dev:server": "cross-env nodemon --exec 'ts-node --require dotenv/config ./server.ts' --watch ./server.ts",
-    "start": "cross-env NODE_ENV=production node ./build/server.js",
+    "build:server": "tsx ./other/build-server.ts",
+    "dev": "remix dev -c \"node ./server/dev-server.js\" --no-restart",
+    "start": "cross-env NODE_ENV=production node .",
     "docker:build": "cd ../.. & docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "test": "vitest run",
@@ -34,11 +34,17 @@
     "@remix-run/react": "^1.18.0",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "chokidar": "^3.5.3"
+    "chokidar": "^3.5.3",
+    "close-with-grace": "^1.2.0",
+    "chalk": "^5.2.0",
+    "get-port": "^7.0.0",
+    "address": "^1.2.2",
+    "execa": "^7.1.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
@@ -61,12 +67,13 @@
     "@types/node": "^20.3.2",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@types/fs-extra": "^11.0.1",
+    "@types/glob": "8.1.0",
     "@vitejs/plugin-react": "^4.0.1",
     "@vitest/coverage-c8": "^0.32.2",
     "autoprefixer": "^10.4.14",
     "concurrently": "^8.2.0",
     "cypress": "^12.16.0",
-    "dotenv": "^16.3.1",
     "esbuild": "^0.18.10",
     "eslint": "^8.43.0",
     "eslint-plugin-cypress": "^2.13.3",
@@ -81,9 +88,12 @@
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.32.2",
     "ts-node": "^10.9.1",
-    "postcss-load-config": "^4.0.1"
+    "postcss-load-config": "^4.0.1",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.0",
+    "tsx": "^3.12.7"
   },
   "engines": {
-    "node": ">=18"
+    "node": "18"
   }
 }

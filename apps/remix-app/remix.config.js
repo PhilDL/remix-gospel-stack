@@ -26,5 +26,5 @@ export default {
     v2_headers: true,
     v2_dev: true,
   },
-  serverModuleFormat: "cjs",
+  serverModuleFormat: "esm",
 };

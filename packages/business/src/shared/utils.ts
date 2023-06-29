@@ -1,3 +1,3 @@
 export function helloWorld(name?: string) {
-  return `From the server to ${name}`;
+  return `Great answer from the server to ${name}`;
 }
