@@ -12,6 +12,7 @@ kill_timeout = "5s"
 [env]
   PRIMARY_REGION = "cdg"
   REMIX_APP_PORT = "8080"
+  PORT = "8080"
 
 [[services]]
   protocol = "tcp"
