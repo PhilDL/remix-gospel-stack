@@ -1,9 +1,7 @@
-
 import type { PrismaClient } from "@remix-gospel-stack/database";
 
-import type { User } from "../shared/dtos";
-import type { UserRepository } from "./iuser-repository";
-
+import type { User } from "../shared/dtos.ts";
+import type { UserRepository } from "./iuser-repository.ts";
 
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaClient) {

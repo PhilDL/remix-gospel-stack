@@ -1,5 +1,5 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node16.json",
+  "extends": "@remix-gospel-stack/tsconfig/node18.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "exclude": ["node_modules"]
 }

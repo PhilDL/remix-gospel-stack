@@ -67,7 +67,7 @@ app.use(
 // more aggressive with this caching.
 app.use(express.static("public", { maxAge: "1h" }));
 
-morgan.token("url", (req, res) => decodeURIComponent(req.url ?? ""));
+morgan.token("url", (req, _res) => decodeURIComponent(req.url ?? ""));
 app.use(morgan("tiny"));
 
 app.use((_, res, next) => {

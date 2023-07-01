@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist/**"
   ],
@@ -20,7 +21,7 @@
     "tiny-invariant": "^1.3.1"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config-vite": "workspace:*",
+    "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^20.3.2",
     "rimraf": "^5.0.1",

@@ -38,9 +38,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
-    "@remix-gospel-stack/eslint-config": "workspace:*",
     "@turbo/gen": "^1.10.6",
-    "eslint": "^8.43.0",
     "json5": "^2.2.3",
     "magicast": "^0.2.9",
     "prettier": "^2.8.8",

@@ -1,12 +1,5 @@
 {
-    "compilerOptions": {
-      "lib": ["dom", "ES2015"],
-      "module": "ESNext",
-      "target": "ES6",
-      "jsx": "react-jsx",
-    },
-    "extends": "@remix-gospel-stack/tsconfig/react-library.json",
-    "include": ["src"],
-    "exclude": ["dist", "build", "node_modules"]
-  }
-  
+  "extends": "@remix-gospel-stack/tsconfig/react.json",
+  "include": [".eslintrc.js", ".prettierrc.js", "src", "*.ts", "*.cjs"],
+  "exclude": ["node_modules"]
+}

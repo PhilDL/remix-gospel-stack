@@ -3,7 +3,7 @@ import { describe } from "vitest";
 import {
   lookUpSalesPersonForZipcode,
   type SalesPersonDirectory,
-} from "./sales-person";
+} from "./sales-person.ts";
 
 describe("Dummy test", () => {
   describe("lookUpSalesPersonForZipcode", () => {

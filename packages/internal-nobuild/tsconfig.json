@@ -1,10 +1,10 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node16.json",
+  "extends": "@remix-gospel-stack/tsconfig/node18.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2021"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vitest/globals"],
     "isolatedModules": true,
     "esModuleInterop": true,

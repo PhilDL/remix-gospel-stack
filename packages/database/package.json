@@ -2,6 +2,7 @@
   "name": "@remix-gospel-stack/database",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -28,7 +29,7 @@
     "@prisma/client": "^4.16.1"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config-vite": "workspace:*",
+    "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^20.3.2",
     "prisma": "^4.16.1",

@@ -18,6 +18,7 @@ export default {
     "../../packages/internal-nobuild/src/**/*",
   ],
   tailwind: true,
+  postcss: true,
   future: {
     v2_routeConvention: true,
     v2_normalizeFormMethod: true,

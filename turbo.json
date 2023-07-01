@@ -79,6 +79,8 @@
     "REMIX_APP_PORT",
     "FLY_REGION",
     "PRIMARY_REGION",
-    "CI"
+    "CI",
+    "PORT",
+    "MOCKS"
   ]
 }
