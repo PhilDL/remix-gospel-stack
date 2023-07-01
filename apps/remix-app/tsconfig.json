@@ -1,12 +1,9 @@
 {
-  "exclude": [
-    "./cypress",
-    "./cypress.config.ts"
-  ],
   "include": [
     "remix.env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "./tests/setup/setup-test-env.ts"
   ],
   "ts-node": {
 		"swc": true
@@ -15,21 +12,24 @@
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ES2019"
+      "ES2022"
     ],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "module": "nodenext",
+		"moduleResolution": "nodenext",
     "resolveJsonModule": true,
-    "target": "ES2019",
+    "target": "ES2022",
     "strict": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "allowImportingTsExtensions": true,
     "baseUrl": ".",
+    "typeRoots": ["./types", "./node_modules/@types"],
     "paths": {
       "~/*": [
         "./app/*"
@@ -57,7 +57,10 @@
       ],
       "@remix-gospel-stack/internal-nobuild/*": [
         "../../packages/internal-nobuild/src/*"
-      ]
+      ],
+      "@remix-gospel-stack/tailwind-config": [
+        "../../config/tailwind-config/src/index"
+      ],
     },
     "noEmit": true
   }

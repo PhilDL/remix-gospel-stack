@@ -1,10 +1,11 @@
-import { container } from "./container";
-import { UserRepository } from "./repositories/iuser-repository";
+import { prisma } from "@remix-gospel-stack/database";
+
+import { PrismaUserRepository } from "./repositories/user-repository.ts";
 
 export const Service = {
-  userRepository: container.resolve<UserRepository>("UserRepository"),
+  userRepository: new PrismaUserRepository(prisma),
 };
 
-export type { User } from "./shared/dtos";
+export type { User } from "./shared/dtos.ts";
 
-export { helloWorld } from "./shared/utils";
+export { helloWorld } from "./shared/utils.ts";

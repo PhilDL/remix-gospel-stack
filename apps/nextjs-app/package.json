@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@remix-gospel-stack/database": "workspace:*",
-    "@remix-gospel-stack/eslint-config-next": "workspace:*",
+    "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^20.3.2",
     "@types/react": "^18.2.14",

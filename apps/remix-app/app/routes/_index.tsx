@@ -10,11 +10,19 @@ import {
   lookUpSalesPersonForZipcode,
   type SalesPersonDirectory,
 } from "@remix-gospel-stack/internal-nobuild";
-import { Button, helloFromUILibrary } from "@remix-gospel-stack/ui";
+import { Button } from "@remix-gospel-stack/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@remix-gospel-stack/ui/card";
+import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
-import Service, { helloWorld } from "~/services.server";
+import Service, { helloWorld } from "~/services.server.ts";
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request: _request }: LoaderArgs) => {
   const users = await Service.userRepository.getUsers();
   return json({ users, serverValue: helloWorld("Remix Turborepo") });
 };
@@ -176,112 +184,123 @@ export default function Index() {
             ))}
           </div>
         </div>
-        <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-8 px-4 py-2 sm:px-6 lg:px-8">
-          <div>
-            <h2>
-              <span className="block text-lg font-semibold text-orange-600">
+        <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-8 px-4 py-2 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Server packages</CardTitle>
+              <CardDescription>
+                {" "}
                 packages/business, packages/database
-              </span>
-              <span className="mt-1 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Server packages
-              </span>
-            </h2>
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Display prisma users from the business function{" "}
-              <code className="bg-gray-200 px-1 text-orange-600">
-                Service.userRepository.getUsers()
-              </code>
-              .
-            </h3>
-            <div className="prose prose-lg mt-4">
-              <blockquote className="prose">
-                {users.length > 0 ? (
-                  <React.Fragment>
-                    {users.map((user) => (
-                      <div key={user.id}>{JSON.stringify(user)}</div>
-                    ))}
-                  </React.Fragment>
-                ) : (
-                  <div>No user in the database</div>
-                )}
-              </blockquote>
-            </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Display prisma users from the business function{" "}
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                  Service.userRepository.getUsers()
+                </code>
+                .
+              </h4>
+              <div className="prose prose-lg mt-4">
+                <blockquote className="prose">
+                  {users.length > 0 ? (
+                    <React.Fragment>
+                      {users.map((user) => (
+                        <div key={user.id}>{JSON.stringify(user)}</div>
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    <div>No user in the database</div>
+                  )}
+                </blockquote>
+              </div>
 
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Regular server value passed from Loader here{" "}
-              <code className="bg-gray-200 px-1 text-orange-600">
-                serverValue
-              </code>
-              :
-            </h3>
-            <div className="prose prose-lg mt-4">
-              <blockquote className="prose">
-                <p>{serverValue}</p>
-              </blockquote>
-            </div>
-          </div>
-          <div>
-            <h2 className="mt-4">
-              <span className="block text-lg font-semibold text-orange-600">
-                packages/ui
-              </span>
-              <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Ui packages
-              </span>
-            </h2>
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              This is an example Button Component from "ui" packages
-            </h3>
-            <div className="mx-auto flex max-w-sm flex-col items-start sm:flex sm:max-w-none">
-              <Button />
-            </div>
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Result of function{" "}
-              <code className="bg-gray-200 px-1 text-orange-600">
-                helloFromUILibrary
-              </code>
-              :
-            </h3>
-            <div className="prose prose-lg mt-4">
-              <blockquote className="prose">
-                <p>{helloFromUILibrary()}</p>
-              </blockquote>
-            </div>
-          </div>
-          <div>
-            <h2 className="mt-4">
-              <span className="block text-lg font-semibold text-orange-600">
-                packages/internal-nobuild
-              </span>
-              <span className="mt-2 block text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Internal TS Package with no build step
-              </span>
-            </h2>
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Result of function{" "}
-              <code className="text-md bg-gray-200 px-1 text-orange-600">
-                lookUpSalesPersonForZipcode("97", salesPersons)
-              </code>
-              :
-            </h3>
-            <div className="prose prose-lg mt-4">
-              <blockquote className="prose">
-                <p>{lookUpSalesPersonForZipcode("974", salesPersons)?.email}</p>
-              </blockquote>
-            </div>
-            <h3 className="mt-3 block text-lg font-semibold text-gray-600">
-              Result of function{" "}
-              <code className="text-md bg-gray-200 px-1 text-orange-600">
-                lookUpSalesPersonForZipcode("63", salesPersons)
-              </code>
-              :
-            </h3>
-            <div className="prose prose-lg mt-4">
-              <blockquote className="prose">
-                <p>{lookUpSalesPersonForZipcode("63", salesPersons)?.email}</p>
-              </blockquote>
-            </div>
-          </div>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Regular server value passed from Loader here{" "}
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                  serverValue
+                </code>
+                :
+              </h4>
+              <div className="prose prose-lg mt-4">
+                <blockquote className="prose">
+                  <p>{serverValue}</p>
+                </blockquote>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>UI package</CardTitle>
+              <CardDescription>packages/ui</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                This is an example Button Component from "ui" packages using
+                shadcn/ui
+              </h4>
+              <div className="mx-auto flex max-w-sm flex-row items-start gap-3 sm:flex sm:max-w-none">
+                <Button size="sm">Default/Primary</Button>
+                <Button size="sm" variant={"secondary"}>
+                  Secondary
+                </Button>
+                <Button size="sm" variant={"outline"}>
+                  Outline
+                </Button>
+                <Button size="sm" variant={"ghost"}>
+                  Ghost
+                </Button>
+              </div>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Result of function{" "}
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                  helloFromUILibrary
+                </code>
+                :
+              </h4>
+              <div className="prose prose-lg mt-4">
+                <blockquote className="prose">
+                  <p>Todo</p>
+                </blockquote>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Internal TS Package with no build step</CardTitle>
+              <CardDescription>packages/internal-nobuild</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Result of function{" "}
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                  lookUpSalesPersonForZipcode("97", salesPersons)
+                </code>
+                :
+              </h4>
+              <div className="prose prose-lg mt-4">
+                <blockquote className="prose">
+                  <p>
+                    {lookUpSalesPersonForZipcode("974", salesPersons)?.email}
+                  </p>
+                </blockquote>
+              </div>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Result of function{" "}
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                  lookUpSalesPersonForZipcode("63", salesPersons)
+                </code>
+                :
+              </h4>
+              <div className="prose prose-lg mt-4">
+                <blockquote className="prose">
+                  <p>
+                    {lookUpSalesPersonForZipcode("63", salesPersons)?.email}
+                  </p>
+                </blockquote>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </main>

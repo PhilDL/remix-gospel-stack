@@ -1,3 +1,3 @@
-export * from "./client";
+export * from "./client.ts";
 
-export type { PrismaClient } from "./client";
+export type { PrismaClient } from "./client.ts";

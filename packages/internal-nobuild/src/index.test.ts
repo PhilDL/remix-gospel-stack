@@ -1,6 +1,6 @@
 import { describe } from "vitest";
 
-import { internalFunc } from ".";
+import { internalFunc } from "./index.ts";
 
 describe("Dummy test", () => {
   describe("internalFunc", () => {

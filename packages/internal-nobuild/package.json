@@ -4,6 +4,7 @@
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
+  "type": "module",
   "scripts": {
     "clean": "rimraf .turbo node_modules dist",
     "lint": "eslint ./src --fix",
@@ -12,7 +13,7 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config-vite": "workspace:*",
+    "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "^5.0.1",
     "typescript": "^5.1.5",
