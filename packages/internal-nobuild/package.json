@@ -16,7 +16,7 @@
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "^5.0.1",
-    "typescript": "^5.1.5",
+    "typescript": "^5.1.6",
     "vite": "^4.3.9",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.32.2"
