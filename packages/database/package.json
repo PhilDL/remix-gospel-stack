@@ -26,16 +26,16 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^4.16.1"
+    "@prisma/client": "^4.16.2"
   },
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^20.3.2",
-    "prisma": "^4.16.1",
+    "@types/node": "^20.3.3",
+    "prisma": "^4.16.2",
     "rimraf": "^5.0.1",
     "tsup": "^7.1.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.5"
+    "typescript": "^5.1.6"
   }
 }

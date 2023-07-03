@@ -2,7 +2,7 @@
 
 ![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, TailwindCSS and Tsyringe for DI.
+Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
 
 ### Quickstart (recommended)
 
@@ -33,15 +33,15 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 ### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
 
 - `apps` Folder containing the applications
-  - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app
+  - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app in ESM.
   - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
 
+  - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
   - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
-  - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using [Tsyringe](https://github.com/microsoft/tsyringe) to inject the Prisma `database` as a dependency and using a _repository pattern_ like example.
+  - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
   - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
     Remix uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
-  - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a dummy React UI library (which contains a single `<Button>` component), build with tsup.
 
 - `config-packages`:
   - Eslint packages with different preset configs.
@@ -54,7 +54,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 - Database [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
 - Remix App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy the Remix App on merge to production and staging environments.
-- End-to-end testing with [Cypress](https://cypress.io) in the Remix App
+- End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the Remix App
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com) inside the different packages.
 - Code formatting with [Prettier](https://prettier.io)
 - Static Types with [TypeScript](https://typescriptlang.org)

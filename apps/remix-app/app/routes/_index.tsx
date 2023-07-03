@@ -139,9 +139,9 @@ export default function Index() {
                 href: "https://tailwindcss.com",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",
-                alt: "Cypress",
-                href: "https://www.cypress.io",
+                src: "https://raw.githubusercontent.com/github/explore/60cd2530141f67f07a947fa2d310c482e287e387/topics/playwright/playwright.png",
+                alt: "Playwright",
+                href: "https://github.com/microsoft/playwright",
               },
               {
                 src: "https://user-images.githubusercontent.com/4941205/192078609-3f08928d-2811-4a33-ab32-062a77836d57.svg",

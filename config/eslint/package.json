@@ -9,16 +9,16 @@
     "./next.js"
   ],
   "dependencies": {
-    "@remix-run/eslint-config": "^1.18.0",
+    "@remix-run/eslint-config": "^1.18.1",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
+    "eslint-config-next": "^13.4.7",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-config-turbo": "^1.10.6",
-    "eslint-plugin-tailwindcss": "^3.13.0",
-    "eslint-config-next": "^13.4.7"
+    "eslint-config-turbo": "^1.10.7",
+    "eslint-plugin-tailwindcss": "^3.13.0"
   },
   "devDependencies": {
-    "eslint": "^8.43.0",
-    "typescript": "^5.1.5"
+    "eslint": "^8.44.0",
+    "typescript": "^5.1.6"
   }
 }
