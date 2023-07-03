@@ -236,6 +236,12 @@ Learn more about the power of Turborepo:
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
 
+## Thanks
+
+- The ESM setup is heavily inspired by the [epic-stack](https://github.com/epicweb-dev/epic-stack) by [@kentcdodds](https://github.com/kentcdodds)
+- Thanks to [@shadcn](https://github.com/shadcn) for the amazing [component library](https://github.com/shadcn/ui).
+- The UI integration and some good practices were shamelessly borrowed from [@juliusmarminge](https://github.com/juliusmarminge) project [acme-corp monorepo](https://github.com/juliusmarminge/acme-corp)
+
 ## Support
 
 If you found the template useful, please consider giving it a [Star ⭐](https://github.com/PhilDL/remix-gospel-stack). Thanks you!
