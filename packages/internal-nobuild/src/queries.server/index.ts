@@ -1,6 +1,9 @@
 import { SalesPersonDirectory } from "../types.ts";
 
+console.log("This console log should never be visible in the browser.");
+
 export const getSalesPersonDirectory = (): SalesPersonDirectory => {
+  console.log("This is also server only");
   return [
     {
       name: "mark",

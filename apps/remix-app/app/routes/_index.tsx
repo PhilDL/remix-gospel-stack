@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
-import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/server";
+import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
 import { Button } from "@remix-gospel-stack/ui/button";
 import {
   Card,

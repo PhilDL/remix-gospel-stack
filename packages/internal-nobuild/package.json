@@ -25,9 +25,9 @@
       "import": "./src/index.ts",
       "types": "./src/types.ts"
     },
-    "./server": {
-      "import": "./src/server/index.ts",
-      "types": "./src/server/index.ts"
+    "./queries.server": {
+      "import": "./src/queries.server/index.ts",
+      "types": "./src/queries.server/index.ts"
     },
     "./client": {
       "import": "./src/client/index.ts",
