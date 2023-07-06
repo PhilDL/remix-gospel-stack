@@ -2,8 +2,6 @@
   "name": "@remix-gospel-stack/internal-nobuild",
   "version": "0.0.1",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "type": "module",
   "scripts": {
     "clean": "rimraf .turbo node_modules dist",
@@ -20,5 +18,23 @@
     "vite": "^4.3.9",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.32.2"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/types.ts"
+    },
+    "./server": {
+      "import": "./src/server/index.ts",
+      "types": "./src/server/index.ts"
+    },
+    "./client": {
+      "import": "./src/client/index.ts",
+      "types": "./src/client/index.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {}
   }
 }
