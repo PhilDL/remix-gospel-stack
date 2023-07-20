@@ -16,7 +16,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@remix-gospel-stack/ui/card";
-import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
+
+// import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
 import Service, { helloWorld } from "~/services.server.ts";
 
