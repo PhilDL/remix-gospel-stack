@@ -2,10 +2,10 @@
   "name": "@remix-gospel-stack/internal-nobuild",
   "version": "0.0.1",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "type": "module",
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf .turbo node_modules dist",
     "lint": "eslint ./src --fix",
     "test": "vitest run",
@@ -16,9 +16,31 @@
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "^5.0.1",
+    "tsup": "^7.1.0",
     "typescript": "^5.1.6",
-    "vite": "^4.3.9",
+    "vite": "^4.4.4",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.32.2"
+    "vitest": "^0.32.4"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/types.ts",
+      "default": "./dist/index.js"
+    },
+    "./queries.server": {
+      "import": "./src/queries.server/index.ts",
+      "types": "./src/queries.server/index.ts",
+      "default": "./dist/queries.server/index.js"
+    },
+    "./client": {
+      "import": "./src/client/index.ts",
+      "types": "./src/client/index.ts",
+      "default": "./dist/client/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {}
   }
 }
