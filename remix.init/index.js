@@ -196,6 +196,7 @@ const renameAll = async ({
       path.join(rootDirectory, "apps", "**", "remix.config.js"),
       path.join(rootDirectory, "apps", "**", "Dockerfile"),
       path.join(rootDirectory, "apps", "**", ".eslintrc.cjs"),
+      path.join(rootDirectory, "apps", "**", "README.md"),
     ],
     from: new RegExp(orgNameRegex, "g"),
     to: ORG_NAME,
