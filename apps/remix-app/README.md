@@ -7,17 +7,23 @@ from the root of your Monorepo.
 
 ## Development
 
+> **Warning**
+> All the following commands should be launched from the **monorepo root directory**
+
 Start the Remix development asset server and the Express server by running:
 
 ```sh
-pnpm run dev
+pnpm run dev --filter=@remix-gospel-stack/remix-app...
 ```
 
 This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
 
 ## Deployment
 
-Buil thi App for production:
+> **Warning**
+> All the following commands should be launched from the **monorepo root directory**
+
+Build App for production:
 
 ```sh
 pnpm run build --filter=@remix-gospel-stack/remix-app...
