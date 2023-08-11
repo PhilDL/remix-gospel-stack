@@ -85,7 +85,7 @@ OR
 
 - Run only the Remix app:
   pnpm run dev --filter=${ORG_NAME}/remix-app
-    `.trim()
+    `.trim(),
   );
 };
 
@@ -101,18 +101,18 @@ const rootConfigsRename = async ({
     rootDirectory,
     "apps",
     "remix-app",
-    "fly.toml"
+    "fly.toml",
   );
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
   const ENV_PATH = path.join(rootDirectory, ".env");
   const PKG_PATH = path.join(rootDirectory, "package.json");
-  const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
+  // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
   const DEPLOY_PATH = path.join(
     rootDirectory,
     ".github",
     "workflows",
-    "deploy.yml"
+    "deploy.yml",
   );
   const TURBO_PATH = path.join(rootDirectory, "turbo.json");
   const DOCKER_COMPOSE_PATH = path.join(rootDirectory, "docker-compose.yml");
@@ -123,7 +123,7 @@ const rootConfigsRename = async ({
     readme,
     env,
     packageJson,
-    eslint,
+    // eslint,
     prettier,
     githubCI,
     turbo,
@@ -133,7 +133,7 @@ const rootConfigsRename = async ({
     fs.readFile(README_PATH, "utf-8"),
     fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
     fs.readFile(PKG_PATH, "utf-8"),
-    fs.readFile(ESLINT_PATH, "utf-8"),
+    // fs.readFile(ESLINT_PATH, "utf-8"),
     fs.readFile(PRETTIER_PATH, "utf-8"),
     fs.readFile(DEPLOY_PATH, "utf-8"),
     fs.readFile(TURBO_PATH, "utf-8"),
@@ -142,16 +142,16 @@ const rootConfigsRename = async ({
 
   const newEnv = env.replace(
     /^SESSION_SECRET=.*$/m,
-    `SESSION_SECRET="${getRandomString(16)}"`
+    `SESSION_SECRET="${getRandomString(16)}"`,
   );
   const newFlyTomlContent = flyTomlContent.replace(
     new RegExp(appNameRegex, "g"),
-    APP_NAME
+    APP_NAME,
   );
   const newPackageJson = packageJson
     .replace(globalOrgNameRegex, ORG_NAME)
     .replace(new RegExp(appNameRegex, "g"), APP_NAME);
-  const newEslint = eslint.replace(globalOrgNameRegex, ORG_NAME);
+  // const newEslint = eslint.replace(globalOrgNameRegex, ORG_NAME);
   const newPrettier = prettier.replace(globalOrgNameRegex, ORG_NAME);
   const newReadme = readme
     .replace(globalOrgNameRegex, ORG_NAME)
@@ -160,7 +160,7 @@ const rootConfigsRename = async ({
   const newTurbo = turbo.replace(globalOrgNameRegex, ORG_NAME);
   const newDockerCompose = dockerCompose.replaceAll(
     "remix-gospel-stack-postgres",
-    `${APP_NAME}-postgres`
+    `${APP_NAME}-postgres`,
   );
 
   const fileOperationPromises = [
@@ -168,7 +168,7 @@ const rootConfigsRename = async ({
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
     fs.writeFile(PKG_PATH, newPackageJson),
-    fs.writeFile(ESLINT_PATH, newEslint),
+    // fs.writeFile(ESLINT_PATH, newEslint),
     fs.writeFile(PRETTIER_PATH, newPrettier),
     fs.writeFile(DEPLOY_PATH, newGithubCI),
     fs.writeFile(TURBO_PATH, newTurbo),
@@ -195,7 +195,7 @@ const renameAll = async ({
       path.join(rootDirectory, "apps", "**", "*.tsx"),
       path.join(rootDirectory, "apps", "**", "remix.config.mjs"),
       path.join(rootDirectory, "apps", "**", "Dockerfile"),
-      path.join(rootDirectory, "apps", "**", ".eslintrc"),
+      path.join(rootDirectory, "apps", "**", ".eslintrc.cjs"),
     ],
     from: new RegExp(orgNameRegex, "g"),
     to: ORG_NAME,
@@ -222,7 +222,7 @@ const renameAll = async ({
       path.join(rootDirectory, "packages", "**", "*.js"),
       path.join(rootDirectory, "packages", "**", "*.ts"),
       path.join(rootDirectory, "packages", "**", "*.tsx"),
-      path.join(rootDirectory, "packages", "**", ".eslintrc.js"),
+      path.join(rootDirectory, "packages", "**", ".eslintrc.cjs"),
     ],
     from: new RegExp(orgNameRegex, "g"),
     to: ORG_NAME,
