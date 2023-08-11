@@ -193,7 +193,7 @@ const renameAll = async ({
       path.join(rootDirectory, "apps", "**", "*.js"),
       path.join(rootDirectory, "apps", "**", "*.ts"),
       path.join(rootDirectory, "apps", "**", "*.tsx"),
-      path.join(rootDirectory, "apps", "**", "remix.config.mjs"),
+      path.join(rootDirectory, "apps", "**", "remix.config.js"),
       path.join(rootDirectory, "apps", "**", "Dockerfile"),
       path.join(rootDirectory, "apps", "**", ".eslintrc.cjs"),
     ],
