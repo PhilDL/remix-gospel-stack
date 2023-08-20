@@ -8,7 +8,7 @@ module.exports = {
     "prettier",
     "plugin:tailwindcss/recommended",
   ],
-  plugins: ["tailwindcss", "@typescript-eslint"],
+  plugins: ["tailwindcss"],
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-var": "off",
