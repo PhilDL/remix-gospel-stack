@@ -20,7 +20,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "turbo run generate",
     "lint": "turbo run lint",
-    "docker:db": "docker-compose -f docker-compose.yml up -d",
+    "docker:db": "docker compose -f docker-compose.yml up -d",
     "docker:build": "turbo run docker:build",
     "docker:build:remix-app": "docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
     "docker:run:remix-app": "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network remix-gospel-stack-remix-app",
