@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@remix-gospel-stack/ui/card";
+import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
 // import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
@@ -168,7 +169,7 @@ export default function Index() {
             <CardContent className="space-y-6">
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Display prisma users from the business function{" "}
-                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   Service.userRepository.getUsers()
                 </code>
                 .
@@ -189,7 +190,7 @@ export default function Index() {
 
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Regular server value passed from Loader here{" "}
-                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   serverValue
                 </code>
                 :
@@ -223,9 +224,12 @@ export default function Index() {
                   Ghost
                 </Button>
               </div>
+              <div>
+                <Checkbox />
+              </div>
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   helloFromUILibrary
                 </code>
                 :
@@ -245,7 +249,7 @@ export default function Index() {
             <CardContent className="space-y-6">
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   lookUpSalesPersonForZipcode("97", salesPersons)
                 </code>
                 :
@@ -259,7 +263,7 @@ export default function Index() {
               </div>
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   lookUpSalesPersonForZipcode("63", salesPersons)
                 </code>
                 :

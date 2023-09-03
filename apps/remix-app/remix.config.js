@@ -5,12 +5,7 @@ export default {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
-  serverDependenciesToBundle: [
-    "@remix-gospel-stack/internal-nobuild",
-    "@remix-gospel-stack/database",
-    "@remix-gospel-stack/business",
-    "@remix-gospel-stack/ui",
-  ],
+  serverDependenciesToBundle: [],
   watchPaths: [
     "../../packages/ui/src/**/*",
     "../../packages/business/src/**/*",
