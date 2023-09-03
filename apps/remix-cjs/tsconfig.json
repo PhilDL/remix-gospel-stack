@@ -1,0 +1,36 @@
+{
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.ts"],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"],
+      "@remix-gospel-stack/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@remix-gospel-stack/ui": [
+        "../../packages/ui/src/index"
+      ],
+      "@remix-gospel-stack/internal-nobuild": [
+        "../../packages/internal-nobuild/src/index"
+      ],
+      "@remix-gospel-stack/internal-nobuild/*": [
+        "../../packages/internal-nobuild/src/*"
+      ],
+    },
+
+    // Remix takes care of building everything in `remix build`.
+    "noEmit": true
+  }
+}
