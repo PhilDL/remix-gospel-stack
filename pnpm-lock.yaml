@@ -218,8 +218,8 @@ importers:
         specifier: ^10.3.3
         version: 10.3.3
       happy-dom:
-        specifier: ^10.10.4
-        version: 10.10.4
+        specifier: ^11.0.0
+        version: 11.0.2
       msw:
         specifier: ^1.2.3
         version: 1.2.3(typescript@5.1.6)
@@ -261,7 +261,7 @@ importers:
         version: 4.2.0(typescript@5.1.6)(vite@4.4.9)
       vitest:
         specifier: ^0.34.2
-        version: 0.34.2(happy-dom@10.10.4)
+        version: 0.34.2(happy-dom@11.0.2)
 
   apps/remix-cjs:
     dependencies:
@@ -456,7 +456,7 @@ importers:
         version: 4.2.0(typescript@5.1.6)(vite@4.4.9)
       vitest:
         specifier: ^0.34.2
-        version: 0.34.2(happy-dom@10.10.4)
+        version: 0.34.2(happy-dom@11.0.2)
 
   packages/ui:
     dependencies:
@@ -473,8 +473,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       lucide-react:
-        specifier: ^0.274.0
-        version: 0.274.0(react@18.2.0)
+        specifier: ^0.276.0
+        version: 0.276.0(react@18.2.0)
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
@@ -3706,7 +3706,7 @@ packages:
       dom-accessibility-api: 0.5.16
       lodash: 4.17.21
       redent: 3.0.0
-      vitest: 0.34.2(happy-dom@10.10.4)
+      vitest: 0.34.2(happy-dom@11.0.2)
     dev: true
 
   /@testing-library/react@14.0.0(react-dom@18.2.0)(react@18.2.0):
@@ -4449,7 +4449,7 @@ packages:
       magic-string: 0.30.2
       picocolors: 1.0.0
       std-env: 3.4.0
-      vitest: 0.34.2(happy-dom@10.10.4)
+      vitest: 0.34.2(happy-dom@11.0.2)
     dev: true
 
   /@vitest/expect@0.34.2:
@@ -7434,8 +7434,8 @@ packages:
       uglify-js: 3.17.4
     dev: false
 
-  /happy-dom@10.10.4:
-    resolution: {integrity: sha512-aEEFGSSs4DEJbxXvSMsIvJvvdsZbJZQEgtHsU4GgwNKbSbFxtgu6vXHmn4XoXnuElIbXV0xhbJiiQTxPnTmJcw==}
+  /happy-dom@11.0.2:
+    resolution: {integrity: sha512-0yyYIBCByZVgWNuM+/tXXaAR+YUjsoXmzDisQ/KPI7Dt9kXtsPUOU6JAc/isVxridmeSb9/icthsaAhUBKJa4g==}
     dependencies:
       css.escape: 1.5.1
       entities: 4.5.0
@@ -8305,8 +8305,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  /lucide-react@0.274.0(react@18.2.0):
-    resolution: {integrity: sha512-qiWcojRXEwDiSimMX1+arnxha+ROJzZjJaVvCC0rsG6a9pUPjZePXSq7em4ZKMp0NDm1hyzPNkM7UaWC3LU2AA==}
+  /lucide-react@0.276.0(react@18.2.0):
+    resolution: {integrity: sha512-ubP1Tyj67nsy84/ikelrFcjj7eEkD6hg9H/1Mhk22CGpbvPtEd3r8sMFQQ1YdpePx70Nt4oYIMfTPHZlag+ZLQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -11822,7 +11822,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.34.2(happy-dom@10.10.4):
+  /vitest@0.34.2(happy-dom@11.0.2):
     resolution: {integrity: sha512-WgaIvBbjsSYMq/oiMlXUI7KflELmzM43BEvkdC/8b5CAod4ryAiY2z8uR6Crbi5Pjnu5oOmhKa9sy7uk6paBxQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -11866,7 +11866,7 @@ packages:
       cac: 6.7.14
       chai: 4.3.7
       debug: 4.3.4
-      happy-dom: 10.10.4
+      happy-dom: 11.0.2
       local-pkg: 0.4.3
       magic-string: 0.30.2
       pathe: 1.1.1
