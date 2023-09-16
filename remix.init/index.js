@@ -100,6 +100,12 @@ const rootConfigsRename = async ({
   );
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
   const ENV_PATH = path.join(rootDirectory, ".env");
+  const DATABASE_ENV_PATH = path.join(
+    rootDirectory,
+    "packages",
+    "database",
+    ".env",
+  );
   const PKG_PATH = path.join(rootDirectory, "package.json");
   // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
@@ -162,6 +168,7 @@ const rootConfigsRename = async ({
     fs.writeFile(FLY_TOML_PATH, newFlyTomlContent),
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
+    fs.writeFile(DATABASE_ENV_PATH, newEnv),
     fs.writeFile(PKG_PATH, newPackageJson),
     // fs.writeFile(ESLINT_PATH, newEslint),
     fs.writeFile(PRETTIER_PATH, newPrettier),
