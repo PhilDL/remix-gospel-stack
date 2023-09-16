@@ -1,7 +1,7 @@
-const { execSync } = require("child_process");
-const crypto = require("crypto");
-const fs = require("fs/promises");
-const path = require("path");
+const { execSync } = require("node:child_process");
+const crypto = require("node:crypto");
+const fs = require("node:fs/promises");
+const path = require("node:path");
 const inquirer = require("inquirer");
 const replace = require("replace-in-file");
 
@@ -11,12 +11,7 @@ const escapeRegExp = (string) =>
 
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
-const main = async ({ isTypeScript, rootDirectory }) => {
-  if (!isTypeScript) {
-    // isTypeScript is always false here... not sure why.
-    console.log(`This template only supports TypeScript`);
-  }
-
+const main = async ({ rootDirectory }) => {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
   const orgNameRegex = escapeRegExp("@remix-gospel-stack");
 
