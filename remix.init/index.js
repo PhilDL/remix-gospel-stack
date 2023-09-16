@@ -11,12 +11,7 @@ const escapeRegExp = (string) =>
 
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
-const main = async ({ isTypeScript, rootDirectory }) => {
-  if (!isTypeScript) {
-    // isTypeScript is always false here... not sure why.
-    console.log(`This template only supports TypeScript`);
-  }
-
+const main = async ({ rootDirectory }) => {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
   const orgNameRegex = escapeRegExp("@remix-gospel-stack");
 
