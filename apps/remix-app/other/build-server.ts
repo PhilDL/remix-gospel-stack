@@ -2,7 +2,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import esbuild from "esbuild";
 import fsExtra from "fs-extra";
-// @ts-expect-error
 import { globSync } from "glob";
 
 const pkg = fsExtra.readJsonSync(path.join(process.cwd(), "package.json"));
