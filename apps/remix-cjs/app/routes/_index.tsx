@@ -1,4 +1,3 @@
-import React from "react";
 import { useLoaderData } from "@remix-run/react";
 import { json, type LoaderArgs, type V2_MetaFunction } from "@vercel/remix";
 
@@ -13,6 +12,8 @@ import {
   CardTitle,
 } from "@remix-gospel-stack/ui/card";
 import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
+
+export const config = { runtime: "edge" };
 
 export const meta: V2_MetaFunction = () => {
   return [
