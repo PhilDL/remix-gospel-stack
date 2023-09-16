@@ -7,7 +7,7 @@ Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker d
 ### Quickstart (recommended)
 
 ```bash
-pnpm dlx create-remix@latest --install --typescript --template https://github.com/PhilDL/remix-gospel-stack
+pnpm create remix@latest --init-script --install --template https://github.com/PhilDL/remix-gospel-stack
 ```
 
 > :minidisc: This repository is opiniated:
