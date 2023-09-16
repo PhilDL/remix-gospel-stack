@@ -1,7 +1,7 @@
-const { execSync } = require("child_process");
-const crypto = require("crypto");
-const fs = require("fs/promises");
-const path = require("path");
+const { execSync } = require("node:child_process");
+const crypto = require("node:crypto");
+const fs = require("node:fs/promises");
+const path = require("node:path");
 const inquirer = require("inquirer");
 const replace = require("replace-in-file");
 
