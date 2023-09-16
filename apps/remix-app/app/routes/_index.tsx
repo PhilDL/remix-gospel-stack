@@ -1,5 +1,5 @@
 import React from "react";
-import { json, type LoaderArgs } from "@remix-run/node";
+import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -22,7 +22,7 @@ import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
 import Service, { helloWorld } from "~/services.server.ts";
 
-export const loader = async ({ request: _request }: LoaderArgs) => {
+export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
   const users = await Service.userRepository.getUsers();
   const salesPersons = getSalesPersonDirectory();
   return json({
@@ -169,7 +169,7 @@ export default function Index() {
             <CardContent className="space-y-6">
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Display prisma users from the business function{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   Service.userRepository.getUsers()
                 </code>
                 .
@@ -190,7 +190,7 @@ export default function Index() {
 
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Regular server value passed from Loader here{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   serverValue
                 </code>
                 :
@@ -229,7 +229,7 @@ export default function Index() {
               </div>
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   helloFromUILibrary
                 </code>
                 :
@@ -249,7 +249,7 @@ export default function Index() {
             <CardContent className="space-y-6">
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   lookUpSalesPersonForZipcode("97", salesPersons)
                 </code>
                 :
@@ -263,7 +263,7 @@ export default function Index() {
               </div>
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Result of function{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                   lookUpSalesPersonForZipcode("63", salesPersons)
                 </code>
                 :

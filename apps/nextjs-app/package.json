@@ -17,9 +17,9 @@
     "@remix-gospel-stack/database": "workspace:*",
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^20.5.1",
-    "@types/react": "^18.2.20",
+    "@types/node": "^20.6.2",
+    "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }

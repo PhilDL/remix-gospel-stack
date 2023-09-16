@@ -1,9 +1,8 @@
 {
   "include": [
-    "remix.env.d.ts",
+    "types/remix.env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "./tests/setup/setup-test-env.ts"
   ],
   "ts-node": {
 		"swc": true
@@ -29,7 +28,6 @@
     "emitDecoratorMetadata": true,
     "allowImportingTsExtensions": true,
     "baseUrl": ".",
-    "typeRoots": ["./types", "./node_modules/@types"],
     "paths": {
       "~/*": [
         "./app/*"

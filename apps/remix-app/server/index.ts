@@ -2,7 +2,11 @@ import crypto from "crypto";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createRequestHandler } from "@remix-run/express";
-import { broadcastDevReady, type ServerBuild } from "@remix-run/node";
+import {
+  broadcastDevReady,
+  installGlobals,
+  type ServerBuild,
+} from "@remix-run/node";
 import address from "address";
 import chalk from "chalk";
 import chokidar from "chokidar";
@@ -16,6 +20,8 @@ import morgan from "morgan";
 // @ts-ignore - this file may not exist if you haven't built yet, but it will
 // definitely exist by the time the dev or prod server actually runs.
 import * as remixBuild from "../build/index.js";
+
+installGlobals();
 
 const MODE = process.env.NODE_ENV;
 
@@ -61,7 +67,7 @@ app.disable("x-powered-by");
 // Remix fingerprints its assets so we can cache forever.
 app.use(
   "/build",
-  express.static("public/build", { immutable: true, maxAge: "1y" })
+  express.static("public/build", { immutable: true, maxAge: "1y" }),
 );
 // Everything else (like favicon.ico) is cached for an hour. You may want to be
 // more aggressive with this caching.
@@ -76,7 +82,7 @@ app.use((_, res, next) => {
 });
 
 async function getRequestHandlerOptions(
-  build: ServerBuild
+  build: ServerBuild,
 ): Promise<Parameters<typeof createRequestHandler>[0]> {
   function getLoadContext(_: any, res: any) {
     return { cspNonce: res.locals.cspNonce };
@@ -91,10 +97,10 @@ app.all(
         return createRequestHandler(await getRequestHandlerOptions(devBuild))(
           req,
           res,
-          next
+          next,
         );
       }
-    : createRequestHandler(await getRequestHandlerOptions(build))
+    : createRequestHandler(await getRequestHandlerOptions(build)),
 );
 
 const desiredPort = Number(process.env.PORT || 3000);
@@ -114,8 +120,8 @@ const server = app.listen(portToUse, () => {
   if (portUsed !== desiredPort) {
     console.warn(
       chalk.yellow(
-        `⚠️  Port ${desiredPort} is not available, using ${portUsed} instead.`
-      )
+        `⚠️  Port ${desiredPort} is not available, using ${portUsed} instead.`,
+      ),
     );
   }
   console.log(`🎹 Server ready! - ${process.env.NODE_ENV} mode`);
@@ -134,7 +140,7 @@ const server = app.listen(portToUse, () => {
 ${chalk.bold("Local:")}            ${chalk.cyan(localUrl)}
 ${lanUrl ? `${chalk.bold("On Your Network:")}  ${chalk.cyan(lanUrl)}` : ""}
 ${chalk.bold("Press Ctrl+C to stop")}
-    `.trim()
+    `.trim(),
   );
 
   if (process.env.NODE_ENV === "development") {

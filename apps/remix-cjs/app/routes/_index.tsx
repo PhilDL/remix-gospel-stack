@@ -1,6 +1,5 @@
-import React from "react";
-import { json, type LoaderArgs, type V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { json, type LoaderArgs, type V2_MetaFunction } from "@vercel/remix";
 
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
@@ -13,6 +12,8 @@ import {
   CardTitle,
 } from "@remix-gospel-stack/ui/card";
 import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
+
+export const config = { runtime: "edge" };
 
 export const meta: V2_MetaFunction = () => {
   return [
