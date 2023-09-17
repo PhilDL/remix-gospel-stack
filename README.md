@@ -12,8 +12,9 @@ pnpm create remix@latest --init-script --install --template https://github.com/P
 
 > :minidisc: This repository is opiniated:
 >
-> - **TypeScript** only, if you choose JavaScript nothing will happen.
+> - **TypeScript** only.
 > - Only compatible with **pnpm** package manager to handle monorepo workspaces.
+> - Uses turborepo pipelines + cache to build, lint, typecheck, and test the monorepo.
 
 ### (Alternative) Cloning the repository
 
