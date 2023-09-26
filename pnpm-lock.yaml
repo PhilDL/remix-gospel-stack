@@ -100,8 +100,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       address:
-        specifier: ^1.2.2
-        version: 1.2.2
+        specifier: ^2.0.0
+        version: 2.0.1
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -296,8 +296,8 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       '@vercel/remix':
-        specifier: ^1.19.3
-        version: 1.19.3(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.0.0
+        version: 2.0.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       isbot:
         specifier: ^3.6.13
         version: 3.6.13
@@ -2715,21 +2715,6 @@ packages:
       express: 4.18.2
       typescript: 5.2.2
 
-  /@remix-run/node@1.19.3:
-    resolution: {integrity: sha512-z5qrVL65xLXIUpU4mkR4MKlMeKARLepgHAk4W5YY3IBXOreRqOGUC70POViYmY7x38c2Ia1NwqL80H+0h7jbMw==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@remix-run/server-runtime': 1.19.3
-      '@remix-run/web-fetch': 4.4.0
-      '@remix-run/web-file': 3.1.0
-      '@remix-run/web-stream': 1.1.0
-      '@web3-storage/multipart-parser': 1.0.0
-      abort-controller: 3.0.0
-      cookie-signature: 1.2.1
-      source-map-support: 0.5.21
-      stream-slice: 0.1.2
-    dev: false
-
   /@remix-run/node@2.0.0(typescript@5.2.2):
     resolution: {integrity: sha512-wICp1W3Aue6CojlfSQZoKCQYnJ+7U/kk0poqQr6+CNihY5QPStzOce3hNYwB9NweagbZsMf80x47m6ef6a9psQ==}
     engines: {node: '>=18.0.0'}
@@ -2749,6 +2734,26 @@ packages:
       stream-slice: 0.1.2
       typescript: 5.2.2
 
+  /@remix-run/node@2.0.1(typescript@5.2.2):
+    resolution: {integrity: sha512-pWsbmkNRb7azYomh1IGSKeW68hkwBBp6L2AWvfKSq2r2MJXHCzqgAJEc0uWkEUx6OtFbVNOg27g/cMCyKvrjIA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@remix-run/server-runtime': 2.0.1(typescript@5.2.2)
+      '@remix-run/web-fetch': 4.4.1
+      '@remix-run/web-file': 3.1.0
+      '@remix-run/web-stream': 1.1.0
+      '@web3-storage/multipart-parser': 1.0.0
+      cookie-signature: 1.2.1
+      source-map-support: 0.5.21
+      stream-slice: 0.1.2
+      typescript: 5.2.2
+    dev: false
+
   /@remix-run/react@2.0.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-h/xXrwupxXoWGvEC1JnDeh9D7lfLTQNiKaEXvWKZwlfNuKeI8nIKXpy+JDDHhloUybe4tpMKztyCqdNCYqfKWQ==}
     engines: {node: '>=18.0.0'}
@@ -2766,11 +2771,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.16.0(react-dom@18.2.0)(react@18.2.0)
       typescript: 5.2.2
-    dev: false
-
-  /@remix-run/router@1.7.2:
-    resolution: {integrity: sha512-7Lcn7IqGMV+vizMPoEl5F0XDshcdDYtMI6uJLQdQz5CfZAwy3vvGKYSUk789qndt5dEC4HfSjviSYlSoHGL2+A==}
-    engines: {node: '>=14'}
     dev: false
 
   /@remix-run/router@1.9.0:
@@ -2794,18 +2794,6 @@ packages:
       - supports-color
       - typescript
 
-  /@remix-run/server-runtime@1.19.3:
-    resolution: {integrity: sha512-KzQ+htUsKqpBgKE2tWo7kIIGy3MyHP58Io/itUPvV+weDjApwr9tQr9PZDPA3yAY6rAzLax7BU0NMSYCXWFY5A==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@remix-run/router': 1.7.2
-      '@types/cookie': 0.4.1
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie: 0.4.2
-      set-cookie-parser: 2.6.0
-      source-map: 0.7.4
-    dev: false
-
   /@remix-run/server-runtime@2.0.0(typescript@5.2.2):
     resolution: {integrity: sha512-HaNszj/mp/A1Qz5sVupVIXqDyeEni3nwW5iKDqGAqv0n8E6FRkzEhOtAJypRABcKWBq0M9VM3fm6IO0vaMti8Q==}
     engines: {node: '>=18.0.0'}
@@ -2824,6 +2812,25 @@ packages:
       type-fest: 4.3.1
       typescript: 5.2.2
 
+  /@remix-run/server-runtime@2.0.1(typescript@5.2.2):
+    resolution: {integrity: sha512-xCW2aw9EILx7F3orEHN2fcpEkNzZTRU8VzP7gS9pmHP45qteFqsY5Qg2/dnF17royWmeeBNhnXaJOgb76W1KEA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@remix-run/router': 1.9.0
+      '@types/cookie': 0.4.1
+      '@web3-storage/multipart-parser': 1.0.0
+      cookie: 0.4.2
+      set-cookie-parser: 2.6.0
+      source-map: 0.7.4
+      type-fest: 4.3.1
+      typescript: 5.2.2
+    dev: false
+
   /@remix-run/web-blob@3.1.0:
     resolution: {integrity: sha512-owGzFLbqPH9PlKb8KvpNJ0NO74HWE2euAn61eEiyCXX/oteoVzTVSN8mpLgDjaxBf2btj5/nUllSUgpyd6IH6g==}
     dependencies:
@@ -2841,6 +2848,20 @@ packages:
       abort-controller: 3.0.0
       data-uri-to-buffer: 3.0.1
       mrmime: 1.0.1
+
+  /@remix-run/web-fetch@4.4.1:
+    resolution: {integrity: sha512-xMceEGn2kvfeWS91nHSOhEQHPGgjFnmDVpWFZrbWPVdiTByMZIn421/tdSF6Kd1RsNsY+5Iwt3JFEKZHAcMQHw==}
+    engines: {node: ^10.17 || >=12.3}
+    dependencies:
+      '@remix-run/web-blob': 3.1.0
+      '@remix-run/web-file': 3.1.0
+      '@remix-run/web-form-data': 3.1.0
+      '@remix-run/web-stream': 1.1.0
+      '@web3-storage/multipart-parser': 1.0.0
+      abort-controller: 3.0.0
+      data-uri-to-buffer: 3.0.1
+      mrmime: 1.0.1
+    dev: false
 
   /@remix-run/web-file@3.1.0:
     resolution: {integrity: sha512-dW2MNGwoiEYhlspOAXFBasmLeYshyAyhIdrlXBi06Duex5tDr3ut2LFKVj7tyHLmn8nnNwFf1BjNbkQpygC2aQ==}
@@ -3776,18 +3797,20 @@ packages:
       - encoding
     dev: false
 
-  /@vercel/remix@1.19.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-YLgtsuTkTrmLL1t5QFr2LV0U2nqL7gJmEegTgmACcB32Gnps4bnFjv4EAgt7eUurcEzcaGSfDSONdMiEUjZXTQ==}
-    engines: {node: '>=14'}
+  /@vercel/remix@2.0.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-mHtbgIRn4naLkKT2ICcd0v9hgGZrGBSYjBQp2kYaA4PDBUKHFqXeB7C+iyyFlQXkc6tiSPwGeqMXgvb7t8D5Ow==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
       react: '*'
       react-dom: '*'
     dependencies:
-      '@remix-run/node': 1.19.3
-      '@remix-run/server-runtime': 1.19.3
+      '@remix-run/node': 2.0.1(typescript@5.2.2)
+      '@remix-run/server-runtime': 2.0.1(typescript@5.2.2)
       isbot: 3.6.13
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - typescript
     dev: false
 
   /@vercel/static-config@3.0.0:
@@ -3915,9 +3938,9 @@ packages:
     resolution: {integrity: sha512-jaVNAFBHNLXspO543WnNNPZFRtavh3skAkITqD0/2aeMkKZTN+254PyhwxFYrk3vQ1xfY+2wbesJMs/JC8/PwQ==}
     engines: {node: '>=0.4.0'}
 
-  /address@1.2.2:
-    resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
-    engines: {node: '>= 10.0.0'}
+  /address@2.0.1:
+    resolution: {integrity: sha512-Fd3nPUe+kPZ0P70sGkV8dAUchT3pQCyTPQO5xW9580oqVBPJe2PtWtK7KGnQBvgTrloWAOvOoX8DksyuIWssvQ==}
+    engines: {node: '>= 16.0.0'}
     dev: false
 
   /agent-base@7.1.0:
