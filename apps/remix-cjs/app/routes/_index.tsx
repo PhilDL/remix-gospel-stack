@@ -1,5 +1,9 @@
 import { useLoaderData } from "@remix-run/react";
-import { json, type LoaderArgs, type V2_MetaFunction } from "@vercel/remix";
+import {
+  json,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@vercel/remix";
 
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
@@ -15,14 +19,14 @@ import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 
 export const config = { runtime: "edge" };
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
 
-export const loader = async ({ request: _request }: LoaderArgs) => {
+export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
   const salesPersons = getSalesPersonDirectory();
   return json({
     salesPersons,
