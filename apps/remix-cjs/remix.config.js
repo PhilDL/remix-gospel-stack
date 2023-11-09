@@ -6,7 +6,7 @@ module.exports = {
     "../../packages/ui/src/**/*",
     "../../packages/internal-nobuild/src/**/*",
   ],
-  serverDependenciesToBundle: [],
+  serverDependenciesToBundle: ["tailwind-merge"],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
