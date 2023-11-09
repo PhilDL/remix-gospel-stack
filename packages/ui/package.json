@@ -15,8 +15,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "lucide-react": "^0.291.0",
-    "tailwind-merge": "^1.14.0"
+    "lucide-react": "^0.292.0",
+    "tailwind-merge": "^2.0.0"
   },
   "peerDependencies": {
     "@remix-run/dev": "^2.0.0",
