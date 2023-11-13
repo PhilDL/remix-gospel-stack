@@ -91,6 +91,9 @@ const main = async ({ rootDirectory }) => {
 - Start the database:
   pnpm run docker:db
 
+- Create your first migration:
+  pnpm run db:migrate:dev
+
 - Run setup (this generate prisma client and seed db):
   pnpm run setup
 
