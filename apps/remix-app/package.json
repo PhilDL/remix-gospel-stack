@@ -20,7 +20,10 @@
     "test:e2e:run": "cross-env CI=true playwright test",
     "test:e2e:install": "npx playwright install --with-deps chromium",
     "test:e2e:ci": "pnpm run test:e2e:install && pnpm run test:e2e:run",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "setup": "pnpm run docker:db && pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
+    "docker:db": "docker compose -f docker-compose.yml up -d",
+    "docker:run:remix-app": "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-remix-app"
   },
   "dependencies": {
     "@remix-gospel-stack/business": "workspace:*",

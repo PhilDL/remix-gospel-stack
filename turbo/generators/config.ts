@@ -200,21 +200,51 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFile: "templates/.env.example.hbs",
         force: true,
       },
-      {
-        type: "add",
-        path: "{{ turbo.paths.root }}/.github/workflows/deploy.yml",
-        templateFile: "templates/deploy-with-litefs.yml",
-        force: true,
-        skip: (answers: { dbType: SupportedDatabases }) =>
-          answers.dbType !== "sqlite-litefs",
-      },
-      {
-        type: "add",
-        path: "{{ turbo.paths.root }}/.github/workflows/deploy.yml",
-        templateFile: "templates/deploy-with-postgres.yml",
-        force: true,
-        skip: (answers: { dbType: SupportedDatabases }) =>
-          answers.dbType !== "postgres",
+      async function githubDeployWorkflow(answers: {
+        appPckgName?: string;
+        appDirname?: string;
+        dbType?: SupportedDatabases;
+      }) {
+        if (answers.dbType === "sqlite-litefs") {
+          // copy deploy-with-litefs.yml to .github/workflows/deploy.yml
+          fs.copyFileSync(
+            path.join(
+              plop.getDestBasePath(),
+              "turbo",
+              "generators",
+              "templates",
+              "deploy-with-litefs.yml",
+            ),
+            path.join(
+              plop.getDestBasePath(),
+              ".github",
+              "workflows",
+              "deploy.yml",
+            ),
+          );
+          return "Copied deploy-with-litefs.yml to .github/workflows/deploy.yml";
+        }
+        if (answers.dbType === "postgres") {
+          // copy deploy-with-postgres.yml to .github/workflows/deploy.yml
+          fs.copyFileSync(
+            path.join(
+              plop.getDestBasePath(),
+              "turbo",
+              "generators",
+              "templates",
+              "deploy-with-postgres.yml",
+            ),
+            path.join(
+              plop.getDestBasePath(),
+              ".github",
+              "workflows",
+              "deploy.yml",
+            ),
+          );
+          return "Copied deploy-with-postgres.yml to .github/workflows/deploy.yml";
+        }
+
+        return "No deploy workflow added";
       },
     ],
   });
