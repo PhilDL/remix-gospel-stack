@@ -86,21 +86,8 @@ const main = async ({ rootDirectory }) => {
 
   cd ${rootDirectory}
 
-${
-  db === "postgres" &&
-  `
-- Start the database:
-  pnpm run docker:db
-`
-}
-- Create your first migration:
-  pnpm run db:migrate:dev
-
-- Run setup (this generate prisma client and seed db):
+- Run setup (this generate First migration, prisma client, seed db, build):
   pnpm run setup
-
-- Build all the packages and apps,:
-  pnpm run build
 
 ${
   db === "postgres"

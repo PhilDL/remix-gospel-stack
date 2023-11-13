@@ -87,6 +87,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 
         if (answers.dbType === "postgres") {
           delete packageJson.dependencies["litefs-js"];
+          packageJson.scripts["docker:db"] =
+            "docker compose -f docker-compose.yml up -d";
+          packageJson.scripts["docker:run:remix-app"] =
+            "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-remix-app";
+          packageJson.scripts["setup"] =
+            "pnpm run docker:db && pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
           fs.writeFileSync(
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),
@@ -94,6 +100,10 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           return "Removed litefs-js from dependencies";
         } else {
           packageJson.dependencies["litefs-js"] = "^1.1.2";
+          delete packageJson.scripts["docker:db"];
+          delete packageJson.scripts["docker:run:remix-app"];
+          packageJson.scripts["setup"] =
+            "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
           fs.writeFileSync(
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),

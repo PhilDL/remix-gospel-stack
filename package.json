@@ -33,7 +33,7 @@
     "typecheck": "turbo run typecheck",
     "test:e2e:dev": "turbo run test:e2e:dev",
     "test:e2e:ci": "turbo run test:e2e:ci",
-    "setup": "turbo run generate db:migrate:force db:seed",
+    "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {
