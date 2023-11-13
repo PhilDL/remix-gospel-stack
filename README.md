@@ -2,7 +2,7 @@
 
 ![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL, Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
+Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Litefs), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
 
 ### Quickstart (recommended)
 
@@ -39,7 +39,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 - `packages` Folder containing examples
 
   - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
-  - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/).
+  - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
   - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
   - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
     Remix uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
@@ -52,7 +52,9 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 ### What else ?
 
 - Remix App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
-- Database [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
+- Database comes in 2 flavors that you choose at install:
+  - [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
+  - [Litefs - Distributed SQLite](https://fly.io/docs/litefs/)
 - Remix App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy the Remix App on merge to production and staging environments.
 - End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the Remix App
@@ -143,7 +145,9 @@ Check the `turbo.json` file to see the available pipelines.
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
 
-### Setup Deployement to fly.io
+_(Documentation for deployment with litefs coming soon)_
+
+### Setup Deployement to fly.io (PostgreSQL)
 
 Prior to your first deployment, you'll need to do a few things:
 

@@ -200,6 +200,22 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFile: "templates/.env.example.hbs",
         force: true,
       },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/.github/workflows/deploy.yml",
+        templateFile: "templates/deploy-with-litefs.yml",
+        force: true,
+        skip: (answers: { dbType: SupportedDatabases }) =>
+          answers.dbType !== "sqlite-litefs",
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/.github/workflows/deploy.yml",
+        templateFile: "templates/deploy-with-postgres.yml",
+        force: true,
+        skip: (answers: { dbType: SupportedDatabases }) =>
+          answers.dbType !== "postgres",
+      },
     ],
   });
   plop.setGenerator("add internal package", {
