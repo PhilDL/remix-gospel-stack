@@ -12,7 +12,7 @@
   "scripts": {
     "build": "turbo run build",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:migrate:dev": "turbo run db:migrate:dev",
+    "db:migrate:dev": "pnpm run --filter @remix-gospel-stack/database db:migrate:dev",
     "db:push": "turbo run db:push",
     "db:seed": "turbo run db:seed --no-cache",
     "db:migrate:force": "turbo run db:migrate:force --no-cache",
@@ -33,7 +33,7 @@
     "typecheck": "turbo run typecheck",
     "test:e2e:dev": "turbo run test:e2e:dev",
     "test:e2e:ci": "turbo run test:e2e:ci",
-    "setup": "turbo run generate db:migrate:force db:seed",
+    "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {

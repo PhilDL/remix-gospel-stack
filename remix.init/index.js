@@ -53,34 +53,32 @@ const main = async ({ rootDirectory }) => {
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
 
-  // console.log("🦆 Generate first migration...");
-  // execSync("pnpm db:migrate:dev -- --name first-migration", {
-  //   cwd: rootDirectory,
-  //   stdio: "inherit",
-  // });
+  const { db } = await inquirer.prompt([
+    {
+      name: "db",
+      type: "list",
+      message: "📼 Which database do you want to use? (Deployed to Fly.io)",
+      choices: ["postgres", "sqlite-litefs"],
+      default: "postgres",
+    },
+  ]);
+
+  execSync(
+    `pnpm turbo gen scaffold-database --args ${ORG_NAME}/remix-app remix-app ${db}`,
+    {
+      cwd: rootDirectory,
+      stdio: "inherit",
+    },
+  );
+
+  await copyENV({ rootDirectory });
 
   execSync("pnpm run format", {
     cwd: rootDirectory,
     stdio: "inherit",
   });
 
-  const { db } = await inquirer.prompt([
-    {
-      name: "db",
-      type: "list",
-      message: "Which database do you want to use? (sqlite-litefs coming soon)",
-      choices: ["postgres"],
-      default: "postgres",
-    },
-  ]);
-
-  execSync(
-    `pnpm turbo gen create-dockerfile --args ${ORG_NAME}/remix-app remix-app ${db}`,
-    {
-      cwd: rootDirectory,
-      stdio: "inherit",
-    },
-  );
+  execSync("pnpm i", { cwd: rootDirectory, stdio: "inherit" });
 
   console.log(
     `
@@ -88,18 +86,12 @@ const main = async ({ rootDirectory }) => {
 
   cd ${rootDirectory}
 
-- Start the database:
-  pnpm run docker:db
-
-- Create your first migration:
-  pnpm run db:migrate:dev
-
-- Run setup (this generate prisma client and seed db):
+- Run setup (this generate First migration, prisma client, seed db, build):
   pnpm run setup
 
-- Build all the packages and apps,:
-  pnpm run build
-
+${
+  db === "postgres"
+    ? `
 - Run all the apps/packages dev scripts concurrently:
   pnpm run dev
 
@@ -107,7 +99,15 @@ OR
 
 - Run only the Remix app:
   pnpm run dev --filter=${ORG_NAME}/remix-app
-    `.trim(),
+`
+    : `
+- Run the remix app:
+  pnpm run dev --filter=${ORG_NAME}/remix-app
+
+⚠️ With local sqlite database you cannot run the NextJS app concurrently to the 
+  remix app, as they will both connect on the same sqlite file creating errors!
+`
+}`.trim(),
   );
 };
 
@@ -125,8 +125,6 @@ const rootConfigsRename = async ({
     "remix-app",
     "fly.toml",
   );
-  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
-  const ENV_PATH = path.join(rootDirectory, ".env");
   const PKG_PATH = path.join(rootDirectory, "package.json");
   // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
@@ -143,7 +141,6 @@ const rootConfigsRename = async ({
   const [
     flyTomlContent,
     readme,
-    env,
     packageJson,
     // eslint,
     prettier,
@@ -153,7 +150,6 @@ const rootConfigsRename = async ({
   ] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
-    fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
     fs.readFile(PKG_PATH, "utf-8"),
     // fs.readFile(ESLINT_PATH, "utf-8"),
     fs.readFile(PRETTIER_PATH, "utf-8"),
@@ -162,10 +158,6 @@ const rootConfigsRename = async ({
     fs.readFile(DOCKER_COMPOSE_PATH, "utf-8"),
   ]);
 
-  const newEnv = env.replace(
-    /^SESSION_SECRET=.*$/m,
-    `SESSION_SECRET="${getRandomString(16)}"`,
-  );
   const newFlyTomlContent = flyTomlContent.replace(
     new RegExp(appNameRegex, "g"),
     APP_NAME,
@@ -188,7 +180,6 @@ const rootConfigsRename = async ({
   const fileOperationPromises = [
     fs.writeFile(FLY_TOML_PATH, newFlyTomlContent),
     fs.writeFile(README_PATH, newReadme),
-    fs.writeFile(ENV_PATH, newEnv),
     fs.writeFile(PKG_PATH, newPackageJson),
     // fs.writeFile(ESLINT_PATH, newEslint),
     fs.writeFile(PRETTIER_PATH, newPrettier),
@@ -200,6 +191,17 @@ const rootConfigsRename = async ({
   ];
 
   await Promise.all(fileOperationPromises);
+};
+
+const copyENV = async ({ rootDirectory }) => {
+  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
+  const ENV_PATH = path.join(rootDirectory, ".env");
+  const env = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8");
+  const newEnv = env.replace(
+    /^SESSION_SECRET=.*$/m,
+    `SESSION_SECRET="${getRandomString(16)}"`,
+  );
+  await fs.writeFile(ENV_PATH, newEnv);
 };
 
 const renameAll = async ({

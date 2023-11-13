@@ -1,0 +1,54 @@
+app = "remix-gospel-stack"
+primary_region = "cdg"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
+
+{{#ifEquals dbType "sqlite-litefs"}}
+[mounts]
+  source = "data"
+  destination = "/data"
+{{else}}
+[deploy]
+  release_command = "bash ./apps/remix-app/scripts/migrate.sh"
+{{/ifEquals}}
+
+[env]
+  PRIMARY_REGION = "cdg"
+  REMIX_APP_PORT = "8080"
+  PORT = "8080"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
+
+  [[services.http_checks]]
+    interval = "10s"
+    timeout = "2s"
+    grace_period = "5s"
+    restart_limit = 0
+    method = "get"
+    path = "/healthcheck"
+    protocol = "http"

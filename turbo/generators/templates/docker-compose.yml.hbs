@@ -1,0 +1,42 @@
+version: "3"
+
+volumes:
+  database:
+    driver: local
+
+services:
+  db:
+    image: postgres:latest
+    container_name: "remix-gospel-stack-postgres"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - database:/var/lib/postgresql-docker/data
+    networks:
+      - app_network
+  # If you want to run the remix app also inside Docker
+  #
+  # remix-app:
+  #   environment:
+  #     DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
+  #   container_name: remix-app
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/remix-app/Dockerfile
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - app_network
+
+
+networks:
+  app_network:
+    external: true
