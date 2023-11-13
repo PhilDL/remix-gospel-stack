@@ -52,11 +52,33 @@ const main = async ({ rootDirectory }) => {
   console.log("📦 Installing dependencies...");
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
+  console.log("🦆 Generate first migration...");
+  execSync("pnpm db:migrate:dev -- --name first-migration", {
+    cwd: rootDirectory,
+    stdio: "inherit",
+  });
 
   execSync("pnpm run format", {
     cwd: rootDirectory,
     stdio: "inherit",
   });
+
+  const { db } = await inquirer.prompt([
+    {
+      name: "db",
+      type: "list",
+      message: "Which database do you want to use?",
+      choices: ["postgres", "sqlite-litefs"],
+    },
+  ]);
+
+  execSync(
+    `pnpm turbo gen create-dockerfile --args ${ORG_NAME}/remix-app remix-app ${db}`,
+    {
+      cwd: rootDirectory,
+      stdio: "inherit",
+    },
+  );
 
   console.log(
     `
