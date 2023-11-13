@@ -1,7 +1,7 @@
 # This file is moved to the root directory before building the image
 
-ARG APP_DIRNAME=remix-app
-ARG APP_PKG_NAME=@remix-gospel-stack/remix-app
+ARG APP_DIRNAME={{ appDirname }}
+ARG APP_PKG_NAME={{ appPckgName }}
 
 FROM node:18-bookworm-slim AS pruner
 ARG APP_PKG_NAME
@@ -50,6 +50,18 @@ ARG APP_DIRNAME
 
 ENV NODE_ENV production
 
+{{#ifEquals dbType "sqlite-litefs"}}
+
+ENV FLY="true"
+ENV LITEFS_DIR="/litefs/data"
+ENV DATABASE_FILENAME="sqlite.db"
+ENV DATABASE_PATH="$LITEFS_DIR/$DATABASE_FILENAME"
+ENV DATABASE_URL="file:$DATABASE_PATH"
+
+# add shortcut for connecting to database CLI
+RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli
+
+{{/ifEquals}}
 
 COPY --from=pruner /app/out/full/ .
 COPY --from=production-deps /app .
@@ -58,5 +70,16 @@ COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
 COPY --from=builder /app/apps/$APP_DIRNAME/public ./apps/$APP_DIRNAME/public
 COPY --from=builder /app/apps/$APP_DIRNAME/server-build ./apps/$APP_DIRNAME/server-build
 
+{{#ifEquals dbType "sqlite-litefs"}}
+# prepare for litefs
+COPY --from=flyio/litefs:0.5.5 /usr/local/bin/litefs /usr/local/bin/litefs
+ADD ./apps/$APP_DIRNAME/other/litefs.yml /etc/litefs.yml
+RUN mkdir -p /data ${LITEFS_DIR}
+
+ADD . .
+
+CMD ["litefs", "mount"]
+{{else}}
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-remix-production"]
+{{/ifEquals}}

@@ -53,10 +53,34 @@ const main = async ({ rootDirectory }) => {
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
 
+  // console.log("🦆 Generate first migration...");
+  // execSync("pnpm db:migrate:dev -- --name first-migration", {
+  //   cwd: rootDirectory,
+  //   stdio: "inherit",
+  // });
+
   execSync("pnpm run format", {
     cwd: rootDirectory,
     stdio: "inherit",
   });
+
+  const { db } = await inquirer.prompt([
+    {
+      name: "db",
+      type: "list",
+      message: "Which database do you want to use? (sqlite-litefs coming soon)",
+      choices: ["postgres"],
+      default: "postgres",
+    },
+  ]);
+
+  execSync(
+    `pnpm turbo gen create-dockerfile --args ${ORG_NAME}/remix-app remix-app ${db}`,
+    {
+      cwd: rootDirectory,
+      stdio: "inherit",
+    },
+  );
 
   console.log(
     `
@@ -66,6 +90,9 @@ const main = async ({ rootDirectory }) => {
 
 - Start the database:
   pnpm run docker:db
+
+- Create your first migration:
+  pnpm run db:migrate:dev
 
 - Run setup (this generate prisma client and seed db):
   pnpm run setup
