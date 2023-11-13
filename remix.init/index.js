@@ -53,17 +53,11 @@ const main = async ({ rootDirectory }) => {
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
 
-  // console.log("🦆 Generate first migration...");
-  // execSync("pnpm db:migrate:dev -- --name first-migration", {
-  //   cwd: rootDirectory,
-  //   stdio: "inherit",
-  // });
-
   const { db } = await inquirer.prompt([
     {
       name: "db",
       type: "list",
-      message: "Which database do you want to use? (sqlite-litefs coming soon)",
+      message: "📼 Which database do you want to use? (Deployed to Fly.io)",
       choices: ["postgres", "sqlite-litefs"],
       default: "postgres",
     },
@@ -92,9 +86,13 @@ const main = async ({ rootDirectory }) => {
 
   cd ${rootDirectory}
 
+${
+  db === "postgres" &&
+  `
 - Start the database:
   pnpm run docker:db
-
+`
+}
 - Create your first migration:
   pnpm run db:migrate:dev
 
@@ -104,6 +102,9 @@ const main = async ({ rootDirectory }) => {
 - Build all the packages and apps,:
   pnpm run build
 
+${
+  db === "postgres"
+    ? `
 - Run all the apps/packages dev scripts concurrently:
   pnpm run dev
 
@@ -111,7 +112,15 @@ OR
 
 - Run only the Remix app:
   pnpm run dev --filter=${ORG_NAME}/remix-app
-    `.trim(),
+`
+    : `
+- Run the remix app:
+  pnpm run dev --filter=${ORG_NAME}/remix-app
+
+⚠️ With local sqlite database you cannot run the NextJS app concurrently to the 
+  remix app, as they will both connect on the same sqlite file creating errors!
+`
+}`.trim(),
   );
 };
 
