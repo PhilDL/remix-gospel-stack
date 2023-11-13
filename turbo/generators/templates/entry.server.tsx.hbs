@@ -3,6 +3,9 @@ import {
   createReadableStreamFromReadable,
   type EntryContext,
 } from "@remix-run/node";
+{{#ifEquals dbType "sqlite-litefs"}}
+import { getInstanceInfo } from "litefs-js";
+{{/ifEquals}}
 
 import { RemixServer } from "@remix-run/react";
 import { renderToPipeableStream } from "react-dom/server";
@@ -15,6 +18,13 @@ export default async function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
+{{#ifEquals dbType "sqlite-litefs"}}
+  const { currentInstance, primaryInstance } = await getInstanceInfo();
+  responseHeaders.set("fly-region", process.env.FLY_REGION ?? "unknown");
+  responseHeaders.set("fly-app", process.env.FLY_APP_NAME ?? "unknown");
+  responseHeaders.set("fly-primary-instance", primaryInstance);
+  responseHeaders.set("fly-instance", currentInstance);
+{{/ifEquals}}
   return new Promise((resolve, reject) => {
     let didError = false;
 
