@@ -30,7 +30,7 @@ const main = async ({ rootDirectory }) => {
       type: "input",
       message: "What is the name of the monorepo @org?",
       default: `@${DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")}`,
-      prefix: `${spaces(5)}◼ `,
+      prefix: `${spaces(6)}◼ `,
     },
   ]);
   if (!ORG_NAME.startsWith("@")) {
@@ -52,9 +52,9 @@ const main = async ({ rootDirectory }) => {
     APP_NAME,
   });
   console.log(`${spaces()}✔  ${ORG_NAME} remix app and packages setup.`);
-  console.log(`${spaces()}◼  Installing dependencies with pnpm..`);
+  // console.log(`${spaces()}◼  Installing dependencies with pnpm..`);
 
-  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
+  // execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
   const { db } = await inquirer.prompt([
     {
@@ -63,10 +63,11 @@ const main = async ({ rootDirectory }) => {
       message: `Which database do you want to use? (Deployed to Fly.io)`,
       choices: ["postgres", "sqlite-litefs"],
       default: "postgres",
-      prefix: `${spaces(5)}◼  `,
+      prefix: `${spaces(6)}◼  `,
     },
   ]);
 
+  console.log(`${spaces()}◼  Preparing monorepo for ${db}...`);
   execSync(
     `pnpm turbo gen scaffold-database --args ${ORG_NAME}/remix-app remix-app ${db}`,
     {
@@ -82,7 +83,7 @@ const main = async ({ rootDirectory }) => {
     stdio: "ignore",
   });
 
-  execSync("pnpm i", { cwd: rootDirectory, stdio: "ignore" });
+  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
   console.log(
     `
