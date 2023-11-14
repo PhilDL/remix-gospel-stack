@@ -66,7 +66,13 @@ ${spaces()}${chalk.green(
       name: "db",
       type: "list",
       message: `Which database do you want to use? (Deployed to Fly.io)`,
-      choices: ["postgres", "sqlite-litefs"],
+      choices: [
+        { name: `${spaces(9)}PostgreSQL`, value: "postgres" },
+        {
+          name: `${spaces(9)}Distributed SQLite (Litefs)`,
+          value: "sqlite-litefs",
+        },
+      ],
       default: "postgres",
       prefix: `${spaces(6)}◼ `,
     },
@@ -99,7 +105,7 @@ ${spaces()}✔  Setup is almost complete. Follow these steps to finish initializ
 )}
 ${spaces(
   9,
-)}- CD and Run setup (this generate First migration, prisma client, seed db, bui ld):
+)}- CD and Run setup (this generate First migration, prisma client, seed db, build):
 ${spaces(9)}  ${chalk.yellow(chalk.bold(`cd ${rootDirectory}`))}
 ${spaces(9)}  ${chalk.yellow(chalk.bold("pnpm run setup"))}
 
