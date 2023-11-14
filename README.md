@@ -102,6 +102,18 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   pnpm run dev --filter=@remix-gospel-stack/remix-app
   ```
 
+## Switch between PostgreSQL and SQLite (Litefs)
+
+- To switch between PostgreSQL and SQLite (Litefs), there is a turbo generator you can use from the root of the repository.
+
+  ```bash
+  pnpm turbo gen scaffold-database
+  ```
+
+  Then follow the prompts. Be careful though, prisma migrations are linked to a specific database, so you will have to delete the `migrations` folder.
+
+  > **Note:** You will have to run `pnpm i --fix-lockfile` again after switching to SQLite (Litefs) that require another package (litefs-js). You will probably also have to run `pnpm run setup` again to generate the first migration.
+
 ## Create packages
 
 ### Internal package
@@ -136,7 +148,7 @@ Check the `turbo.json` file to see the available pipelines.
   ```
 - How to install an npm package in the Remix app ?
   ```bash
-  pnpm add dayjs --filter remix-app
+  pnpm add dayjs --filter @remix-gospel-stack/remix-app
   ```
 - Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
 
@@ -177,19 +189,40 @@ Prior to your first deployment, you'll need to do a few things:
   ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
-- Create a database for both your staging and production environments. Run the following:
 
-  ```sh
-  fly postgres create --name remix-gospel-stack-db
-  fly postgres attach --app remix-gospel-stack remix-gospel-stack-db
+- Create a database for both your staging and production environments:
 
-  fly postgres create --name remix-gospel-stack-staging-db
-  fly postgres attach --app remix-gospel-stack-staging remix-gospel-stack-staging-db
-  ```
+#### PostgreSQL
 
-  > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
+```sh
+fly postgres create --name remix-gospel-stack-db
+fly postgres attach --app remix-gospel-stack remix-gospel-stack-db
+
+fly postgres create --name remix-gospel-stack-staging-db
+fly postgres attach --app remix-gospel-stack-staging remix-gospel-stack-staging-db
+```
+
+> **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
 
 Fly will take care of setting the `DATABASE_URL` secret for you.
+
+#### SQLite Litefs
+
+Create a persistent volume for the sqlite database for both your staging and production environments. Run the following (feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well):
+
+```sh
+fly volumes create data --region cdg --size 1 --app remix-gospel-stack
+fly volumes create data --region cdg --size 1 --app remix-gospel-stack-staging
+```
+
+Then attach the volumes to the apps:
+
+```sh
+fly consul attach --app remix-gospel-stack
+fly consul attach --app remix-gospel-stack-staging
+```
+
+#### Start coding!
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 

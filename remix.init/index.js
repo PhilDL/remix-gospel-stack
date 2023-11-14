@@ -57,9 +57,6 @@ ${spaces()}${chalk.green(
     `✔  ${chalk.bold(ORG_NAME)} remix app and packages setup.`,
   )}
 `);
-  // console.log(`${spaces()}◼  Installing dependencies with pnpm..`);
-
-  // execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
   const { db } = await inquirer.prompt([
     {
@@ -67,9 +64,9 @@ ${spaces()}${chalk.green(
       type: "list",
       message: `Which database do you want to use? (Deployed to Fly.io)`,
       choices: [
-        { name: `${spaces(9)}PostgreSQL`, value: "postgres" },
+        { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
         {
-          name: `${spaces(9)}Distributed SQLite (Litefs)`,
+          name: `${spaces(6)}Distributed SQLite (Litefs)`,
           value: "sqlite-litefs",
         },
       ],
