@@ -51,7 +51,7 @@ const main = async ({ rootDirectory }) => {
   console.log("✨ App personalization complete.");
   console.log("📦 Installing dependencies...");
 
-  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
+  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
   const { db } = await inquirer.prompt([
     {
@@ -75,10 +75,10 @@ const main = async ({ rootDirectory }) => {
 
   execSync("pnpm run format", {
     cwd: rootDirectory,
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
-  execSync("pnpm i", { cwd: rootDirectory, stdio: "inherit" });
+  execSync("pnpm i", { cwd: rootDirectory, stdio: "ignore" });
 
   console.log(
     `
