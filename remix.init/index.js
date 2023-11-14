@@ -4,12 +4,15 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const inquirer = require("inquirer");
 const replace = require("replace-in-file");
+const chalk = require("chalk");
 
 const escapeRegExp = (string) =>
   // $& means the whole matched string
   string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
+
+const spaces = (spaces = 6) => Array(spaces).fill(" ").join("");
 
 const main = async ({ rootDirectory }) => {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
@@ -26,8 +29,9 @@ const main = async ({ rootDirectory }) => {
     {
       name: "ORG_NAME",
       type: "input",
-      message: "What is the name of the org?",
+      message: "What is the name of the monorepo @org?",
       default: `@${DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")}`,
+      prefix: `${spaces(6)}◼ `,
     },
   ]);
   if (!ORG_NAME.startsWith("@")) {
@@ -48,26 +52,35 @@ const main = async ({ rootDirectory }) => {
     ORG_NAME,
     APP_NAME,
   });
-  console.log("✨ App personalization complete.");
-  console.log("📦 Installing dependencies...");
-
-  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "inherit" });
+  console.log(`
+${spaces()}${chalk.green(
+    `✔  ${chalk.bold(ORG_NAME)} remix app and packages setup.`,
+  )}
+`);
 
   const { db } = await inquirer.prompt([
     {
       name: "db",
       type: "list",
-      message: "📼 Which database do you want to use? (Deployed to Fly.io)",
-      choices: ["postgres", "sqlite-litefs"],
+      message: `Which database do you want to use? (Deployed to Fly.io)`,
+      choices: [
+        { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
+        {
+          name: `${spaces(6)}Distributed SQLite (Litefs)`,
+          value: "sqlite-litefs",
+        },
+      ],
       default: "postgres",
+      prefix: `${spaces(6)}◼ `,
     },
   ]);
 
+  console.log(`${spaces()}◼  Preparing monorepo for ${db}...`);
   execSync(
     `pnpm turbo gen scaffold-database --args ${ORG_NAME}/remix-app remix-app ${db}`,
     {
       cwd: rootDirectory,
-      stdio: "inherit",
+      stdio: "ignore",
     },
   );
 
@@ -75,37 +88,45 @@ const main = async ({ rootDirectory }) => {
 
   execSync("pnpm run format", {
     cwd: rootDirectory,
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
-  execSync("pnpm i", { cwd: rootDirectory, stdio: "inherit" });
+  execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
   console.log(
     `
-✅ Setup is almost complete. Follow these steps to finish initialization:
-
-  cd ${rootDirectory}
-
-- Run setup (this generate First migration, prisma client, seed db, build):
-  pnpm run setup
+${chalk.green(
+  `
+${spaces()}✔  Setup is almost complete. Follow these steps to finish initialization:
+`,
+)}
+${spaces(
+  9,
+)}- CD and Run setup (this generate First migration, prisma client, seed db, build):
+${spaces(9)}  ${chalk.yellow(chalk.bold(`cd ${rootDirectory}`))}
+${spaces(9)}  ${chalk.yellow(chalk.bold("pnpm run setup"))}
 
 ${
   db === "postgres"
     ? `
-- Run all the apps/packages dev scripts concurrently:
-  pnpm run dev
+${spaces(9)}- Run all the apps/packages dev scripts concurrently:
+${spaces(9)}  ${chalk.bold("pnpm run dev")}
 
-OR
+${spaces(9)}OR
 
-- Run only the Remix app:
-  pnpm run dev --filter=${ORG_NAME}/remix-app
+${spaces(9)}- Run only the Remix app:
+${spaces(9)}  ${chalk.yellow(
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+      )}
 `
     : `
-- Run the remix app:
-  pnpm run dev --filter=${ORG_NAME}/remix-app
+${spaces(9)}- Run the remix app:
+${spaces(9)}  ${chalk.yellow(
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+      )}
 
-⚠️ With local sqlite database you cannot run the NextJS app concurrently to the 
-  remix app, as they will both connect on the same sqlite file creating errors!
+${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
+${spaces()}   to the remix app, as they will both connect on the same sqlite file creating errors!
 `
 }`.trim(),
   );
