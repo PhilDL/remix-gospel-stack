@@ -11,7 +11,7 @@ const escapeRegExp = (string) =>
 
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
-const spaces = (spaces = 9) => Array(spaces).fill(" ").join("");
+const spaces = (spaces = 6) => Array(spaces).fill(" ").join("");
 
 const main = async ({ rootDirectory }) => {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
@@ -50,8 +50,8 @@ const main = async ({ rootDirectory }) => {
     ORG_NAME,
     APP_NAME,
   });
-  console.log(`${spaces()}✨ ${ORG_NAME} remix app and packages setup.`);
-  console.log(`${spaces()}📦 Installing dependencies with pnpm..`);
+  console.log(`${spaces()}✨  ${ORG_NAME} remix app and packages setup.`);
+  console.log(`${spaces()}📦  Installing dependencies with pnpm..`);
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
@@ -59,7 +59,7 @@ const main = async ({ rootDirectory }) => {
     {
       name: "db",
       type: "list",
-      message: `${spaces()}📼 Which database do you want to use? (Deployed to Fly.io)`,
+      message: `📼 Which database do you want to use? (Deployed to Fly.io)`,
       choices: ["postgres", "sqlite-litefs"],
       default: "postgres",
       prefix: spaces(),
