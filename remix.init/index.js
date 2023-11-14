@@ -28,9 +28,9 @@ const main = async ({ rootDirectory }) => {
     {
       name: "ORG_NAME",
       type: "input",
-      message: "What is the name of the org?",
+      message: "What is the name of the monorepo @org?",
       default: `@${DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")}`,
-      prefix: `${spaces(5)}◼  `,
+      prefix: `${spaces(5)}◼ `,
     },
   ]);
   if (!ORG_NAME.startsWith("@")) {
@@ -86,30 +86,32 @@ const main = async ({ rootDirectory }) => {
 
   console.log(
     `
-${spaces()}✅ Setup is almost complete. Follow these steps to finish initialization:
+${spaces()}✔  Setup is almost complete. Follow these steps to finish initialization:
 
-  cd ${rootDirectory}
+${spaces(9)} cd ${rootDirectory}
 
-- Run setup (this generate First migration, prisma client, seed db, bui ld):
-  pnpm run setup
+${spaces(
+  9,
+)}- Run setup (this generate First migration, prisma client, seed db, bui ld):
+${spaces(9)}  pnpm run setup
 
 ${
   db === "postgres"
     ? `
-- Run all the apps/packages dev scripts concurrently:
-  pnpm run dev
+${spaces(9)}- Run all the apps/packages dev scripts concurrently:
+${spaces(9)}  pnpm run dev
 
-OR
+${spaces(9)}OR
 
-- Run only the Remix app:
-  pnpm run dev --filter=${ORG_NAME}/remix-app
+${spaces(9)}- Run only the Remix app:
+${spaces(9)}  pnpm run dev --filter=${ORG_NAME}/remix-app
 `
     : `
-- Run the remix app:
-  pnpm run dev --filter=${ORG_NAME}/remix-app
+${spaces(9)}- Run the remix app:
+${spaces(9)}  pnpm run dev --filter=${ORG_NAME}/remix-app
 
-⚠️ With local sqlite database you cannot run the NextJS app concurrently to the 
-  remix app, as they will both connect on the same sqlite file creating errors!
+${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
+${spaces()}   to the remix app, as they will both connect on the same sqlite file creating errors!
 `
 }`.trim(),
   );
