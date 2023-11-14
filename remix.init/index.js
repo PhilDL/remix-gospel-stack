@@ -92,16 +92,16 @@ ${spaces()}${chalk.green(
 
   console.log(
     `
-
-${spaces()}${chalk.green(
-      "✔  Setup is almost complete. Follow these steps to finish initialization:",
-    )}
-
-${spaces(9)}  ${chalk.bold("cd ${rootDirectory}")}
+${chalk.green(
+  `
+${spaces()}✔  Setup is almost complete. Follow these steps to finish initialization:
+`,
+)}
 ${spaces(
   9,
-)}- Run setup (this generate First migration, prisma client, seed db, bui ld):
-${spaces(9)}  ${chalk.bold("pnpm run setup")}
+)}- CD and Run setup (this generate First migration, prisma client, seed db, bui ld):
+${spaces(9)}  ${chalk.yellow(chalk.bold(`cd ${rootDirectory}`))}
+${spaces(9)}  ${chalk.yellow(chalk.bold("pnpm run setup"))}
 
 ${
   db === "postgres"
@@ -112,11 +112,15 @@ ${spaces(9)}  ${chalk.bold("pnpm run dev")}
 ${spaces(9)}OR
 
 ${spaces(9)}- Run only the Remix app:
-${spaces(9)}  ${chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`)}
+${spaces(9)}  ${chalk.yellow(
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+      )}
 `
     : `
 ${spaces(9)}- Run the remix app:
-${spaces(9)}  ${chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app)`)}
+${spaces(9)}  ${chalk.yellow(
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+      )}
 
 ${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
 ${spaces()}   to the remix app, as they will both connect on the same sqlite file creating errors!
