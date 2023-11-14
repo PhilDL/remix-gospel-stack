@@ -51,7 +51,9 @@ const main = async ({ rootDirectory }) => {
     ORG_NAME,
     APP_NAME,
   });
-  console.log(`${spaces()}✔  ${ORG_NAME} remix app and packages setup.`);
+  console.log(`
+${spaces()}✔  ${ORG_NAME} remix app and packages setup.
+`);
   // console.log(`${spaces()}◼  Installing dependencies with pnpm..`);
 
   // execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
@@ -63,7 +65,7 @@ const main = async ({ rootDirectory }) => {
       message: `Which database do you want to use? (Deployed to Fly.io)`,
       choices: ["postgres", "sqlite-litefs"],
       default: "postgres",
-      prefix: `${spaces(6)}◼  `,
+      prefix: `${spaces(6)}◼ `,
     },
   ]);
 
@@ -72,7 +74,7 @@ const main = async ({ rootDirectory }) => {
     `pnpm turbo gen scaffold-database --args ${ORG_NAME}/remix-app remix-app ${db}`,
     {
       cwd: rootDirectory,
-      stdio: "inherit",
+      stdio: "ignore",
     },
   );
 
@@ -87,6 +89,7 @@ const main = async ({ rootDirectory }) => {
 
   console.log(
     `
+
 ${spaces()}✔  Setup is almost complete. Follow these steps to finish initialization:
 
 ${spaces(9)} cd ${rootDirectory}
