@@ -30,6 +30,7 @@ const main = async ({ rootDirectory }) => {
       type: "input",
       message: "What is the name of the org?",
       default: `@${DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")}`,
+      prefix: `${spaces(5)}◼  `,
     },
   ]);
   if (!ORG_NAME.startsWith("@")) {
@@ -50,8 +51,8 @@ const main = async ({ rootDirectory }) => {
     ORG_NAME,
     APP_NAME,
   });
-  console.log(`${spaces()}✨ ${ORG_NAME} remix app and packages setup.`);
-  console.log(`${spaces()}📦 Installing dependencies with pnpm..`);
+  console.log(`${spaces()}✔  ${ORG_NAME} remix app and packages setup.`);
+  console.log(`${spaces()}◼  Installing dependencies with pnpm..`);
 
   execSync("pnpm i --fix-lockfile", { cwd: rootDirectory, stdio: "ignore" });
 
@@ -59,10 +60,10 @@ const main = async ({ rootDirectory }) => {
     {
       name: "db",
       type: "list",
-      message: `📼 Which database do you want to use? (Deployed to Fly.io)`,
+      message: `Which database do you want to use? (Deployed to Fly.io)`,
       choices: ["postgres", "sqlite-litefs"],
       default: "postgres",
-      prefix: spaces(5),
+      prefix: `${spaces(5)}◼  `,
     },
   ]);
 
@@ -89,7 +90,7 @@ ${spaces()}✅ Setup is almost complete. Follow these steps to finish initializa
 
   cd ${rootDirectory}
 
-- Run setup (this generate First migration, prisma client, seed db, build):
+- Run setup (this generate First migration, prisma client, seed db, bui ld):
   pnpm run setup
 
 ${
