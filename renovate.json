@@ -7,7 +7,7 @@
     "schedule:weekly",
     ":maintainLockFilesWeekly",
     "docker:disableMajor",
-    "node:disableMajor"
+    "engines:disableMajor"
   ],
   "lockFileMaintenance": {
     "extends": ["group:all"],
