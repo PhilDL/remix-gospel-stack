@@ -13,14 +13,5 @@
     "extends": ["group:all"],
     "commitMessageAction": "Update"
   },
-  "packageRules": [
-    {
-      "description": "Don't bump engines field in package.json",
-      "matchPackageNames": ["node"],
-      "matchManagers": ["npm", "pnpm"],
-      "matchDepTypes": ["engines"],
-      "rangeStrategy": "auto"
-    }
-  ],
   "ignoreDeps": []
 }
