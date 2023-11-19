@@ -2,16 +2,23 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "separateMajorMinor": false,
   "extends": [
+    "config:recommended",
     ":preserveSemverRanges",
-    "group:all",
+    "group:allNonMajor",
     "schedule:weekly",
     ":maintainLockFilesWeekly",
     "docker:disableMajor",
-    "engines:disableMajor"
+    "npm:unpublishSafe"
   ],
   "lockFileMaintenance": {
     "extends": ["group:all"],
     "commitMessageAction": "Update"
   },
+  "packageRules": [
+    {
+      "packageNames": ["node"],
+      "enabled": false
+    }
+  ],
   "ignoreDeps": []
 }
