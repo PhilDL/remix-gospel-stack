@@ -17,7 +17,7 @@
     {
       "description": "Don't bump engines field in package.json",
       "matchPackageNames": ["node"],
-      "matchManagers": ["npm"],
+      "matchManagers": ["npm", "pnpm"],
       "matchDepTypes": ["engines"],
       "rangeStrategy": "auto"
     }
