@@ -50,5 +50,5 @@
     "typescript": "^5.2.2",
     "@remix-run/dev": "^2.0.0"
   },
-  "packageManager": "pnpm@8.10.2"
+  "packageManager": "pnpm@8.10.5"
 }
