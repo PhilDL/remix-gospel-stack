@@ -16,7 +16,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.294.0",
-    "tailwind-merge": "^2.0.0"
+    "tailwind-merge": "^2.1.0"
   },
   "peerDependencies": {
     "@remix-run/dev": "^2.0.0",
