@@ -6,7 +6,11 @@ module.exports = {
     "../../packages/ui/src/**/*",
     "../../packages/internal-nobuild/src/**/*",
   ],
-  serverDependenciesToBundle: ["tailwind-merge"],
+  serverDependenciesToBundle: [
+    "tailwind-merge",
+    "@remix-gospel-stack/internal-nobuild",
+    "@remix-gospel-stack/ui",
+  ],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
