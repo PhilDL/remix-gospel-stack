@@ -7,7 +7,6 @@ module.exports = {
     "../../packages/internal-nobuild/src/**/*",
   ],
   serverDependenciesToBundle: [
-    "tailwind-merge",
     "@remix-gospel-stack/internal-nobuild",
     "@remix-gospel-stack/ui",
   ],
