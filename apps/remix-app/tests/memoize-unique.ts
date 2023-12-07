@@ -41,12 +41,12 @@ export interface MemoizeUniqueOptions<T> {
 
 export type MemoizeUniqueReturn<
   T,
-  U extends readonly any[] = readonly any[]
+  U extends readonly any[] = readonly any[],
 > = (...args: [...U]) => T;
 
 export function memoizeUnique<T, U extends readonly any[] = readonly any[]>(
   callback: MemoizeUniqueReturn<T, U>,
-  options: MemoizeUniqueOptions<T> = {}
+  options: MemoizeUniqueOptions<T> = {},
 ): MemoizeUniqueReturn<T, U> {
   const { maxTime = 50, maxRetries = 50, store = {} } = options;
   let { exclude = [] } = options;
@@ -64,7 +64,7 @@ export function memoizeUnique<T, U extends readonly any[] = readonly any[]>(
     do {
       if (Date.now() - startTime > maxTime) {
         throw new Error(
-          `memoizeUnique: maxTime of ${maxTime}ms exceeded after ${retries} retries`
+          `memoizeUnique: maxTime of ${maxTime}ms exceeded after ${retries} retries`,
         );
       }
 

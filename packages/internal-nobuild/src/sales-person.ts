@@ -7,7 +7,7 @@ export type SalesPerson = Omit<SalesPersonDirectory[0], "regexp">;
 
 export function lookUpSalesPersonForZipcode(
   zipcode: string,
-  salesPersonDirectory: SalesPersonDirectory
+  salesPersonDirectory: SalesPersonDirectory,
 ): SalesPerson | undefined {
   for (const salesPerson of salesPersonDirectory) {
     if (salesPerson.regexp.test(zipcode)) {
