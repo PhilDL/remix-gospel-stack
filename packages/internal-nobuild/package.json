@@ -17,8 +17,8 @@
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "^5.0.5",
     "tsup": "^8.0.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.6",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.6"
   },

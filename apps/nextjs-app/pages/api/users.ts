@@ -9,7 +9,7 @@ import { prisma } from "@remix-gospel-stack/database";
  */
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "GET") {
     res.setHeader("Allow", ["GET"]);

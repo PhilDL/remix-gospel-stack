@@ -53,7 +53,7 @@ export default defineConfig((opts) => {
         const pkgJson = JSON.parse(
           await readFile("./package.json", {
             encoding: "utf-8",
-          })
+          }),
         ) as PackageJson;
         pkgJson.exports = {
           "./package.json": "./package.json",

@@ -8,7 +8,7 @@ const hydrate = () =>
       document,
       <StrictMode>
         <RemixBrowser />
-      </StrictMode>
+      </StrictMode>,
     );
   });
 
