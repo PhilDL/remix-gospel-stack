@@ -8,15 +8,15 @@ import {
 
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
-import { Button } from "@remix-gospel-stack/ui/button";
+import { Button } from "@remix-gospel-stack/ui/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@remix-gospel-stack/ui/card";
-import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
+} from "@remix-gospel-stack/ui/components/card";
+import { Checkbox } from "@remix-gospel-stack/ui/components/checkbox";
 
 // import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
 

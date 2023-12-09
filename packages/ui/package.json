@@ -4,11 +4,16 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "dev": "run-p dev:*",
+    "dev:tsup": "tsup --watch",
+    "dev:vite": "vite",
     "build": "tsup",
-    "dev": "tsup --watch",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "rm -rf dist",
     "lint": "eslint ./src --fix",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -16,7 +21,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.294.0",
-    "tailwind-merge": "^2.1.0"
+    "tailwind-merge": "^2.1.0",
+    "npm-run-all": "^4.1.5"
   },
   "peerDependencies": {
     "@remix-run/dev": "^2.0.0",
@@ -31,10 +37,13 @@
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@remix-run/dev": "^2.3.1",
     "@remix-run/node": "^2.3.1",
+    "eslint-plugin-storybook": "^0.6.15",
+    "@storybook/cli": "^7.6.4",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "postcss": "^8.4.32",
@@ -43,7 +52,18 @@
     "tailwindcss": "^3.3.6",
     "tailwindcss-animate": "^1.0.7",
     "tsup": "^8.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0",
+    "vite-tsconfig-paths": "^4.2.1",
+    "storybook": "^7.6.4",
+    "@storybook/react": "^7.6.4",
+    "@storybook/react-vite": "^7.6.4",
+    "@storybook/addon-links": "^7.6.4",
+    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/blocks": "^7.6.4",
+    "@storybook/addon-onboarding": "^1.0.9",
+    "@storybook/addon-interactions": "^7.6.4",
+    "@storybook/test": "^7.6.4"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -57,29 +77,38 @@
       "types": "./src/tailwind/index.ts",
       "default": "./dist/tailwind/index.mjs"
     },
-    "./checkbox": {
-      "import": "./src/checkbox.tsx",
-      "types": "./src/checkbox.tsx"
+    "./components/checkbox": {
+      "import": "./src/components/checkbox.tsx",
+      "types": "./src/components/checkbox.tsx"
     },
-    "./button": {
-      "import": "./src/button.tsx",
-      "types": "./src/button.tsx"
+    "./components/button": {
+      "import": "./src/components/button.tsx",
+      "types": "./src/components/button.tsx"
     },
-    "./card": {
-      "import": "./src/card.tsx",
-      "types": "./src/card.tsx"
+    "./components/card": {
+      "import": "./src/components/card.tsx",
+      "types": "./src/components/card.tsx"
     }
   },
   "typesVersions": {
     "*": {
       "button": [
-        "src/button.tsx"
+        "src/components/button.tsx"
       ],
       "checkbox": [
-        "src/checkbox.tsx"
+        "src/components/checkbox.tsx"
       ],
       "card": [
-        "src/card.tsx"
+        "src/components/card.tsx"
+      ],
+      "components/checkbox": [
+        "src/components/checkbox.tsx"
+      ],
+      "components/button": [
+        "src/components/button.tsx"
+      ],
+      "components/card": [
+        "src/components/card.tsx"
       ]
     }
   }

@@ -1,1 +1,6 @@
-module.exports = require("@remix-gospel-stack/eslint-config/remix");
+module.exports = {
+  extends: [
+    "@remix-gospel-stack/eslint-config/remix",
+    "plugin:storybook/recommended",
+  ],
+};
