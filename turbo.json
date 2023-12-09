@@ -39,6 +39,9 @@
     "dev": {
       "cache": false
     },
+    "storybook": {
+      "outputs": []
+    },
     "generate": {
       "dependsOn": ["^generate"]
     },
