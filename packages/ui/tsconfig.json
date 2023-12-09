@@ -1,5 +1,12 @@
 {
   "extends": "@remix-gospel-stack/tsconfig/react.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+  },
   "include": [".eslintrc.js", ".prettierrc.js", "src", "*.ts", "*.cjs"],
+  "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["node_modules"]
 }

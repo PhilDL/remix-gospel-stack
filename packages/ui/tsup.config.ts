@@ -3,7 +3,7 @@ import { readFile, writeFile } from "fs/promises";
 import { defineConfig, type Options } from "tsup";
 
 const client = [
-  "./src/checkbox.tsx",
+  "./src/components/checkbox.tsx",
   // "./src/calendar.tsx",
   // "./src/command.tsx",
   // "./src/dialog.tsx",
@@ -20,9 +20,9 @@ const client = [
 ];
 
 const server = [
-  "./src/button.tsx",
+  "./src/components/button.tsx",
   // "./src/icons.tsx",
-  "./src/card.tsx",
+  "./src/components/card.tsx",
   // "./src/toast.tsx",
 ];
 

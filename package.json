@@ -17,6 +17,7 @@
     "db:seed": "turbo run db:seed --no-cache",
     "db:migrate:force": "turbo run db:migrate:force --no-cache",
     "dev": "turbo run dev --parallel",
+    "storybook": "turbo run storybook",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "turbo run generate",
     "lint": "turbo run lint",
