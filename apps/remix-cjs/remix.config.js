@@ -6,10 +6,10 @@ export default {
     "../../packages/ui/src/**/*",
     "../../packages/internal-nobuild/src/**/*",
   ],
-  // serverDependenciesToBundle: [
-  //   "@remix-gospel-stack/internal-nobuild",
-  //   "@remix-gospel-stack/ui",
-  // ],
+  serverDependenciesToBundle: [
+    "@remix-gospel-stack/internal-nobuild",
+    "@remix-gospel-stack/ui",
+  ],
   tailwind: true,
   postcss: true,
   future: {},
