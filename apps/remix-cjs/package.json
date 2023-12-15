@@ -2,6 +2,7 @@
   "private": true,
   "name": "@remix-gospel-stack/remix-cjs",
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
