@@ -35,6 +35,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 
 - `apps` Folder containing the applications
   - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app in ESM.
+  - [`remix-vercel`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-vercel): the [Remix.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
   - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
 

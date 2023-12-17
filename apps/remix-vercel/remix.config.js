@@ -1,5 +1,5 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-module.exports = {
+export default {
   ignoredRouteFiles: ["**/.*"],
   // Vercel adapter don't need server and serveruildPath
   watchPaths: [
@@ -10,10 +10,6 @@ module.exports = {
     "@remix-gospel-stack/internal-nobuild",
     "@remix-gospel-stack/ui",
   ],
-  // appDirectory: "app",
-  // assetsBuildDirectory: "public/build",
-  // publicPath: "/build/",
-  serverModuleFormat: "cjs",
   tailwind: true,
   postcss: true,
   future: {},
