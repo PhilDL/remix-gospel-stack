@@ -55,7 +55,7 @@ export default function Index() {
                 </span>
               </h1>
               <p className="mx-auto my-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                This a Vercel Remix app in CJS.
+                This a Remix app with the Vercel adapter
               </p>
               <div className="mx-auto flex w-full flex-row items-center justify-between gap-8">
                 <a
