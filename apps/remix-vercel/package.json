@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@remix-gospel-stack/remix-cjs",
+  "name": "@remix-gospel-stack/remix-vercel",
   "sideEffects": false,
   "type": "module",
   "scripts": {
