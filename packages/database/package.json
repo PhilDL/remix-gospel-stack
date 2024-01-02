@@ -27,17 +27,17 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0"
+    "@prisma/client": "^5.7.1"
   },
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.6",
     "dotenv-cli": "^7.3.0",
-    "prisma": "^5.7.0",
+    "prisma": "^5.7.1",
     "rimraf": "^5.0.5",
     "tsup": "^8.0.0",
-    "tsx": "^4.6.2",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }
