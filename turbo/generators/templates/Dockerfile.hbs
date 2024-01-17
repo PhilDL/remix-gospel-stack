@@ -72,7 +72,7 @@ COPY --from=builder /app/apps/$APP_DIRNAME/server-build ./apps/$APP_DIRNAME/serv
 
 {{#ifEquals dbType "sqlite-litefs"}}
 # prepare for litefs
-COPY --from=flyio/litefs:0.5.10 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ADD ./apps/$APP_DIRNAME/other/litefs.yml /etc/litefs.yml
 RUN mkdir -p /data ${LITEFS_DIR}
 

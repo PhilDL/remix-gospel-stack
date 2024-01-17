@@ -38,26 +38,6 @@ const main = async ({ rootDirectory }) => {
     ORG_NAME = `@${ORG_NAME}`;
   }
 
-  await rootConfigsRename({
-    rootDirectory,
-    orgNameRegex,
-    appNameRegex,
-    ORG_NAME,
-    APP_NAME,
-  });
-  await renameAll({
-    rootDirectory,
-    orgNameRegex,
-    appNameRegex,
-    ORG_NAME,
-    APP_NAME,
-  });
-  console.log(`
-${spaces()}${chalk.green(
-    `✔  ${chalk.bold(ORG_NAME)} remix app and packages setup.`,
-  )}
-`);
-
   const { db } = await inquirer.prompt([
     {
       name: "db",
@@ -83,6 +63,26 @@ ${spaces()}${chalk.green(
       stdio: "ignore",
     },
   );
+
+  await rootConfigsRename({
+    rootDirectory,
+    orgNameRegex,
+    appNameRegex,
+    ORG_NAME,
+    APP_NAME,
+  });
+  await renameAll({
+    rootDirectory,
+    orgNameRegex,
+    appNameRegex,
+    ORG_NAME,
+    APP_NAME,
+  });
+  console.log(`
+${spaces()}${chalk.green(
+    `✔  ${chalk.bold(ORG_NAME)} remix app and packages setup.`,
+  )}
+`);
 
   await copyENV({ rootDirectory });
 
@@ -146,6 +146,13 @@ const rootConfigsRename = async ({
     "remix-app",
     "fly.toml",
   );
+  const LITEFS_YML_PATH = path.join(
+    rootDirectory,
+    "apps",
+    "remix-app",
+    "other",
+    "litefs.yml",
+  );
   const PKG_PATH = path.join(rootDirectory, "package.json");
   // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
@@ -157,6 +164,7 @@ const rootConfigsRename = async ({
   );
   const TURBO_PATH = path.join(rootDirectory, "turbo.json");
   const DOCKER_COMPOSE_PATH = path.join(rootDirectory, "docker-compose.yml");
+
   const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
 
   const [
@@ -167,7 +175,6 @@ const rootConfigsRename = async ({
     prettier,
     githubCI,
     turbo,
-    dockerCompose,
   ] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
@@ -176,7 +183,6 @@ const rootConfigsRename = async ({
     fs.readFile(PRETTIER_PATH, "utf-8"),
     fs.readFile(DEPLOY_PATH, "utf-8"),
     fs.readFile(TURBO_PATH, "utf-8"),
-    fs.readFile(DOCKER_COMPOSE_PATH, "utf-8"),
   ]);
 
   const newFlyTomlContent = flyTomlContent.replace(
@@ -193,10 +199,39 @@ const rootConfigsRename = async ({
     .replaceAll(new RegExp(appNameRegex, "g"), APP_NAME);
   const newGithubCI = githubCI.replace(globalOrgNameRegex, ORG_NAME);
   const newTurbo = turbo.replace(globalOrgNameRegex, ORG_NAME);
-  const newDockerCompose = dockerCompose.replaceAll(
-    "remix-gospel-stack-postgres",
-    `${APP_NAME}-postgres`,
-  );
+
+  try {
+    const dockerCompose = await fs.readFile(DOCKER_COMPOSE_PATH, "utf-8");
+    const newDockerCompose = dockerCompose.replaceAll(
+      "remix-gospel-stack-postgres",
+      `${APP_NAME}-postgres`,
+    );
+    await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);
+  } catch (error) {
+    // pass, no Dockerfile for that setup
+  }
+
+  try {
+    const litefsYML = await fs.readFile(LITEFS_YML_PATH, "utf-8");
+    const newLitefsYML = litefsYML
+      .replace(globalOrgNameRegex, ORG_NAME)
+      .replaceAll(new RegExp(appNameRegex, "g"), APP_NAME);
+    await fs.writeFile(LITEFS_YML_PATH, newLitefsYML);
+  } catch (error) {
+    // pass, no litefs.yml for that setup
+  }
+
+  try {
+    const DOCKER_COMPOSE_PATH = path.join(rootDirectory, "docker-compose.yml");
+    const dockerCompose = await fs.readFile(DOCKER_COMPOSE_PATH, "utf-8");
+    const newDockerCompose = dockerCompose.replaceAll(
+      "remix-gospel-stack-postgres",
+      `${APP_NAME}-postgres`,
+    );
+    await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);
+  } catch (error) {
+    // pass, no Dockerfile for that setup
+  }
 
   const fileOperationPromises = [
     fs.writeFile(FLY_TOML_PATH, newFlyTomlContent),
@@ -206,7 +241,6 @@ const rootConfigsRename = async ({
     fs.writeFile(PRETTIER_PATH, newPrettier),
     fs.writeFile(DEPLOY_PATH, newGithubCI),
     fs.writeFile(TURBO_PATH, newTurbo),
-    fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose),
     fs.rm(path.join(rootDirectory, "LICENSE.md")),
     fs.rm(path.join(rootDirectory, "CONTRIBUTING.md")),
   ];
