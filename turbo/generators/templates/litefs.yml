@@ -26,7 +26,7 @@ lease:
 
   consul:
     url: "${FLY_CONSUL_URL}"
-    key: "atelier-egon-com-litefs/${FLY_APP_NAME}"
+    key: "remix-gospel-stack/${FLY_APP_NAME}"
 
 exec:
   - cmd: node ./apps/remix-app/other/setup-swap.js
