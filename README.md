@@ -153,14 +153,10 @@ Check the `turbo.json` file to see the available pipelines.
   ```
 - Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
 
-## Deployement
+## Deployement on fly.io – PostgreSQL
 
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
-
-_(Documentation for deployment with litefs coming soon)_
-
-### Setup Deployement to fly.io (PostgreSQL)
 
 Prior to your first deployment, you'll need to do a few things:
 
@@ -193,7 +189,7 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Create a database for both your staging and production environments:
 
-#### PostgreSQL
+Database creation:
 
 ```sh
 fly postgres create --name remix-gospel-stack-db
@@ -207,7 +203,39 @@ fly postgres attach --app remix-gospel-stack-staging remix-gospel-stack-staging-
 
 Fly will take care of setting the `DATABASE_URL` secret for you.
 
-#### SQLite Litefs
+## Deployement on fly.io – SQLite Litefs
+
+> **Warning**
+> All the following commands should be launched from the **monorepo root directory**
+
+Prior to your first deployment, you'll need to do a few things:
+
+- First singup the fly CLI
+  ```bash
+  fly auth signup
+  ```
+- Create two apps on Fly, one for staging and one for production:
+
+  ```sh
+  fly apps create remix-gospel-stack
+  fly apps create remix-gospel-stack-staging
+  ```
+
+  > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
+
+- Initialize Git.
+
+  ```sh
+  git init
+  ```
+
+- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
+
+  ```sh
+  git remote add origin <ORIGIN_URL>
+  ```
+
+- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
 Create a persistent volume for the sqlite database for both your staging and production environments. Run the following (feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well):
 
