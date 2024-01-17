@@ -129,8 +129,38 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           fs.unlinkSync(
             path.join(plop.getDestBasePath(), "docker-compose.yml"),
           );
+          fs.copyFileSync(
+            path.join(
+              plop.getDestBasePath(),
+              "turbo",
+              "generators",
+              "templates",
+              "litefs.yml",
+            ),
+            path.join(
+              plop.getDestBasePath(),
+              "apps",
+              answers.appDirname ?? "remix-app",
+              "other",
+              "litefs.yml",
+            ),
+          );
           return "Removed postgres docker-compose files";
         }
+        try {
+          fs.unlinkSync(
+            path.join(
+              plop.getDestBasePath(),
+              "apps",
+              answers.appDirname ?? "remix-app",
+              "other",
+              "litefs.yml",
+            ),
+          );
+        } catch (err) {
+          // ignore
+        }
+
         return "Postgres docker-compose files kept";
       },
       async function updatePrismaSchema(answers: {
