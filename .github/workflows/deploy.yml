@@ -18,7 +18,7 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -82,7 +82,7 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -118,7 +118,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -172,13 +172,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.2
+        uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
@@ -236,13 +236,13 @@ jobs:
 
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.2
+        uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
