@@ -79,7 +79,7 @@
     "happy-dom": "^13.0.0",
     "msw": "^2.0.13",
     "nodemon": "^3.0.2",
-    "npm-run-all2": "^5.0.0",
+    "npm-run-all2": "^6.0.0",
     "postcss": "^8.4.33",
     "postcss-load-config": "^5.0.0",
     "start-server-and-test": "^2.0.3",
