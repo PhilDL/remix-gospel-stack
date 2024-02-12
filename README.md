@@ -27,7 +27,7 @@ pnpm remix init
 
 ## What's in the stack
 
-This stack is a Remix oriented Monorepo powered by turborepo abd [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container.
+This stack is a Remix oriented Monorepo powered by turborepo and [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container.
 
 _This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee._
 
