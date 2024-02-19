@@ -1,7 +1,7 @@
 {
   "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.ts"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
