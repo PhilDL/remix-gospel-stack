@@ -17,7 +17,7 @@ import {
 } from "@remix-gospel-stack/ui/components/card";
 import { Checkbox } from "@remix-gospel-stack/ui/components/checkbox";
 
-// export const config = { runtime: "edge" };
+export const config = { runtime: "edge" };
 
 export const meta: MetaFunction = () => {
   return [
