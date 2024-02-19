@@ -302,8 +302,8 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       isbot:
-        specifier: ^4.3.0
-        version: 4.3.0
+        specifier: ^5.0.0
+        version: 5.1.0
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -10848,8 +10848,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /isbot@4.3.0:
-    resolution: {integrity: sha512-cohu4X66cXP120xwF+UubL+BQzOQLN1O0DOPOmkci6elgZ7o6XIn8B3FARk59RL0aX3cGTq8Ta7MVOWpay3rbw==}
+  /isbot@5.1.0:
+    resolution: {integrity: sha512-cWTMpcI8G0BjxVg/UH+fMF16yYxPup7QL7v7FuJqCFOTuB0yuLKxonWyEDiKG/DC9LIxEvy0COQkMDNkxpY0jQ==}
     engines: {node: '>=18'}
     dev: false
 
