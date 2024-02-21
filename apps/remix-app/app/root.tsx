@@ -7,18 +7,13 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-// see https://github.com/remix-run/remix/pull/8829
-// "Fix build errors with Vite .css?url imports #8829"
-// import fontStylesheet from "./styles/fonts.css?url";
-// import tailwindStylesheetUrl from "./styles/tailwind.css?url";
-
-import "./styles/fonts.css";
-import "./styles/tailwind.css";
+import fontStylesheet from "./styles/fonts.css?url";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
 export const links: LinksFunction = () => {
   return [
-    // { rel: "stylesheet", href: fontStylesheet },
-    // { rel: "stylesheet", href: tailwindStylesheetUrl },
+    { rel: "stylesheet", href: fontStylesheet },
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
   ];
 };
 
