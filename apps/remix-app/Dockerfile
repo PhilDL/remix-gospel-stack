@@ -53,10 +53,9 @@ ENV NODE_ENV production
 
 COPY --from=pruner /app/out/full/ .
 COPY --from=production-deps /app .
-COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
+COPY --from=builder /app/apps/$APP_DIRNAME/server.mjs ./apps/$APP_DIRNAME/server.mjs
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
 COPY --from=builder /app/apps/$APP_DIRNAME/public ./apps/$APP_DIRNAME/public
-COPY --from=builder /app/apps/$APP_DIRNAME/server-build ./apps/$APP_DIRNAME/server-build
 
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-remix-production"]

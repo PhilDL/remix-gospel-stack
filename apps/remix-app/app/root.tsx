@@ -1,20 +1,24 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
 
-import fontStylesheet from "./styles/fonts.css";
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+// see https://github.com/remix-run/remix/pull/8829
+// "Fix build errors with Vite .css?url imports #8829"
+// import fontStylesheet from "./styles/fonts.css?url";
+// import tailwindStylesheetUrl from "./styles/tailwind.css?url";
+
+import "./styles/fonts.css";
+import "./styles/tailwind.css";
 
 export const links: LinksFunction = () => {
   return [
-    { rel: "stylesheet", href: fontStylesheet },
-    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    // { rel: "stylesheet", href: fontStylesheet },
+    // { rel: "stylesheet", href: tailwindStylesheetUrl },
   ];
 };
 
@@ -37,7 +41,6 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
