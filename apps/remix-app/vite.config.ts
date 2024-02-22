@@ -6,15 +6,6 @@ export default defineConfig({
   plugins: [
     remix({
       ignoredRouteFiles: ["**/.*"],
-      // serverDependenciesToBundle: [],
-      // watchPaths: [
-      //   "../../packages/ui/src/**/*",
-      //   "../../packages/business/src/**/*",
-      //   "../../packages/database/src/**/*",
-      //   "../../packages/internal-nobuild/src/**/*",
-      // ],
-      // tailwind: true,
-      // postcss: true,
       serverModuleFormat: "esm",
     }),
     tsconfigPaths(),
