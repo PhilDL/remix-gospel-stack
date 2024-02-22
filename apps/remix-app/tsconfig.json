@@ -1,8 +1,8 @@
 {
   "include": [
-    "types/remix.env.d.ts",
+    "types/env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx", "server.mjs",
   ],
   "ts-node": {
 		"swc": true
