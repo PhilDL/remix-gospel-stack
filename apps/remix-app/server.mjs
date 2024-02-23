@@ -62,11 +62,14 @@ if (viteDevServer) {
   );
   morgan.token("url", (req, _res) => decodeURIComponent(req.url ?? ""));
   app.use(morgan("tiny"));
+  // Everything else (like favicon.ico) is cached for an hour. You may want to be
+  // more aggressive with this caching.
+  app.use(express.static("build/client", { maxAge: "1h" }));
 }
 
-// Everything else (like favicon.ico) is cached for an hour. You may want to be
-// more aggressive with this caching.
-app.use(express.static("build/client", { maxAge: "1h" }));
+app.get(["/img/*", "/favicons/*"], (req, res) => {
+  return res.status(404).send("Not found");
+});
 
 app.use((_, res, next) => {
   res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
