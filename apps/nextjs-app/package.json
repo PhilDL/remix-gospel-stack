@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^14.0.4",
+    "next": "^14.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -17,8 +17,8 @@
     "@remix-gospel-stack/database": "workspace:*",
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^20.11.0",
-    "@types/react": "^18.2.47",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.18",
     "typescript": "^5.3.3"
   }

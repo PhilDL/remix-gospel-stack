@@ -9,7 +9,7 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import type { LinksFunction } from "@vercel/remix";
 
-import tailwindStylesheetUrl from "./tailwind.css";
+import tailwindStylesheetUrl from "./tailwind.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwindStylesheetUrl },
