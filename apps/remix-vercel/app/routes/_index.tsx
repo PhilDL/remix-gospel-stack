@@ -42,7 +42,7 @@ export default function Index() {
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
             <div className="absolute inset-0">
               <img
-                className="h-full w-full object-cover"
+                className="size-full object-cover"
                 src="https://user-images.githubusercontent.com/4941205/189402031-751764e0-2227-4f5e-a527-6763563c5911.jpg"
                 alt="The Bling Boys of Alabama Gospel band singing"
               />
