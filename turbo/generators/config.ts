@@ -294,7 +294,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           .filter((p) => p.name === answers.package)[0].path;
         try {
           const mod = await loadFile<{ default: AppConfig }>(
-            "./apps/remix-app/remix.config.mjs",
+            "./apps/remix-app/vite.config.ts",
           );
 
           if (
@@ -311,8 +311,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             );
           }
           // @ts-ignore
-          await writeFile(mod, "./apps/remix-app/remix.config.mjs");
-          return "updated remix.config.mjs";
+          await writeFile(mod, "./apps/remix-app/vite.config.ts");
+          return "updated vite.config.ts";
         } catch (err) {
           console.log(err);
           return "failed";
