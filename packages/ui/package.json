@@ -33,7 +33,6 @@
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
-    "eslint": "8.57.0",
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@remix-run/dev": "2.8.1",
@@ -64,7 +63,8 @@
     "tsup": "^8.0.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "eslint": "8.57.0"
   },
   "exports": {
     "./package.json": "./package.json",
