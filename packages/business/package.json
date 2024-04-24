@@ -23,10 +23,10 @@
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^20.11.24",
+    "@types/node": "^20.12.7",
     "rimraf": "^5.0.5",
     "tsup": "^8.0.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   }
 }
