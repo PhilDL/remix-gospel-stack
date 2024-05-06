@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@remix-run/dev": "2.8.1",
+    "@remix-run/dev": "2.9.1",
     "@turbo/gen": "^1.13.2",
     "@types/glob": "8.1.0",
     "glob": "^10.3.12",
