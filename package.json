@@ -46,10 +46,10 @@
     "json5": "^2.2.3",
     "magicast": "^0.3.4",
     "prettier": "^3.1.1",
-    "prettier-plugin-tailwindcss": "^0.5.14",
+    "prettier-plugin-tailwindcss": "^0.6.0",
     "replace-in-file": "^7.1.0",
     "turbo": "^1.13.2",
     "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@9.1.2"
+  "packageManager": "pnpm@9.1.4"
 }
