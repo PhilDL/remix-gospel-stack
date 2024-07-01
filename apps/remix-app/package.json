@@ -73,7 +73,7 @@
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
     "esbuild": "0.21.5",
-    "eslint": "8.57.0",
+    "eslint": "9.6.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.12",
     "happy-dom": "^14.0.0",
