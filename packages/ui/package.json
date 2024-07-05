@@ -20,13 +20,13 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.395.0",
+    "lucide-react": "^0.400.0",
     "npm-run-all2": "^6.0.0",
     "tailwind-merge": "^2.3.0"
   },
   "peerDependencies": {
-    "@remix-run/dev": "2.9.2",
-    "@remix-run/node": "2.9.2",
+    "@remix-run/dev": "2.10.0",
+    "@remix-run/node": "2.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.2",
@@ -35,8 +35,8 @@
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@remix-run/dev": "2.9.2",
-    "@remix-run/node": "2.9.2",
+    "@remix-run/dev": "2.10.0",
+    "@remix-run/node": "2.10.0",
     "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-interactions": "^8.0.9",
     "@storybook/addon-links": "^8.0.9",
