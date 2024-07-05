@@ -3,22 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "files": [
     "./base.js",
     "./remix.js",
     "./next.js"
   ],
   "dependencies": {
-    "@remix-run/eslint-config": "2.9.2",
-    "@typescript-eslint/eslint-plugin": "^7.7.1",
-    "@typescript-eslint/parser": "^7.7.1",
-    "eslint-config-next": "^14.2.2",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-turbo": "^1.13.2",
-    "eslint": "8.57.0",
-    "eslint-plugin-tailwindcss": "^3.15.1"
+    "eslint-config-turbo": "^2.0.4",
+    "eslint-plugin-import-x": "0.5.2",
+    "eslint-plugin-jsx-a11y": "6.9.0",
+    "eslint-plugin-react": "7.34.3",
+    "eslint-plugin-react-hooks": "rc",
+    "globals": "15.7.0",
+    "typescript-eslint": "7.14.1"
   },
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "@eslint/eslintrc": "3.1.0",
+    "@next/eslint-plugin-next": "^14.2.4",
+    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "eslint": "9.6.0",
+    "typescript": "^5.5.2"
   }
 }

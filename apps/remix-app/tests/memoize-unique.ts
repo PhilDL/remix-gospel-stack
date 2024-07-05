@@ -76,7 +76,7 @@ export function memoizeUnique<T, U extends readonly any[] = readonly any[]>(
 
       result = callback(...args);
 
-      if ((exclude as T[]).includes(result)) {
+      if (exclude.includes(result)) {
         continue;
       }
 

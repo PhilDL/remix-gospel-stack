@@ -5,8 +5,9 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
-  "include": [".eslintrc.js", ".prettierrc.js", "src", "*.ts", "*.cjs"],
+  "include": ["eslint.config.mjs", "src/**/*.ts", "src/**/*.tsx", ".storybook/**/*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

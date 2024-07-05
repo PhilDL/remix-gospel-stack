@@ -2,11 +2,12 @@
   "private": true,
   "name": "@remix-gospel-stack/nextjs-app",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "next": "^14.2.2",
@@ -20,6 +21,8 @@
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2",
+    "eslint": "9.6.0",
+    "@types/eslint": "^8.56.10"
   }
 }

@@ -1,35 +1,30 @@
-module.exports = {
-  env: {
-    node: true,
+/// <reference types="./types.d.ts" />
+
+import reactPlugin from "eslint-plugin-react";
+import hooksPlugin from "eslint-plugin-react-hooks";
+
+import base from "./base.js";
+
+export default [
+  ...base,
+  {
+    // jsx-runtime
+    files: ["**/*.tsx", "**/*.jsx"],
+    plugins: {
+      react: reactPlugin,
+    },
+    rules: {
+      ...reactPlugin.configs["jsx-runtime"].rules,
+    },
   },
-  extends: [
-    "@remix-run/eslint-config",
-    "@remix-run/eslint-config/node",
-    "prettier",
-    "plugin:tailwindcss/recommended",
-  ],
-  plugins: ["tailwindcss"],
-  rules: {
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "no-var": "off",
-    "prefer-const": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "tailwindcss/no-custom-classname": "off",
+  {
+    ignores: ["**/*.spec.ts"],
+    files: ["**/*.ts?(x)", "**/*.js?(x)"],
+    plugins: {
+      "react-hooks": hooksPlugin,
+    },
+    rules: {
+      ...hooksPlugin.configs.recommended.rules,
+    },
   },
-  ignorePatterns: [
-    "**/.eslintrc.cjs",
-    "**/*.config.js",
-    "**/*.config.cjs",
-    ".next",
-    "dist",
-    "pnpm-lock.yaml",
-    "**/build",
-    "**/server-build",
-    "**/public/build",
-    "**/playwright-report",
-  ],
-};
+];

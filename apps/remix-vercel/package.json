@@ -31,11 +31,11 @@
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "@types/source-map-support": "^0.5.10",
-    "eslint": "8.57.0",
+    "eslint": "9.6.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.2",
     "vite": "^5.2.10",
     "vite-tsconfig-paths": "^4.3.2"
   },

@@ -5,7 +5,8 @@
     "paths": {
       "@remix-gospel-stack/database/*": ["../database/src/*"],
       "@remix-gospel-stack/database": ["../database/src/index"],
-    }
+    },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
   "exclude": ["node_modules"]
 }
