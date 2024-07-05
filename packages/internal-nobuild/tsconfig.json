@@ -11,6 +11,7 @@
     "noEmit": true,
     "paths": {
     },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
   "exclude": ["node_modules"]
 }
