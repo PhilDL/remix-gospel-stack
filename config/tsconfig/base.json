@@ -18,8 +18,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "resolveJsonModule": true
-  },
-  "exclude": ["node_modules", "**/*/lib", "**/*/dist"],
-  "references": [{ "path": "../utils/" }]
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "incremental": true
+  }
 }

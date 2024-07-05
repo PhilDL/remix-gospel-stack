@@ -13,7 +13,7 @@ importers:
         version: 4.2.1(prettier@3.2.5)
       '@remix-run/dev':
         specifier: 2.9.2
-        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
+        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
       '@turbo/gen':
         specifier: ^1.13.2
         version: 1.13.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)
@@ -33,14 +33,14 @@ importers:
         specifier: ^3.1.1
         version: 3.2.5
       prettier-plugin-tailwindcss:
-        specifier: ^0.6.0
-        version: 0.6.1(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier@3.2.5)
+        specifier: ^0.6.5
+        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier@3.2.5)
       replace-in-file:
         specifier: ^7.1.0
         version: 7.1.0
       turbo:
-        specifier: ^1.13.2
-        version: 1.13.2
+        specifier: ^2.0.6
+        version: 2.0.6
       typescript:
         specifier: ^5.5.2
         version: 5.5.3
@@ -66,6 +66,9 @@ importers:
       '@remix-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
+      '@types/eslint':
+        specifier: ^8.56.10
+        version: 8.56.10
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
@@ -75,6 +78,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.25
         version: 18.2.25
+      eslint:
+        specifier: 9.6.0
+        version: 9.6.0
       typescript:
         specifier: ^5.5.2
         version: 5.5.3
@@ -153,10 +159,7 @@ importers:
         version: link:../../config/eslint
       '@remix-run/dev':
         specifier: 2.9.2
-        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
-      '@remix-run/eslint-config':
-        specifier: 2.9.2
-        version: 2.9.2(eslint@9.6.0)(react@18.2.0)(typescript@5.5.3)
+        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
       '@swc/core':
         specifier: ^1.5.0
         version: 1.5.0(@swc/helpers@0.5.10)
@@ -258,7 +261,7 @@ importers:
         version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)))
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)
+        version: 10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3)
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
@@ -322,7 +325,7 @@ importers:
         version: link:../../config/eslint
       '@remix-run/dev':
         specifier: 2.9.2
-        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
+        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
       '@remix-run/eslint-config':
         specifier: 2.9.2
         version: 2.9.2(eslint@9.6.0)(react@18.2.0)(typescript@5.5.3)
@@ -387,6 +390,9 @@ importers:
       '@eslint/eslintrc':
         specifier: 3.1.0
         version: 3.1.0
+      '@next/eslint-plugin-next':
+        specifier: ^14.2.4
+        version: 14.2.4
       '@remix-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -523,7 +529,7 @@ importers:
         version: link:../../config/tsconfig
       '@remix-run/dev':
         specifier: 2.9.2
-        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
+        version: 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
       '@remix-run/node':
         specifier: 2.9.2
         version: 2.9.2(typescript@5.5.3)
@@ -2081,6 +2087,9 @@ packages:
 
   '@next/env@14.2.2':
     resolution: {integrity: sha512-sk72qRfM1Q90XZWYRoJKu/UWlTgihrASiYw/scb15u+tyzcze3bOuJ/UV6TBOQEeUaxOkRqGeuGUdiiuxc5oqw==}
+
+  '@next/eslint-plugin-next@14.2.4':
+    resolution: {integrity: sha512-svSFxW9f3xDaZA3idQmlFw7SusOuWTpDTAeBlO3AEPDltrraV+lqs7mAc6A27YdnpQVVIA3sODqUAAHdWhVWsA==}
 
   '@next/swc-darwin-arm64@14.2.2':
     resolution: {integrity: sha512-3iPgMhzbalizGwHNFUcGnDhFPSgVBHQ8aqSTAMxB5BvJG0oYrDf1WOJZlbXBgunOEj/8KMVbejEur/FpvFsgFQ==}
@@ -4845,6 +4854,11 @@ packages:
   glob-to-regexp@0.4.1:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
 
+  glob@10.3.10:
+    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    hasBin: true
+
   glob@10.3.12:
     resolution: {integrity: sha512-TCNv8vJ+xz4QiqTpfOJA7HvYv+tNIRHKfUWw/q+v2jdgN4ebz+KY9tGx5J4rHP0o84mNP+ApH66HRX8us3Khqg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -6400,8 +6414,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-tailwindcss@0.6.1:
-    resolution: {integrity: sha512-AnbeYZu0WGj+QgKciUgdMnRxrqcxltleZPgdwfA5104BHM3siBLONN/HLW1yS2HvzSNkzpQ/JAj+LN0jcJO+0w==}
+  prettier-plugin-tailwindcss@0.6.5:
+    resolution: {integrity: sha512-axfeOArc/RiGHjOIy9HytehlC0ZLeMaqY09mm8YCkMzznKiDkwFzOpBvtuhuv3xG5qB73+Mj7OCe2j/L1ryfuQ==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -7369,41 +7383,41 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  turbo-darwin-64@1.13.2:
-    resolution: {integrity: sha512-CCSuD8CfmtncpohCuIgq7eAzUas0IwSbHfI8/Q3vKObTdXyN8vAo01gwqXjDGpzG9bTEVedD0GmLbD23dR0MLA==}
+  turbo-darwin-64@2.0.6:
+    resolution: {integrity: sha512-XpgBwWj3Ggmz/gQVqXdMKXHC1iFPMDiuwugLwSzE7Ih0O13JuNtYZKhQnopvbDQnFQCeRq2Vsm5OTWabg/oB/g==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@1.13.2:
-    resolution: {integrity: sha512-0HySm06/D2N91rJJ89FbiI/AodmY8B3WDSFTVEpu2+8spUw7hOJ8okWOT0e5iGlyayUP9gr31eOeL3VFZkpfCw==}
+  turbo-darwin-arm64@2.0.6:
+    resolution: {integrity: sha512-RfeZYXIAkiA21E8lsvfptGTqz/256YD+eI1x37fedfvnHFWuIMFZGAOwJxtZc6QasQunDZ9TRRREbJNI68tkIw==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@1.13.2:
-    resolution: {integrity: sha512-7HnibgbqZrjn4lcfIouzlPu8ZHSBtURG4c7Bedu7WJUDeZo+RE1crlrQm8wuwO54S0siYqUqo7GNHxu4IXbioQ==}
+  turbo-linux-64@2.0.6:
+    resolution: {integrity: sha512-92UDa0xNQQbx0HdSp9ag3YSS3xPdavhc7q9q9mxIAcqyjjD6VElA4Y85m4F/DDGE5SolCrvBz2sQhVmkOd6Caw==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@1.13.2:
-    resolution: {integrity: sha512-sUq4dbpk6SNKg/Hkwn256Vj2AEYSQdG96repio894h5/LEfauIK2QYiC/xxAeW3WBMc6BngmvNyURIg7ltrePg==}
+  turbo-linux-arm64@2.0.6:
+    resolution: {integrity: sha512-eQKu6utCVUkIH2kqOzD8OS6E0ba6COjWm6PRDTNCHQRljZW503ycaTUIdMOiJrVg1MkEjDyOReUg8s8D18aJ4Q==}
     cpu: [arm64]
     os: [linux]
 
   turbo-stream@2.0.1:
     resolution: {integrity: sha512-sm0ZtcX9YWh28p5X8t5McxC2uthrt9p+g0bGE0KTVFhnhNWefpSVCr+67zRNDUOfo4bpXwiOp7otO+dyQ7/y/A==}
 
-  turbo-windows-64@1.13.2:
-    resolution: {integrity: sha512-DqzhcrciWq3dpzllJR2VVIyOhSlXYCo4mNEWl98DJ3FZ08PEzcI3ceudlH6F0t/nIcfSItK1bDP39cs7YoZHEA==}
+  turbo-windows-64@2.0.6:
+    resolution: {integrity: sha512-+9u4EPrpoeHYCQ46dRcou9kbkSoelhOelHNcbs2d86D6ruYD/oIAHK9qgYK8LeARRz0jxhZIA/dWYdYsxJJWkw==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@1.13.2:
-    resolution: {integrity: sha512-WnPMrwfCXxK69CdDfS1/j2DlzcKxSmycgDAqV0XCYpK/812KB0KlvsVAt5PjEbZGXkY88pCJ1BLZHAjF5FcbqA==}
+  turbo-windows-arm64@2.0.6:
+    resolution: {integrity: sha512-rdrKL+p+EjtdDVg0wQ/7yTbzkIYrnb0Pw4IKcjsy3M0RqUM9UcEi67b94XOAyTa5a0GqJL1+tUj2ebsFGPgZbg==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@1.13.2:
-    resolution: {integrity: sha512-rX/d9f4MgRT3yK6cERPAkfavIxbpBZowDQpgvkYwGMGDQ0Nvw1nc0NVjruE76GrzXQqoxR1UpnmEP54vBARFHQ==}
+  turbo@2.0.6:
+    resolution: {integrity: sha512-/Ftmxd5Mq//a9yMonvmwENNUN65jOVTwhhBPQjEtNZutYT9YKyzydFGLyVM1nzhpLWahQSMamRc/RDBv5EapzA==}
     hasBin: true
 
   type-check@0.4.0:
@@ -9268,6 +9282,10 @@ snapshots:
 
   '@next/env@14.2.2': {}
 
+  '@next/eslint-plugin-next@14.2.4':
+    dependencies:
+      glob: 10.3.10
+
   '@next/swc-darwin-arm64@14.2.2':
     optional: true
 
@@ -9488,7 +9506,7 @@ snapshots:
 
   '@remix-run/css-bundle@2.9.2': {}
 
-  '@remix-run/dev@2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))':
+  '@remix-run/dev@2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/generator': 7.24.4
@@ -9532,7 +9550,7 @@ snapshots:
       pidtree: 0.6.0
       postcss: 8.4.38
       postcss-discard-duplicates: 5.1.0(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))
       postcss-modules: 6.0.0(postcss@8.4.38)
       prettier: 2.8.8
       pretty-ms: 7.0.1
@@ -10549,7 +10567,7 @@ snapshots:
       minimatch: 9.0.4
       node-plop: 0.26.3
       proxy-agent: 6.4.0
-      ts-node: 10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)
+      ts-node: 10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -11061,7 +11079,7 @@ snapshots:
 
   '@vercel/remix@2.9.1(@remix-run/dev@2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7)))(@remix-run/node@2.9.2(typescript@5.5.3))(@remix-run/server-runtime@2.9.2(typescript@5.5.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@remix-run/dev': 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
+      '@remix-run/dev': 2.9.2(@remix-run/react@2.9.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.3))(@remix-run/serve@2.9.2(typescript@5.5.3))(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))(typescript@5.5.3)(vite@5.2.10(@types/node@20.12.7))
       '@remix-run/node': 2.9.2(typescript@5.5.3)
       '@remix-run/server-runtime': 2.9.2(typescript@5.5.3)
       '@vercel/static-config': 3.0.0
@@ -13045,6 +13063,14 @@ snapshots:
 
   glob-to-regexp@0.4.1: {}
 
+  glob@10.3.10:
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 2.3.6
+      minimatch: 9.0.4
+      minipass: 7.0.4
+      path-scurry: 1.10.2
+
   glob@10.3.12:
     dependencies:
       foreground-child: 3.1.1
@@ -14749,13 +14775,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3)):
     dependencies:
       lilconfig: 3.1.1
       yaml: 2.4.1
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3)
+      ts-node: 10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3)
 
   postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38):
     dependencies:
@@ -14829,7 +14855,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.6.1(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier@3.2.5):
+  prettier-plugin-tailwindcss@0.6.5(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier@3.2.5):
     dependencies:
       prettier: 3.2.5
     optionalDependencies:
@@ -15696,7 +15722,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.16
       resolve: 1.22.8
@@ -15836,7 +15862,7 @@ snapshots:
       '@ts-morph/common': 0.11.1
       code-block-writer: 10.1.1
 
-  ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3):
+  ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.9
@@ -15889,7 +15915,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0)(@types/node@20.12.7)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(typescript@5.5.3))
       resolve-from: 5.0.0
       rollup: 4.12.0
       source-map: 0.8.0-beta.0
@@ -15915,34 +15941,34 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  turbo-darwin-64@1.13.2:
+  turbo-darwin-64@2.0.6:
     optional: true
 
-  turbo-darwin-arm64@1.13.2:
+  turbo-darwin-arm64@2.0.6:
     optional: true
 
-  turbo-linux-64@1.13.2:
+  turbo-linux-64@2.0.6:
     optional: true
 
-  turbo-linux-arm64@1.13.2:
+  turbo-linux-arm64@2.0.6:
     optional: true
 
   turbo-stream@2.0.1: {}
 
-  turbo-windows-64@1.13.2:
+  turbo-windows-64@2.0.6:
     optional: true
 
-  turbo-windows-arm64@1.13.2:
+  turbo-windows-arm64@2.0.6:
     optional: true
 
-  turbo@1.13.2:
+  turbo@2.0.6:
     optionalDependencies:
-      turbo-darwin-64: 1.13.2
-      turbo-darwin-arm64: 1.13.2
-      turbo-linux-64: 1.13.2
-      turbo-linux-arm64: 1.13.2
-      turbo-windows-64: 1.13.2
-      turbo-windows-arm64: 1.13.2
+      turbo-darwin-64: 2.0.6
+      turbo-darwin-arm64: 2.0.6
+      turbo-linux-64: 2.0.6
+      turbo-linux-arm64: 2.0.6
+      turbo-windows-64: 2.0.6
+      turbo-windows-arm64: 2.0.6
 
   type-check@0.4.0:
     dependencies:
@@ -16118,7 +16144,7 @@ snapshots:
 
   unplugin@1.10.1:
     dependencies:
-      acorn: 8.11.3
+      acorn: 8.12.1
       chokidar: 3.6.0
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.6.1

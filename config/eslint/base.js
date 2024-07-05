@@ -60,7 +60,7 @@ export default tseslint.config(
       // new stuff
       "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/require-await": "off",
-      "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }],
+      "@typescript-eslint/unbound-method": ["warn", { ignoreStatic: true }],
 
       // this is mostly library code, so some functions use and return lots of any
       // this should be allowed
@@ -72,11 +72,7 @@ export default tseslint.config(
       "@typescript-eslint/restrict-template-expressions": "off",
       "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/no-floating-promises": "off",
-
-      // this is necessary or else it doesn't work in CI... not sure why
-      // Todo fix that
       "@typescript-eslint/no-unnecessary-type-assertion": "warn",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },
   {

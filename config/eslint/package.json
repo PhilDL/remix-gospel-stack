@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "files": [
     "./base.js",
-    "./remix.js"
+    "./remix.js",
+    "./next.js"
   ],
   "dependencies": {
     "eslint-config-prettier": "^9.1.0",
@@ -18,8 +20,9 @@
     "typescript-eslint": "7.14.1"
   },
   "devDependencies": {
-    "@remix-gospel-stack/tsconfig": "workspace:*",
     "@eslint/eslintrc": "3.1.0",
+    "@next/eslint-plugin-next": "^14.2.4",
+    "@remix-gospel-stack/tsconfig": "workspace:*",
     "eslint": "9.6.0",
     "typescript": "^5.5.2"
   }

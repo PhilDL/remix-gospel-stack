@@ -46,9 +46,9 @@
     "json5": "^2.2.3",
     "magicast": "^0.3.4",
     "prettier": "^3.1.1",
-    "prettier-plugin-tailwindcss": "^0.6.0",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "replace-in-file": "^7.1.0",
-    "turbo": "^1.13.2",
+    "turbo": "^2.0.6",
     "typescript": "^5.5.2"
   },
   "packageManager": "pnpm@9.4.0"

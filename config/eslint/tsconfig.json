@@ -2,7 +2,4 @@
   "extends": "@remix-gospel-stack/tsconfig/node18.json",
   "include": ["."],
   "exclude": ["node_modules"],
-  "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-  },
 }
