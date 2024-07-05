@@ -80,7 +80,7 @@
     "nodemon": "^3.1.0",
     "npm-run-all2": "^6.0.0",
     "postcss": "^8.4.38",
-    "postcss-load-config": "^5.0.0",
+    "postcss-load-config": "^6.0.0",
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
