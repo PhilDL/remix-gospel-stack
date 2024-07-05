@@ -12,12 +12,12 @@
   "dependencies": {
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^2.0.4",
-    "eslint-plugin-import-x": "0.5.2",
+    "eslint-plugin-import-x": "0.5.3",
     "eslint-plugin-jsx-a11y": "6.9.0",
     "eslint-plugin-react": "7.34.3",
     "eslint-plugin-react-hooks": "rc",
-    "globals": "15.7.0",
-    "typescript-eslint": "7.14.1"
+    "globals": "15.8.0",
+    "typescript-eslint": "7.15.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.1.0",
