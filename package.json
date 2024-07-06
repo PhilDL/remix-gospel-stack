@@ -38,18 +38,23 @@
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@remix-run/dev": "2.10.0",
-    "@turbo/gen": "^1.13.2",
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
+    "@remix-run/dev": "2.10.2",
+    "@turbo/gen": "^2.0.6",
     "@types/glob": "8.1.0",
-    "glob": "^10.3.12",
+    "glob": "^10.4.3",
     "json5": "^2.2.3",
     "magicast": "^0.3.4",
-    "prettier": "^3.1.1",
+    "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
-    "replace-in-file": "^7.1.0",
+    "replace-in-file": "^8.1.0",
     "turbo": "^2.0.6",
     "typescript": "^5.5.2"
   },
-  "packageManager": "pnpm@9.4.0"
+  "packageManager": "pnpm@9.4.0",
+  "pnpm": {
+    "overrides": {
+      "@swc/core": "^1.6.7"
+    }
+  }
 }
