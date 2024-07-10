@@ -14,7 +14,7 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
 const spaces = (spaces = 6) => Array(spaces).fill(" ").join("");
 
-const main = async ({ rootDirectory }) => {
+export async function main({ rootDirectory }) {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
   const orgNameRegex = escapeRegExp("@remix-gospel-stack");
 
@@ -130,7 +130,7 @@ ${spaces()}   to the remix app, as they will both connect on the same sqlite fil
 `
 }`.trim(),
   );
-};
+}
 
 const rootConfigsRename = async ({
   rootDirectory,
@@ -310,4 +310,4 @@ const renameAll = async ({
   });
 };
 
-module.exports = main;
+export default main;
