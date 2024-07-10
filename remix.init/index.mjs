@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { replace } from "replace-in-file";
+import { replaceInFile } from "replace-in-file";
 
 const escapeRegExp = (string) =>
   // $& means the whole matched string
@@ -14,7 +14,7 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
 const spaces = (spaces = 6) => Array(spaces).fill(" ").join("");
 
-const main = async ({ rootDirectory }) => {
+export async function main({ rootDirectory }) {
   const appNameRegex = escapeRegExp("remix-gospel-stack");
   const orgNameRegex = escapeRegExp("@remix-gospel-stack");
 
@@ -130,7 +130,7 @@ ${spaces()}   to the remix app, as they will both connect on the same sqlite fil
 `
 }`.trim(),
   );
-};
+}
 
 const rootConfigsRename = async ({
   rootDirectory,
@@ -266,7 +266,7 @@ const renameAll = async ({
   ORG_NAME,
   APP_NAME,
 }) => {
-  await replace({
+  await replaceInFile({
     files: [
       path.join(rootDirectory, "apps", "**", "*.json"),
       path.join(rootDirectory, "apps", "**", "*.js"),
@@ -281,13 +281,13 @@ const renameAll = async ({
     to: ORG_NAME,
   });
 
-  await replace({
+  await replaceInFile({
     files: [path.join(rootDirectory, "apps", "**", "package.json")],
     from: new RegExp(appNameRegex, "g"),
     to: APP_NAME,
   });
 
-  await replace({
+  await replaceInFile({
     files: [
       path.join(rootDirectory, "config", "**", "*.json"),
       path.join(rootDirectory, "config", "**", "*.js"),
@@ -296,7 +296,7 @@ const renameAll = async ({
     to: ORG_NAME,
   });
 
-  await replace({
+  await replaceInFile({
     files: [
       path.join(rootDirectory, "packages", "**", "*.json"),
       path.join(rootDirectory, "packages", "**", "*.js"),
@@ -310,4 +310,4 @@ const renameAll = async ({
   });
 };
 
-module.exports = main;
+export default main;

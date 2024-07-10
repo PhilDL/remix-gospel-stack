@@ -20,7 +20,7 @@
     "dev": "tsup --watch",
     "format": "pnpm with-env prisma format",
     "generate": "pnpm with-env prisma generate",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src",
     "prebuild": "npm run generate",
     "predev": "npm run generate",
     "studio": "pnpm with-env prisma studio",
