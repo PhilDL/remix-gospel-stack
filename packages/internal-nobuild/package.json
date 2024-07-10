@@ -7,7 +7,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rimraf .turbo node_modules dist",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src",
     "test": "vitest run",
     "test:dev": "vitest",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"

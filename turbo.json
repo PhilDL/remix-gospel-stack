@@ -59,7 +59,8 @@
       "dependsOn": ["^generate"]
     },
     "lint": {
-      "outputs": []
+      "dependsOn": ["^build"],
+      "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "docker:build": {
       "outputs": [],
