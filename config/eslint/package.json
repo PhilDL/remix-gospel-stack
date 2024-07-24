@@ -14,16 +14,16 @@
     "eslint-config-turbo": "^2.0.4",
     "eslint-plugin-import-x": "0.5.3",
     "eslint-plugin-jsx-a11y": "6.9.0",
-    "eslint-plugin-react": "7.34.3",
+    "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "rc",
     "globals": "15.8.0",
-    "typescript-eslint": "7.15.0"
+    "typescript-eslint": "7.16.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.1.0",
     "@next/eslint-plugin-next": "^14.2.4",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "eslint": "9.6.0",
+    "eslint": "9.7.0",
     "typescript": "^5.5.2"
   }
 }
