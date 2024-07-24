@@ -15,7 +15,7 @@
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "rimraf": "^5.0.8",
+    "rimraf": "^6.0.0",
     "tsup": "^8.1.0",
     "typescript": "^5.5.2",
     "vite": "^5.3.3",
