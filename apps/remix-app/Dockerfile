@@ -3,7 +3,7 @@
 ARG APP_DIRNAME=remix-app
 ARG APP_PKG_NAME=@remix-gospel-stack/remix-app
 
-FROM node:18-bookworm-slim AS pruner
+FROM node:20-bookworm-slim AS pruner
 ARG APP_PKG_NAME
 RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY . .
 RUN turbo prune --scope=$APP_PKG_NAME --docker
 RUN find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 
-FROM node:18-bookworm-slim AS base
+FROM node:20-bookworm-slim AS base
 RUN apt-get update && apt-get install -y openssl
 RUN corepack enable
 WORKDIR /app
