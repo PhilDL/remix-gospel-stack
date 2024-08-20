@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
-    "@remix-run/dev": "2.10.3",
+    "@remix-run/dev": "2.11.2",
     "@turbo/gen": "^2.0.6",
     "@types/glob": "8.1.0",
     "glob": "^10.4.3",
@@ -52,7 +52,7 @@
     "turbo": "^2.0.6",
     "typescript": "^5.5.2"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.7.1",
   "pnpm": {
     "overrides": {
       "@swc/core": "^1.6.7"
