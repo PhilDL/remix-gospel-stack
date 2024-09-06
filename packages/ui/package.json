@@ -20,7 +20,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.428.0",
+    "lucide-react": "^0.438.0",
     "npm-run-all2": "^6.2.2",
     "tailwind-merge": "^2.3.0"
   },
@@ -53,7 +53,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
-    "eslint": "9.9.0",
+    "eslint": "9.9.1",
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8.4.39",
     "react": "^18.3.1",
