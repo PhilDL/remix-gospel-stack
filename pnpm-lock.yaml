@@ -164,7 +164,7 @@ importers:
         specifier: 2.12.1
         version: 2.12.1(@remix-run/react@2.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@remix-run/serve@2.12.1(typescript@5.6.2))(@types/node@22.7.0)(ts-node@10.9.2(@swc/core@1.7.28(@swc/helpers@0.5.13))(@types/node@22.7.0)(typescript@5.6.2))(typescript@5.6.2)(vite@5.4.8(@types/node@22.7.0))
       '@swc/core':
-        specifier: ^1.7.28
+        specifier: ^1.6.7
         version: 1.7.28(@swc/helpers@0.5.13)
       '@swc/helpers':
         specifier: ^0.5.13
