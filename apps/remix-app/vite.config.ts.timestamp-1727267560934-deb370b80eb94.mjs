@@ -1,0 +1,17 @@
+// vite.config.ts
+import { vitePlugin as remix } from "file:///Users/philippelattention/Code/remix-gospel-stack/node_modules/@remix-run/dev/dist/index.js";
+import { defineConfig } from "file:///Users/philippelattention/Code/remix-gospel-stack/node_modules/vite/dist/node/index.js";
+import tsconfigPaths from "file:///Users/philippelattention/Code/remix-gospel-stack/node_modules/vite-tsconfig-paths/dist/index.js";
+var vite_config_default = defineConfig({
+  plugins: [
+    remix({
+      ignoredRouteFiles: ["**/.*"],
+      serverModuleFormat: "esm"
+    }),
+    tsconfigPaths()
+  ]
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCIvVXNlcnMvcGhpbGlwcGVsYXR0ZW50aW9uL0NvZGUvcmVtaXgtZ29zcGVsLXN0YWNrL2FwcHMvcmVtaXgtYXBwXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCIvVXNlcnMvcGhpbGlwcGVsYXR0ZW50aW9uL0NvZGUvcmVtaXgtZ29zcGVsLXN0YWNrL2FwcHMvcmVtaXgtYXBwL3ZpdGUuY29uZmlnLnRzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9Vc2Vycy9waGlsaXBwZWxhdHRlbnRpb24vQ29kZS9yZW1peC1nb3NwZWwtc3RhY2svYXBwcy9yZW1peC1hcHAvdml0ZS5jb25maWcudHNcIjtpbXBvcnQgeyB2aXRlUGx1Z2luIGFzIHJlbWl4IH0gZnJvbSBcIkByZW1peC1ydW4vZGV2XCI7XG5pbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tIFwidml0ZVwiO1xuaW1wb3J0IHRzY29uZmlnUGF0aHMgZnJvbSBcInZpdGUtdHNjb25maWctcGF0aHNcIjtcblxuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcbiAgcGx1Z2luczogW1xuICAgIHJlbWl4KHtcbiAgICAgIGlnbm9yZWRSb3V0ZUZpbGVzOiBbXCIqKi8uKlwiXSxcbiAgICAgIHNlcnZlck1vZHVsZUZvcm1hdDogXCJlc21cIixcbiAgICB9KSxcbiAgICB0c2NvbmZpZ1BhdGhzKCksXG4gIF0sXG59KTtcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBa1gsU0FBUyxjQUFjLGFBQWE7QUFDdFosU0FBUyxvQkFBb0I7QUFDN0IsT0FBTyxtQkFBbUI7QUFFMUIsSUFBTyxzQkFBUSxhQUFhO0FBQUEsRUFDMUIsU0FBUztBQUFBLElBQ1AsTUFBTTtBQUFBLE1BQ0osbUJBQW1CLENBQUMsT0FBTztBQUFBLE1BQzNCLG9CQUFvQjtBQUFBLElBQ3RCLENBQUM7QUFBQSxJQUNELGNBQWM7QUFBQSxFQUNoQjtBQUNGLENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

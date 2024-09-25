@@ -18,11 +18,7 @@ export default async function handler(
 
   try {
     const users = await prisma.user.findMany();
-    if (!users)
-      throw {
-        message: "Failed to retrieve users",
-        status: 500,
-      };
+    if (!users) throw new Error("Failed to retrieve users");
 
     return res.status(200).json({
       users,

@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const [count] = await Promise.all([
       Service.userRepository.getUsersCount(),
       fetch(url.toString(), { method: "HEAD" }).then((r) => {
-        if (!r.ok) return Promise.reject(r);
+        if (!r.ok) return Promise.reject(new Error(r.statusText));
       }),
     ]);
     return new Response(`OK: ${count}`);
