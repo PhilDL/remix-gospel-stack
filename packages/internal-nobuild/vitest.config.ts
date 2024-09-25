@@ -11,7 +11,6 @@ export default defineConfig({
     environment: "happy-dom",
     // setupFiles: ["./test/setup-test-env.ts"],
     include: ["./**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-    watchExclude: [".*\\/node_modules\\/.*", ".*\\/build\\/.*"],
     exclude: [
       "node_modules",
       "dist",

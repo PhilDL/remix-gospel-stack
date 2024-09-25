@@ -60,12 +60,12 @@ export default defineConfig((opts) => {
           ".": {
             import: "./src/index.ts",
             types: "./src/index.ts",
-            default: "./dist/index.mjs",
+            default: "./dist/index.js",
           },
           "./tailwind": {
             import: "./src/tailwind/index.ts",
             types: "./src/tailwind/index.ts",
-            default: "./dist/tailwind/index.mjs",
+            default: "./dist/tailwind/index.js",
           },
         };
         [...client, ...server]

@@ -35,7 +35,7 @@ export default async function handleRequest(
           pipe(body);
         },
         onShellError: (err) => {
-          reject(err);
+          reject(err as Error);
         },
         onError: (error) => {
           didError = true;

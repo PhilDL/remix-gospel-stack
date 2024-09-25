@@ -46,16 +46,16 @@ describe("Dummy test", () => {
 
     it("Should get john", async () => {
       const commercial = lookUpSalesPersonForZipcode("97490", salesPersons);
-      expect(commercial).toBeDefined;
+      expect(commercial).toBeDefined();
       expect(commercial?.name).toBe("john");
     });
     it("Should get undefined", async () => {
       const commercial = lookUpSalesPersonForZipcode("00000", salesPersons);
-      expect(commercial).toBeUndefined;
+      expect(commercial).toBeUndefined();
     });
     it("If Zipcode begins with 08 should get coltrane", async () => {
       const commercial = lookUpSalesPersonForZipcode("08490", salesPersons);
-      expect(commercial).toBeDefined;
+      expect(commercial).toBeDefined();
       expect(commercial?.name).toBe("coltrane");
     });
   });
