@@ -15,7 +15,7 @@
     "eslint-plugin-import-x": "4.3.0",
     "eslint-plugin-jsx-a11y": "6.10.0",
     "eslint-plugin-react": "7.36.1",
-    "eslint-plugin-react-hooks": "5.1.0-rc-04bd67a4-20240924",
+    "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
     "globals": "15.9.0",
     "typescript-eslint": "8.7.0"
   },
