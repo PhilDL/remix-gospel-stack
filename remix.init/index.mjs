@@ -303,7 +303,6 @@ const renameAll = async ({
       path.join(rootDirectory, "packages", "**", "*.ts"),
       path.join(rootDirectory, "packages", "**", "*.tsx"),
       path.join(rootDirectory, "packages", "**", "eslint.config.js"),
-      path.join(rootDirectory, "packages", "**", "eslint.config.mjs"),
     ],
     from: new RegExp(orgNameRegex, "g"),
     to: ORG_NAME,
