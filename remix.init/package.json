@@ -4,7 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "execa": "^9.3.0",
-    "inquirer": "^9.2.6",
+    "inquirer": "^11.0.0",
     "parse-github-url": "^1.0.2",
     "toml": "^3.0.0",
     "replace-in-file": "^8.1.0",
