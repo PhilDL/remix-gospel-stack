@@ -22,7 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.454.0",
-    "npm-run-all2": "^6.2.3",
+    "npm-run-all2": "^7.0.0",
     "tailwind-merge": "^2.5.2"
   },
   "peerDependencies": {
