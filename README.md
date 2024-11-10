@@ -50,6 +50,18 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   - TS Configs, also with different presets.
   - [Tailwind](https://tailwindcss.com/) configs.
 
+### Remix future flags activated:
+
+```ts
+future: {
+  unstable_optimizeDeps: true,
+  v3_fetcherPersist: true,
+  v3_lazyRouteDiscovery: true,
+  v3_relativeSplatPath: true,
+  v3_throwAbortReason: true,
+},
+```
+
 ### What else ?
 
 - Remix App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
