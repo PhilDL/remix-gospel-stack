@@ -1,6 +1,5 @@
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
-import { installGlobals } from "@remix-run/node";
 import { ip } from "address";
 import chalk from "chalk";
 import closeWithGrace from "close-with-grace";
@@ -9,8 +8,6 @@ import express from "express";
 import getPort, { portNumbers } from "get-port";
 // import helmet from "helmet";
 import morgan from "morgan";
-
-installGlobals();
 
 const viteDevServer =
   process.env.NODE_ENV === "production"

@@ -1,5 +1,5 @@
 import React from "react";
-import { json, type LoaderFunctionArgs } from "@remix-run/node";
+import { type LoaderFunctionArgs } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -25,11 +25,11 @@ import Service, { helloWorld } from "~/services.server.ts";
 export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
   const users = await Service.userRepository.getUsers();
   const salesPersons = getSalesPersonDirectory();
-  return json({
+  return {
     users,
     serverValue: helloWorld("Remix Turborepo"),
     salesPersons,
-  });
+  };
 };
 
 export default function Index() {
