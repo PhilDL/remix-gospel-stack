@@ -50,7 +50,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   - TS Configs, also with different presets.
   - [Tailwind](https://tailwindcss.com/) configs.
 
-### Remix future flags activated:
+### All Remix future flags activated:
 
 ```ts
 future: {
@@ -59,6 +59,8 @@ future: {
   v3_lazyRouteDiscovery: true,
   v3_relativeSplatPath: true,
   v3_throwAbortReason: true,
+  v3_singleFetch: true,
+  v3_routeConfig: true,
 },
 ```
 
