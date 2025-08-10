@@ -369,8 +369,8 @@ importers:
   config/eslint:
     dependencies:
       eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.21.0(jiti@1.21.6))
+        specifier: ^10.0.0
+        version: 10.1.8(eslint@9.21.0(jiti@1.21.6))
       eslint-config-turbo:
         specifier: ^2.1.2
         version: 2.1.2(eslint@9.21.0(jiti@1.21.6))
@@ -1940,6 +1940,7 @@ packages:
   '@faker-js/faker@9.0.2':
     resolution: {integrity: sha512-nI/FP30ZGXb+UaR7yXawVTH40NVKXPIx0tA3GKjkKLjorqBoMAeq4iSEacl8mJmpVhOCDa0vYHwYDmOOcFMrYw==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+    deprecated: Please update to a newer version
 
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
@@ -4158,8 +4159,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-prettier@9.1.0:
-    resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
+  eslint-config-prettier@10.1.8:
+    resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -6786,6 +6787,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
@@ -11780,7 +11782,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-prettier@9.1.0(eslint@9.21.0(jiti@1.21.6)):
+  eslint-config-prettier@10.1.8(eslint@9.21.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.21.0(jiti@1.21.6)
 
