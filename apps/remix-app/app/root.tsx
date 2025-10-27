@@ -1,11 +1,5 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import type { LinksFunction, MetaFunction } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import fontStylesheet from "./styles/fonts.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
@@ -20,7 +14,7 @@ export const links: LinksFunction = () => {
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
-    { title: "Remix Gospel Stack" },
+    { title: "React Router Gospel Stack" },
     { viewport: "width=device-width,initial-scale=1" },
   ];
 };

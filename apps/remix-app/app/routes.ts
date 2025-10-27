@@ -1,5 +1,6 @@
-import { flatRoutes } from "@remix-run/fs-routes";
-import type { RouteConfig } from "@remix-run/route-config";
+import { index, route, type RouteConfig } from "@react-router/dev/routes";
 
-export const routes: RouteConfig = flatRoutes();
-export default routes;
+export default [
+  index("./routes/_index.tsx"),
+  route("/healthcheck", "./routes/healthcheck.tsx"),
+] satisfies RouteConfig;

@@ -2,3 +2,10 @@ packages:
   - "config/*"
   - "packages/*"
   - "apps/*"
+
+catalogs:
+  hono:
+    hono: 4.10.2
+    hono-rate-limiter: ^0.4.2
+    react-router-hono-server: 2.21.0
+    remix-hono: ^0.0.18

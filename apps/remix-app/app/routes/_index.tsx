@@ -1,10 +1,10 @@
 import React from "react";
-import { type LoaderFunctionArgs } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+  type LoaderFunctionArgs,
+} from "react-router";
 
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
@@ -27,7 +27,7 @@ export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
   const salesPersons = getSalesPersonDirectory();
   return {
     users,
-    serverValue: helloWorld("Remix Turborepo"),
+    serverValue: helloWorld("React Router Gospel Stack"),
     salesPersons,
   };
 };
@@ -36,7 +36,7 @@ export default function Index() {
   const { serverValue, users, salesPersons } = useLoaderData<typeof loader>();
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      <div className="relative sm:pb-16 sm:pt-8">
+      <div className="relative sm:pt-8 sm:pb-16">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
             <div className="absolute inset-0">
@@ -47,9 +47,9 @@ export default function Index() {
               />
               <div className="absolute inset-0 bg-[color:#6a3f077d] mix-blend-multiply" />
             </div>
-            <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
+            <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32 lg:pb-20">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-amber-500 drop-shadow-md">
+                <span className="block text-amber-500 uppercase drop-shadow-md">
                   Gospel Stack
                 </span>
               </h1>

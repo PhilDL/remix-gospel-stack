@@ -1,5 +1,5 @@
 import { startTransition, StrictMode } from "react";
-import { RemixBrowser } from "@remix-run/react";
+import { HydratedRouter } from "react-router/dom";
 import { hydrateRoot } from "react-dom/client";
 
 const hydrate = () =>
@@ -7,7 +7,7 @@ const hydrate = () =>
     hydrateRoot(
       document,
       <StrictMode>
-        <RemixBrowser />
+        <HydratedRouter />
       </StrictMode>,
     );
   });

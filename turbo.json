@@ -11,11 +11,14 @@
     "MOCKS",
     "DATABASE_URL",
     "DATABASE_PATH",
-    "LITEFS_DIR"
+    "LITEFS_DIR",
+    "SENTRY_DSN"
   ],
+  "globalPassThroughEnv": ["MODE", "DEV", "NODE_ENV", "DEBUG_MOCKS"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "./other/Dockerfile"],
       "outputs": [
         "dist/**",
         ".next/**",
@@ -50,7 +53,8 @@
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "storybook": {
       "outputs": []
@@ -71,12 +75,14 @@
     },
     "test:dev": {
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test:e2e:dev": {
       "dependsOn": ["^build"],
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test:e2e:ci": {
       "dependsOn": ["^build"],

@@ -1,9 +1,7 @@
 import { PassThrough } from "stream";
-import {
-  createReadableStreamFromReadable,
-  type EntryContext,
-} from "@remix-run/node";
-import { RemixServer } from "@remix-run/react";
+import { createReadableStreamFromReadable } from "@react-router/node";
+import { type EntryContext } from "react-router";
+import { ServerRouter } from "react-router";
 import { renderToPipeableStream } from "react-dom/server";
 
 export const streamTimeout = 5000;
@@ -12,13 +10,13 @@ export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  reactRouterContext: EntryContext,
 ) {
   return new Promise((resolve, reject) => {
     let didError = false;
 
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} />,
+      <ServerRouter context={reactRouterContext} url={request.url} />,
       {
         onShellReady: () => {
           const body = new PassThrough();

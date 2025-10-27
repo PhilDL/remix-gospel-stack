@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { memoizeUnique } from "./memoize-unique.ts";
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const unique = memoizeUnique(faker.internet.userName);
+const unique = memoizeUnique(faker.internet.username);
 
 export function createUser() {
   const firstName = faker.person.firstName();
@@ -22,7 +22,7 @@ export function createUser() {
   };
 }
 
-export function createPassword(_username: string = faker.internet.userName()) {
+export function createPassword(_username: string = faker.internet.username()) {
   return {
     hash: "secret",
   };
