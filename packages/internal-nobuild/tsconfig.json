@@ -1,5 +1,5 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node18.json",
+  "extends": "@remix-gospel-stack/tsconfig/node22.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "experimentalDecorators": true,
@@ -9,9 +9,8 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "noEmit": true,
-    "paths": {
-    },
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {},
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "exclude": ["node_modules"]
 }
