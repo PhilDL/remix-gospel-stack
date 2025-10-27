@@ -18,12 +18,12 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v2.4.0
+      - uses: pnpm/action-setup@v4.2.0
 
       - name: ⎔ Setup Node.js
         uses: actions/setup-node@v4
@@ -45,12 +45,12 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v2.4.0
+      - uses: pnpm/action-setup@v4.2.0
 
       - name: ⎔ Setup Node.js
         uses: actions/setup-node@v4
@@ -78,10 +78,10 @@ jobs:
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🏄 Copy test env vars
         run: cp .env.example .env
@@ -89,7 +89,7 @@ jobs:
       - name: 🏄 Copy test env vars to Package
         run: cp .env.example packages/database/.env
 
-      - uses: pnpm/action-setup@v2.4.0
+      - uses: pnpm/action-setup@v4.2.0
 
       - name: ⎔ Setup Node.js
         uses: actions/setup-node@v4
@@ -112,12 +112,12 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v2.4.0
+      - uses: pnpm/action-setup@v4.2.0
 
       - name: ⎔ Setup Node.js
         uses: actions/setup-node@v4
@@ -158,13 +158,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.2
+        uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
@@ -177,7 +177,7 @@ jobs:
 
       # Setup cache
       - name: ⚡️ Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
@@ -222,13 +222,13 @@ jobs:
 
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.0.2
+        uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
           file: "apps/remix-app/fly.toml"
@@ -236,7 +236,7 @@ jobs:
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref == 'refs/heads/dev' }}
-        uses: superfly/flyctl-actions@v1.4
+        uses: superfly/flyctl-actions@v1.5
         with:
           args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --config ./apps/remix-app/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
@@ -244,7 +244,7 @@ jobs:
 
       - name: 🚀 Deploy Production
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: superfly/flyctl-actions@v1.4
+        uses: superfly/flyctl-actions@v1.5
         with:
           args: "deploy --config ./apps/remix-app/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
