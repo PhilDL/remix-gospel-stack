@@ -2,9 +2,7 @@ import type { Context } from "hono";
 import { rateLimiter } from "hono-rate-limiter";
 import { createMiddleware } from "hono/factory";
 
-import { AUTH_ERROR_KEY } from "~/storage/auth.server";
-import { getIp, getSession } from "@atoly/infrastructure/hono-node";
-import { FORGOT_PASSWORD_PATH } from "~/constants";
+import { getIp } from "./get-ip.ts";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const maxMultiple =
@@ -24,17 +22,6 @@ const strongestRateLimit = rateLimiter({
   limit: 10 * maxMultiple,
 });
 
-const rateLimiterPasswordReset = rateLimiter({
-  ...rateLimitDefault,
-  limit: 5 * maxMultiple,
-  handler: (c) => {
-    console.log("rate limit password reset");
-    const session = getSession(c as any);
-    session.flash(AUTH_ERROR_KEY, "Too many requests, please wait 1 minute");
-    return c.redirect(FORGOT_PASSWORD_PATH);
-  },
-});
-
 // in production, this is 100 requests per minute
 const strongRateLimit = rateLimiter({
   ...rateLimitDefault,
@@ -52,14 +39,6 @@ export const rateLimitMiddleware = createMiddleware(async (c, next) => {
 
   // Vérification des méthodes et des chemins
   const isStrongPath = strongPaths.some((p) => path.includes(p));
-
-  if (
-    path.includes(FORGOT_PASSWORD_PATH) &&
-    method !== "GET" &&
-    method !== "HEAD"
-  ) {
-    return rateLimiterPasswordReset(c, next);
-  }
 
   // Limitation de débit selon la méthode et le chemin
   if (method !== "GET" && method !== "HEAD") {

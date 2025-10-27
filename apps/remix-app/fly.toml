@@ -7,8 +7,9 @@ swap_size_mb = 512
 [experimental]
   auto_rollback = true
 
-[deploy]
-  release_command = "bash ./apps/remix-app/scripts/migrate.sh"
+[mounts]
+  source = "data"
+  destination = "/data"
 
 [env]
   PRIMARY_REGION = "cdg"

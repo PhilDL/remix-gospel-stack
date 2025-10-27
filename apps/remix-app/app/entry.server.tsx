@@ -1,8 +1,7 @@
 import { PassThrough } from "stream";
 import { createReadableStreamFromReadable } from "@react-router/node";
-import { type EntryContext } from "react-router";
-import { ServerRouter } from "react-router";
 import { renderToPipeableStream } from "react-dom/server";
+import { ServerRouter, type EntryContext } from "react-router";
 
 export const streamTimeout = 5000;
 

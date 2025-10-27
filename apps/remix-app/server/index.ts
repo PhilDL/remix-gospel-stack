@@ -4,20 +4,13 @@ import { createMiddleware } from "hono/factory";
 import { poweredBy } from "hono/powered-by";
 import { requestId } from "hono/request-id";
 import { trimTrailingSlash } from "hono/trailing-slash";
-import type {
-  ServerBuild,
-  Session,
-  SessionData,
-  SessionStorage,
-} from "react-router";
+import type { ServerBuild, Session, SessionStorage } from "react-router";
 import { createHonoServer } from "react-router-hono-server/node";
 
 import { sessionStorage } from "~/session.server.ts";
-import { cspNonceMiddleware } from "./middleware/cspnonce.ts";
 import { appLogger } from "./middleware/logger.ts";
 import { ALLOW_INDEXING, IS_DEV, IS_PROD } from "./middleware/misc.ts";
 import { rateLimitMiddleware } from "./middleware/rate-limit.ts";
-import { secureHeadersMiddleware } from "./middleware/security.ts";
 import {
   getSession,
   getSessionStorage,
@@ -49,8 +42,6 @@ type HonoEnv = {
     cspNonce: string;
   };
 };
-const featureFlagsClientKey = Symbol();
-const productEventsClientKey = Symbol();
 
 const app = new Hono<HonoEnv>();
 
@@ -100,8 +91,8 @@ export default createHonoServer({
       await next();
     });
 
-    server.use(cspNonceMiddleware);
-    server.use("*", secureHeadersMiddleware);
+    // server.use(cspNonceMiddleware);
+    // server.use("*", secureHeadersMiddleware);
 
     server.use("*", poweredBy({ serverName: "Gospel Stack" }));
     server.on("GET", ["/favicons/*", "/img/*"], (c) => {

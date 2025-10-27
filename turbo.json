@@ -12,9 +12,16 @@
     "DATABASE_URL",
     "DATABASE_PATH",
     "LITEFS_DIR",
-    "SENTRY_DSN"
+    "SENTRY_DSN",
+    "ALLOW_INDEXING"
   ],
-  "globalPassThroughEnv": ["MODE", "DEV", "NODE_ENV", "DEBUG_MOCKS"],
+  "globalPassThroughEnv": [
+    "MODE",
+    "DEV",
+    "NODE_ENV",
+    "DEBUG_MOCKS",
+    "PLAYWRIGHT_TEST_BASE_URL"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

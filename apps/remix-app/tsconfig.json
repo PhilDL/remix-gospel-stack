@@ -3,8 +3,7 @@
     ".react-router/types/**/*",
     "types/env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "server.mjs"
+    "**/*.tsx"
   ],
   "ts-node": {
     "swc": true

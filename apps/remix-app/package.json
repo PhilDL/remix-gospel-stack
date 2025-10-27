@@ -21,9 +21,7 @@
     "test:e2e:install": "npx playwright install --with-deps chromium",
     "test:e2e:ci": "pnpm run test:e2e:install && pnpm run test:e2e:run",
     "typecheck": "react-router typegen && tsc -b",
-    "setup": "pnpm run docker:db && pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
-    "docker:db": "docker compose -f docker-compose.yml up -d",
-    "docker:run:remix-app": "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-remix-app",
+    "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
@@ -45,7 +43,8 @@
     "hono": "catalog:hono",
     "hono-rate-limiter": "catalog:hono",
     "@t3-oss/env-core": "0.13.8",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "litefs-js": "^1.1.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
