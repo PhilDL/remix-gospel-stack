@@ -44,9 +44,12 @@
     "hono-rate-limiter": "catalog:hono",
     "@t3-oss/env-core": "0.13.8",
     "source-map-support": "^0.5.21",
-    "litefs-js": "^1.1.2"
+    "litefs-js": "^1.1.2",
+    "@sentry/profiling-node": "catalog:sentry",
+    "@sentry/react-router": "catalog:sentry"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "catalog:sentry",
     "@faker-js/faker": "^10.1.0",
     "@playwright/test": "^1.56.1",
     "@react-router/dev": "^7.0.0",
@@ -89,7 +92,8 @@
     "@tailwindcss/vite": "^4.1.13",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.4",
-    "@types/source-map-support": "^0.5.10"
+    "@types/source-map-support": "^0.5.10",
+    "@total-typescript/ts-reset": "^0.6.1"
   },
   "engines": {
     "node": "22"

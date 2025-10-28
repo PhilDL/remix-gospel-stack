@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 
 import { memoizeUnique } from "./memoize-unique.ts";
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
 const unique = memoizeUnique(faker.internet.username);
 
 export function createUser() {

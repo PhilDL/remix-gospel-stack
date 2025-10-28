@@ -4,12 +4,22 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "files": [
-    "./base.js",
-    "./remix.js",
-    "./next.js"
-  ],
+  "exports": {
+    "./base": {
+      "default": "./base.js",
+      "import": "./base.js"
+    },
+    "./remix": {
+      "default": "./remix.js",
+      "import": "./remix.js"
+    },
+    "./plugin": {
+      "default": "./plugin.js",
+      "import": "./plugin.js"
+    }
+  },
   "dependencies": {
+    "@eslint/js": "9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-turbo": "^2.5.8",
     "eslint-plugin-import-x": "4.16.1",
@@ -20,7 +30,6 @@
     "typescript-eslint": "8.46.2"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.1",
     "@next/eslint-plugin-next": "^16.0.0",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "eslint": "9.38.0",

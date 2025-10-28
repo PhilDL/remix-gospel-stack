@@ -81,10 +81,12 @@ export function memoizeUnique<T, U extends readonly any[] = readonly any[]>(
       }
 
       const key = JSON.stringify(args) + JSON.stringify(result);
+      // eslint-disable-next-line no-prototype-builtins
       if (!store.hasOwnProperty(key)) {
         store[key] = result;
         break;
       }
+      // eslint-disable-next-line no-constant-condition
     } while (true);
 
     return result;

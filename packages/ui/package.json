@@ -74,6 +74,7 @@
       "types": "./src/index.ts",
       "default": "./dist/index.js"
     },
+    "./theme.css": "./src/tailwind/theme.css",
     "./components/checkbox": {
       "import": "./src/components/checkbox.tsx",
       "types": "./src/components/checkbox.tsx"
@@ -85,8 +86,7 @@
     "./components/card": {
       "import": "./src/components/card.tsx",
       "types": "./src/components/card.tsx"
-    },
-    "./theme.css": "./src/tailwind/theme.css"
+    }
   },
   "typesVersions": {
     "*": {

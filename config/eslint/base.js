@@ -1,9 +1,11 @@
 /// <reference types="./types.d.ts" />
+import eslint from "@eslint/js";
 import turboPlugin from "eslint-plugin-turbo";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
+  eslint.configs.recommended,
   {
     // Globally ignored files
     ignores: [
@@ -16,6 +18,9 @@ export default tseslint.config(
       "**/build",
       "**/public/build",
       "**/playwright-report",
+      "**/test-results",
+      "**/.react-router",
+      "**/public/**/*.js",
     ],
   },
   {
@@ -60,7 +65,7 @@ export default tseslint.config(
       // new stuff
       "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/require-await": "off",
-      "@typescript-eslint/unbound-method": ["warn", { ignoreStatic: true }],
+      "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }],
 
       // this is mostly library code, so some functions use and return lots of any
       // this should be allowed
@@ -69,10 +74,42 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-function-type": "off",
       "@typescript-eslint/restrict-template-expressions": "off",
       "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/prefer-promise-reject-errors": "off",
+
+      // Remix
+      // Allow to `throw redirect("/foo")`
+      "@typescript-eslint/only-throw-error": "off",
+
+      // this is necessary or else it doesn't work in CI... not sure why
+      // Todo fix that
       "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+      // "no-console": ["warn", { allow: ["warn", "error"] }],
+
+      // allowing type {}
+      "@typescript-eslint/no-empty-object-type": "off",
+
+      "no-empty-pattern": ["error", { allowObjectPatternsAsParameters: true }],
+
+      // prepare for verbatimModuleSyntax
+      "@typescript-eslint/consistent-type-exports": [
+        "warn",
+        {
+          fixMixedExportsWithInlineTypeSpecifier: true,
+        },
+      ],
+      "@typescript-eslint/consistent-type-imports": [
+        "warn",
+        {
+          fixStyle: "inline-type-imports",
+          prefer: "type-imports",
+        },
+      ],
+      "@typescript-eslint/no-import-type-side-effects": "warn",
     },
   },
   {

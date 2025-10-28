@@ -1,7 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { secureHeaders } from "hono/secure-headers";
 
-import { env } from "~/env.server.ts";
 import { IS_DEV } from "./misc.ts";
 
 export const secureHeadersMiddleware = secureHeaders({
