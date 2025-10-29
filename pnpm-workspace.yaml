@@ -5,8 +5,31 @@ packages:
 
 catalog:
   isbot: 5.1.31
+  chalk: 5.6.2
+  cross-env: 10.1.0
+  dotenv: 17.2.3
+  "@t3-oss/env-core": 0.13.8
+  source-map-support: 0.5.21
+  "@types/source-map-support": 0.5.10
+  glob: 11.0.3
 
 catalogs:
+  typescript:
+    typescript: 5.9.3
+    tsx: 4.20.6
+    tsup: 8.5.0
+  react-router:
+    react-router: ^7.9.3
+    react-router-dom: ^7.9.3
+    "@react-router/node": ^7.9.3
+    "@react-router/dev": ^7.9.3
+    "@react-router/remix-routes-option-adapter": ^7.9.3
+    "@react-router/fs-routes": ^7.9.3
+  react19:
+    react: 19.2.0
+    react-dom: 19.2.0
+    "@types/react": 19.2.2
+    "@types/react-dom": ^19.1.9
   hono:
     hono: 4.10.2
     hono-rate-limiter: ^0.4.2
@@ -16,3 +39,17 @@ catalogs:
     "@sentry/react-router": 10.21.0
     "@sentry/profiling-node": 10.21.0
     "@sentry/vite-plugin": 4.5.0
+  tailwindcss:
+    tailwindcss: 4.1.16
+    tw-animate-css: 1.3.8
+    "@tailwindcss/vite": 4.1.13
+    "@tailwindcss/typography": 0.5.19
+    tailwind-merge: 3.3.1
+    prettier-plugin-tailwindcss: 0.7.1
+  storybook:
+    storybook: 10.0.0
+    "@storybook/addon-docs": 10.0.0
+    "@storybook/addon-onboarding": 10.0.0
+    "@storybook/react-vite": 10.0.0
+    "@storybook/builder-vite": 10.0.0
+    eslint-plugin-storybook: 10.0.0

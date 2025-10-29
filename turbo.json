@@ -64,7 +64,8 @@
       "persistent": true
     },
     "storybook": {
-      "outputs": []
+      "outputs": [],
+      "persistent": false
     },
     "generate": {
       "dependsOn": ["^generate"]
