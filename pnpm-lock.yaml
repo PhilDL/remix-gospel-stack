@@ -5,6 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
+  default:
+    isbot:
+      specifier: 5.1.31
+      version: 5.1.31
   hono:
     hono:
       specifier: 4.10.2
@@ -117,6 +121,9 @@ importers:
       hono-rate-limiter:
         specifier: catalog:hono
         version: 0.4.2(hono@4.10.2)
+      isbot:
+        specifier: 'catalog:'
+        version: 5.1.31
       litefs-js:
         specifier: ^1.1.2
         version: 1.1.2

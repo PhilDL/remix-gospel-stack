@@ -47,7 +47,7 @@
     "litefs-js": "^1.1.2",
     "@sentry/profiling-node": "catalog:sentry",
     "@sentry/react-router": "catalog:sentry",
-    "isbot": "catalog:isbot"
+    "isbot": "catalog:"
   },
   "devDependencies": {
     "@sentry/vite-plugin": "catalog:sentry",
