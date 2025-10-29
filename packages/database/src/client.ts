@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
 
-declare global {
-  var prisma: PrismaClient | undefined;
-}
+import { PrismaClient } from "./generated/client";
 
-export const prisma = global.prisma || new PrismaClient();
-
-export type { PrismaClient } from "@prisma/client";
-
-if (process.env.NODE_ENV !== "production") global.prisma = prisma;
+export const createClient = ({ url }: { url: string }) => {
+  const adapter = new PrismaBetterSQLite3({
+    url,
+  });
+  return new PrismaClient({ adapter });
+};

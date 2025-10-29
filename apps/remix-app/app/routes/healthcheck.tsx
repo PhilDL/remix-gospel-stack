@@ -1,9 +1,6 @@
-// learn more: https://fly.io/docs/reference/configuration/#services-http_checks
-import type { LoaderFunctionArgs } from "react-router";
+import type { Route } from "./+types/healthcheck";
 
-import Service from "~/services.server.ts";
-
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context }: Route.LoaderArgs) => {
   const host =
     request.headers.get("X-Forwarded-Host") ?? request.headers.get("host");
 
@@ -12,7 +9,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     // if we can connect to the database and make a simple query
     // and make a HEAD request to ourselves, then we're good.
     const [count] = await Promise.all([
-      Service.userRepository.getUsersCount(),
+      context.repositories.user.getUsersCount(),
       fetch(url.toString(), { method: "HEAD" }).then((r) => {
         if (!r.ok) return Promise.reject(new Error(r.statusText));
       }),

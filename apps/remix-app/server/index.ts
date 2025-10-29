@@ -7,6 +7,10 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import type { ServerBuild, Session, SessionStorage } from "react-router";
 import { createHonoServer } from "react-router-hono-server/node";
 
+import { PrismaUserRepository } from "@remix-gospel-stack/business/infrastructure";
+import type { UserRepository } from "@remix-gospel-stack/business/repositories";
+
+import { db } from "~/db.server.ts";
 import { sessionStorage } from "~/session.server.ts";
 import { appLogger } from "./middleware/logger.ts";
 import { ALLOW_INDEXING, IS_DEV, IS_PROD } from "./middleware/misc.ts";
@@ -34,6 +38,9 @@ declare module "react-router" {
     serverBuild: ServerBuild;
     session: Session;
     sessionStorage: SessionStorage;
+    repositories: {
+      user: UserRepository;
+    };
   }
 }
 
@@ -56,6 +63,9 @@ export default createHonoServer({
       serverBuild: build,
       session,
       sessionStorage,
+      repositories: {
+        user: PrismaUserRepository(db),
+      },
     };
   },
   async beforeAll(app) {

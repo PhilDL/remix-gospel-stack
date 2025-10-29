@@ -24,7 +24,7 @@
   ],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*", "./other/Dockerfile"],
       "outputs": [
         "dist/**",
@@ -67,8 +67,8 @@
       "outputs": [],
       "persistent": false
     },
-    "generate": {
-      "dependsOn": ["^generate"]
+    "db:generate": {
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^build"],

@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "db:generate": "turbo run db:generate",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
     "db:migrate:dev": "pnpm run --filter @remix-gospel-stack/database db:migrate:dev",
     "db:push": "turbo run db:push",
@@ -19,7 +20,6 @@
     "dev": "turbo run dev --parallel",
     "storybook": "turbo run storybook",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
     "lint": "turbo run lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "docker:db": "docker compose -f docker-compose.yml up -d",
@@ -52,6 +52,9 @@
   },
   "packageManager": "pnpm@10.19.0",
   "pnpm": {
-    "overrides": {}
+    "overrides": {},
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }

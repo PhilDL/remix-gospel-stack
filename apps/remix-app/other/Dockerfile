@@ -3,37 +3,53 @@
 ARG APP_DIRNAME=remix-app
 ARG APP_PKG_NAME=@remix-gospel-stack/remix-app
 
-FROM node:20-bookworm-slim AS pruner
+FROM node:22-bookworm-slim AS bookworm
 ARG APP_PKG_NAME
-RUN apt-get update && apt-get install -y openssl
+RUN apt-get update && apt-get install -y openssl sqlite3 ca-certificates python3 build-essential
+
+FROM bookworm AS bookworm-turbopm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV TURBO_TELEMETRY_MESSAGE_DISABLED=1
+RUN npm install -g corepack@latest
+RUN corepack enable
+RUN pnpm add turbo@^2 --global
+RUN pnpm config set store-dir ~/.pnpm-store
+
+# pruner 
+FROM bookworm-turbopm AS pruner
+ARG APP_PKG_NAME
 WORKDIR /app
-RUN yarn global add turbo
 COPY . .
-RUN turbo prune --scope=$APP_PKG_NAME --docker
+RUN turbo prune $APP_PKG_NAME --docker
 RUN find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 
-FROM node:20-bookworm-slim AS base
-RUN apt-get update && apt-get install -y openssl
-RUN corepack enable
+FROM bookworm-turbopm AS base
 WORKDIR /app
 COPY .gitignore .gitignore
+COPY .npmrc .npmrc
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm fetch --frozen-lockfile
 
 FROM base AS dev-deps
 WORKDIR /app
-RUN pnpm install
+ENV CI true
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
 
 FROM base AS production-deps
+ARG APP_DIRNAME
 WORKDIR /app
 ENV NODE_ENV production
-RUN pnpm install --prod
-COPY --from=pruner /app/out/full/packages/database/prisma/schema.prisma /app/packages/database/prisma/schema.prisma
+ENV CI true
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --prod --frozen-lockfile
 RUN pnpm dlx prisma generate --schema /app/packages/database/prisma/schema.prisma
 
 FROM base AS builder
+ARG COMMIT_SHA
 ARG APP_PKG_NAME
+ENV COMMIT_SHA=$COMMIT_SHA
 WORKDIR /app
 RUN corepack enable
 ENV NODE_ENV production
@@ -47,15 +63,14 @@ RUN pnpm run build --filter=$APP_PKG_NAME...
 # Runner
 FROM base AS runner
 ARG APP_DIRNAME
+ENV NODE_ENV "production"
 
-ENV NODE_ENV production
-
+WORKDIR /app
 
 COPY --from=pruner /app/out/full/ .
 COPY --from=production-deps /app .
-COPY --from=builder /app/apps/$APP_DIRNAME/server.mjs ./apps/$APP_DIRNAME/server.mjs
+COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
-COPY --from=builder /app/apps/$APP_DIRNAME/public ./apps/$APP_DIRNAME/public
 
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-remix-production"]

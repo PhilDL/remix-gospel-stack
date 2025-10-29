@@ -36,7 +36,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/Dockerfile",
+        path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/other/Dockerfile",
         templateFile: "templates/Dockerfile.hbs",
         force: true,
       },

@@ -3,9 +3,9 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-  type LoaderFunctionArgs,
 } from "react-router";
 
+import { helloWorld } from "@remix-gospel-stack/business/shared/utils";
 import { lookUpSalesPersonForZipcode } from "@remix-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@remix-gospel-stack/internal-nobuild/queries.server";
 import { Button } from "@remix-gospel-stack/ui/components/button";
@@ -18,12 +18,13 @@ import {
 } from "@remix-gospel-stack/ui/components/card";
 import { Checkbox } from "@remix-gospel-stack/ui/components/checkbox";
 
-// import { Checkbox } from "@remix-gospel-stack/ui/checkbox";
+import type { Route } from "./+types/_index";
 
-import Service, { helloWorld } from "~/services.server.ts";
-
-export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
-  const users = await Service.userRepository.getUsers();
+export const loader = async ({
+  request: _request,
+  context,
+}: Route.LoaderArgs) => {
+  const users = await context.repositories.user.getUsers();
   const salesPersons = getSalesPersonDirectory();
   return {
     users,

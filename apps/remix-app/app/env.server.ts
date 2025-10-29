@@ -12,6 +12,7 @@ export const env = createEnv({
       .default("production"),
     DEBUG_MOCKS: z.enum(["true", "false"]).optional().default("false"),
     ALLOW_INDEXING: z.enum(["true", "false"]).optional(),
+    DATABASE_URL: z.string().min(1),
   },
   client: {
     PUBLIC_NODE_ENV: z

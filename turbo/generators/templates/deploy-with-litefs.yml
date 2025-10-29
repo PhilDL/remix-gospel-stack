@@ -195,7 +195,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: apps/remix-app/Dockerfile
+          file: apps/remix-app/other/Dockerfile
           push: true
           tags: registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}
           build-args: |
