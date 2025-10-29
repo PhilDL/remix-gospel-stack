@@ -6,9 +6,6 @@
     "**/*.tsx",
     "index.js"
   ],
-  "ts-node": {
-    "swc": true
-  },
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,

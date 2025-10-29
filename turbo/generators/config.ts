@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
-import type { AppConfig } from "@remix-run/dev";
+import type { Config } from "@react-router/dev/config";
 import type { PlopTypes } from "@turbo/gen";
 import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
@@ -293,23 +293,23 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           })
           .filter((p) => p.name === answers.package)[0].path;
         try {
-          const mod = await loadFile<{ default: AppConfig }>(
+          const mod = await loadFile<{ default: Config }>(
             "./apps/remix-app/vite.config.ts",
           );
 
-          if (
-            mod.exports.default.serverDependenciesToBundle &&
-            mod.exports.default.serverDependenciesToBundle !== "all"
-          ) {
-            mod.exports.default.serverDependenciesToBundle.push(
-              answers.package || "",
-            );
-          }
-          if (mod.exports.default.watchPaths) {
-            (mod.exports.default.watchPaths as string[]).push(
-              `../../packages/${dirname}/src/**/*`,
-            );
-          }
+          // if (
+          //   mod.exports.default.ssr &&
+          //   mod.exports.default.ssr !== "all"
+          // ) {
+          //   mod.exports.default.serverDependenciesToBundle.push(
+          //     answers.package || "",
+          //   );
+          // }
+          // if (mod.exports.default.watchPaths) {
+          //   (mod.exports.default.watchPaths as string[]).push(
+          //     `../../packages/${dirname}/src/**/*`,
+          //   );
+          // }
           // @ts-ignore
           await writeFile(mod, "./apps/remix-app/vite.config.ts");
           return "updated vite.config.ts";

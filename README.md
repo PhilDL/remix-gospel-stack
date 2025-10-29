@@ -21,7 +21,7 @@ pnpm create remix@latest --init-script --install --template https://github.com/P
 ```bash
 git clone git@github.com:PhilDL/remix-gospel-stack.git
 cd remix-gospel-stack
-pnpm add -w @remix-run/dev
+pnpm add -w @react-router/dev
 pnpm remix init
 ```
 
@@ -38,7 +38,6 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   - [`remix-vercel`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-vercel): the [Remix.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
   - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
-
   - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
   - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
   - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
