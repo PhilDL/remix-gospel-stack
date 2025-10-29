@@ -1,34 +1,35 @@
 import { PassThrough } from "stream";
 import { createReadableStreamFromReadable } from "@react-router/node";
+import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { ServerRouter, type EntryContext } from "react-router";
+import { ServerRouter, type HandleDocumentRequestFunction } from "react-router";
 
 export const streamTimeout = 5000;
 
-export default async function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  reactRouterContext: EntryContext,
-) {
+type DocRequestArgs = Parameters<HandleDocumentRequestFunction>;
+
+export default async function handleRequest(...args: DocRequestArgs) {
+  const [request, responseStatusCode, responseHeaders, reactRouterContext] =
+    args;
   return new Promise((resolve, reject) => {
     let didError = false;
+
+    const callbackName = isbot(request.headers.get("user-agent"))
+      ? "onAllReady"
+      : "onShellReady";
 
     const { pipe, abort } = renderToPipeableStream(
       <ServerRouter context={reactRouterContext} url={request.url} />,
       {
-        onShellReady: () => {
+        [callbackName]: () => {
           const body = new PassThrough();
-
-          responseHeaders.set("Content-Type", "text/html");
-
+          responseHeaders.set("Content-Type", "text/html; charset=utf-8");
           resolve(
             new Response(createReadableStreamFromReadable(body), {
               headers: responseHeaders,
               status: didError ? 500 : responseStatusCode,
             }),
           );
-
           pipe(body);
         },
         onShellError: (err) => {

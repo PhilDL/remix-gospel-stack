@@ -3,6 +3,9 @@ packages:
   - "packages/*"
   - "apps/*"
 
+catalog:
+  isbot: 5.1.31
+
 catalogs:
   hono:
     hono: 4.10.2

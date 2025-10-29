@@ -45,37 +45,37 @@ export default function Index() {
                 src="https://user-images.githubusercontent.com/4941205/189402031-751764e0-2227-4f5e-a527-6763563c5911.jpg"
                 alt="The Bling Boys of Alabama Gospel band singing"
               />
-              <div className="absolute inset-0 bg-[color:#6a3f077d] mix-blend-multiply" />
+              <div className="absolute inset-0 bg-[#6a3f077d] mix-blend-multiply" />
             </div>
-            <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32 lg:pb-20">
+            <div className="relative bg-stone-900/40 px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32 lg:pb-20">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
                 <span className="block text-amber-500 uppercase drop-shadow-md">
                   Gospel Stack
                 </span>
               </h1>
               <p className="mx-auto my-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Remix Monorepo Check the README.md file for instructions on how
-                to get this project deployed.{" "}
+                React Router Monorepo Check the README.md file for instructions
+                on how to get this project deployed.{" "}
               </p>
-              <div className="mx-auto flex w-full flex-row items-center justify-between gap-8">
-                <a
+              <div className="mx-auto flex w-full flex-row items-center justify-center gap-8">
+                {/* <a
                   href="https://turborepo.org"
                   className="flex flex-1 items-center justify-end"
                 >
                   <img
                     src="https://user-images.githubusercontent.com/4941205/189468691-7b1f3967-2470-4bd2-923f-0be0041151dc.svg"
                     alt="Turborepo"
-                    className="max-w-[15rem] fill-white md:max-w-[19rem]"
+                    className="max-w-60 fill-white md:max-w-76"
                   />
-                </a>
+                </a> */}
                 <a
-                  href="https://remix.run"
-                  className="flex flex-1 items-center justify-start"
+                  href="https://reactrouter.com/home"
+                  className="items-center justify-start"
                 >
                   <img
-                    src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                    alt="Remix"
-                    className="w-full max-w-[12rem] md:max-w-[16rem]"
+                    src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Lockup/Dark.svg"
+                    alt="React Router"
+                    className="w-full max-w-[24rem]"
                   />
                 </a>
               </div>
