@@ -84,10 +84,10 @@ jobs:
         uses: actions/checkout@v5
 
       - name: 🏄 Copy test env vars
-        run: cp .env.example .env
-
-      - name: 🏄 Copy test env vars to Package
-        run: cp .env.example packages/database/.env
+        run: |
+          cp .env.example .env
+          cp ./apps/remix-app/.env.example ./apps/remix-app/.env
+          cp .env.example packages/database/.env
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -126,10 +126,10 @@ jobs:
           cache: "pnpm"
 
       - name: 🏄 Copy test env vars
-        run: cp .env.example .env
-
-      - name: 🏄 Copy test env vars to Package
-        run: cp .env.example packages/database/.env
+        run: |
+          cp .env.example .env
+          cp ./apps/remix-app/.env.example ./apps/remix-app/.env
+          cp .env.example packages/database/.env
 
       - name: 📥 Download deps
         run: pnpm install

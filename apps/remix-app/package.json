@@ -22,7 +22,7 @@
     "test:e2e:ci": "pnpm run test:e2e:install && pnpm run test:e2e:run",
     "typecheck": "react-router typegen && tsc -b",
     "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
-    "with-env": "dotenv -e ../../.env --"
+    "with-root-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@react-router/node": "^7.0.0",
