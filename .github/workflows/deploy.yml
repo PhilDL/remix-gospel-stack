@@ -62,7 +62,7 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: pnpm generate
+        run: pnpm db:generate
 
       - name: ⚙️ Build
         run: pnpm build
@@ -101,10 +101,10 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: npm run generate
+        run: pnpm db:generate
 
       - name: ⚡ Run vitest
-        run: npm run test
+        run: pnpm test
 
   playwright:
     name: 🎭 Playwright
