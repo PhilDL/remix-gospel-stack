@@ -11,7 +11,8 @@
     "db:seed": "pnpm with-env tsx src/seed.ts",
     "db:migrate:force": "pnpm with-env prisma migrate reset --force",
     "format": "pnpm with-env prisma format",
-    "clean": "rimraf .turbo node_modules dist src/generated",
+    "nuke": "rimraf .turbo node_modules src/generated",
+    "clean": "rimraf .turbo src/generated",
     "lint": "eslint ./src",
     "studio": "pnpm with-env prisma studio",
     "with-env": "dotenv -e ../../.env --"
@@ -26,7 +27,7 @@
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
     "prisma": "^6.18.0",
-    "rimraf": "^6.0.1",
+    "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "tsx": "catalog:typescript",
     "typescript": "catalog:typescript"

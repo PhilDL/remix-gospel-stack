@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@remix-gospel-stack/remix-app",
+  "name": "@remix-gospel-stack/webapp",
   "version": "1.0.0",
   "sideEffects": false,
   "type": "module",
@@ -10,7 +10,7 @@
     "dev": "NODE_ENV=development react-router dev",
     "start": "cross-env NODE_ENV=production node .",
     "start:mocks": "cross-env NODE_ENV=production MOCKS=true tsx .",
-    "docker:build": "cd ../.. & docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/other/Dockerfile .",
+    "docker:build": "cd ../.. & docker build -t remix-gospel-stack-webapp -f ./apps/webapp/other/Dockerfile .",
     "lint": "eslint .",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -22,7 +22,9 @@
     "test:e2e:ci": "pnpm run test:e2e:install && pnpm run test:e2e:run",
     "typecheck": "react-router typegen && tsc -b",
     "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
-    "with-root-env": "dotenv -e ../../.env --"
+    "with-root-env": "dotenv -e ../../.env --",
+    "clean": "pnpm rimraf .turbo build public/build",
+    "nuke": "pnpm rimraf .turbo build public/build node_modules coverage playwright-report test-results"
   },
   "dependencies": {
     "@epic-web/remember": "^1.1.0",
@@ -50,6 +52,7 @@
     "source-map-support": "catalog:"
   },
   "devDependencies": {
+    "rimraf": "catalog:",
     "@faker-js/faker": "^10.1.0",
     "@playwright/test": "^1.56.1",
     "@react-router/dev": "catalog:react-router",

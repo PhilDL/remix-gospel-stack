@@ -10,7 +10,8 @@
     "dev:vite": "vite",
     "build": "tsup",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean": "rm -rf dist",
+    "clean": "rimraf .turbo",
+    "nuke": "rimraf .turbo node_modules",
     "lint": "eslint ./src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "storybook": "storybook dev",
@@ -34,6 +35,7 @@
     "tw-animate-css": "catalog:tailwindcss"
   },
   "devDependencies": {
+    "rimraf": "catalog:",
     "@react-router/dev": "catalog:react-router",
     "@react-router/node": "catalog:react-router",
     "@remix-gospel-stack/eslint-config": "workspace:*",

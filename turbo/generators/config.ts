@@ -60,8 +60,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           delete packageJson.dependencies["litefs-js"];
           packageJson.scripts["docker:db"] =
             "docker compose -f docker-compose.yml up -d";
-          packageJson.scripts["docker:run:remix-app"] =
-            "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-remix-app";
+          packageJson.scripts["docker:run:webapp"] =
+            "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp";
           packageJson.scripts["setup"] =
             "pnpm run docker:db && pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
           fs.writeFileSync(
@@ -72,7 +72,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         } else {
           packageJson.dependencies["litefs-js"] = "^1.1.2";
           delete packageJson.scripts["docker:db"];
-          delete packageJson.scripts["docker:run:remix-app"];
+          delete packageJson.scripts["docker:run:webapp"];
           packageJson.scripts["setup"] =
             "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
           fs.writeFileSync(
@@ -140,7 +140,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             path.join(
               plop.getDestBasePath(),
               "apps",
-              answers.appDirname ?? "remix-app",
+              answers.appDirname ?? "webapp",
               "other",
               "litefs.yml",
             ),
@@ -152,7 +152,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             path.join(
               plop.getDestBasePath(),
               "apps",
-              answers.appDirname ?? "remix-app",
+              answers.appDirname ?? "webapp",
               "other",
               "litefs.yml",
             ),
@@ -294,7 +294,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           .filter((p) => p.name === answers.package)[0].path;
         try {
           const mod = await loadFile<{ default: Config }>(
-            "./apps/remix-app/vite.config.ts",
+            "./apps/webapp/vite.config.ts",
           );
 
           // if (
@@ -311,7 +311,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           //   );
           // }
           // @ts-ignore
-          await writeFile(mod, "./apps/remix-app/vite.config.ts");
+          await writeFile(mod, "./apps/webapp/vite.config.ts");
           return "updated vite.config.ts";
         } catch (err) {
           console.log(err);
@@ -333,7 +333,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           .filter((p) => p.name === answers.package)[0].path;
         try {
           const tsconfig = JSON5.parse(
-            fs.readFileSync(`./apps/remix-app/tsconfig.json`, "utf8"),
+            fs.readFileSync(`./apps/webapp/tsconfig.json`, "utf8"),
           );
 
           tsconfig.compilerOptions.paths = {
@@ -342,7 +342,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             [`${answers.package}/*`]: [`../../packages/${dirname}/src/*`],
           };
           fs.writeFileSync(
-            `./apps/remix-app/tsconfig.json`,
+            `./apps/webapp/tsconfig.json`,
             JSON.stringify(tsconfig, null, 2),
           );
 

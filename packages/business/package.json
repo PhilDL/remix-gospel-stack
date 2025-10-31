@@ -4,7 +4,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "clean": "rimraf .turbo node_modules dist",
+    "clean": "rimraf .turbo",
+    "nuke": "rimraf .turbo node_modules",
     "lint": "eslint ./src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
@@ -16,7 +17,7 @@
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
-    "rimraf": "^6.0.1",
+    "rimraf": "catalog:",
     "typescript": "catalog:typescript"
   },
   "exports": {

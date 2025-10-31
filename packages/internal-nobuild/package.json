@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rimraf .turbo node_modules dist",
+    "clean": "rimraf .turbo",
+    "nuke": "rimraf .turbo node_modules",
     "lint": "eslint ./src",
     "test": "vitest run",
     "test:dev": "vitest",
@@ -15,7 +16,7 @@
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "rimraf": "^6.0.1",
+    "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "typescript": "catalog:typescript",
     "vite": "^7.1.12",

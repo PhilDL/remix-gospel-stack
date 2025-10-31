@@ -35,7 +35,7 @@
         ".cache"
       ]
     },
-    "@remix-gospel-stack/remix-app#start": {
+    "@remix-gospel-stack/webapp#start": {
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },
@@ -101,6 +101,9 @@
       "outputs": []
     },
     "clean": {
+      "cache": false
+    },
+    "nuke": {
       "cache": false
     }
   }

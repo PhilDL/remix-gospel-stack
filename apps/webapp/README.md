@@ -13,7 +13,7 @@ from the root of your Monorepo.
 Start the Remix development asset server and the Express server by running:
 
 ```sh
-pnpm run dev --filter=@remix-gospel-stack/remix-app...
+pnpm run dev --filter=@remix-gospel-stack/webapp...
 ```
 
 This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
@@ -26,13 +26,13 @@ This starts your app in development mode, which will purge the server require ca
 Build App for production:
 
 ```sh
-pnpm run build --filter=@remix-gospel-stack/remix-app...
+pnpm run build --filter=@remix-gospel-stack/webapp...
 ```
 
 Then run the app in production mode:
 
 ```sh
-pnpm run start --filter=@remix-gospel-stack/remix-app
+pnpm run start --filter=@remix-gospel-stack/webapp
 ```
 
 Now you'll need to pick a host to deploy it to.
@@ -52,9 +52,9 @@ When you ran `npx create-remix@latest` there were a few choices for hosting. You
 cd ..
 # create a new project, and pick a pre-configured host
 npx create-remix@latest
-cd my-new-remix-app
+cd my-new-webapp
 # remove the new project's app (not the old one!)
 rm -rf app
 # copy your app over
-cp -R ../my-old-remix-app/app app
+cp -R ../my-old-webapp/app app
 ```

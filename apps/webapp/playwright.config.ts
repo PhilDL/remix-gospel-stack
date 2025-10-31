@@ -31,9 +31,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: process.env.CI
-      ? `pnpm -w run start-remix-production`
-      : `pnpm run dev`,
+    command: process.env.CI ? `pnpm -w run start-webapp` : `pnpm run dev`,
     port: Number(PORT),
     reuseExistingServer: !process.env.CI,
     stdout: "pipe",

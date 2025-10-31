@@ -34,7 +34,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 ### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
 
 - `apps` Folder containing the applications
-  - [`remix-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-app): the [Remix.run](https://remix.run) app in ESM.
+  - [`webapp`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/webapp): the [Remix.run](https://remix.run) app in ESM.
   - [`remix-vercel`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-vercel): the [Remix.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
   - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
@@ -108,12 +108,12 @@ future: {
   ```
 - Run the first build (with dependencies via the `...` option)
   ```bash
-  pnpm run build --filter=@remix-gospel-stack/remix-app...
+  pnpm run build --filter=@remix-gospel-stack/webapp...
   ```
   **Running simply `pnpm run build` will build everything, including the NextJS app.**
 - Run the Remix dev server
   ```bash
-  pnpm run dev --filter=@remix-gospel-stack/remix-app
+  pnpm run dev --filter=@remix-gospel-stack/webapp
   ```
 
 ## Switch between PostgreSQL and SQLite (Litefs)
@@ -144,7 +144,7 @@ Check the `turbo.json` file to see the available pipelines.
 
 - Run the Cypress tests and Dev
   ```bash
-  pnpm run test:e2e:dev --filter=@remix-gospel-stack/remix-app
+  pnpm run test:e2e:dev --filter=@remix-gospel-stack/webapp
   ```
 - Lint everything
   ```bash
@@ -162,7 +162,7 @@ Check the `turbo.json` file to see the available pipelines.
   ```
 - How to install an npm package in the Remix app ?
   ```bash
-  pnpm add dayjs --filter @remix-gospel-stack/remix-app
+  pnpm add dayjs --filter @remix-gospel-stack/webapp
   ```
 - Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
 
@@ -294,15 +294,15 @@ We use GitHub Actions for continuous integration and deployment. Anything that g
   ```
 - Build the docker image
   ```sh
-  pnpm docker:build:remix-app
+  pnpm docker:build:webapp
   ```
 - Run the docker Image
   ```sh
-  pnpm docker:run:remix-app
+  pnpm docker:run:webapp
   ```
 - (Optionnal) If you want to manually deploy to fly.io:
   ```bash
-  DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/remix-app/fly.toml --dockerfile ./apps/remix-app/Dockerfile
+  DOCKER_DEFAULT_PLATFORM=linux/amd64 flyctl deploy --config ./apps/webapp/fly.toml --dockerfile ./apps/webapp/Dockerfile
   ```
 
 ## Useful Turborepo Links

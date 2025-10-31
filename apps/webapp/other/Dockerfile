@@ -1,7 +1,7 @@
 # This file is moved to the root directory before building the image
 
-ARG APP_DIRNAME=remix-app
-ARG APP_PKG_NAME=@remix-gospel-stack/remix-app
+ARG APP_DIRNAME=webapp
+ARG APP_PKG_NAME=@remix-gospel-stack/webapp
 
 FROM node:22-bookworm-slim AS bookworm
 ARG APP_PKG_NAME
@@ -73,4 +73,4 @@ COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
 
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
-CMD ["pnpm", "run", "start-remix-production"]
+CMD ["pnpm", "run", "start-webapp"]

@@ -33,10 +33,10 @@ exec:
   - cmd: sqlite3 $DATABASE_PATH "PRAGMA journal_mode = WAL;"
     if-candidate: true
 
-  # - cmd: npx prisma migrate reset --force --schema ./apps/remix-app/prisma/schema.prisma
+  # - cmd: npx prisma migrate reset --force --schema ./apps/webapp/prisma/schema.prisma
   #   if-candidate: true
 
   - cmd: npx prisma migrate deploy --schema packages/database/prisma/schema.prisma
     if-candidate: true
 
-  - cmd: pnpm run start-remix-production
+  - cmd: pnpm run start-webapp

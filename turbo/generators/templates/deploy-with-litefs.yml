@@ -148,7 +148,7 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: apps/remix-app/playwright-report/
+          path: apps/webapp/playwright-report/
           retention-days: 30
 
   build:
@@ -167,7 +167,7 @@ jobs:
         uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
-          file: "apps/remix-app/fly.toml"
+          file: "apps/webapp/fly.toml"
           field: "app"
 
       - name: 🐳 Set up Docker Buildx
@@ -195,7 +195,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: apps/remix-app/other/Dockerfile
+          file: apps/webapp/other/Dockerfile
           push: true
           tags: registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}
           build-args: |
@@ -231,7 +231,7 @@ jobs:
         uses: SebRollen/toml-action@v1.2.0
         id: app_name
         with:
-          file: "apps/remix-app/fly.toml"
+          file: "apps/webapp/fly.toml"
           field: "app"
 
       - name: 🎈 Setup Fly
@@ -239,12 +239,12 @@ jobs:
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref == 'refs/heads/dev' }}
-        run: "flyctl deploy --app ${{ steps.app_name.outputs.value }}-staging --config ./apps/remix-app/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
+        run: "flyctl deploy --app ${{ steps.app_name.outputs.value }}-staging --config ./apps/webapp/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🚀 Deploy Production
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: "flyctl deploy --config ./apps/remix-app/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
+        run: "flyctl deploy --config ./apps/webapp/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

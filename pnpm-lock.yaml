@@ -27,6 +27,9 @@ catalogs:
     isbot:
       specifier: 5.1.31
       version: 5.1.31
+    rimraf:
+      specifier: 6.0.1
+      version: 6.0.1
     source-map-support:
       specifier: 0.5.21
       version: 0.5.21
@@ -163,7 +166,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  apps/remix-app:
+  apps/webapp:
     dependencies:
       '@epic-web/remember':
         specifier: ^1.1.0
@@ -316,6 +319,9 @@ importers:
       npm-run-all2:
         specifier: ^8.0.4
         version: 8.0.4
+      rimraf:
+        specifier: 'catalog:'
+        version: 6.0.1
       tailwindcss:
         specifier: catalog:tailwindcss
         version: 4.1.16
@@ -402,7 +408,7 @@ importers:
         specifier: ^24.9.1
         version: 24.9.1
       rimraf:
-        specifier: ^6.0.1
+        specifier: 'catalog:'
         version: 6.0.1
       typescript:
         specifier: catalog:typescript
@@ -433,7 +439,7 @@ importers:
         specifier: ^6.18.0
         version: 6.18.0(magicast@0.3.5)(typescript@5.9.3)
       rimraf:
-        specifier: ^6.0.1
+        specifier: 'catalog:'
         version: 6.0.1
       tsup:
         specifier: catalog:typescript
@@ -454,7 +460,7 @@ importers:
         specifier: workspace:*
         version: link:../../config/tsconfig
       rimraf:
-        specifier: ^6.0.1
+        specifier: 'catalog:'
         version: 6.0.1
       tsup:
         specifier: catalog:typescript
@@ -559,6 +565,9 @@ importers:
       react-dom:
         specifier: catalog:react19
         version: 19.2.0(react@19.2.0)
+      rimraf:
+        specifier: 'catalog:'
+        version: 6.0.1
       storybook:
         specifier: catalog:storybook
         version: 10.0.0(@testing-library/dom@10.4.1)(msw@2.11.6(@types/node@24.9.1)(typescript@5.9.3))(prettier@3.6.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.12(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
