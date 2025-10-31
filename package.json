@@ -45,13 +45,13 @@
     "prettier-plugin-tailwindcss": "catalog:tailwindcss",
     "replace-in-file": "^8.3.0",
     "turbo": "^2.5.8",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "prisma": "catalog:prisma",
+    "@prisma/adapter-libsql": "catalog:prisma"
   },
   "packageManager": "pnpm@10.19.0",
   "pnpm": {
     "overrides": {},
-    "onlyBuiltDependencies": [
-      "better-sqlite3"
-    ]
+    "onlyBuiltDependencies": []
   }
 }

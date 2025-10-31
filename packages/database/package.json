@@ -18,15 +18,15 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^6.18.0",
-    "@prisma/client": "^6.18.0"
+    "@prisma/adapter-libsql": "catalog:prisma",
+    "@prisma/client": "catalog:prisma"
   },
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
-    "prisma": "^6.18.0",
+    "prisma": "catalog:prisma",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "tsx": "catalog:typescript",

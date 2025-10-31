@@ -10,8 +10,8 @@
     "PORT",
     "MOCKS",
     "DATABASE_URL",
-    "DATABASE_PATH",
-    "LITEFS_DIR",
+    "DATABASE_TOKEN",
+    "DATABASE_SYNC_URL",
     "SENTRY_DSN",
     "ALLOW_INDEXING"
   ],
