@@ -57,7 +57,7 @@ export async function main({ rootDirectory }) {
 
   console.log(`${spaces()}◼  Preparing monorepo for ${db}...`);
   execSync(
-    `pnpm turbo gen scaffold-database --args ${ORG_NAME}/remix-app remix-app ${db}`,
+    `pnpm turbo gen scaffold-database --args ${ORG_NAME}/webapp webapp ${db}`,
     {
       cwd: rootDirectory,
       stdio: "ignore",
@@ -116,13 +116,13 @@ ${spaces(9)}OR
 
 ${spaces(9)}- Run only the Remix app:
 ${spaces(9)}  ${chalk.yellow(
-        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 `
     : `
 ${spaces(9)}- Run the remix app:
 ${spaces(9)}  ${chalk.yellow(
-        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/remix-app`),
+        chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 
 ${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
@@ -140,16 +140,11 @@ const rootConfigsRename = async ({
   APP_NAME,
 }) => {
   const README_PATH = path.join(rootDirectory, "README.md");
-  const FLY_TOML_PATH = path.join(
-    rootDirectory,
-    "apps",
-    "remix-app",
-    "fly.toml",
-  );
+  const FLY_TOML_PATH = path.join(rootDirectory, "apps", "webapp", "fly.toml");
   const LITEFS_YML_PATH = path.join(
     rootDirectory,
     "apps",
-    "remix-app",
+    "webapp",
     "other",
     "litefs.yml",
   );

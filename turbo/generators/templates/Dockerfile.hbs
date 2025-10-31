@@ -53,5 +53,5 @@ COPY --from=pruner /app/out/full/ . COPY --from=production-deps /app . COPY
 {{else}}
   # release_command = "pnpx prisma migrate deploy --schema
   packages/database/prisma/schema.prisma" CMD ["pnpm", "run",
-  "start-remix-production"]
+  "start-webapp"]
 {{/ifEquals}}

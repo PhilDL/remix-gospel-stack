@@ -1,12 +1,12 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node18.json",
+  "extends": "@remix-gospel-stack/tsconfig/node22.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "compilerOptions": {
     "paths": {
       "@remix-gospel-stack/database/*": ["../database/src/*"],
-      "@remix-gospel-stack/database": ["../database/src/index"],
+      "@remix-gospel-stack/database": ["../database/src/index"]
     },
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "exclude": ["node_modules"]
 }

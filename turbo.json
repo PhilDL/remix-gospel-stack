@@ -11,11 +11,21 @@
     "MOCKS",
     "DATABASE_URL",
     "DATABASE_PATH",
-    "LITEFS_DIR"
+    "LITEFS_DIR",
+    "SENTRY_DSN",
+    "ALLOW_INDEXING"
+  ],
+  "globalPassThroughEnv": [
+    "MODE",
+    "DEV",
+    "NODE_ENV",
+    "DEBUG_MOCKS",
+    "PLAYWRIGHT_TEST_BASE_URL"
   ],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^db:generate"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "./other/Dockerfile"],
       "outputs": [
         "dist/**",
         ".next/**",
@@ -25,7 +35,7 @@
         ".cache"
       ]
     },
-    "@remix-gospel-stack/remix-app#start": {
+    "@remix-gospel-stack/webapp#start": {
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },
@@ -50,13 +60,15 @@
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "storybook": {
-      "outputs": []
+      "outputs": [],
+      "persistent": false
     },
-    "generate": {
-      "dependsOn": ["^generate"]
+    "db:generate": {
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^build"],
@@ -71,12 +83,14 @@
     },
     "test:dev": {
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test:e2e:dev": {
       "dependsOn": ["^build"],
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test:e2e:ci": {
       "dependsOn": ["^build"],
@@ -87,6 +101,9 @@
       "outputs": []
     },
     "clean": {
+      "cache": false
+    },
+    "nuke": {
       "cache": false
     }
   }

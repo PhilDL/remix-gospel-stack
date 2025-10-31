@@ -1,0 +1,48 @@
+{
+  "include": [
+    ".react-router/types/**/*",
+    "types/env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "index.js"
+  ],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "target": "ESNext",
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"],
+      "@remix-gospel-stack/ui/*": ["../../packages/ui/src/*"],
+      "@remix-gospel-stack/ui": ["../../packages/ui/src/index"],
+      "@remix-gospel-stack/business/*": ["../../packages/business/src/*"],
+      "@remix-gospel-stack/business": ["../../packages/business/src/index"],
+      "@remix-gospel-stack/database/*": ["../../packages/database/src/*"],
+      "@remix-gospel-stack/database": ["../../packages/database/src/index"],
+      "@remix-gospel-stack/internal-nobuild": [
+        "../../packages/internal-nobuild/src/index"
+      ],
+      "@remix-gospel-stack/internal-nobuild/*": [
+        "../../packages/internal-nobuild/src/*"
+      ],
+      "@remix-gospel-stack/tailwind-config": [
+        "../../config/tailwind-config/src/index"
+      ]
+    },
+    "noEmit": true,
+    "types": ["@react-router/node", "vite/client"],
+    "rootDirs": [".", "./.react-router/types"]
+  }
+}

@@ -1,4 +1,4 @@
-import baseConfig from "@remix-gospel-stack/eslint-config/base.js";
+import baseConfig from "@remix-gospel-stack/eslint-config/base";
 
 /** @type {import('typescript-eslint').Config} */
 export default [...baseConfig];

@@ -1,4 +1,4 @@
-import { SalesPerson, SalesPersonDirectory } from "../types.ts";
+import type { SalesPerson, SalesPersonDirectory } from "../types.ts";
 
 export function lookUpSalesPersonForZipcode(
   zipcode: string,

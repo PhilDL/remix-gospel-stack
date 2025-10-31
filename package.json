@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "db:generate": "turbo run db:generate",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
     "db:migrate:dev": "pnpm run --filter @remix-gospel-stack/database db:migrate:dev",
     "db:push": "turbo run db:push",
@@ -19,18 +20,18 @@
     "dev": "turbo run dev --parallel",
     "storybook": "turbo run storybook",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
     "lint": "turbo run lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "docker:db": "docker compose -f docker-compose.yml up -d",
     "docker:build": "turbo run docker:build",
-    "docker:build:remix-app": "docker build -t remix-gospel-stack-remix-app -f ./apps/remix-app/Dockerfile .",
-    "docker:run:remix-app": "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network remix-gospel-stack-remix-app",
+    "docker:build:webapp": "docker build -t remix-gospel-stack-webapp -f ./apps/webapp/Dockerfile .",
+    "docker:run:webapp": "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network remix-gospel-stack-webapp",
     "test": "turbo run test",
     "test:dev": "turbo run test:dev",
-    "start-remix-production": "pnpm run --filter @remix-gospel-stack/remix-app start",
+    "start-webapp": "pnpm run --filter @remix-gospel-stack/webapp start",
     "start": "turbo run start",
     "clean": "turbo run clean",
+    "nuke": "turbo run nuke",
     "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "typecheck": "turbo run typecheck",
     "test:e2e:dev": "turbo run test:e2e:dev",
@@ -39,23 +40,22 @@
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
-    "@remix-run/dev": "2.16.0",
-    "@turbo/gen": "^2.1.2",
-    "@types/glob": "8.1.0",
-    "glob": "^11.0.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@turbo/gen": "^2.5.8",
+    "glob": "catalog:",
     "json5": "^2.2.3",
-    "magicast": "^0.3.5",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.8",
-    "replace-in-file": "^8.2.0",
-    "turbo": "^2.1.2",
-    "typescript": "^5.6.2"
+    "magicast": "^0.4.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "catalog:tailwindcss",
+    "replace-in-file": "^8.3.0",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.19.0",
   "pnpm": {
-    "overrides": {
-      "@swc/core": "^1.6.7"
-    }
+    "overrides": {},
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }

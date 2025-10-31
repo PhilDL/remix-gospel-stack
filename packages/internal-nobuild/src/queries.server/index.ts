@@ -1,4 +1,4 @@
-import { SalesPersonDirectory } from "../types.ts";
+import type { SalesPersonDirectory } from "../types.ts";
 
 console.log("This console log should never be visible in the browser.");
 

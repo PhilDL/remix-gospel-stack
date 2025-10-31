@@ -5,7 +5,8 @@ import hooksPlugin from "eslint-plugin-react-hooks";
 
 import base from "./base.js";
 
-export default [
+/** @type {import('typescript-eslint').Config} */
+const config = [
   ...base,
   {
     // jsx-runtime
@@ -28,3 +29,5 @@ export default [
     },
   },
 ];
+
+export default config;

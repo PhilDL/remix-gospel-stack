@@ -2,17 +2,10 @@
   "name": "@remix-gospel-stack/business",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "type": "module",
-  "files": [
-    "dist/**"
-  ],
   "scripts": {
-    "build": "tsup",
-    "clean": "rimraf .turbo node_modules dist",
-    "dev": "tsup --watch",
+    "clean": "rimraf .turbo",
+    "nuke": "rimraf .turbo node_modules",
     "lint": "eslint ./src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
@@ -23,10 +16,13 @@
   "devDependencies": {
     "@remix-gospel-stack/eslint-config": "workspace:*",
     "@remix-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^22.7.0",
-    "rimraf": "^6.0.1",
-    "tsup": "^8.3.0",
-    "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "@types/node": "^24.9.1",
+    "rimraf": "catalog:",
+    "typescript": "catalog:typescript"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./repositories": "./src/repositories/index.ts",
+    "./infrastructure": "./src/infrastructure/index.ts"
   }
 }

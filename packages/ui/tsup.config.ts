@@ -39,7 +39,7 @@ export default defineConfig((opts) => {
     {
       // separate not to inject the banner
       ...common,
-      entry: ["./src/index.ts", "./src/tailwind/index.ts", ...server],
+      entry: ["./src/index.ts", ...server],
     },
     {
       ...common,
@@ -62,11 +62,7 @@ export default defineConfig((opts) => {
             types: "./src/index.ts",
             default: "./dist/index.js",
           },
-          "./tailwind": {
-            import: "./src/tailwind/index.ts",
-            types: "./src/tailwind/index.ts",
-            default: "./dist/tailwind/index.js",
-          },
+          "./theme.css": "./src/tailwind/theme.css",
         };
         [...client, ...server]
           .filter((e) => e.endsWith(".tsx"))
