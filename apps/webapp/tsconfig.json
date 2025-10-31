@@ -25,19 +25,27 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "@remix-gospel-stack/ui/*": ["../../packages/ui/src/*"],
-      "@remix-gospel-stack/ui": ["../../packages/ui/src/index"],
-      "@remix-gospel-stack/business/*": ["../../packages/business/src/*"],
-      "@remix-gospel-stack/business": ["../../packages/business/src/index"],
-      "@remix-gospel-stack/database/*": ["../../packages/database/src/*"],
-      "@remix-gospel-stack/database": ["../../packages/database/src/index"],
-      "@remix-gospel-stack/internal-nobuild": [
+      "@react-router-gospel-stack/ui/*": ["../../packages/ui/src/*"],
+      "@react-router-gospel-stack/ui": ["../../packages/ui/src/index"],
+      "@react-router-gospel-stack/business/*": [
+        "../../packages/business/src/*"
+      ],
+      "@react-router-gospel-stack/business": [
+        "../../packages/business/src/index"
+      ],
+      "@react-router-gospel-stack/database/*": [
+        "../../packages/database/src/*"
+      ],
+      "@react-router-gospel-stack/database": [
+        "../../packages/database/src/index"
+      ],
+      "@react-router-gospel-stack/internal-nobuild": [
         "../../packages/internal-nobuild/src/index"
       ],
-      "@remix-gospel-stack/internal-nobuild/*": [
+      "@react-router-gospel-stack/internal-nobuild/*": [
         "../../packages/internal-nobuild/src/*"
       ],
-      "@remix-gospel-stack/tailwind-config": [
+      "@react-router-gospel-stack/tailwind-config": [
         "../../config/tailwind-config/src/index"
       ]
     },

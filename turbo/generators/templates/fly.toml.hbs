@@ -1,4 +1,4 @@
-app = "remix-gospel-stack" primary_region = "cdg" kill_signal = "SIGINT"
+app = "react-router-gospel-stack" primary_region = "cdg" kill_signal = "SIGINT"
 kill_timeout = "5s" swap_size_mb = 512 [experimental] auto_rollback = true
 
 {{#ifEquals dbType "sqlite-litefs"}}
@@ -7,7 +7,7 @@ kill_timeout = "5s" swap_size_mb = 512 [experimental] auto_rollback = true
   [deploy] release_command = "bash ./apps/webapp/scripts/migrate.sh"
 {{/ifEquals}}
 
-[env] PRIMARY_REGION = "cdg" REMIX_APP_PORT = "8080" PORT = "8080" [[services]]
+[env] PRIMARY_REGION = "cdg" APP_PORT = "8080" PORT = "8080" [[services]]
 protocol = "tcp" internal_port = 8080 processes = ["app"] [[services.ports]]
 port = 80 handlers = ["http"] force_https = true [[services.ports]] port = 443
 handlers = ["tls", "http"] [services.concurrency] type = "connections"

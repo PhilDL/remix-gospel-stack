@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/ui",
+  "name": "@react-router-gospel-stack/ui",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -38,8 +38,8 @@
     "rimraf": "catalog:",
     "@react-router/dev": "catalog:react-router",
     "@react-router/node": "catalog:react-router",
-    "@remix-gospel-stack/eslint-config": "workspace:*",
-    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@storybook/addon-docs": "catalog:storybook",
     "@storybook/addon-onboarding": "catalog:storybook",
     "@storybook/react-vite": "catalog:storybook",

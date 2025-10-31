@@ -15,8 +15,8 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 const spaces = (spaces = 6) => Array(spaces).fill(" ").join("");
 
 export async function main({ rootDirectory }) {
-  const appNameRegex = escapeRegExp("remix-gospel-stack");
-  const orgNameRegex = escapeRegExp("@remix-gospel-stack");
+  const appNameRegex = escapeRegExp("react-router-gospel-stack");
+  const orgNameRegex = escapeRegExp("@react-router-gospel-stack");
 
   const DIR_NAME = path.basename(rootDirectory);
   const SUFFIX = getRandomString(2);
@@ -198,7 +198,7 @@ const rootConfigsRename = async ({
   try {
     const dockerCompose = await fs.readFile(DOCKER_COMPOSE_PATH, "utf-8");
     const newDockerCompose = dockerCompose.replaceAll(
-      "remix-gospel-stack-postgres",
+      "react-router-gospel-stack-postgres",
       `${APP_NAME}-postgres`,
     );
     await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);
@@ -220,7 +220,7 @@ const rootConfigsRename = async ({
     const DOCKER_COMPOSE_PATH = path.join(rootDirectory, "docker-compose.yml");
     const dockerCompose = await fs.readFile(DOCKER_COMPOSE_PATH, "utf-8");
     const newDockerCompose = dockerCompose.replaceAll(
-      "remix-gospel-stack-postgres",
+      "react-router-gospel-stack-postgres",
       `${APP_NAME}-postgres`,
     );
     await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);

@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/business",
+  "name": "@react-router-gospel-stack/business",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -10,12 +10,12 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@remix-gospel-stack/database": "workspace:*",
+    "@react-router-gospel-stack/database": "workspace:*",
     "tiny-invariant": "^1.3.3"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config": "workspace:*",
-    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "rimraf": "catalog:",
     "typescript": "catalog:typescript"

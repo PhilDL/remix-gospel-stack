@@ -12,11 +12,11 @@ module.exports = {
   ],
   importOrder: [
     "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
-    "^(remix/(.*)$)|^(remix$)",
+    "^(react-router/(.*)$)|^(react-router$)",
     "^(next/(.*)$)|^(next$)",
     "<THIRD_PARTY_MODULES>",
     "",
-    "^@remix-gospel-stack/(.*)$",
+    "^@react-router-gospel-stack/(.*)$",
     "",
     "^~/utils/(.*)$",
     "^~/components/(.*)$",

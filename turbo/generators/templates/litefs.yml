@@ -26,7 +26,7 @@ lease:
 
   consul:
     url: "${FLY_CONSUL_URL}"
-    key: "remix-gospel-stack/${FLY_APP_NAME}"
+    key: "react-router-gospel-stack/${FLY_APP_NAME}"
 
 exec:
   # Set the journal mode for the database to WAL. This reduces concurrency deadlock issues

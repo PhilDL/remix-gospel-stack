@@ -171,21 +171,21 @@ importers:
       '@epic-web/remember':
         specifier: ^1.1.0
         version: 1.1.0
+      '@react-router-gospel-stack/business':
+        specifier: workspace:*
+        version: link:../../packages/business
+      '@react-router-gospel-stack/database':
+        specifier: workspace:*
+        version: link:../../packages/database
+      '@react-router-gospel-stack/internal-nobuild':
+        specifier: workspace:*
+        version: link:../../packages/internal-nobuild
+      '@react-router-gospel-stack/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@react-router/node':
         specifier: catalog:react-router
         version: 7.9.4(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
-      '@remix-gospel-stack/business':
-        specifier: workspace:*
-        version: link:../../packages/business
-      '@remix-gospel-stack/database':
-        specifier: workspace:*
-        version: link:../../packages/database
-      '@remix-gospel-stack/internal-nobuild':
-        specifier: workspace:*
-        version: link:../../packages/internal-nobuild
-      '@remix-gospel-stack/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@sentry/profiling-node':
         specifier: catalog:sentry
         version: 10.21.0
@@ -244,12 +244,12 @@ importers:
       '@playwright/test':
         specifier: ^1.56.1
         version: 1.56.1
+      '@react-router-gospel-stack/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint
       '@react-router/dev':
         specifier: catalog:react-router
         version: 7.9.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(tsx@4.20.6)(typescript@5.9.3)(vite@7.1.12(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)
-      '@remix-gospel-stack/eslint-config':
-        specifier: workspace:*
-        version: link:../../config/eslint
       '@sentry/vite-plugin':
         specifier: catalog:sentry
         version: 4.5.0
@@ -377,7 +377,7 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^16.0.0
         version: 16.0.0
-      '@remix-gospel-stack/tsconfig':
+      '@react-router-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       eslint:
@@ -391,17 +391,17 @@ importers:
 
   packages/business:
     dependencies:
-      '@remix-gospel-stack/database':
+      '@react-router-gospel-stack/database':
         specifier: workspace:*
         version: link:../database
       tiny-invariant:
         specifier: ^1.3.3
         version: 1.3.3
     devDependencies:
-      '@remix-gospel-stack/eslint-config':
+      '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint
-      '@remix-gospel-stack/tsconfig':
+      '@react-router-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
       '@types/node':
@@ -423,10 +423,10 @@ importers:
         specifier: ^6.18.0
         version: 6.18.0(prisma@6.18.0(magicast@0.3.5)(typescript@5.9.3))(typescript@5.9.3)
     devDependencies:
-      '@remix-gospel-stack/eslint-config':
+      '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint
-      '@remix-gospel-stack/tsconfig':
+      '@react-router-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
       '@types/node':
@@ -453,10 +453,10 @@ importers:
 
   packages/internal-nobuild:
     devDependencies:
-      '@remix-gospel-stack/eslint-config':
+      '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint
-      '@remix-gospel-stack/tsconfig':
+      '@react-router-gospel-stack/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
       rimraf:
@@ -502,18 +502,18 @@ importers:
         specifier: catalog:tailwindcss
         version: 3.3.1
     devDependencies:
+      '@react-router-gospel-stack/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint
+      '@react-router-gospel-stack/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
       '@react-router/dev':
         specifier: catalog:react-router
         version: 7.9.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(tsx@4.20.6)(typescript@5.9.3)(vite@7.1.12(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)
       '@react-router/node':
         specifier: catalog:react-router
         version: 7.9.4(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
-      '@remix-gospel-stack/eslint-config':
-        specifier: workspace:*
-        version: link:../../config/eslint
-      '@remix-gospel-stack/tsconfig':
-        specifier: workspace:*
-        version: link:../../config/tsconfig
       '@storybook/addon-docs':
         specifier: catalog:storybook
         version: 10.0.0(@types/react@19.2.2)(esbuild@0.25.11)(rollup@4.52.5)(storybook@10.0.0(@testing-library/dom@10.4.1)(msw@2.11.6(@types/node@24.9.1)(typescript@5.9.3))(prettier@3.6.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.12(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)))(vite@7.1.12(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))

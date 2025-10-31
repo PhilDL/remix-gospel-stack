@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@remix-gospel-stack/database";
+import type { PrismaClient } from "@react-router-gospel-stack/database";
 
 import type { UserRepository } from "../repositories/user-repository.ts";
 

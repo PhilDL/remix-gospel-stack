@@ -1,8 +1,8 @@
-import remixConfig from "@remix-gospel-stack/eslint-config/remix";
+import reactRouterConfig from "@react-router-gospel-stack/eslint-config/react-router";
 
 /** @type {import('typescript-eslint').Config} */
 export default [
-  ...remixConfig,
+  ...reactRouterConfig,
   {
     ignores: ["server-build/**"],
   },

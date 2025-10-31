@@ -3,7 +3,7 @@
   "globalDependencies": [".env"],
   "globalEnv": [
     "NODE_ENV",
-    "REMIX_APP_PORT",
+    "APP_PORT",
     "FLY_REGION",
     "PRIMARY_REGION",
     "CI",
@@ -35,7 +35,7 @@
         ".cache"
       ]
     },
-    "@remix-gospel-stack/webapp#start": {
+    "@react-router-gospel-stack/webapp#start": {
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },

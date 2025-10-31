@@ -1,7 +1,7 @@
 # This file is moved to the root directory before building the image
 
 ARG APP_DIRNAME=webapp
-ARG APP_PKG_NAME=@remix-gospel-stack/webapp
+ARG APP_PKG_NAME=@react-router-gospel-stack/webapp
 
 FROM node:22-bookworm-slim AS bookworm
 ARG APP_PKG_NAME

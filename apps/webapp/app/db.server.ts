@@ -1,6 +1,5 @@
 import { remember } from "@epic-web/remember";
-
-import { createClient } from "@remix-gospel-stack/database";
+import { createClient } from "@react-router-gospel-stack/database";
 
 import { env } from "./env.server";
 

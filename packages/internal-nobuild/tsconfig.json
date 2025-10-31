@@ -1,5 +1,5 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node22.json",
+  "extends": "@react-router-gospel-stack/tsconfig/node22.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "experimentalDecorators": true,

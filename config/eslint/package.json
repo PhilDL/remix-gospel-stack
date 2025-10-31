@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/eslint-config",
+  "name": "@react-router-gospel-stack/eslint-config",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -9,9 +9,9 @@
       "default": "./base.js",
       "import": "./base.js"
     },
-    "./remix": {
-      "default": "./remix.js",
-      "import": "./remix.js"
+    "./react-router": {
+      "default": "./react-router.js",
+      "import": "./react-router.js"
     },
     "./plugin": {
       "default": "./plugin.js",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^16.0.0",
-    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
     "eslint": "9.38.0",
     "typescript": "^5.9.3"
   }

@@ -1,5 +1,5 @@
 {
-  "extends": "@remix-gospel-stack/tsconfig/node22.json",
+  "extends": "@react-router-gospel-stack/tsconfig/node22.json",
   "include": ["."],
   "exclude": ["node_modules"],
   "compilerOptions": {

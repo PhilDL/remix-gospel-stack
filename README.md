@@ -1,13 +1,13 @@
-# Remix Gospel stack with Turborepo
+# React Router Gospel stack with Turborepo
 
-![The Remix Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
+![The React Router Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-Remix TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Litefs), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
+React Router TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Litefs), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
 
 ### Quickstart (recommended)
 
 ```bash
-pnpm create remix@latest --init-script --install --template https://github.com/PhilDL/remix-gospel-stack
+pnpm create remix@latest --init-script --install --template https://github.com/PhilDL/react-router-gospel-stack
 ```
 
 > :minidisc: This repository is opiniated:
@@ -19,37 +19,37 @@ pnpm create remix@latest --init-script --install --template https://github.com/P
 ### (Alternative) Cloning the repository
 
 ```bash
-git clone git@github.com:PhilDL/remix-gospel-stack.git
-cd remix-gospel-stack
+git clone git@github.com:PhilDL/react-router-gospel-stack.git
+cd react-router-gospel-stack
 pnpm add -w @react-router/dev
 pnpm remix init
 ```
 
 ## What's in the stack
 
-This stack is a Remix oriented Monorepo powered by turborepo and [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy Remix App on [fly.io](https://fly.io) via the building of a Docker container.
+This stack is a React Router oriented Monorepo powered by turborepo and [pnpm workspaces](https://pnpm.io/workspaces). Containing a ready-to-deploy React Router App on [fly.io](https://fly.io) via the building of a Docker container.
 
 _This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee._
 
 ### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
 
 - `apps` Folder containing the applications
-  - [`webapp`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/webapp): the [Remix.run](https://remix.run) app in ESM.
-  - [`remix-vercel`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/remix-vercel): the [Remix.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
-  - [`nextjs-app`](https://github.com/PhilDL/remix-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
+  - [`webapp`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/webapp): the [React Router.run](https://remix.run) app in ESM.
+  - [`remix-vercel`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/remix-vercel): the [React Router.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
+  - [`nextjs-app`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
 - `packages` Folder containing examples
-  - [`ui`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
-  - [`database`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
-  - [`business`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
-  - [`internal-nobuild`](https://github.com/PhilDL/remix-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. Remix takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
-    Remix uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
+  - [`ui`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
+  - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
+  - [`business`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
+  - [`internal-nobuild`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. React Router takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
+    React Router uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
 
 - `config-packages`:
   - Eslint packages with different preset configs.
   - TS Configs, also with different presets.
   - [Tailwind](https://tailwindcss.com/) configs.
 
-### All Remix future flags activated:
+### All React Router future flags activated:
 
 ```ts
 future: {
@@ -65,13 +65,13 @@ future: {
 
 ### What else ?
 
-- Remix App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
+- React Router App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
 - Database comes in 2 flavors that you choose at install:
   - [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
   - [Litefs - Distributed SQLite](https://fly.io/docs/litefs/)
-- Remix App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
-- [GitHub Actions](https://github.com/features/actions) for deploy the Remix App on merge to production and staging environments.
-- End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the Remix App
+- React Router App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
+- [GitHub Actions](https://github.com/features/actions) for deploy the React Router App on merge to production and staging environments.
+- End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the React Router App
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com) inside the different packages.
 - Code formatting with [Prettier](https://prettier.io)
 - Static Types with [TypeScript](https://typescriptlang.org)
@@ -108,12 +108,12 @@ future: {
   ```
 - Run the first build (with dependencies via the `...` option)
   ```bash
-  pnpm run build --filter=@remix-gospel-stack/webapp...
+  pnpm run build --filter=@react-router-gospel-stack/webapp...
   ```
   **Running simply `pnpm run build` will build everything, including the NextJS app.**
-- Run the Remix dev server
+- Run the React Router dev server
   ```bash
-  pnpm run dev --filter=@remix-gospel-stack/webapp
+  pnpm run dev --filter=@react-router-gospel-stack/webapp
   ```
 
 ## Switch between PostgreSQL and SQLite (Litefs)
@@ -133,7 +133,7 @@ future: {
 ### Internal package
 
 ```bash
-turbo gen workspace --name @remix-gospel-stack/foobarbaz --type package --copy
+turbo gen workspace --name @react-router-gospel-stack/foobarbaz --type package --copy
 ```
 
 Then follow the prompts
@@ -144,7 +144,7 @@ Check the `turbo.json` file to see the available pipelines.
 
 - Run the Cypress tests and Dev
   ```bash
-  pnpm run test:e2e:dev --filter=@remix-gospel-stack/webapp
+  pnpm run test:e2e:dev --filter=@react-router-gospel-stack/webapp
   ```
 - Lint everything
   ```bash
@@ -160,9 +160,9 @@ Check the `turbo.json` file to see the available pipelines.
   or
   pnpm run test:dev
   ```
-- How to install an npm package in the Remix app ?
+- How to install an npm package in the React Router app ?
   ```bash
-  pnpm add dayjs --filter @remix-gospel-stack/webapp
+  pnpm add dayjs --filter @react-router-gospel-stack/webapp
   ```
 - Tweak the tsconfigs, eslint configs in the `config-package` folder. Any package or app will then extend from these configs.
 
@@ -180,8 +180,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create remix-gospel-stack
-  fly apps create remix-gospel-stack-staging
+  fly apps create react-router-gospel-stack
+  fly apps create react-router-gospel-stack-staging
   ```
 
   > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
@@ -205,11 +205,11 @@ Prior to your first deployment, you'll need to do a few things:
 Database creation:
 
 ```sh
-fly postgres create --name remix-gospel-stack-db
-fly postgres attach --app remix-gospel-stack remix-gospel-stack-db
+fly postgres create --name react-router-gospel-stack-db
+fly postgres attach --app react-router-gospel-stack react-router-gospel-stack-db
 
-fly postgres create --name remix-gospel-stack-staging-db
-fly postgres attach --app remix-gospel-stack-staging remix-gospel-stack-staging-db
+fly postgres create --name react-router-gospel-stack-staging-db
+fly postgres attach --app react-router-gospel-stack-staging react-router-gospel-stack-staging-db
 ```
 
 > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
@@ -230,8 +230,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create remix-gospel-stack
-  fly apps create remix-gospel-stack-staging
+  fly apps create react-router-gospel-stack
+  fly apps create react-router-gospel-stack-staging
   ```
 
   > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
@@ -253,15 +253,15 @@ Prior to your first deployment, you'll need to do a few things:
 Create a persistent volume for the sqlite database for both your staging and production environments. Run the following (feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well):
 
 ```sh
-fly volumes create data --region cdg --size 1 --app remix-gospel-stack
-fly volumes create data --region cdg --size 1 --app remix-gospel-stack-staging
+fly volumes create data --region cdg --size 1 --app react-router-gospel-stack
+fly volumes create data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
 
 Then attach the volumes to the apps:
 
 ```sh
-fly consul attach --app remix-gospel-stack
-fly consul attach --app remix-gospel-stack-staging
+fly consul attach --app react-router-gospel-stack
+fly consul attach --app react-router-gospel-stack-staging
 ```
 
 #### Start coding!
@@ -307,7 +307,7 @@ We use GitHub Actions for continuous integration and deployment. Anything that g
 
 ## Useful Turborepo Links
 
-Learn more about the power of Turborepo:
+Learn more about Turborepo features:
 
 - [Pipelines](https://turborepo.org/docs/features/pipelines)
 - [Caching](https://turborepo.org/docs/features/caching)
@@ -324,7 +324,7 @@ Learn more about the power of Turborepo:
 
 ## Support
 
-If you found the template useful, please consider giving it a [Star ⭐](https://github.com/PhilDL/remix-gospel-stack). Thanks you!
+If you found the template useful, please consider giving it a [Star ⭐](https://github.com/PhilDL/react-router-gospel-stack). Thanks you!
 
 ## Disclaimer
 

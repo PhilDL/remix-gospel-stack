@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/database",
+  "name": "@react-router-gospel-stack/database",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -22,8 +22,8 @@
     "@prisma/client": "^6.18.0"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config": "workspace:*",
-    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
     "prisma": "^6.18.0",

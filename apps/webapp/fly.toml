@@ -1,4 +1,4 @@
-app = "remix-gospel-stack"
+app = "react-router-gospel-stack"
 primary_region = "cdg"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
@@ -13,7 +13,7 @@ swap_size_mb = 512
 
 [env]
   PRIMARY_REGION = "cdg"
-  REMIX_APP_PORT = "8080"
+  APP_PORT = "8080"
   PORT = "8080"
 
 [[services]]

@@ -1,5 +1,5 @@
 {
-  "name": "@remix-gospel-stack/internal-nobuild",
+  "name": "@react-router-gospel-stack/internal-nobuild",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -14,8 +14,8 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@remix-gospel-stack/eslint-config": "workspace:*",
-    "@remix-gospel-stack/tsconfig": "workspace:*",
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "typescript": "catalog:typescript",
