@@ -5,12 +5,14 @@
 React Router TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Turso), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
 
 > [!IMPORTANT]  
-> This used to be the remix-gospel-stack (Remix v2) but to follow remix merging back into react router, the stack was converted to React Router v7+. And the name was changed to react-router-gospel-stack.
+> This used to be the remix-gospel-stack (Remix v2) but to follow remix merging back into react router, the stack was converted to **React Router v7+**. And the name was changed to `react-router-gospel-stack`.
 >
 > In this migration, we made other adjustments to the stack that reflects what I'm using
 > on production apps:
 >
-> - Using Turso instead of LiteFS
+> - Using Turso instead of LiteFS ([decision](./docs/why-turso-instead-of-litefs.md))
+> - Dropping the NextJS app and the Vercel deployments (I was not using them so difficult to maintain)
+> - We now use pnpm catalogs to define our versions in one file.
 
 ### Quickstart (recommended)
 
