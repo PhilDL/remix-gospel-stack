@@ -28,6 +28,8 @@ FROM bookworm-turbopm AS base
 WORKDIR /app
 COPY .gitignore .gitignore
 COPY .npmrc .npmrc
+COPY prisma.config.ts prisma.config.ts
+COPY turbo.json turbo.json
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
@@ -44,7 +46,6 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV CI true
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --prod --frozen-lockfile
-RUN pnpm dlx prisma generate --schema /app/packages/database/prisma/schema.prisma
 
 FROM base AS builder
 ARG COMMIT_SHA
@@ -56,7 +57,6 @@ ENV NODE_ENV production
 COPY --from=pruner /app/out/full/ .
 COPY --from=dev-deps /app/ .
 COPY turbo.json turbo.json
-RUN pnpm run db:generate
 RUN pnpm run build --filter=$APP_PKG_NAME...
 
 
