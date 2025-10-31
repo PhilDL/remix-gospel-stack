@@ -2,7 +2,15 @@
 
 ![The React Router Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-React Router TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Litefs), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
+React Router TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR SQLite (Turso), Docker deploy to Fly.io, pnpm, shadcn/ui TailwindCSS.
+
+> [!IMPORTANT]  
+> This used to be the remix-gospel-stack (Remix v2) but to follow remix merging back into react router, the stack was converted to React Router v7+. And the name was changed to react-router-gospel-stack.
+>
+> In this migration, we made other adjustments to the stack that reflects what I'm using
+> on production apps:
+>
+> - Using Turso instead of LiteFS
 
 ### Quickstart (recommended)
 
