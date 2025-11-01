@@ -293,7 +293,7 @@ fly volumes create data --region cdg --size 1 --app react-router-gospel-stack-st
 #### Set secrets in the apps
 
 ```sh
-fly secrets set DATABASE_URL="/data/app.db" DATABASE_SYNC_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+fly secrets set DATABASE_URL="file:/data/app.db" DATABASE_SYNC_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
 
 
 fly secrets set DATABASE_URL=<staging-database-url> --app react-router-gospel-stack-staging

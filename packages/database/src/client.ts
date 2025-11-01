@@ -15,6 +15,7 @@ export const createClient = ({
     url,
     syncUrl,
     authToken,
+    syncInterval: syncUrl ? 60 : undefined,
   });
   return new PrismaClient({ adapter });
 };
