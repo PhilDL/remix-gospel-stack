@@ -125,8 +125,11 @@ ${spaces(9)}  ${chalk.yellow(
         chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 
-${spaces()}⚠️  With Turso, make sure to set your DATABASE_URL and DATABASE_AUTH_TOKEN 
-${spaces()}   environment variables in your .env file!
+${spaces()}⚠️  With Turso embedded replicas, make sure to set:
+${spaces()}   - DATABASE_URL=file:./local.db (local file path)
+${spaces()}   - TURSO_DATABASE_URL=<your-turso-url> (sync URL)
+${spaces()}   - TURSO_AUTH_TOKEN=<your-auth-token>
+${spaces()}   in your .env file!
 `
 }`.trim(),
   );

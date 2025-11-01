@@ -12,10 +12,19 @@ auto_rollback = true
 release_command = "bash ./apps/webapp/scripts/migrate.sh"
 {{/ifEquals}}
 
+{{#ifEquals dbType "turso"}}
+[[mounts]]
+source = "libsql_data"
+destination = "/data/libsql"
+{{/ifEquals}}
+
 [env]
 PRIMARY_REGION = "cdg"
 APP_PORT = "8080"
 PORT = "8080"
+{{#ifEquals dbType "turso"}}
+DATABASE_URL = "file:/data/libsql/local.db"
+{{/ifEquals}}
 
 [[services]]
 protocol = "tcp"

@@ -283,15 +283,45 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
-#### Set secrets in the apps
+#### Create volumes for embedded replicas
 
-With Turso, you don't need persistent volumes. Just set the Turso database URL and auth token as secrets:
+Turso uses embedded replicas for optimal performance - a local SQLite file that syncs with the remote Turso database. Create persistent volumes for both environments:
 
 ```sh
-fly secrets set DATABASE_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
-
-fly secrets set DATABASE_URL=<staging-database-url> DATABASE_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
+fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack
+fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
+
+> **Note:** Feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well.
+
+#### Set secrets in the apps
+
+Set the Turso database URL (syncUrl) and auth token as secrets:
+
+```sh
+fly secrets set TURSO_DATABASE_URL=<database-sync-url> TURSO_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+
+fly secrets set TURSO_DATABASE_URL=<staging-database-sync-url> TURSO_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
+```
+
+> **Note:** The `DATABASE_URL` will be set to a local file path (e.g., `file:/data/libsql/local.db`) in your environment configuration, while `TURSO_DATABASE_URL` is the remote sync URL from Turso.
+
+#### Configure your Turso client
+
+When using Turso with embedded replicas, configure your client in your database connection file:
+
+```typescript
+import { createClient } from "@libsql/client";
+
+const client = createClient({
+  url: process.env.DATABASE_URL, // "file:/data/libsql/local.db" on Fly.io
+  syncUrl: process.env.TURSO_DATABASE_URL, // Remote Turso URL
+  authToken: process.env.TURSO_AUTH_TOKEN,
+  syncInterval: 60, // Sync every 60 seconds
+});
+```
+
+For more information, see the [Turso Embedded Replicas documentation](https://docs.turso.tech/features/embedded-replicas/with-fly#embedded-replicas-on-fly).
 
 #### Start coding!
 
