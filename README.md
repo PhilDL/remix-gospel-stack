@@ -8,7 +8,7 @@ React Router TypeScript monorepo with Turborepo pipelines, Prisma, PostgreSQL OR
 > This used to be the remix-gospel-stack (Remix v2) but to follow remix merging back into react router, the stack was converted to **React Router v7+**. And the name was changed to `react-router-gospel-stack`.
 >
 > In this migration, we made other adjustments to the stack that reflects what I'm using
-> on production apps:
+> in production SaaS apps:
 >
 > - Using Turso instead of LiteFS ([decision](./docs/why-turso-instead-of-litefs.md))
 > - Dropping the NextJS app and the Vercel deployments (I was not using them so difficult to maintain)
@@ -41,12 +41,10 @@ This stack is a React Router oriented Monorepo powered by turborepo and [pnpm wo
 
 _This Package **uses `pnpm` as the package manager** of choice to manage workspaces. It may work with `yarn` and `npm` if you put the workspace definitions in the package.json file but there is no guarantee._
 
-### Monorepo architecture powered by [Turborepo](https://turborepo.org/) and pnpm workspaces:
+### Monorepo architecture powered by pnpm workspaces, and [Turborepo](https://turborepo.org/) cache:
 
 - `apps` Folder containing the applications
-  - [`webapp`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/webapp): the [React Router.run](https://remix.run) app in ESM.
-  - [`remix-vercel`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/remix-vercel): the [React Router.run](https://remix.run) app, ready to be deployed on [Vercel](https://vercel.com).
-  - [`nextjs-app`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/nextjs-app): a [Next.js](https://nextjs.org) app
+  - [`webapp`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/webapp): the [React Router](https://reactrouter.com) app in ESM.
 - `packages` Folder containing examples
   - [`ui`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
   - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
@@ -57,21 +55,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 - `config-packages`:
   - Eslint packages with different preset configs.
   - TS Configs, also with different presets.
-  - [Tailwind](https://tailwindcss.com/) configs.
-
-### All React Router future flags activated:
-
-```ts
-future: {
-  unstable_optimizeDeps: true,
-  v3_fetcherPersist: true,
-  v3_lazyRouteDiscovery: true,
-  v3_relativeSplatPath: true,
-  v3_throwAbortReason: true,
-  v3_singleFetch: true,
-  v3_routeConfig: true,
-},
-```
+  - [Tailwind 4](https://tailwindcss.com/) theme.
 
 ### What else ?
 
@@ -126,9 +110,9 @@ future: {
   pnpm run dev --filter=@react-router-gospel-stack/webapp
   ```
 
-## Switch between PostgreSQL and SQLite (Litefs)
+## Switch between PostgreSQL and SQLite (Turso)
 
-- To switch between PostgreSQL and SQLite (Litefs), there is a turbo generator you can use from the root of the repository.
+- To switch between PostgreSQL and SQLite (Turso), there is a turbo generator you can use from the root of the repository.
 
   ```bash
   pnpm turbo gen scaffold-database
@@ -212,14 +196,53 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Create a database for both your staging and production environments:
 
-Database creation:
+###Turso Database creation:
+
+First, login to Turso:
 
 ```sh
-fly postgres create --name react-router-gospel-stack-db
-fly postgres attach --app react-router-gospel-stack react-router-gospel-stack-db
+turso auth login
+```
 
-fly postgres create --name react-router-gospel-stack-staging-db
-fly postgres attach --app react-router-gospel-stack-staging react-router-gospel-stack-staging-db
+Review your organizations, switch to the one you want to use:
+
+```sh
+turso org list
+turso org switch <organization-name>
+```
+
+Create an auth token:
+
+```sh
+turso auth api-tokens mint <name-of-the-token>
+```
+
+Keep this token safe, you will need to set it to the `DATABASE_AUTH_TOKEN` secret in the apps.
+
+Create a database group:
+
+```sh
+turso group create <name-of-the-group>
+```
+
+Create a new database:
+
+```sh
+turso db create <database-name> --group <name-of-the-group>
+```
+
+Get the URL of the database:
+
+```sh
+turso db show --url <database-name>
+```
+
+Get the output url and save it as `DATABASE_URL` if you want to query directly from the remote database, or as `DATABASE_SYNC_URL` if you want to use embedded replica (recommended, in that case the DATABASE_URL will be a relative path on the volume).
+
+### Apply the migration with prisma
+
+```sh
+turso db shell <database-name> < packages/database/prisma/migrations/20251027155525_first/migration.sql
 ```
 
 > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
@@ -267,11 +290,19 @@ fly volumes create data --region cdg --size 1 --app react-router-gospel-stack
 fly volumes create data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
 
-Then attach the volumes to the apps:
+#### Set secrets in the apps
 
 ```sh
-fly consul attach --app react-router-gospel-stack
-fly consul attach --app react-router-gospel-stack-staging
+fly secrets set DATABASE_URL="/data/app.db" DATABASE_SYNC_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+
+
+fly secrets set DATABASE_URL=<staging-database-url> --app react-router-gospel-stack-staging
+```
+
+#### Set secrets in the database
+
+```sh
+turso db set-secret <database-name> <secret-name> <secret-value>
 ```
 
 #### Start coding!

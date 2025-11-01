@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/tailwind.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@react-router-gospel-stack/ui/components",
+    "utils": "@react-router-gospel-stack/ui/lib/utils",
+    "ui": "@react-router-gospel-stack/ui/components",
+    "lib": "@react-router-gospel-stack/ui/lib",
+    "hooks": "@react-router-gospel-stack/ui/hooks"
+  },
+  "registries": {
+    "@svgl": "https://svgl.app/r/{name}.json"
+  }
+}
