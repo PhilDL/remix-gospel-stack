@@ -6,7 +6,7 @@ import type { PlopTypes } from "@turbo/gen";
 import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
 
-type SupportedDatabases = "postgres" | "sqlite-litefs";
+type SupportedDatabases = "postgres" | "turso";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setHelper("ifEquals", function (arg1, arg2, options) {
@@ -29,7 +29,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "list",
         name: "dbType",
         message: "What type of database does the app use?",
-        choices: ["sqlite-litefs", "postgres"],
+        choices: ["turso", "postgres"],
         default: "postgres",
       },
     ],
@@ -43,7 +43,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       function updatePackageJson(answers: {
         appPckgName?: string;
         appDirname?: string;
-        dbType?: "postgres" | "sqlite-litefs";
+        dbType?: "postgres" | "turso";
       }) {
         const appPackageJsonPath = path.join(
           // resolves to the root of the current workspace
@@ -57,7 +57,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         );
 
         if (answers.dbType === "postgres") {
-          delete packageJson.dependencies["litefs-js"];
           packageJson.scripts["docker:db"] =
             "docker compose -f docker-compose.yml up -d";
           packageJson.scripts["docker:run:webapp"] =
@@ -68,9 +67,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),
           );
-          return "Removed litefs-js from dependencies";
+          return "Updated package.json for PostgreSQL";
         } else {
-          packageJson.dependencies["litefs-js"] = "^1.1.2";
           delete packageJson.scripts["docker:db"];
           delete packageJson.scripts["docker:run:webapp"];
           packageJson.scripts["setup"] =
@@ -79,7 +77,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),
           );
-          return "Added litefs-js to dependencies";
+          return "Updated package.json for Turso";
         }
       },
       function createOrDeleteDockerCompose(answers: {
@@ -122,43 +120,22 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         appDirname?: string;
         dbType?: SupportedDatabases;
       }) {
-        if (answers.dbType === "sqlite-litefs") {
-          fs.unlinkSync(
-            path.join(plop.getDestBasePath(), "docker-compose-ci.yml"),
-          );
-          fs.unlinkSync(
-            path.join(plop.getDestBasePath(), "docker-compose.yml"),
-          );
-          fs.copyFileSync(
-            path.join(
-              plop.getDestBasePath(),
-              "turbo",
-              "generators",
-              "templates",
-              "litefs.yml",
-            ),
-            path.join(
-              plop.getDestBasePath(),
-              "apps",
-              answers.appDirname ?? "webapp",
-              "other",
-              "litefs.yml",
-            ),
-          );
-          return "Removed postgres docker-compose files";
-        }
-        try {
-          fs.unlinkSync(
-            path.join(
-              plop.getDestBasePath(),
-              "apps",
-              answers.appDirname ?? "webapp",
-              "other",
-              "litefs.yml",
-            ),
-          );
-        } catch (err) {
-          // ignore
+        if (answers.dbType === "turso") {
+          try {
+            fs.unlinkSync(
+              path.join(plop.getDestBasePath(), "docker-compose-ci.yml"),
+            );
+          } catch (err) {
+            // ignore if file doesn't exist
+          }
+          try {
+            fs.unlinkSync(
+              path.join(plop.getDestBasePath(), "docker-compose.yml"),
+            );
+          } catch (err) {
+            // ignore if file doesn't exist
+          }
+          return "Removed postgres docker-compose files for Turso setup";
         }
 
         return "Postgres docker-compose files kept";
@@ -175,7 +152,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           "schema.prisma",
         );
         const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
-        if (answers.dbType === "sqlite-litefs") {
+        if (answers.dbType === "turso") {
           fs.writeFileSync(
             prismaSchemaPath,
             prismaSchema.replace(
@@ -183,7 +160,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
               'provider = "sqlite"',
             ),
           );
-          return "Updated prisma schema to use sqlite";
+          return "Updated prisma schema to use sqlite for Turso";
         } else {
           fs.writeFileSync(
             prismaSchemaPath,
@@ -192,7 +169,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
               'provider = "postgresql"',
             ),
           );
-          return "Updated prisma schema to use postgres";
+          return "Updated prisma schema to use postgresql";
         }
       },
       {
@@ -206,15 +183,15 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         appDirname?: string;
         dbType?: SupportedDatabases;
       }) {
-        if (answers.dbType === "sqlite-litefs") {
-          // copy deploy-with-litefs.yml to .github/workflows/deploy.yml
+        if (answers.dbType === "turso") {
+          // copy deploy-with-turso.yml to .github/workflows/deploy.yml
           fs.copyFileSync(
             path.join(
               plop.getDestBasePath(),
               "turbo",
               "generators",
               "templates",
-              "deploy-with-litefs.yml",
+              "deploy-with-turso.yml",
             ),
             path.join(
               plop.getDestBasePath(),
@@ -223,7 +200,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
               "deploy.yml",
             ),
           );
-          return "Copied deploy-with-litefs.yml to .github/workflows/deploy.yml";
+          return "Copied deploy-with-turso.yml to .github/workflows/deploy.yml";
         }
         if (answers.dbType === "postgres") {
           // copy deploy-with-postgres.yml to .github/workflows/deploy.yml

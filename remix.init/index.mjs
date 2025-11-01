@@ -46,8 +46,8 @@ export async function main({ rootDirectory }) {
       choices: [
         { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
         {
-          name: `${spaces(6)}Distributed SQLite (Litefs)`,
-          value: "sqlite-litefs",
+          name: `${spaces(6)}Turso (SQLite with libSQL)`,
+          value: "turso",
         },
       ],
       default: "postgres",
@@ -125,8 +125,8 @@ ${spaces(9)}  ${chalk.yellow(
         chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 
-${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
-${spaces()}   to the remix app, as they will both connect on the same sqlite file creating errors!
+${spaces()}⚠️  With Turso, make sure to set your DATABASE_URL and DATABASE_AUTH_TOKEN 
+${spaces()}   environment variables in your .env file!
 `
 }`.trim(),
   );
@@ -141,13 +141,6 @@ const rootConfigsRename = async ({
 }) => {
   const README_PATH = path.join(rootDirectory, "README.md");
   const FLY_TOML_PATH = path.join(rootDirectory, "apps", "webapp", "fly.toml");
-  const LITEFS_YML_PATH = path.join(
-    rootDirectory,
-    "apps",
-    "webapp",
-    "other",
-    "litefs.yml",
-  );
   const PKG_PATH = path.join(rootDirectory, "package.json");
   // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
@@ -204,16 +197,6 @@ const rootConfigsRename = async ({
     await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);
   } catch (error) {
     // pass, no Dockerfile for that setup
-  }
-
-  try {
-    const litefsYML = await fs.readFile(LITEFS_YML_PATH, "utf-8");
-    const newLitefsYML = litefsYML
-      .replace(globalOrgNameRegex, ORG_NAME)
-      .replaceAll(new RegExp(appNameRegex, "g"), APP_NAME);
-    await fs.writeFile(LITEFS_YML_PATH, newLitefsYML);
-  } catch (error) {
-    // pass, no litefs.yml for that setup
   }
 
   try {

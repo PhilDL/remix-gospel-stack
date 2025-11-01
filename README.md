@@ -47,7 +47,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   - [`webapp`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/webapp): the [React Router](https://reactrouter.com) app in ESM.
 - `packages` Folder containing examples
   - [`ui`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
-  - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
+  - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite (Turso) depending on what you choose during installation.
   - [`business`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
   - [`internal-nobuild`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. React Router takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
     React Router uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
@@ -62,7 +62,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 - React Router App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
 - Database comes in 2 flavors that you choose at install:
   - [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
-  - [Litefs - Distributed SQLite](https://fly.io/docs/litefs/)
+  - [Turso - Distributed SQLite with libSQL](https://turso.tech/)
 - React Router App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy the React Router App on merge to production and staging environments.
 - End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the React Router App
@@ -120,7 +120,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 
   Then follow the prompts. Be careful though, prisma migrations are linked to a specific database, so you will have to delete the `migrations` folder.
 
-  > **Note:** You will have to run `pnpm i --fix-lockfile` again after switching to SQLite (Litefs) that require another package (litefs-js). You will probably also have to run `pnpm run setup` again to generate the first migration.
+  > **Note:** You will probably have to run `pnpm run setup` again to generate the first migration after switching database types.
 
 ## Create packages
 
@@ -249,7 +249,7 @@ turso db shell <database-name> < packages/database/prisma/migrations/20251027155
 
 Fly will take care of setting the `DATABASE_URL` secret for you.
 
-## Deployement on fly.io – SQLite Litefs
+## Deployement on fly.io – Turso (SQLite with libSQL)
 
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
@@ -283,26 +283,14 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
-Create a persistent volume for the sqlite database for both your staging and production environments. Run the following (feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well):
-
-```sh
-fly volumes create data --region cdg --size 1 --app react-router-gospel-stack
-fly volumes create data --region cdg --size 1 --app react-router-gospel-stack-staging
-```
-
 #### Set secrets in the apps
 
-```sh
-fly secrets set DATABASE_URL="file:/data/app.db" DATABASE_SYNC_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
-
-
-fly secrets set DATABASE_URL=<staging-database-url> --app react-router-gospel-stack-staging
-```
-
-#### Set secrets in the database
+With Turso, you don't need persistent volumes. Just set the Turso database URL and auth token as secrets:
 
 ```sh
-turso db set-secret <database-name> <secret-name> <secret-value>
+fly secrets set DATABASE_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+
+fly secrets set DATABASE_URL=<staging-database-url> DATABASE_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
 ```
 
 #### Start coding!
