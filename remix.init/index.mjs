@@ -130,8 +130,8 @@ ${spaces()}   - DATABASE_URL=file:./local.db
 ${spaces()}   
 ${spaces()}   For production (Fly.io) with embedded replicas:
 ${spaces()}   - DATABASE_URL=file:/data/libsql/local.db
-${spaces()}   - TURSO_DATABASE_URL=<your-turso-sync-url>
-${spaces()}   - TURSO_AUTH_TOKEN=<your-auth-token>
+${spaces()}   - DATABASE_SYNC_URL=<your-turso-sync-url>
+${spaces()}   - DATABASE_AUTH_TOKEN=<your-auth-token>
 ${spaces()}
 ${spaces()}   Note: Prisma migrations don't work with Turso - you must manually
 ${spaces()}   apply SQL files: turso db shell <db-name> < path/to/migration.sql

@@ -133,7 +133,7 @@ For local development, you can use a simple local SQLite file:
 ```sh
 # .env
 DATABASE_URL="file:./local.db"
-# No need for TURSO_DATABASE_URL or TURSO_AUTH_TOKEN in development
+# No need for DATABASE_SYNC_URL or DATABASE_AUTH_TOKEN in development
 ```
 
 This gives you a standard SQLite database without the need for embedded replicas or remote connection during development.
@@ -341,32 +341,38 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 
 #### Set secrets in the apps
 
-Set the database URL (local file path), Turso sync URL, and auth token as secrets:
+Set the database URL (local file path), sync URL, and auth token as secrets:
 
 ```sh
-fly secrets set DATABASE_URL="file:/data/libsql/local.db" TURSO_DATABASE_URL=<database-sync-url> TURSO_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" DATABASE_SYNC_URL=<database-sync-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
 
-fly secrets set DATABASE_URL="file:/data/libsql/local.db" TURSO_DATABASE_URL=<staging-database-sync-url> TURSO_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" DATABASE_SYNC_URL=<staging-database-sync-url> DATABASE_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
 ```
 
-> **Note:** `DATABASE_URL` is the local file path for the embedded replica, `TURSO_DATABASE_URL` is the remote sync URL from Turso, and `TURSO_AUTH_TOKEN` is your authentication token.
+> **Note:** `DATABASE_URL` is the local file path for the embedded replica, `DATABASE_SYNC_URL` is the remote sync URL from Turso, and `DATABASE_AUTH_TOKEN` is your authentication token.
 
 #### Configure your Turso client with Embedded Replicas
 
-When using Turso with embedded replicas on Fly.io, configure your client in your database connection file:
+The database client is already configured in `apps/webapp/app/db.server.ts`:
 
 ```typescript
-import { createClient } from "@libsql/client";
+import { createClient } from "@react-router-gospel-stack/database";
 
-const client = createClient({
-  url: process.env.DATABASE_URL, // "file:/data/libsql/local.db" on Fly.io, "file:./local.db" in dev
-  syncUrl: process.env.TURSO_DATABASE_URL, // Remote Turso URL (not needed for local dev)
-  authToken: process.env.TURSO_AUTH_TOKEN, // (not needed for local dev)
-  syncInterval: 60, // Sync every 60 seconds (only used when syncUrl is set)
+export const db = remember("db", () => {
+  return createClient({
+    url: env.DATABASE_URL,          // Local file path or remote URL
+    authToken: env.DATABASE_AUTH_TOKEN,  // Optional in dev
+    syncUrl: env.DATABASE_SYNC_URL,      // Optional in dev
+  });
 });
 ```
 
-> **Note:** In development, you can omit `syncUrl` and `authToken` to use a purely local SQLite database.
+**Environment variables:**
+- `DATABASE_URL`: `"file:./local.db"` in dev, `"file:/data/libsql/local.db"` on Fly.io
+- `DATABASE_SYNC_URL`: Remote Turso URL (optional for local dev)
+- `DATABASE_AUTH_TOKEN`: Turso auth token (optional for local dev)
+
+> **Note:** In development, you can omit `DATABASE_SYNC_URL` and `DATABASE_AUTH_TOKEN` to use a purely local SQLite database.
 
 For more information, see the [Turso Embedded Replicas documentation](https://docs.turso.tech/features/embedded-replicas/with-fly#embedded-replicas-on-fly).
 
