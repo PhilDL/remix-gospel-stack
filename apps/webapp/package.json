@@ -42,7 +42,6 @@
     "hono": "catalog:hono",
     "hono-rate-limiter": "catalog:hono",
     "isbot": "catalog:",
-    "litefs-js": "^1.1.2",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "react-router": "catalog:react-router",
