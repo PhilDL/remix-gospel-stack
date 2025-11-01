@@ -51,7 +51,9 @@
   },
   "packageManager": "pnpm@10.19.0",
   "pnpm": {
-    "overrides": {},
+    "overrides": {
+      "@libsql/client": "0.15.15"
+    },
     "onlyBuiltDependencies": []
   }
 }
