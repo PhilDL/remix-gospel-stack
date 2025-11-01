@@ -46,8 +46,8 @@ export async function main({ rootDirectory }) {
       choices: [
         { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
         {
-          name: `${spaces(6)}Distributed SQLite (Litefs)`,
-          value: "sqlite-litefs",
+          name: `${spaces(6)}Turso (SQLite with libSQL)`,
+          value: "turso",
         },
       ],
       default: "postgres",
@@ -125,8 +125,16 @@ ${spaces(9)}  ${chalk.yellow(
         chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 
-${spaces()}⚠️  With local sqlite database you cannot run the NextJS app concurrently 
-${spaces()}   to the remix app, as they will both connect on the same sqlite file creating errors!
+${spaces()}⚠️  For local development with Turso, set in your .env file:
+${spaces()}   - DATABASE_URL=file:./local.db
+${spaces()}   
+${spaces()}   For production (Fly.io) with embedded replicas:
+${spaces()}   - DATABASE_URL=file:/data/libsql/local.db
+${spaces()}   - DATABASE_SYNC_URL=<your-turso-sync-url>
+${spaces()}   - DATABASE_AUTH_TOKEN=<your-auth-token>
+${spaces()}
+${spaces()}   Note: Prisma migrations don't work with Turso - you must manually
+${spaces()}   apply SQL files: turso db shell <db-name> < path/to/migration.sql
 `
 }`.trim(),
   );
@@ -141,13 +149,6 @@ const rootConfigsRename = async ({
 }) => {
   const README_PATH = path.join(rootDirectory, "README.md");
   const FLY_TOML_PATH = path.join(rootDirectory, "apps", "webapp", "fly.toml");
-  const LITEFS_YML_PATH = path.join(
-    rootDirectory,
-    "apps",
-    "webapp",
-    "other",
-    "litefs.yml",
-  );
   const PKG_PATH = path.join(rootDirectory, "package.json");
   // const ESLINT_PATH = path.join(rootDirectory, ".eslintrc.js");
   const PRETTIER_PATH = path.join(rootDirectory, ".prettierrc.js");
@@ -204,16 +205,6 @@ const rootConfigsRename = async ({
     await fs.writeFile(DOCKER_COMPOSE_PATH, newDockerCompose);
   } catch (error) {
     // pass, no Dockerfile for that setup
-  }
-
-  try {
-    const litefsYML = await fs.readFile(LITEFS_YML_PATH, "utf-8");
-    const newLitefsYML = litefsYML
-      .replace(globalOrgNameRegex, ORG_NAME)
-      .replaceAll(new RegExp(appNameRegex, "g"), APP_NAME);
-    await fs.writeFile(LITEFS_YML_PATH, newLitefsYML);
-  } catch (error) {
-    // pass, no litefs.yml for that setup
   }
 
   try {

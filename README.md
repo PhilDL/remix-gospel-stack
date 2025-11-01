@@ -47,7 +47,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   - [`webapp`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/apps/webapp): the [React Router](https://reactrouter.com) app in ESM.
 - `packages` Folder containing examples
   - [`ui`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/ui): a React UI package example powered by [shadcn/ui](https://ui.shadcn.com/). Some example components and shadcn/ui Tailwind config exported as Tailwind plugin and preset.
-  - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite // Litefs dependening of what you choose during installation.
+  - [`database`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/database): a [Prisma](https://prisma.io) wrapper ready to be used in other packages, or apps. Bundled with [tsup](https://tsup.egoist.dev/). Can be PostgreSQL or SQLite (Turso) depending on what you choose during installation.
   - [`business`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/business): an example package using the Prisma `database` as a dependency and using a _repository pattern_ like example.
   - [`internal-nobuild`](https://github.com/PhilDL/react-router-gospel-stack/tree/main/packages/internal-nobuild): an example package that is pure TypeScript with no build steps. The `main` entrypoint to the package is directly `src/index.ts`. React Router takes care of compiling with its own build step (with esbuild). This packages also contains unit test with Vitest.
     React Router uses `tsconfig.json` paths to reference to that project and its types. _I would recommend these types of **internal** packages when you don't plan on publishing the package._
@@ -62,7 +62,7 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 - React Router App [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
 - Database comes in 2 flavors that you choose at install:
   - [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
-  - [Litefs - Distributed SQLite](https://fly.io/docs/litefs/)
+  - [Turso - Distributed SQLite with libSQL](https://turso.tech/)
 - React Router App Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy the React Router App on merge to production and staging environments.
 - End-to-end testing with [Playwright](https://github.com/microsoft/playwright) in the React Router App
@@ -97,9 +97,13 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   pnpm run generate
   ```
 - Run the Prisma migration to the database
+  
+  **For PostgreSQL:**
   ```bash
   pnpm run db:migrate:deploy
   ```
+  
+  **For Turso:** Prisma migrations don't work directly with Turso. See the [Prisma Migrations with Turso](#important-prisma-migrations-with-turso) section below.
 - Run the first build (with dependencies via the `...` option)
   ```bash
   pnpm run build --filter=@react-router-gospel-stack/webapp...
@@ -120,7 +124,37 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
 
   Then follow the prompts. Be careful though, prisma migrations are linked to a specific database, so you will have to delete the `migrations` folder.
 
-  > **Note:** You will have to run `pnpm i --fix-lockfile` again after switching to SQLite (Litefs) that require another package (litefs-js). You will probably also have to run `pnpm run setup` again to generate the first migration.
+  > **Note:** You will probably have to run `pnpm run setup` again to generate the first migration after switching database types.
+
+### Development with Turso
+
+For local development, you can use a simple local SQLite file:
+
+```sh
+# .env
+DATABASE_URL="file:./local.db"
+# No need for DATABASE_SYNC_URL or DATABASE_AUTH_TOKEN in development
+```
+
+This gives you a standard SQLite database without the need for embedded replicas or remote connection during development.
+
+### Important: Prisma Migrations with Turso
+
+**Prisma's automatic migrations don't work with libSQL/Turso yet.** You need to manually apply the SQL migration files:
+
+1. Generate migrations normally with Prisma:
+   ```bash
+   pnpm run db:migrate:dev
+   ```
+
+2. Prisma will create SQL files in `packages/database/prisma/migrations/`
+
+3. Apply the migration to your Turso database manually:
+   ```bash
+   turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
+
+For production deployments, you'll need to apply migrations as part of your deployment process or manually before deploying.
 
 ## Create packages
 
@@ -196,7 +230,7 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Create a database for both your staging and production environments:
 
-###Turso Database creation:
+### Turso Database creation
 
 First, login to Turso:
 
@@ -237,19 +271,30 @@ Get the URL of the database:
 turso db show --url <database-name>
 ```
 
-Get the output url and save it as `DATABASE_URL` if you want to query directly from the remote database, or as `DATABASE_SYNC_URL` if you want to use embedded replica (recommended, in that case the DATABASE_URL will be a relative path on the volume).
+Get the output URL and save it as `TURSO_DATABASE_URL` (this will be your sync URL for embedded replicas).
 
-### Apply the migration with prisma
+### Apply Prisma migrations manually to Turso
 
-```sh
-turso db shell <database-name> < packages/database/prisma/migrations/20251027155525_first/migration.sql
-```
+**Important:** Since Prisma's `migrate deploy` doesn't work with libSQL/Turso, you need to manually apply the SQL migration files:
 
-> **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
+1. First, generate your Prisma migration locally:
+   ```sh
+   pnpm run db:migrate:dev
+   ```
 
-Fly will take care of setting the `DATABASE_URL` secret for you.
+2. Apply the generated SQL to your Turso database:
+   ```sh
+   turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
 
-## Deployement on fly.io – SQLite Litefs
+3. Repeat for staging database:
+   ```sh
+   turso db shell <staging-database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
+
+> **Note:** For the initial setup, you'll typically have a migration like `20251027155525_first/migration.sql`. For subsequent migrations, apply each new migration SQL file in order.
+
+## Deployement on fly.io – Turso (SQLite with libSQL)
 
 > **Warning**
 > All the following commands should be launched from the **monorepo root directory**
@@ -283,27 +328,53 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
-Create a persistent volume for the sqlite database for both your staging and production environments. Run the following (feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well):
+#### Create volumes for embedded replicas
+
+Turso uses embedded replicas for optimal performance - a local SQLite file that syncs with the remote Turso database. Create persistent volumes for both environments:
 
 ```sh
-fly volumes create data --region cdg --size 1 --app react-router-gospel-stack
-fly volumes create data --region cdg --size 1 --app react-router-gospel-stack-staging
+fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack
+fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
+
+> **Note:** Feel free to change the GB size based on your needs and the region of your choice (https://fly.io/docs/reference/regions/). If you do change the region, make sure you change the primary_region in fly.toml as well.
 
 #### Set secrets in the apps
 
-```sh
-fly secrets set DATABASE_URL="file:/data/app.db" DATABASE_SYNC_URL=<database-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
-
-
-fly secrets set DATABASE_URL=<staging-database-url> --app react-router-gospel-stack-staging
-```
-
-#### Set secrets in the database
+Set the database URL (local file path), sync URL, and auth token as secrets:
 
 ```sh
-turso db set-secret <database-name> <secret-name> <secret-value>
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" DATABASE_SYNC_URL=<database-sync-url> DATABASE_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" DATABASE_SYNC_URL=<staging-database-sync-url> DATABASE_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
 ```
+
+> **Note:** `DATABASE_URL` is the local file path for the embedded replica, `DATABASE_SYNC_URL` is the remote sync URL from Turso, and `DATABASE_AUTH_TOKEN` is your authentication token.
+
+#### Configure your Turso client with Embedded Replicas
+
+The database client is already configured in `apps/webapp/app/db.server.ts`:
+
+```typescript
+import { createClient } from "@react-router-gospel-stack/database";
+
+export const db = remember("db", () => {
+  return createClient({
+    url: env.DATABASE_URL,          // Local file path or remote URL
+    authToken: env.DATABASE_AUTH_TOKEN,  // Optional in dev
+    syncUrl: env.DATABASE_SYNC_URL,      // Optional in dev
+  });
+});
+```
+
+**Environment variables:**
+- `DATABASE_URL`: `"file:./local.db"` in dev, `"file:/data/libsql/local.db"` on Fly.io
+- `DATABASE_SYNC_URL`: Remote Turso URL (optional for local dev)
+- `DATABASE_AUTH_TOKEN`: Turso auth token (optional for local dev)
+
+> **Note:** In development, you can omit `DATABASE_SYNC_URL` and `DATABASE_AUTH_TOKEN` to use a purely local SQLite database.
+
+For more information, see the [Turso Embedded Replicas documentation](https://docs.turso.tech/features/embedded-replicas/with-fly#embedded-replicas-on-fly).
 
 #### Start coding!
 
