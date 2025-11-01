@@ -211,10 +211,10 @@ turso org list
 turso org switch <organization-name>
 ```
 
-Create an auth token:
+Create an auth token for the database:
 
 ```sh
-turso auth api-tokens mint <name-of-the-token>
+turso db tokens create <database-name>
 ```
 
 Keep this token safe, you will need to set it to the `DATABASE_AUTH_TOKEN` secret in the apps.

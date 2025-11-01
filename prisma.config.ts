@@ -13,7 +13,7 @@ export default defineConfig({
   async adapter() {
     return new PrismaLibSQL({
       url: process.env.DATABASE_URL!,
-      authToken: process.env.DATABASE_TOKEN,
+      authToken: process.env.DATABASE_AUTH_TOKEN,
       syncUrl: process.env.DATABASE_SYNC_URL,
     });
   },

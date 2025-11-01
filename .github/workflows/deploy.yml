@@ -85,9 +85,8 @@ jobs:
 
       - name: 🏄 Copy test env vars
         run: |
-          cp .env.example .env
           cp ./apps/webapp/.env.example ./apps/webapp/.env
-          cp .env.example packages/database/.env
+          cp ./packages/database/.env.example ./packages/database/.env
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -127,9 +126,8 @@ jobs:
 
       - name: 🏄 Copy test env vars
         run: |
-          cp .env.example .env
           cp ./apps/webapp/.env.example ./apps/webapp/.env
-          cp .env.example packages/database/.env
+          cp ./packages/database/.env.example ./packages/database/.env
 
       - name: 📥 Download deps
         run: pnpm install
