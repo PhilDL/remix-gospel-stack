@@ -1,4 +1,10 @@
 import React from "react";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "react-router";
+
 import { helloWorld } from "@react-router-gospel-stack/business/shared/utils";
 import { lookUpSalesPersonForZipcode } from "@react-router-gospel-stack/internal-nobuild/client";
 import { getSalesPersonDirectory } from "@react-router-gospel-stack/internal-nobuild/queries.server";
@@ -11,11 +17,6 @@ import {
   CardTitle,
 } from "@react-router-gospel-stack/ui/components/card";
 import { Checkbox } from "@react-router-gospel-stack/ui/components/checkbox";
-import {
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "react-router";
 
 import type { Route } from "./+types/_index";
 
@@ -84,65 +85,46 @@ export default function Index() {
         </div>
 
         <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <div className="mt-6 flex flex-wrap justify-center gap-8">
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
             {[
               {
-                src: "https://user-images.githubusercontent.com/4060187/106504110-82f58d00-6494-11eb-87b7-a16d4f68bc5a.png",
+                src: "/turborepo-icon-light.svg",
                 alt: "Turborepo",
                 href: "https://turborepo.org",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157764397-ccd8ea10-b8aa-4772-a99b-35de937319e1.svg",
+                src: "/fly.svg",
                 alt: "Fly.io",
                 href: "https://fly.io",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/158238105-e7279a0c-1640-40db-86b0-3d3a10aab824.svg",
-                alt: "PostgreSQL",
-                href: "https://www.postgresql.org/",
+                src: "/turso-light.svg",
+                alt: "Turso",
+                href: "https://turso.tech",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
+                src: "/prisma.svg",
                 alt: "Prisma",
                 href: "https://prisma.io",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157764276-a516a239-e377-4a20-b44a-0ac7b65c8c14.svg",
+                src: "/tailwindcss.svg",
                 alt: "Tailwind",
                 href: "https://tailwindcss.com",
               },
               {
-                src: "https://raw.githubusercontent.com/github/explore/60cd2530141f67f07a947fa2d310c482e287e387/topics/playwright/playwright.png",
-                alt: "Playwright",
-                href: "https://github.com/microsoft/playwright",
+                src: "/shadcn-ui.svg",
+                alt: "Shadcn/UI",
+                href: "https://ui.shadcn.com",
               },
               {
-                src: "https://user-images.githubusercontent.com/4941205/192078609-3f08928d-2811-4a33-ab32-062a77836d57.svg",
+                src: "/pnpm.svg",
                 alt: "pNPM",
                 href: "https://pnpm.io/",
               },
+
               {
-                src: "https://user-images.githubusercontent.com/1500684/157772447-00fccdce-9d12-46a3-8bb4-fac612cdc949.svg",
-                alt: "Vitest",
-                href: "https://vitest.dev",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772662-92b0dd3a-453f-4d18-b8be-9fa6efde52cf.png",
-                alt: "Testing Library",
-                href: "https://testing-library.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772934-ce0a943d-e9d0-40f8-97f3-f464c0811643.svg",
-                alt: "Prettier",
-                href: "https://prettier.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772990-3968ff7c-b551-4c55-a25c-046a32709a8e.svg",
-                alt: "ESLint",
-                href: "https://eslint.org",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157773063-20a0ed64-b9f8-4e0b-9d1e-0b65a3d4a6db.svg",
+                src: "/typescript.svg",
                 alt: "TypeScript",
                 href: "https://typescriptlang.org",
               },
@@ -150,9 +132,13 @@ export default function Index() {
               <a
                 key={img.href}
                 href={img.href}
-                className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 focus:grayscale-0"
+                className="border-input hover:bg-muted group flex h-16 w-16 justify-center rounded-lg border p-2"
               >
-                <img alt={img.alt} src={img.src} className="object-contain" />
+                <img
+                  alt={img.alt}
+                  src={img.src}
+                  className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
+                />
               </a>
             ))}
           </div>
@@ -168,9 +154,9 @@ export default function Index() {
             </CardHeader>
             <CardContent className="space-y-6">
               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Display prisma users from the business function{" "}
+                Display prisma users from the AppLoadContext repository
                 <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                  Service.userRepository.getUsers()
+                  context.repositories.user.getUsers()
                 </code>
                 .
               </h4>

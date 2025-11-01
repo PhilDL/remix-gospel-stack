@@ -1,10 +1,20 @@
-import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
 
 import { PrismaClient } from "./generated/client";
 
-export const createClient = ({ url }: { url: string }) => {
-  const adapter = new PrismaBetterSQLite3({
+export const createClient = ({
+  url,
+  syncUrl,
+  authToken,
+}: {
+  url: string;
+  syncUrl?: string;
+  authToken?: string;
+}) => {
+  const adapter = new PrismaLibSQL({
     url,
+    syncUrl,
+    authToken,
   });
   return new PrismaClient({ adapter });
 };
