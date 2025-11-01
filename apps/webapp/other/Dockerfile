@@ -5,7 +5,9 @@ ARG APP_PKG_NAME=@react-router-gospel-stack/webapp
 
 FROM node:22-bookworm-slim AS bookworm
 ARG APP_PKG_NAME
-RUN apt-get update && apt-get install -y openssl sqlite3 ca-certificates python3 build-essential
+RUN apt-get update -qq && \
+    apt-get install -y openssl sqlite3 ca-certificates python3 build-essential && \
+    update-ca-certificates
 
 FROM bookworm AS bookworm-turbopm
 ENV PNPM_HOME="/pnpm"
@@ -71,6 +73,7 @@ COPY --from=pruner /app/out/full/ .
 COPY --from=production-deps /app .
 COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
+COPY --from=bookworm /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # release_command = "pnpx prisma migrate deploy --schema packages/database/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-webapp"]

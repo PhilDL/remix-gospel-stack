@@ -8,8 +8,8 @@ swap_size_mb = 512
   auto_rollback = true
 
 [mounts]
-  source = "data"
-  destination = "/data"
+  source = "libsql_data"
+  destination = "/data/libsql"
 
 [env]
   PRIMARY_REGION = "cdg"

@@ -97,9 +97,13 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   pnpm run generate
   ```
 - Run the Prisma migration to the database
+  
+  **For PostgreSQL:**
   ```bash
   pnpm run db:migrate:deploy
   ```
+  
+  **For Turso:** Prisma migrations don't work directly with Turso. See the [Prisma Migrations with Turso](#important-prisma-migrations-with-turso) section below.
 - Run the first build (with dependencies via the `...` option)
   ```bash
   pnpm run build --filter=@react-router-gospel-stack/webapp...
@@ -121,6 +125,36 @@ _This Package **uses `pnpm` as the package manager** of choice to manage workspa
   Then follow the prompts. Be careful though, prisma migrations are linked to a specific database, so you will have to delete the `migrations` folder.
 
   > **Note:** You will probably have to run `pnpm run setup` again to generate the first migration after switching database types.
+
+### Development with Turso
+
+For local development, you can use a simple local SQLite file:
+
+```sh
+# .env
+DATABASE_URL="file:./local.db"
+# No need for TURSO_DATABASE_URL or TURSO_AUTH_TOKEN in development
+```
+
+This gives you a standard SQLite database without the need for embedded replicas or remote connection during development.
+
+### Important: Prisma Migrations with Turso
+
+**Prisma's automatic migrations don't work with libSQL/Turso yet.** You need to manually apply the SQL migration files:
+
+1. Generate migrations normally with Prisma:
+   ```bash
+   pnpm run db:migrate:dev
+   ```
+
+2. Prisma will create SQL files in `packages/database/prisma/migrations/`
+
+3. Apply the migration to your Turso database manually:
+   ```bash
+   turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
+
+For production deployments, you'll need to apply migrations as part of your deployment process or manually before deploying.
 
 ## Create packages
 
@@ -196,7 +230,7 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Create a database for both your staging and production environments:
 
-###Turso Database creation:
+### Turso Database creation
 
 First, login to Turso:
 
@@ -237,17 +271,28 @@ Get the URL of the database:
 turso db show --url <database-name>
 ```
 
-Get the output url and save it as `DATABASE_URL` if you want to query directly from the remote database, or as `DATABASE_SYNC_URL` if you want to use embedded replica (recommended, in that case the DATABASE_URL will be a relative path on the volume).
+Get the output URL and save it as `TURSO_DATABASE_URL` (this will be your sync URL for embedded replicas).
 
-### Apply the migration with prisma
+### Apply Prisma migrations manually to Turso
 
-```sh
-turso db shell <database-name> < packages/database/prisma/migrations/20251027155525_first/migration.sql
-```
+**Important:** Since Prisma's `migrate deploy` doesn't work with libSQL/Turso, you need to manually apply the SQL migration files:
 
-> **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
+1. First, generate your Prisma migration locally:
+   ```sh
+   pnpm run db:migrate:dev
+   ```
 
-Fly will take care of setting the `DATABASE_URL` secret for you.
+2. Apply the generated SQL to your Turso database:
+   ```sh
+   turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
+
+3. Repeat for staging database:
+   ```sh
+   turso db shell <staging-database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
+   ```
+
+> **Note:** For the initial setup, you'll typically have a migration like `20251027155525_first/migration.sql`. For subsequent migrations, apply each new migration SQL file in order.
 
 ## Deployement on fly.io – Turso (SQLite with libSQL)
 
@@ -296,30 +341,32 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 
 #### Set secrets in the apps
 
-Set the Turso database URL (syncUrl) and auth token as secrets:
+Set the database URL (local file path), Turso sync URL, and auth token as secrets:
 
 ```sh
-fly secrets set TURSO_DATABASE_URL=<database-sync-url> TURSO_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" TURSO_DATABASE_URL=<database-sync-url> TURSO_AUTH_TOKEN=<database-auth-token> --app react-router-gospel-stack
 
-fly secrets set TURSO_DATABASE_URL=<staging-database-sync-url> TURSO_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
+fly secrets set DATABASE_URL="file:/data/libsql/local.db" TURSO_DATABASE_URL=<staging-database-sync-url> TURSO_AUTH_TOKEN=<staging-database-auth-token> --app react-router-gospel-stack-staging
 ```
 
-> **Note:** The `DATABASE_URL` will be set to a local file path (e.g., `file:/data/libsql/local.db`) in your environment configuration, while `TURSO_DATABASE_URL` is the remote sync URL from Turso.
+> **Note:** `DATABASE_URL` is the local file path for the embedded replica, `TURSO_DATABASE_URL` is the remote sync URL from Turso, and `TURSO_AUTH_TOKEN` is your authentication token.
 
-#### Configure your Turso client
+#### Configure your Turso client with Embedded Replicas
 
-When using Turso with embedded replicas, configure your client in your database connection file:
+When using Turso with embedded replicas on Fly.io, configure your client in your database connection file:
 
 ```typescript
 import { createClient } from "@libsql/client";
 
 const client = createClient({
-  url: process.env.DATABASE_URL, // "file:/data/libsql/local.db" on Fly.io
-  syncUrl: process.env.TURSO_DATABASE_URL, // Remote Turso URL
-  authToken: process.env.TURSO_AUTH_TOKEN,
-  syncInterval: 60, // Sync every 60 seconds
+  url: process.env.DATABASE_URL, // "file:/data/libsql/local.db" on Fly.io, "file:./local.db" in dev
+  syncUrl: process.env.TURSO_DATABASE_URL, // Remote Turso URL (not needed for local dev)
+  authToken: process.env.TURSO_AUTH_TOKEN, // (not needed for local dev)
+  syncInterval: 60, // Sync every 60 seconds (only used when syncUrl is set)
 });
 ```
+
+> **Note:** In development, you can omit `syncUrl` and `authToken` to use a purely local SQLite database.
 
 For more information, see the [Turso Embedded Replicas documentation](https://docs.turso.tech/features/embedded-replicas/with-fly#embedded-replicas-on-fly).
 

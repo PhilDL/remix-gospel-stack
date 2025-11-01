@@ -125,11 +125,16 @@ ${spaces(9)}  ${chalk.yellow(
         chalk.bold(`pnpm run dev --filter=${ORG_NAME}/webapp`),
       )}
 
-${spaces()}⚠️  With Turso embedded replicas, make sure to set:
-${spaces()}   - DATABASE_URL=file:./local.db (local file path)
-${spaces()}   - TURSO_DATABASE_URL=<your-turso-url> (sync URL)
+${spaces()}⚠️  For local development with Turso, set in your .env file:
+${spaces()}   - DATABASE_URL=file:./local.db
+${spaces()}   
+${spaces()}   For production (Fly.io) with embedded replicas:
+${spaces()}   - DATABASE_URL=file:/data/libsql/local.db
+${spaces()}   - TURSO_DATABASE_URL=<your-turso-sync-url>
 ${spaces()}   - TURSO_AUTH_TOKEN=<your-auth-token>
-${spaces()}   in your .env file!
+${spaces()}
+${spaces()}   Note: Prisma migrations don't work with Turso - you must manually
+${spaces()}   apply SQL files: turso db shell <db-name> < path/to/migration.sql
 `
 }`.trim(),
   );
