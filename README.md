@@ -41,7 +41,7 @@ pnpm run init
 
 ## What's in the Stack
 
-This is a **production-ready monorepo** for building modern web applications with React Router, optimized for developer experience and deployment simplicity.
+This is a **monorepo** for building modern web applications with React Router, optimized for developer experience and deployment simplicity.
 
 ### Core Technologies
 
@@ -51,19 +51,25 @@ This is a **production-ready monorepo** for building modern web applications wit
   - [PostgreSQL](https://www.postgresql.org/) - Multi-region Fly PostgreSQL Cluster
   - [Turso](https://turso.tech/) - Distributed SQLite with libSQL (recommended)
 - 🛠️ **[Prisma](https://prisma.io)** - Type-safe ORM (future: Drizzle option)
-- 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - Beautiful, accessible component system
+- 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - UI Components system
 - 🎯 **[TailwindCSS 4](https://tailwindcss.com/)** - Utility-first CSS framework
 - 🐳 **[Docker](https://www.docker.com/)** - Containerized deployment
 - 🪂 **[Fly.io](https://fly.io)** - Multi-region deployment platform
 
 ### Developer Tools
 
-- ✅ **[TypeScript](https://typescriptlang.org)** - Type safety across the stack
+- 🦾 **[TypeScript](https://typescriptlang.org)** - Full ts setup
 - 🧪 **[Vitest](https://vitest.dev)** - Fast unit testing
 - 🎭 **[Playwright](https://playwright.dev)** - End-to-end testing
 - 🔍 **[ESLint](https://eslint.org)** - Code linting
 - 💅 **[Prettier](https://prettier.io)** - Code formatting
 - 🔄 **[GitHub Actions](https://github.com/features/actions)** - CI/CD pipelines
+
+### Monorepo Structure
+
+- **`apps/`** - Your applications (React Router webapp included)
+- **`packages/`** - Shared code, UI components, database, business logic
+- **`config/`** - ESLint, tsconfig, and other configuration packages
 
 ## Documentation
 
@@ -77,36 +83,9 @@ This is a **production-ready monorepo** for building modern web applications wit
 
 ### Key Decisions
 
+If you knew this stack from a previous version, here are some decisions documents that explain why certain things changed:
+
 - [Why Turso instead of LiteFS?](./docs/why-turso-instead-of-litefs.md)
-
-## Getting Started
-
-1. **Clone or create** your project using one of the quick start methods above
-2. **Read the [Architecture Guide](./docs/architecture.md)** to understand the monorepo structure
-3. **Follow the [Development Guide](./docs/development.md)** to set up your local environment
-4. **Configure your [Database](./docs/database.md)** (PostgreSQL or Turso)
-5. **Start building!** 🎉
-
-## Key Features
-
-### Monorepo Structure
-- **Apps** - Your applications (React Router webapp included)
-- **Packages** - Shared code, UI components, database, business logic
-- **Config Packages** - ESLint, TypeScript, and Tailwind configurations
-
-### Production Ready
-- Multi-region deployment support
-- Health check endpoints for failover
-- Automated CI/CD with GitHub Actions
-- Docker containerization
-- Environment-based deployments (staging/production)
-
-### Flexible Database
-Choose your database at setup time:
-- **PostgreSQL** for traditional relational database needs
-- **Turso** for edge-optimized SQLite with embedded replicas
-
-> **Note:** Future versions will support choosing between Prisma and Drizzle ORM
 
 ## Support & Contributing
 
@@ -124,7 +103,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 
 ## Disclaimer
 
-I am learning and improving this stack continuously. The setup proposed here is one of many possible approaches. If you see any possible improvements, please submit a PR—I will appreciate it greatly!
+I am learning and improving this stack continuously. The setup proposed here is one of many possible approaches. If you see any possible improvements, please submit a PR — I will appreciate it greatly!
 
 ## License
 

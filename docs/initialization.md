@@ -22,6 +22,7 @@ The initialization script (`scripts/setup.mjs`) performs several important tasks
 Prompts you for your organization name (e.g., `@my-company` or `@acme-corp`).
 
 This name is used throughout the monorepo:
+
 - Package names: `@my-company/webapp`, `@my-company/ui`, etc.
 - Import statements
 - Configuration files
@@ -32,12 +33,14 @@ This name is used throughout the monorepo:
 Asks which database you want to use:
 
 **PostgreSQL**
+
 - Traditional relational database
 - Full Prisma migration support
 - Docker setup for local development
 - Fly.io PostgreSQL for production
 
 **Turso (SQLite with libSQL)**
+
 - Edge-optimized distributed SQLite
 - Embedded replicas for local-first architecture
 - Manual migration application (Prisma limitations)
@@ -46,6 +49,7 @@ Asks which database you want to use:
 ### 3. File Updates
 
 The script automatically updates:
+
 - All `package.json` files with your organization name
 - Import statements across the codebase
 - `fly.toml` with your app name
@@ -56,6 +60,7 @@ The script automatically updates:
 ### 4. Environment Setup
 
 Creates `.env` and `.env.docker` files from `.env.example`:
+
 - Generates a secure random `SESSION_SECRET`
 - Copies all other environment variables
 - Ready for you to customize
@@ -93,45 +98,6 @@ cd my-app
 pnpm install
 pnpm run init
 ```
-
-## Interactive Prompts
-
-### Organization Name Prompt
-
-```
-◼  What is the name of the monorepo @org?
-   (@my-app)
-```
-
-- Enter your organization/project name
-- Will be prefixed with `@` if you don't include it
-- Used for all package names in the monorepo
-
-**Examples:**
-- `@acme-corp` → `@acme-corp/webapp`, `@acme-corp/ui`
-- `@my-startup` → `@my-startup/webapp`, `@my-startup/database`
-
-### Database Choice Prompt
-
-```
-◼  Which database do you want to use? (Deployed to Fly.io)
-   > PostgreSQL
-     Turso (SQLite with libSQL)
-```
-
-Use arrow keys to select, then press Enter.
-
-**Choose PostgreSQL if:**
-- You need traditional relational database features
-- You're familiar with PostgreSQL
-- You want automatic Prisma migrations
-- You prefer managed Fly.io PostgreSQL
-
-**Choose Turso if:**
-- You want edge-optimized performance
-- You need embedded replicas
-- You prefer lower operational overhead
-- You're okay with manual migration application
 
 ## After Initialization
 
@@ -180,24 +146,28 @@ pnpm run dev --filter=@your-org/webapp
 If you prefer to set up manually:
 
 1. **Replace organization name:**
+
    ```bash
    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" \) \
      -exec sed -i '' 's/@react-router-gospel-stack/@your-org/g' {} +
    ```
 
 2. **Replace app name:**
+
    ```bash
    find . -type f -name "fly.toml" \
      -exec sed -i '' 's/react-router-gospel-stack/your-app-name/g' {} +
    ```
 
 3. **Copy environment files:**
+
    ```bash
    cp .env.example .env
    cp .env.example .env.docker
    ```
 
 4. **Generate SESSION_SECRET:**
+
    ```bash
    # Add to .env:
    SESSION_SECRET="$(openssl rand -hex 16)"
@@ -211,6 +181,7 @@ If you prefer to set up manually:
 ### "Command not found: node"
 
 Install Node.js v22 or higher:
+
 ```bash
 # Using nvm
 nvm install 22
@@ -221,12 +192,7 @@ nvm use 22
 
 ### "Command not found: pnpm"
 
-Install pnpm:
-```bash
-npm install -g pnpm
-# or
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-```
+Follow the official pnpm installation guide: [https://pnpm.io/installation](https://pnpm.io/installation)
 
 ### Init Script Fails
 
@@ -241,6 +207,7 @@ If the init script fails:
 ### Permission Denied
 
 Make the script executable:
+
 ```bash
 chmod +x scripts/setup.mjs
 ```
@@ -254,6 +221,7 @@ You can re-run the init script if needed, but be aware:
 - Consider manual edits for small changes
 
 To re-run:
+
 ```bash
 pnpm run init
 ```
@@ -261,25 +229,22 @@ pnpm run init
 ## Skipping Initialization
 
 If you're:
+
 - Forking the repository for contributions
 - Creating a stack variant
 - Just exploring the code
 
 You can skip initialization and use the default names:
+
 ```bash
 pnpm install
 pnpm run build
 pnpm run dev --filter=@react-router-gospel-stack/webapp
 ```
 
-## Changes from Previous Versions
+### Changes from Previous Versions
 
-This stack previously used Remix's automatic initialization system (`pnpm create remix@latest`). Since React Router v7+ doesn't support that system, we now use a standalone setup script that provides the same functionality:
-
-- Organization name customization ✅
-- Database selection ✅
-- Automatic file updates ✅
-- Environment setup ✅
+This stack previously used Remix's automatic initialization system (`pnpm create remix@latest`). Since React Router v7+ doesn't support that system, we now use a standalone setup script that provides the similar functionalities to what was running in the remix.init folder.
 
 ## Next Steps
 
@@ -290,11 +255,3 @@ After initialization:
 3. **Understand the [Architecture](./architecture.md)** of the monorepo
 4. **Set up [Deployment](./deployment.md)** to Fly.io
 5. **Start building!** 🚀
-
-## Resources
-
-- [Development Guide](./development.md) - Local development workflow
-- [Database Guide](./database.md) - Database configuration
-- [Architecture Guide](./architecture.md) - Understanding the monorepo
-- [Deployment Guide](./deployment.md) - Deploying to production
-

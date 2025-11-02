@@ -1,6 +1,6 @@
 # Database Guide
 
-This stack supports two database options: **PostgreSQL** for traditional relational database needs, and **Turso** for edge-optimized SQLite with embedded replicas.
+This stack supports two database options: **PostgreSQL**, and **Turso** for edge-optimized SQLite with embedded replicas that promotes the one-database-per-tenant architecture.
 
 > **Future:** We plan to support choosing between Prisma and Drizzle ORM during setup.
 
@@ -8,16 +8,19 @@ This stack supports two database options: **PostgreSQL** for traditional relatio
 
 During the initial setup, you choose between:
 
-1. **PostgreSQL** - Traditional, battle-tested relational database
+1. **PostgreSQL**
    - Multi-region support via Fly.io PostgreSQL clusters
    - Full Prisma migration support
    - Familiar for most developers
 
-2. **Turso** - Modern, distributed SQLite with libSQL
-   - Edge-optimized with embedded replicas
-   - Sub-100ms reads globally
+2. **Turso Cloud**
+   - LibSQL flavor of SQLite with generous free tiers
+   - Instant reads with embedded replicas (copy of the database on the volume)
+   - Automatic sync between local and remote database
+   - Writes go to the remote database first, then sync locally
    - Built-in backups and point-in-time recovery
-   - See [Why Turso instead of LiteFS?](./why-turso-instead-of-litefs.md)
+   - Prisma doesn't support libSQL migrations, you have to apply them manually.
+   - We used to have LiteFS here but since I was not using it in production, I switched to Turso. See [Why Turso instead of LiteFS?](./why-turso-instead-of-litefs.md)
 
 ## Switching Between Databases
 
@@ -37,64 +40,6 @@ After switching, run the setup again:
 pnpm run generate
 pnpm run db:migrate:dev  # Create a new initial migration
 ```
-
-## PostgreSQL Setup
-
-### Local Development
-
-#### 1. Start the Database
-
-Use the provided Docker Compose setup:
-
-```bash
-pnpm run docker:db
-```
-
-This starts a PostgreSQL container with the configuration from `.env.docker`.
-
-#### 2. Configure Environment Variables
-
-In your `.env` file:
-
-```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
-```
-
-#### 3. Run Migrations
-
-```bash
-# Generate Prisma Client
-pnpm run generate
-
-# Deploy migrations
-pnpm run db:migrate:deploy
-```
-
-#### 4. (Optional) Seed the Database
-
-```bash
-pnpm run db:seed
-```
-
-### Creating Migrations
-
-When you change the Prisma schema (`packages/database/prisma/schema.prisma`):
-
-```bash
-# Create a new migration
-pnpm run db:migrate:dev
-
-# Give it a descriptive name when prompted
-```
-
-This will:
-1. Generate SQL migration files
-2. Apply the migration to your local database
-3. Regenerate the Prisma Client
-
-### Production Setup
-
-For production PostgreSQL on Fly.io, see the [Deployment Guide](./deployment.md#postgresql-deployment).
 
 ## Turso Setup
 
@@ -230,9 +175,9 @@ import { createClient } from "@react-router-gospel-stack/database";
 
 export const db = remember("db", () => {
   return createClient({
-    url: env.DATABASE_URL,          // Local file path or remote URL
-    authToken: env.DATABASE_AUTH_TOKEN,  // Optional in dev
-    syncUrl: env.DATABASE_SYNC_URL,      // Optional in dev
+    url: env.DATABASE_URL, // Local file path or remote URL
+    authToken: env.DATABASE_AUTH_TOKEN, // Optional in dev
+    syncUrl: env.DATABASE_SYNC_URL, // Optional in dev
   });
 });
 ```
@@ -252,6 +197,65 @@ DATABASE_AUTH_TOKEN="eyJhbG..."                 # Turso auth token
 > **Note:** In development, omitting `DATABASE_SYNC_URL` and `DATABASE_AUTH_TOKEN` gives you a purely local SQLite database.
 
 For Fly.io deployment with embedded replicas, see the [Deployment Guide](./deployment.md#turso-deployment).
+
+## PostgreSQL Setup
+
+### Local Development
+
+#### 1. Start the Database
+
+Use the provided Docker Compose setup:
+
+```bash
+pnpm run docker:db
+```
+
+This starts a PostgreSQL container with the configuration from `.env.docker`.
+
+#### 2. Configure Environment Variables
+
+In your `.env` file:
+
+```bash
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
+```
+
+#### 3. Run Migrations
+
+```bash
+# Generate Prisma Client
+pnpm run generate
+
+# Deploy migrations
+pnpm run db:migrate:deploy
+```
+
+#### 4. (Optional) Seed the Database
+
+```bash
+pnpm run db:seed
+```
+
+### Creating Migrations
+
+When you change the Prisma schema (`packages/database/prisma/schema.prisma`):
+
+```bash
+# Create a new migration
+pnpm run db:migrate:dev
+
+# Give it a descriptive name when prompted
+```
+
+This will:
+
+1. Generate SQL migration files
+2. Apply the migration to your local database
+3. Regenerate the Prisma Client
+
+### Production Setup
+
+For production PostgreSQL on Fly.io, see the [Deployment Guide](./deployment.md#postgresql-deployment).
 
 ## Working with Prisma
 
@@ -280,6 +284,7 @@ export async function loader() {
 ### Schema Location
 
 The Prisma schema is located at:
+
 ```
 packages/database/prisma/schema.prisma
 ```
@@ -327,11 +332,13 @@ Edit the seed script at `packages/database/src/seed.ts` to customize the data.
 ### Reset Database (Caution!)
 
 **PostgreSQL:**
+
 ```bash
 pnpm run db:reset
 ```
 
 **Turso:**
+
 ```bash
 # Delete and recreate the database
 turso db destroy <database-name>
@@ -348,6 +355,7 @@ ls packages/database/prisma/migrations
 ### Check Migration Status
 
 **PostgreSQL:**
+
 ```bash
 pnpm --filter @react-router-gospel-stack/database prisma migrate status
 ```
@@ -358,6 +366,7 @@ Prisma's migrate status doesn't work with Turso. You'll need to track applied mi
 ## Future: Drizzle ORM Support
 
 We plan to add Drizzle ORM as an alternative to Prisma during setup. Drizzle offers:
+
 - Better TypeScript inference
 - Smaller bundle size
 - SQL-like query syntax
@@ -412,4 +421,3 @@ docker restart <container-id>
 - Learn about [Deployment](./deployment.md) with your chosen database
 - Explore the [Architecture](./architecture.md) to understand how the database package fits in
 - Check the [Development Guide](./development.md) for workflow tips
-
