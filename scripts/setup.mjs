@@ -2,28 +2,27 @@
 
 /**
  * React Router Gospel Stack Setup Script
- * 
+ *
  * This script handles the initial setup of the monorepo after cloning.
  * It replaces the old Remix init system that's no longer supported in React Router v7+.
- * 
+ *
  * Run this script after cloning:
  * node scripts/setup.mjs
  */
-
 import { execSync } from "child_process";
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import chalk from "chalk";
+import { glob } from "glob";
 import inquirer from "inquirer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDirectory = path.resolve(__dirname, "..");
 
-const escapeRegExp = (string) =>
-  string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
@@ -74,7 +73,7 @@ async function main() {
   ]);
 
   console.log(`${spaces()}◼  Preparing monorepo for ${db}...`);
-  
+
   // Run database scaffold generator
   try {
     execSync(
@@ -82,46 +81,95 @@ async function main() {
       {
         cwd: rootDirectory,
         stdio: "inherit",
-      }
+      },
     );
   } catch (error) {
     console.error(chalk.red("Failed to scaffold database. Continuing..."));
   }
 
-  // Rename webapp directory if APP_NAME is different
-  if (APP_NAME !== "webapp") {
-    console.log(`${spaces()}◼  Renaming webapp to ${APP_NAME}...`);
-    const oldWebappPath = path.join(rootDirectory, "apps", "webapp");
-    const newWebappPath = path.join(rootDirectory, "apps", APP_NAME);
-    try {
-      await fs.rename(oldWebappPath, newWebappPath);
-      console.log(`${spaces()}${chalk.green(`✔  Renamed apps/webapp to apps/${APP_NAME}`)}`);
-    } catch (error) {
-      console.error(chalk.red(`Failed to rename webapp directory: ${error.message}`));
-    }
-  }
+  const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
+  const globalAppNameRegex = new RegExp(appNameRegex, "g");
 
   // Update configuration files
-  await updateRootConfigs({
+  await processFilesWithGlobs({
     rootDirectory,
-    orgNameRegex,
-    appNameRegex,
-    ORG_NAME,
-    APP_NAME,
+    replacements: [
+      {
+        glob: "{package.json,.prettierrc.js,turbo.json}",
+        replacer: (content) => content.replace(globalOrgNameRegex, ORG_NAME),
+      },
+      {
+        glob: "{package.json,README.md}",
+        replacer: (content) => content.replace(globalAppNameRegex, APP_NAME),
+      },
+      {
+        glob: `apps/${APP_NAME}/fly.toml`,
+        replacer: (content) => content.replace(globalAppNameRegex, APP_NAME),
+      },
+      {
+        glob: ".github/workflows/deploy.yml",
+        replacer: (content) => content.replace(globalOrgNameRegex, ORG_NAME),
+      },
+      {
+        glob: "docker-compose.yml",
+        replacer: (content) =>
+          content.replace(
+            /react-router-gospel-stack-postgres/g,
+            `${APP_NAME}-postgres`,
+          ),
+      },
+    ],
+    filesToRemove: ["LICENSE.md", "CONTRIBUTING.md"],
   });
 
   // Update all package references
-  await updateAllPackages({
+  await processFilesWithGlobs({
     rootDirectory,
-    orgNameRegex,
-    appNameRegex,
-    ORG_NAME,
-    APP_NAME,
+    replacements: [
+      {
+        paths: [
+          "apps/**/*.json",
+          "apps/**/*.js",
+          "apps/**/*.ts",
+          "apps/**/*.tsx",
+          "apps/**/vite.config.ts",
+          "apps/**/Dockerfile",
+          "apps/**/eslint.config.js",
+          "apps/**/README.md",
+        ],
+        pattern: globalOrgNameRegex,
+        replacement: ORG_NAME,
+      },
+      {
+        paths: ["apps/**/package.json"],
+        pattern: globalAppNameRegex,
+        replacement: APP_NAME,
+      },
+      {
+        paths: ["config/**/*.json", "config/**/*.js"],
+        pattern: globalOrgNameRegex,
+        replacement: ORG_NAME,
+      },
+      {
+        paths: [
+          "packages/**/*.json",
+          "packages/**/*.js",
+          "packages/**/*.ts",
+          "packages/**/*.tsx",
+          "packages/**/eslint.config.js",
+        ],
+        pattern: globalOrgNameRegex,
+        replacement: ORG_NAME,
+      },
+    ],
+    filesToRemove: [],
   });
 
-  console.log(`\n${spaces()}${chalk.green(
-    `✔  ${chalk.bold(ORG_NAME)} app and packages setup complete.`
-  )}\n`);
+  console.log(
+    `\n${spaces()}${chalk.green(
+      `✔  ${chalk.bold(ORG_NAME)} app and packages setup complete.`,
+    )}\n`,
+  );
 
   // Copy and configure .env file
   await setupEnvFile({ rootDirectory });
@@ -134,101 +182,20 @@ async function main() {
       stdio: "ignore",
     });
   } catch (error) {
-    console.log(chalk.yellow(`${spaces()}⚠️  Could not run formatter (skipping)`));
+    console.log(
+      chalk.yellow(`${spaces()}⚠️  Could not run formatter (skipping)`),
+    );
   }
 
   // Fix lockfile
   console.log(`${spaces()}◼  Updating lockfile...`);
-  execSync("pnpm i --fix-lockfile", { 
-    cwd: rootDirectory, 
-    stdio: "ignore" 
+  execSync("pnpm i --fix-lockfile", {
+    cwd: rootDirectory,
+    stdio: "ignore",
   });
 
   // Print next steps
   printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory);
-}
-
-async function updateRootConfigs({
-  rootDirectory,
-  orgNameRegex,
-  appNameRegex,
-  ORG_NAME,
-  APP_NAME,
-}) {
-  const appDir = APP_NAME || "webapp";
-  const files = {
-    flyToml: path.join(rootDirectory, "apps", appDir, "fly.toml"),
-    readme: path.join(rootDirectory, "README.md"),
-    packageJson: path.join(rootDirectory, "package.json"),
-    prettier: path.join(rootDirectory, ".prettierrc.js"),
-    deploy: path.join(rootDirectory, ".github", "workflows", "deploy.yml"),
-    turbo: path.join(rootDirectory, "turbo.json"),
-  };
-
-  const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
-  const globalAppNameRegex = new RegExp(appNameRegex, "g");
-
-  // Read all files
-  const contents = {};
-  for (const [key, filePath] of Object.entries(files)) {
-    try {
-      contents[key] = await fs.readFile(filePath, "utf-8");
-    } catch (error) {
-      console.log(chalk.yellow(`${spaces()}⚠️  Could not read ${filePath} (skipping)`));
-      contents[key] = null;
-    }
-  }
-
-  // Update contents
-  const updates = {};
-  if (contents.flyToml) {
-    updates.flyToml = contents.flyToml.replace(globalAppNameRegex, APP_NAME);
-  }
-  if (contents.packageJson) {
-    updates.packageJson = contents.packageJson
-      .replace(globalOrgNameRegex, ORG_NAME)
-      .replace(globalAppNameRegex, APP_NAME);
-  }
-  if (contents.prettier) {
-    updates.prettier = contents.prettier.replace(globalOrgNameRegex, ORG_NAME);
-  }
-  if (contents.readme) {
-    updates.readme = contents.readme
-      .replace(globalOrgNameRegex, ORG_NAME)
-      .replace(globalAppNameRegex, APP_NAME);
-  }
-  if (contents.deploy) {
-    updates.deploy = contents.deploy.replace(globalOrgNameRegex, ORG_NAME);
-  }
-  if (contents.turbo) {
-    updates.turbo = contents.turbo.replace(globalOrgNameRegex, ORG_NAME);
-  }
-
-  // Handle docker-compose.yml
-  try {
-    const dockerComposePath = path.join(rootDirectory, "docker-compose.yml");
-    const dockerCompose = await fs.readFile(dockerComposePath, "utf-8");
-    updates.dockerCompose = dockerCompose.replace(
-      /react-router-gospel-stack-postgres/g,
-      `${APP_NAME}-postgres`
-    );
-    files.dockerCompose = dockerComposePath;
-  } catch (error) {
-    // File doesn't exist, skip
-  }
-
-  // Write all files
-  const writePromises = Object.entries(updates).map(([key, content]) =>
-    fs.writeFile(files[key], content)
-  );
-
-  // Remove LICENSE and CONTRIBUTING (user should add their own)
-  writePromises.push(
-    fs.rm(path.join(rootDirectory, "LICENSE.md"), { force: true }),
-    fs.rm(path.join(rootDirectory, "CONTRIBUTING.md"), { force: true })
-  );
-
-  await Promise.all(writePromises);
 }
 
 async function setupEnvFile({ rootDirectory }) {
@@ -240,106 +207,21 @@ async function setupEnvFile({ rootDirectory }) {
     const env = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8");
     const newEnv = env.replace(
       /^SESSION_SECRET=.*$/m,
-      `SESSION_SECRET="${getRandomString(16)}"`
+      `SESSION_SECRET="${getRandomString(16)}"`,
     );
-    
+
     await fs.writeFile(ENV_PATH, newEnv);
     await fs.writeFile(ENV_DOCKER_PATH, newEnv);
-    
-    console.log(`${spaces()}${chalk.green("✔  Created .env and .env.docker files")}`);
+
+    console.log(
+      `${spaces()}${chalk.green("✔  Created .env and .env.docker files")}`,
+    );
   } catch (error) {
-    console.log(chalk.yellow(`${spaces()}⚠️  Could not create .env files (you may need to copy .env.example manually)`));
-  }
-}
-
-async function updateAllPackages({
-  rootDirectory,
-  orgNameRegex,
-  appNameRegex,
-  ORG_NAME,
-  APP_NAME,
-}) {
-  const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
-  const globalAppNameRegex = new RegExp(appNameRegex, "g");
-
-  const replacements = [
-    {
-      paths: [
-        "apps/**/*.json",
-        "apps/**/*.js",
-        "apps/**/*.ts",
-        "apps/**/*.tsx",
-        "apps/**/vite.config.ts",
-        "apps/**/Dockerfile",
-        "apps/**/eslint.config.js",
-        "apps/**/README.md",
-      ],
-      pattern: globalOrgNameRegex,
-      replacement: ORG_NAME,
-    },
-    {
-      paths: ["apps/**/package.json"],
-      pattern: globalAppNameRegex,
-      replacement: APP_NAME,
-    },
-    {
-      paths: [
-        "config/**/*.json",
-        "config/**/*.js",
-      ],
-      pattern: globalOrgNameRegex,
-      replacement: ORG_NAME,
-    },
-    {
-      paths: [
-        "packages/**/*.json",
-        "packages/**/*.js",
-        "packages/**/*.ts",
-        "packages/**/*.tsx",
-        "packages/**/eslint.config.js",
-      ],
-      pattern: globalOrgNameRegex,
-      replacement: ORG_NAME,
-    },
-  ];
-
-  for (const { paths, pattern, replacement } of replacements) {
-    for (const globPattern of paths) {
-      const fullPath = path.join(rootDirectory, globPattern);
-      try {
-        // Use simple file replacement instead of replace-in-file
-        await replaceInFiles(fullPath, pattern, replacement);
-      } catch (error) {
-        // Continue on errors
-      }
-    }
-  }
-}
-
-async function replaceInFiles(globPattern, searchPattern, replacement) {
-  const { glob } = await import("glob");
-  
-  try {
-    const files = await glob(globPattern, {
-      ignore: ["**/node_modules/**", "**/dist/**", "**/.turbo/**", "**/build/**"],
-      nodir: true,
-    });
-
-    for (const file of files) {
-      try {
-        const content = await fs.readFile(file, "utf-8");
-        const newContent = content.replace(searchPattern, replacement);
-        
-        if (content !== newContent) {
-          await fs.writeFile(file, newContent, "utf-8");
-        }
-      } catch (error) {
-        // Skip files that can't be read or written
-        console.log(chalk.yellow(`${spaces()}⚠️  Could not update ${file}`));
-      }
-    }
-  } catch (error) {
-    // Continue on glob errors
+    console.log(
+      chalk.yellow(
+        `${spaces()}⚠️  Could not create .env files (you may need to copy .env.example manually)`,
+      ),
+    );
   }
 }
 
@@ -347,7 +229,7 @@ function printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory) {
   console.log(
     chalk.green(`
 ${spaces()}✔  Setup is complete! Follow these steps to start developing:
-`)
+`),
   );
 
   console.log(`${spaces(9)}1. Install dependencies:
@@ -406,3 +288,64 @@ main().catch((error) => {
   process.exit(1);
 });
 
+/**
+ * Process files matching glob patterns with custom replacer functions
+ * @param {Object} options
+ * @param {string} options.rootDirectory - Base directory for resolving paths
+ * @param {Array<{glob: string, replacer: (content: string) => string}>} options.replacements - Array of glob patterns and replacer functions
+ * @param {Array<string>} [options.filesToRemove] - Optional array of file paths to remove
+ */
+async function processFilesWithGlobs({
+  rootDirectory,
+  replacements,
+  filesToRemove = [],
+}) {
+  const writePromises = [];
+
+  // Process each glob pattern
+  for (const { glob: pattern, replacer } of replacements) {
+    try {
+      const files = await glob(pattern, {
+        cwd: rootDirectory,
+        absolute: true,
+        ignore: [
+          "**/node_modules/**",
+          "**/dist/**",
+          "**/.turbo/**",
+          "**/build/**",
+        ],
+        nodir: true,
+      });
+
+      for (const filePath of files) {
+        try {
+          const content = await fs.readFile(filePath, "utf-8");
+          const newContent = replacer(content);
+
+          if (content !== newContent) {
+            writePromises.push(fs.writeFile(filePath, newContent, "utf-8"));
+          }
+        } catch (error) {
+          console.log(
+            chalk.yellow(
+              `${spaces()}⚠️  Could not process ${filePath} (skipping)`,
+            ),
+          );
+        }
+      }
+    } catch (error) {
+      console.log(
+        chalk.yellow(`${spaces()}⚠️  No files found for pattern: ${pattern}`),
+      );
+    }
+  }
+
+  // Remove files if specified
+  for (const filePath of filesToRemove) {
+    writePromises.push(
+      fs.rm(path.join(rootDirectory, filePath), { force: true }),
+    );
+  }
+
+  await Promise.all(writePromises);
+}
