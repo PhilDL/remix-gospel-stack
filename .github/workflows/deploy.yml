@@ -62,7 +62,7 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: pnpm db:generate
+        run: pnpm generate
 
       - name: ⚙️ Build
         run: pnpm build
@@ -237,10 +237,7 @@ jobs:
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref == 'refs/heads/dev' }}
-        run: "flyctl deploy \
-          --app ${{ steps.app_name.outputs.value }}-staging \
-          --config ./apps/webapp/fly.toml \
-          --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
+        run: "flyctl deploy --app ${{ steps.app_name.outputs.value }}-staging --config ./apps/webapp/fly.toml --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
