@@ -38,8 +38,7 @@ async function main() {
   const DIR_NAME = path.basename(rootDirectory);
   const SUFFIX = getRandomString(2);
 
-  const APP_NAME = DIR_NAME
-    .replace(/[^a-zA-Z0-9-_]/g, "-");
+  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-");
 
   // Prompt for organization name
   let { ORG_NAME } = await inquirer.prompt([
@@ -89,6 +88,19 @@ async function main() {
     console.error(chalk.red("Failed to scaffold database. Continuing..."));
   }
 
+  // Rename webapp directory if APP_NAME is different
+  if (APP_NAME !== "webapp") {
+    console.log(`${spaces()}◼  Renaming webapp to ${APP_NAME}...`);
+    const oldWebappPath = path.join(rootDirectory, "apps", "webapp");
+    const newWebappPath = path.join(rootDirectory, "apps", APP_NAME);
+    try {
+      await fs.rename(oldWebappPath, newWebappPath);
+      console.log(`${spaces()}${chalk.green(`✔  Renamed apps/webapp to apps/${APP_NAME}`)}`);
+    } catch (error) {
+      console.error(chalk.red(`Failed to rename webapp directory: ${error.message}`));
+    }
+  }
+
   // Update configuration files
   await updateRootConfigs({
     rootDirectory,
@@ -122,7 +134,7 @@ async function main() {
       stdio: "ignore",
     });
   } catch (error) {
-    console.log(chalk.yellow("${spaces()}⚠️  Could not run formatter (skipping)"));
+    console.log(chalk.yellow(`${spaces()}⚠️  Could not run formatter (skipping)`));
   }
 
   // Fix lockfile
@@ -133,7 +145,7 @@ async function main() {
   });
 
   // Print next steps
-  printNextSteps(db, ORG_NAME, rootDirectory);
+  printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory);
 }
 
 async function updateRootConfigs({
@@ -143,8 +155,9 @@ async function updateRootConfigs({
   ORG_NAME,
   APP_NAME,
 }) {
+  const appDir = APP_NAME || "webapp";
   const files = {
-    flyToml: path.join(rootDirectory, "apps", "webapp", "fly.toml"),
+    flyToml: path.join(rootDirectory, "apps", appDir, "fly.toml"),
     readme: path.join(rootDirectory, "README.md"),
     packageJson: path.join(rootDirectory, "package.json"),
     prettier: path.join(rootDirectory, ".prettierrc.js"),
@@ -303,13 +316,34 @@ async function updateAllPackages({
   }
 }
 
-async function replaceInFiles(pattern, searchPattern, replacement) {
-  // Simple implementation without external dependencies
-  // In production, you'd use 'replace-in-file' package
-  // For now, this is handled by the main replacement logic above
+async function replaceInFiles(globPattern, searchPattern, replacement) {
+  const { glob } = await import("glob");
+  
+  try {
+    const files = await glob(globPattern, {
+      ignore: ["**/node_modules/**", "**/dist/**", "**/.turbo/**", "**/build/**"],
+      nodir: true,
+    });
+
+    for (const file of files) {
+      try {
+        const content = await fs.readFile(file, "utf-8");
+        const newContent = content.replace(searchPattern, replacement);
+        
+        if (content !== newContent) {
+          await fs.writeFile(file, newContent, "utf-8");
+        }
+      } catch (error) {
+        // Skip files that can't be read or written
+        console.log(chalk.yellow(`${spaces()}⚠️  Could not update ${file}`));
+      }
+    }
+  } catch (error) {
+    // Continue on glob errors
+  }
 }
 
-function printNextSteps(db, ORG_NAME, rootDirectory) {
+function printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory) {
   console.log(
     chalk.green(`
 ${spaces()}✔  Setup is complete! Follow these steps to start developing:
@@ -329,10 +363,10 @@ ${spaces(12)}${chalk.yellow("pnpm run generate")}
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:deploy")}
 
 ${spaces(9)}4. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
+${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/${APP_NAME}...`)}
 
 ${spaces(9)}5. Start development server:
-${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
+${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/${APP_NAME}`)}
 `);
   } else {
     console.log(`${spaces(9)}2. Configure your .env file for Turso:
@@ -346,10 +380,10 @@ ${spaces(12)}${chalk.yellow("pnpm run db:migrate:dev")}
 ${spaces(12)}${chalk.yellow("sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql")}
 
 ${spaces(9)}5. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
+${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/${APP_NAME}...`)}
 
 ${spaces(9)}6. Start development server:
-${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
+${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/${APP_NAME}`)}
 
 ${spaces()}${chalk.cyan("ℹ️  Turso Notes:")}
 ${spaces()}   - For local dev: DATABASE_URL=file:./local.db (no auth needed)
