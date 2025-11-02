@@ -96,19 +96,31 @@ async function main() {
     replacements: [
       {
         glob: "{package.json,.prettierrc.js,turbo.json}",
-        replacer: (content) => content.replace(globalOrgNameRegex, ORG_NAME),
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
         glob: "{package.json,README.md}",
-        replacer: (content) => content.replace(globalAppNameRegex, APP_NAME),
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
         glob: `apps/${APP_NAME}/fly.toml`,
-        replacer: (content) => content.replace(globalAppNameRegex, APP_NAME),
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
         glob: ".github/workflows/deploy.yml",
-        replacer: (content) => content.replace(globalOrgNameRegex, ORG_NAME),
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
         glob: "docker-compose.yml",
@@ -127,39 +139,25 @@ async function main() {
     rootDirectory,
     replacements: [
       {
-        paths: [
-          "apps/**/*.json",
-          "apps/**/*.js",
-          "apps/**/*.ts",
-          "apps/**/*.tsx",
-          "apps/**/vite.config.ts",
-          "apps/**/Dockerfile",
-          "apps/**/eslint.config.js",
-          "apps/**/README.md",
-        ],
-        pattern: globalOrgNameRegex,
-        replacement: ORG_NAME,
+        glob: "apps/**/*.{json,js,ts,tsx,md}",
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
-        paths: ["apps/**/package.json"],
-        pattern: globalAppNameRegex,
-        replacement: APP_NAME,
+        glob: "packages/**/*.{json,js,ts,tsx,md}",
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
       {
-        paths: ["config/**/*.json", "config/**/*.js"],
-        pattern: globalOrgNameRegex,
-        replacement: ORG_NAME,
-      },
-      {
-        paths: [
-          "packages/**/*.json",
-          "packages/**/*.js",
-          "packages/**/*.ts",
-          "packages/**/*.tsx",
-          "packages/**/eslint.config.js",
-        ],
-        pattern: globalOrgNameRegex,
-        replacement: ORG_NAME,
+        glob: "config/**/*.{json,js,ts,tsx,md}",
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
       },
     ],
     filesToRemove: [],
@@ -241,31 +239,31 @@ ${spaces(12)}${chalk.yellow("pnpm install")}
 ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 
 ${spaces(9)}3. Generate Prisma client and run migrations:
-${spaces(12)}${chalk.yellow("pnpm run generate")}
+${spaces(12)}${chalk.yellow("pnpm run db:generate")}
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:deploy")}
 
 ${spaces(9)}4. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/${APP_NAME}...`)}
+${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
 
 ${spaces(9)}5. Start development server:
-${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/${APP_NAME}`)}
+${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 `);
   } else {
     console.log(`${spaces(9)}2. Configure your .env file for Turso:
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 
 ${spaces(9)}3. Generate Prisma client:
-${spaces(12)}${chalk.yellow("pnpm run generate")}
+${spaces(12)}${chalk.yellow("pnpm run db:generate")}
 
 ${spaces(9)}4. Create and apply migrations manually:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:dev")}
 ${spaces(12)}${chalk.yellow("sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql")}
 
 ${spaces(9)}5. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/${APP_NAME}...`)}
+${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
 
 ${spaces(9)}6. Start development server:
-${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/${APP_NAME}`)}
+${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 
 ${spaces()}${chalk.cyan("ℹ️  Turso Notes:")}
 ${spaces()}   - For local dev: DATABASE_URL=file:./local.db (no auth needed)
