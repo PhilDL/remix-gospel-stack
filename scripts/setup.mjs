@@ -315,7 +315,7 @@ ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 
 ${spaces(9)}4. Create and apply migrations manually:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:dev")}
-${spaces(12)}${chalk.yellow("sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql")}
+${spaces(12)}${chalk.yellow("sqlite3 ./apps/webapp/local.db < packages/database/prisma/migrations/<folder>/migration.sql")}
 
 ${spaces(9)}5. Build packages:
 ${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
