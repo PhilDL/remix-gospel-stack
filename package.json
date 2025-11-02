@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "init": "node scripts/setup.mjs",
     "build": "turbo run build",
     "db:generate": "turbo run db:generate",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
@@ -38,7 +39,9 @@
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@turbo/gen": "^2.5.8",
+    "chalk": "catalog:",
     "glob": "catalog:",
+    "inquirer": "^12.4.0",
     "json5": "^2.2.3",
     "magicast": "^0.5.0",
     "prettier": "^3.6.2",

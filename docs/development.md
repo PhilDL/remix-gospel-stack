@@ -13,11 +13,112 @@ This guide will help you set up your local development environment and understan
 
 ## Initial Setup
 
+If you just cloned the repository, run the initialization script first:
+
+```bash
+pnpm run init
+```
+
+This interactive script will:
+- Prompt for your organization name (e.g., `@my-company`)
+- Let you choose between PostgreSQL or Turso database
+- Update all package names throughout the monorepo
+- Generate a secure SESSION_SECRET
+- Copy `.env.example` to `.env` and `.env.docker`
+- Format code and update the lockfile
+
+> **Note:** This replaces the old `pnpm remix init` command that no longer works with React Router v7+.
+
 ### 1. Install Dependencies
 
 ```bash
 pnpm install
 ```
+
+## Understanding pnpm Catalogs
+
+This monorepo uses [pnpm catalogs](https://pnpm.io/catalogs) to manage dependency versions centrally. This is a powerful workspace feature that helps maintain consistent versions across all packages.
+
+### What are Catalogs?
+
+Catalogs define dependency version ranges as reusable constants in the `pnpm-workspace.yaml` file. Instead of specifying version numbers in each `package.json`, packages can reference the catalog using the `catalog:` protocol.
+
+**Example from `pnpm-workspace.yaml`:**
+
+```yaml
+catalog:
+  isbot: 5.1.31
+  chalk: 5.6.2
+  dotenv: 17.2.3
+
+catalogs:
+  typescript:
+    typescript: 5.9.3
+    tsx: 4.20.6
+    tsup: 8.5.0
+  react19:
+    react: 19.2.0
+    react-dom: 19.2.0
+    "@types/react": 19.2.2
+  prisma:
+    prisma: 6.18.0
+    "@prisma/client": 6.18.0
+```
+
+### Using Catalogs in package.json
+
+Instead of hard-coding versions, packages reference the catalog:
+
+```json
+{
+  "dependencies": {
+    "react": "catalog:react19",
+    "typescript": "catalog:typescript",
+    "chalk": "catalog:"
+  }
+}
+```
+
+### Benefits
+
+1. **Single source of truth** - All versions defined in one place
+2. **Easier upgrades** - Update one line to upgrade across all packages
+3. **Fewer merge conflicts** - No need to update multiple `package.json` files
+4. **Consistency** - Ensures all packages use the same versions
+
+### Adding New Dependencies
+
+When adding a dependency that should be shared across packages:
+
+1. **Add to catalog** in `pnpm-workspace.yaml`:
+   ```yaml
+   catalog:
+     my-new-package: ^1.0.0
+   ```
+
+2. **Reference in package.json**:
+   ```bash
+   pnpm add my-new-package@catalog: --filter @your-org/your-package
+   ```
+
+Or for a specific named catalog:
+
+```bash
+pnpm add typescript@catalog:typescript --filter @your-org/your-package
+```
+
+### Named Catalogs
+
+The stack uses named catalogs to group related dependencies:
+
+- **`typescript`** - TypeScript and build tools
+- **`react19`** - React and related packages
+- **`react-router`** - React Router framework
+- **`tailwindcss`** - Tailwind and styling tools
+- **`prisma`** - Prisma ORM packages
+- **`hono`** - Server middleware
+
+This organization makes it easy to upgrade entire technology stacks together.
 
 ### 2. Configure Environment Variables
 

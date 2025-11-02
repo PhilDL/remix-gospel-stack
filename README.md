@@ -15,19 +15,22 @@ React Router TypeScript monorepo with Turborepo pipelines, Prisma ORM, PostgreSQ
 
 ## Quick Start
 
-### Option 1: Quickstart (Recommended)
+### Recommended: Using degit
 
 ```bash
-pnpm create remix@latest --init-script --install --template https://github.com/PhilDL/react-router-gospel-stack
+pnpm dlx degit PhilDL/react-router-gospel-stack my-app
+cd my-app
+pnpm install
+pnpm run init
 ```
 
-### Option 2: Clone the Repository
+### Alternative: Clone the Repository
 
 ```bash
-git clone git@github.com:PhilDL/react-router-gospel-stack.git
-cd react-router-gospel-stack
-pnpm add -w @react-router/dev
-pnpm remix init
+git clone git@github.com:PhilDL/react-router-gospel-stack.git my-app
+cd my-app
+pnpm install
+pnpm run init
 ```
 
 > :minidisc: This repository is opiniated:
@@ -64,10 +67,11 @@ This is a **production-ready monorepo** for building modern web applications wit
 
 ## Documentation
 
+- 🚀 **[Initialization Guide](./docs/initialization.md)** - Set up a new project from this template
 - 📚 **[Architecture](./docs/architecture.md)** - Understand the monorepo structure and packages
 - 🛠️ **[Development Guide](./docs/development.md)** - Set up your local development environment
 - 🗄️ **[Database Guide](./docs/database.md)** - Configure PostgreSQL or Turso, migrations, and switching
-- 🚀 **[Deployment Guide](./docs/deployment.md)** - Deploy to Fly.io with Docker
+- ☁️ **[Deployment Guide](./docs/deployment.md)** - Deploy to Fly.io with Docker
 - 🎨 **[UI Package](./docs/ui-package.md)** - Work with shadcn/ui components
 - 🧪 **[Testing Guide](./docs/testing.md)** - Run tests, linting, and typechecking
 

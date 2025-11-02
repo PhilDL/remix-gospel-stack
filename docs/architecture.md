@@ -30,8 +30,10 @@ react-router-gospel-stack/
 │   ├── eslint/              # ESLint configurations
 │   ├── tsconfig/            # TypeScript configurations
 │   └── tailwind/            # Tailwind configurations
+├── scripts/                 # Utility scripts
+│   └── setup.mjs            # Initialization script
 ├── turbo.json               # Turborepo pipeline configuration
-├── pnpm-workspace.yaml      # pnpm workspace definition
+├── pnpm-workspace.yaml      # pnpm workspace + catalogs
 └── package.json             # Root package.json
 ```
 
@@ -562,12 +564,22 @@ Both will watch for changes and rebuild automatically.
    - Simple shared code
    - Faster development iteration
 
+### pnpm Catalogs
+
+This monorepo uses [pnpm catalogs](https://pnpm.io/catalogs) to manage dependency versions centrally in `pnpm-workspace.yaml`. This provides:
+
+- **Consistent versions** across all packages
+- **Easier upgrades** - change one line instead of many
+- **Fewer merge conflicts** in `package.json` files
+
+See the [Development Guide](./development.md#understanding-pnpm-catalogs) for details on using catalogs.
+
 ### Monorepo Hygiene
 
 1. **Install from root** - Always run `pnpm install` from the monorepo root
 2. **Use filters** - Target specific packages with `--filter`
 3. **Leverage cache** - Let Turborepo cache what it can
-4. **Consistent versions** - Use pnpm catalogs to manage versions
+4. **Use catalogs** - Add shared dependencies to catalogs for consistency
 
 ## Scaling the Monorepo
 
