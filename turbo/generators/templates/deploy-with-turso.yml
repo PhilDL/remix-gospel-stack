@@ -62,7 +62,7 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: pnpm generate
+        run: pnpm db:generate
 
       - name: ⚙️ Build
         run: pnpm build

@@ -7,6 +7,7 @@ The `ui` package is a React component library built with [shadcn/ui](https://ui.
 **Location:** `packages/ui/`
 
 **Features:**
+
 - 🎨 Built with [shadcn/ui](https://ui.shadcn.com/)
 - ♿ Accessible components (built on Radix UI)
 - 🎯 Tailwind CSS integration
@@ -88,12 +89,14 @@ pnpm dlx shadcn-ui@latest add <component-name>
 ```
 
 Example:
+
 ```bash
 cd packages/ui
 pnpm dlx shadcn-ui@latest add dialog
 ```
 
 This will:
+
 1. Download the component source
 2. Add it to `src/components/`
 3. Install any required dependencies
@@ -104,16 +107,17 @@ This will:
 If you prefer to add components manually:
 
 1. **Create the component file:**
+
    ```typescript
    // src/components/my-component.tsx
    import * as React from "react";
    import { cn } from "../utils/cn";
-   
+
    export interface MyComponentProps
      extends React.HTMLAttributes<HTMLDivElement> {
      variant?: "default" | "outline";
    }
-   
+
    export const MyComponent = React.forwardRef<
      HTMLDivElement,
      MyComponentProps
@@ -130,17 +134,19 @@ If you prefer to add components manually:
        />
      );
    });
-   
+
    MyComponent.displayName = "MyComponent";
    ```
 
 2. **Export from components index:**
+
    ```typescript
    // src/components/index.ts
    export * from "./my-component";
    ```
 
 3. **Export from package root:**
+
    ```typescript
    // src/index.ts
    export * from "./components";
@@ -161,6 +167,7 @@ The UI package exports a Tailwind preset that includes the theme configuration.
 
 ```typescript
 import type { Config } from "tailwindcss";
+
 import uiPreset from "@react-router-gospel-stack/ui/tailwind";
 
 export default {
@@ -215,7 +222,7 @@ import { cn } from "@react-router-gospel-stack/ui";
 const className = cn(
   "base-styles",
   isActive && "active-styles",
-  "override-styles"
+  "override-styles",
 );
 ```
 
@@ -242,7 +249,7 @@ export function App() {
   return (
     <div className="p-8 space-y-4">
       <h1 className="text-2xl font-bold">UI Component Preview</h1>
-      
+
       <Card>
         <h2>Buttons</h2>
         <div className="flex gap-2">
@@ -263,6 +270,7 @@ pnpm run build --filter=@react-router-gospel-stack/ui
 ```
 
 This uses tsup to:
+
 1. Bundle TypeScript to JavaScript
 2. Generate type definitions
 3. Output to `dist/`
@@ -288,6 +296,7 @@ export default defineConfig({
 ```
 
 This creates:
+
 - `dist/index.js` - Main entry point
 - `dist/components/` - Component exports
 - `dist/tailwind/` - Tailwind config exports
@@ -380,6 +389,7 @@ export const MyComponent: React.FC<MyComponentProps> = ({ ... }) => {
 ```
 
 This allows consumers to:
+
 ```typescript
 import type { MyComponentProps } from "@react-router-gospel-stack/ui";
 
@@ -440,9 +450,9 @@ Dark mode is configured in `tailwind.config.ts`:
 
 ```typescript
 export default {
-  darkMode: ["class"],  // Uses class-based dark mode
+  darkMode: ["class"], // Uses class-based dark mode
   // ...
-}
+};
 ```
 
 Toggle dark mode by adding/removing the `dark` class on the root element.
@@ -467,7 +477,7 @@ describe("Button", () => {
   it("calls onClick when clicked", async () => {
     const handleClick = vi.fn();
     render(<Button onClick={handleClick}>Click me</Button>);
-    
+
     await userEvent.click(screen.getByText("Click me"));
     expect(handleClick).toHaveBeenCalledOnce();
   });
@@ -477,6 +487,7 @@ describe("Button", () => {
 ### Visual Testing
 
 For visual regression testing, consider:
+
 - [Storybook](https://storybook.js.org/) - Component development and documentation
 - [Chromatic](https://www.chromatic.com/) - Visual testing and review
 
@@ -485,6 +496,7 @@ For visual regression testing, consider:
 If you want to publish the UI package to npm:
 
 1. **Update package.json:**
+
    ```json
    {
      "name": "@your-org/ui",
@@ -496,6 +508,7 @@ If you want to publish the UI package to npm:
    ```
 
 2. **Build the package:**
+
    ```bash
    pnpm run build --filter=@react-router-gospel-stack/ui
    ```
@@ -511,17 +524,20 @@ If you want to publish the UI package to npm:
 When shadcn/ui releases updates:
 
 1. **Update the CLI:**
+
    ```bash
    pnpm dlx shadcn-ui@latest
    ```
 
 2. **Check for component updates:**
+
    ```bash
    cd packages/ui
    pnpm dlx shadcn-ui@latest diff
    ```
 
 3. **Update individual components:**
+
    ```bash
    pnpm dlx shadcn-ui@latest add <component-name> --overwrite
    ```
@@ -571,4 +587,3 @@ If imports aren't working:
 - Customize the theme in `src/tailwind/theme.css`
 - Build your own custom components using the patterns shown
 - Check the [Architecture Guide](./architecture.md) to understand how packages fit together
-

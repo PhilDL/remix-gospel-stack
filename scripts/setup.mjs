@@ -186,8 +186,13 @@ async function main() {
   }
 
   // Fix lockfile
-  console.log(`${spaces()}◼  Updating lockfile...`);
+  console.log(`${spaces()}◼  Installing dependencies...`);
   execSync("pnpm i --fix-lockfile", {
+    cwd: rootDirectory,
+    stdio: "ignore",
+  });
+  console.log(`${spaces()}◼  Generating Prisma client...`);
+  execSync("pnpm db:generate", {
     cwd: rootDirectory,
     stdio: "ignore",
   });
@@ -230,16 +235,11 @@ ${spaces()}✔  Setup is complete! Follow these steps to start developing:
 `),
   );
 
-  console.log(`${spaces(9)}1. Install dependencies:
-${spaces(12)}${chalk.yellow("pnpm install")}
-`);
-
   if (db === "postgres") {
     console.log(`${spaces(9)}2. Start PostgreSQL:
 ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 
-${spaces(9)}3. Generate Prisma client and run migrations:
-${spaces(12)}${chalk.yellow("pnpm run db:generate")}
+${spaces(9)}3. Run migrations:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:deploy")}
 
 ${spaces(9)}4. Build packages:
@@ -251,9 +251,6 @@ ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
   } else {
     console.log(`${spaces(9)}2. Configure your .env file for Turso:
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
-
-${spaces(9)}3. Generate Prisma client:
-${spaces(12)}${chalk.yellow("pnpm run db:generate")}
 
 ${spaces(9)}4. Create and apply migrations manually:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:dev")}

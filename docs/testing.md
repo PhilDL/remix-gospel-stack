@@ -38,7 +38,7 @@ pnpm run test -- --coverage
 #### Basic Test Structure
 
 ```typescript
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("MyFunction", () => {
   beforeEach(() => {
@@ -78,16 +78,16 @@ describe("MyComponent", () => {
   it("handles user interaction", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    
+
     render(<MyComponent onClick={handleClick} />);
-    
+
     await user.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledOnce();
   });
 
   it("updates after async operation", async () => {
     render(<MyComponent />);
-    
+
     await waitFor(() => {
       expect(screen.getByText("Loaded")).toBeInTheDocument();
     });
@@ -162,7 +162,7 @@ pnpm run test:e2e:dev --filter=webapp -- tests/e2e/app.spec.ts
 #### Basic Test Structure
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Homepage", () => {
   test("should load successfully", async ({ page }) => {
@@ -183,14 +183,14 @@ test.describe("Homepage", () => {
 ```typescript
 test("should submit form", async ({ page }) => {
   await page.goto("/signup");
-  
+
   // Fill in the form
   await page.fill('input[name="email"]', "test@example.com");
   await page.fill('input[name="password"]', "password123");
-  
+
   // Submit
   await page.click('button[type="submit"]');
-  
+
   // Wait for navigation or success message
   await expect(page).toHaveURL(/.*dashboard/);
   await expect(page.locator(".success-message")).toBeVisible();
@@ -205,9 +205,7 @@ test("should load data from API", async ({ page }) => {
   await page.route("**/api/users", (route) => {
     route.fulfill({
       status: 200,
-      body: JSON.stringify([
-        { id: 1, name: "John Doe" },
-      ]),
+      body: JSON.stringify([{ id: 1, name: "John Doe" }]),
     });
   });
 
@@ -230,7 +228,7 @@ const test = base.extend({
     await page.fill('input[name="password"]', "password");
     await page.click('button[type="submit"]');
     await page.waitForURL("/dashboard");
-    
+
     await use(page);
   },
 });
@@ -453,6 +451,7 @@ Enable "Format on Save" for automatic formatting.
 Tests run automatically on pull requests and pushes via GitHub Actions.
 
 **Workflow includes:**
+
 1. Install dependencies
 2. Build packages
 3. Run linting
@@ -479,19 +478,21 @@ pnpm run test:e2e --filter=webapp
 ### Unit Tests
 
 1. **Test behavior, not implementation**
+
    ```typescript
    // ❌ Testing implementation details
    expect(component.state.isOpen).toBe(true);
-   
+
    // ✅ Testing behavior
    expect(screen.getByRole("dialog")).toBeVisible();
    ```
 
 2. **Use descriptive test names**
+
    ```typescript
    // ❌ Vague
    it("works", () => { ... });
-   
+
    // ✅ Descriptive
    it("should display error message when email is invalid", () => { ... });
    ```
@@ -501,14 +502,15 @@ pnpm run test:e2e --filter=webapp
    - Test one scenario per test case
 
 4. **Use arrange-act-assert pattern**
+
    ```typescript
    it("should calculate total correctly", () => {
      // Arrange
      const items = [{ price: 10 }, { price: 20 }];
-     
+
      // Act
      const total = calculateTotal(items);
-     
+
      // Assert
      expect(total).toBe(30);
    });
@@ -523,16 +525,18 @@ pnpm run test:e2e --filter=webapp
    - Form submissions
 
 2. **Use data-testid for stability**
+
    ```typescript
    // ✅ Stable selector
    <button data-testid="submit-button">Submit</button>
    await page.click('[data-testid="submit-button"]');
-   
+
    // ❌ Fragile selector
    await page.click('.btn-primary.mt-4 > span');
    ```
 
 3. **Clean up test data**
+
    ```typescript
    test.afterEach(async () => {
      await cleanupDatabase();
@@ -540,10 +544,11 @@ pnpm run test:e2e --filter=webapp
    ```
 
 4. **Use page objects for complex flows**
+
    ```typescript
    class LoginPage {
      constructor(private page: Page) {}
-     
+
      async login(email: string, password: string) {
        await this.page.goto("/login");
        await this.page.fill('input[name="email"]', email);
@@ -551,7 +556,7 @@ pnpm run test:e2e --filter=webapp
        await this.page.click('button[type="submit"]');
      }
    }
-   
+
    test("user can login", async ({ page }) => {
      const loginPage = new LoginPage(page);
      await loginPage.login("user@example.com", "password");
@@ -562,6 +567,7 @@ pnpm run test:e2e --filter=webapp
 ### Linting and Type Checking
 
 1. **Fix linting errors before committing**
+
    ```bash
    pnpm run lint -- --fix
    ```
@@ -627,6 +633,7 @@ start coverage/index.html  # Windows
 ### Coverage Goals
 
 Aim for:
+
 - **80%+ overall coverage** for production code
 - **100% coverage** for critical business logic
 - **Lower coverage acceptable** for UI/presentation code
@@ -673,11 +680,13 @@ pnpm run typecheck && pnpm run lint && pnpm run test
 ### Flaky E2E Tests
 
 1. **Add explicit waits**
+
    ```typescript
    await page.waitForSelector('[data-testid="loaded"]');
    ```
 
 2. **Use waitFor utilities**
+
    ```typescript
    await waitFor(() => {
      expect(screen.getByText("Success")).toBeInTheDocument();
@@ -713,4 +722,3 @@ pnpm run build
 - [Testing Library Docs](https://testing-library.com/)
 - [ESLint Rules](https://eslint.org/docs/rules/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-

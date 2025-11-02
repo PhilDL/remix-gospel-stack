@@ -227,7 +227,8 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
 
-> **Note:** 
+> **Note:**
+>
 > - Change the `--region` to your preferred region (see [Fly.io regions](https://fly.io/docs/reference/regions/))
 > - Adjust `--size` (in GB) based on your needs
 > - Ensure the region matches `primary_region` in `fly.toml`
@@ -257,6 +258,7 @@ fly secrets set \
 ```
 
 > **Important:**
+>
 > - `DATABASE_URL` is the local file path for the embedded replica
 > - `DATABASE_SYNC_URL` is the remote Turso database URL
 > - `DATABASE_AUTH_TOKEN` is the Turso authentication token
@@ -282,14 +284,15 @@ import { createClient } from "@react-router-gospel-stack/database";
 
 export const db = remember("db", () => {
   return createClient({
-    url: env.DATABASE_URL,          // Local file path
-    authToken: env.DATABASE_AUTH_TOKEN,  // Turso auth token
-    syncUrl: env.DATABASE_SYNC_URL,      // Remote sync URL
+    url: env.DATABASE_URL, // Local file path
+    authToken: env.DATABASE_AUTH_TOKEN, // Turso auth token
+    syncUrl: env.DATABASE_SYNC_URL, // Remote sync URL
   });
 });
 ```
 
 **How it works:**
+
 1. Reads happen from the local SQLite file (fast, disk-based)
 2. Writes go to the remote Turso database first
 3. Changes automatically sync between local and remote
@@ -310,6 +313,7 @@ The stack includes GitHub Actions workflows for automated deployments.
 ### Workflow Files
 
 Located in `.github/workflows/`:
+
 - `deploy-production.yml` - Production deployment
 - `deploy-staging.yml` - Staging deployment
 
@@ -322,6 +326,7 @@ Ensure these secrets are set in your GitHub repository:
 ### Customizing Workflows
 
 Edit the workflow files to customize:
+
 - Test commands
 - Build steps
 - Deployment regions
@@ -384,10 +389,12 @@ primary_region = "cdg"
 ### 3. Database Considerations
 
 **PostgreSQL:**
+
 - Follow [Fly's Multi-region PostgreSQL guide](https://fly.io/docs/getting-started/multi-region-databases/)
 - Set up read replicas in additional regions
 
 **Turso:**
+
 - Turso automatically distributes reads globally
 - No additional setup needed—embedded replicas handle it
 
@@ -417,6 +424,7 @@ In `fly.toml`:
 ```
 
 This enables:
+
 - Automatic failover to healthy instances
 - Zero-downtime deployments
 - Region fallbacks
@@ -446,6 +454,7 @@ fly info --app react-router-gospel-stack
 ### Fly.io Dashboard
 
 Visit [fly.io/dashboard](https://fly.io/dashboard) for:
+
 - Metrics and monitoring
 - Log exploration
 - App configuration
@@ -463,12 +472,14 @@ Visit [fly.io/dashboard](https://fly.io/dashboard) for:
 ### Database Connection Issues
 
 **PostgreSQL:**
+
 ```bash
 # Test connection
 fly postgres connect --app react-router-gospel-stack-db
 ```
 
 **Turso:**
+
 ```bash
 # Test connection
 turso db shell <database-name>
@@ -539,4 +550,3 @@ turso db shell react-router-gospel-stack-db < packages/database/prisma/migration
 - [Fly.io Scaling Guide](https://fly.io/docs/reference/scaling/)
 - [Turso Documentation](https://docs.turso.tech/)
 - [Fly.io Support Community](https://community.fly.io/)
-

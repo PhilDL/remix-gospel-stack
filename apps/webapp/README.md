@@ -137,6 +137,7 @@ const databaseUrl = env.DATABASE_URL;
 ```
 
 Add new environment variables:
+
 1. Add to `.env.example`
 2. Add validation in `app/env.server.ts`
 3. Update `types/env.d.ts` for TypeScript support
@@ -162,6 +163,7 @@ Add new environment variables:
 ## Support
 
 For issues or questions:
+
 - Check the [documentation](../../docs/)
 - Open an issue on GitHub
 - See the main [README](../../README.md) for more information

@@ -20,6 +20,7 @@ pnpm run init
 ```
 
 This interactive script will:
+
 - Prompt for your organization name (e.g., `@my-company`)
 - Let you choose between PostgreSQL or Turso database
 - Update all package names throughout the monorepo
@@ -91,6 +92,7 @@ Instead of hard-coding versions, packages reference the catalog:
 When adding a dependency that should be shared across packages:
 
 1. **Add to catalog** in `pnpm-workspace.yaml`:
+
    ```yaml
    catalog:
      my-new-package: ^1.0.0
@@ -287,6 +289,7 @@ pnpm run db:migrate:dev
 **For Turso:**
 
 1. Generate the migration:
+
    ```bash
    pnpm run db:migrate:dev
    ```
@@ -328,6 +331,7 @@ pnpm docker:run:webapp
 ### TypeScript
 
 TypeScript configurations are in the `config/tsconfig` package:
+
 - `base.json` - Base config
 - `react.json` - For React apps
 - `node22.json` - For Node.js projects
@@ -346,6 +350,7 @@ Apps and packages extend these configs in their `tsconfig.json`:
 ### ESLint
 
 ESLint configurations are in the `config/eslint` package:
+
 - `base.js` - Base rules
 - `react-router.js` - React Router specific rules
 - `plugin.js` - Custom ESLint plugin
@@ -419,4 +424,3 @@ docker ps
 - Configure your [Database](./database.md) for production
 - Set up [Testing](./testing.md) in your workflow
 - Prepare for [Deployment](./deployment.md) to Fly.io
-
