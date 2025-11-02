@@ -62,7 +62,7 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: pnpm db:generate
+        run: pnpm generate
 
       - name: ⚙️ Build
         run: pnpm build
@@ -84,10 +84,9 @@ jobs:
         uses: actions/checkout@v5
 
       - name: 🏄 Copy test env vars
-        run: cp .env.example .env
-
-      - name: 🏄 Copy test env vars to Package
-        run: cp .env.example packages/database/.env
+        run: |
+          cp ./apps/webapp/.env.example ./apps/webapp/.env
+          cp ./packages/database/.env.example ./packages/database/.env
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -101,10 +100,10 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: 🛠 Setup PrismaClient
-        run: npm run generate
+        run: pnpm db:generate
 
       - name: ⚡ Run vitest
-        run: npm run test
+        run: pnpm test
 
   playwright:
     name: 🎭 Playwright
@@ -126,10 +125,9 @@ jobs:
           cache: "pnpm"
 
       - name: 🏄 Copy test env vars
-        run: cp .env.example .env
-
-      - name: 🏄 Copy test env vars to Package
-        run: cp .env.example packages/database/.env
+        run: |
+          cp ./apps/webapp/.env.example ./apps/webapp/.env
+          cp ./packages/database/.env.example ./packages/database/.env
 
       - name: 📥 Download deps
         run: pnpm install

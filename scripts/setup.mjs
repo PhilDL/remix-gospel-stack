@@ -170,7 +170,14 @@ async function main() {
   );
 
   // Copy and configure .env file
-  await setupEnvFile({ rootDirectory });
+  await setupEnvFile({
+    rootDirectory,
+    replacer: (content) =>
+      content.replace(
+        /^SESSION_SECRET=.*$/m,
+        `SESSION_SECRET="${getRandomString(16)}"`,
+      ),
+  });
 
   // Format code
   console.log(`${spaces()}◼  Formatting code...`);
@@ -201,24 +208,78 @@ async function main() {
   printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory);
 }
 
-async function setupEnvFile({ rootDirectory }) {
-  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
-  const ENV_PATH = path.join(rootDirectory, ".env");
-  const ENV_DOCKER_PATH = path.join(rootDirectory, ".env.docker");
-
+/**
+ * Find all .env.example files and copy them to .env in their respective directories
+ * @param {Object} options
+ * @param {string} options.rootDirectory - Base directory for resolving paths
+ * @param {(content: string) => string} [options.replacer] - Optional function to transform env file content
+ */
+async function setupEnvFile({ rootDirectory, replacer }) {
   try {
-    const env = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8");
-    const newEnv = env.replace(
-      /^SESSION_SECRET=.*$/m,
-      `SESSION_SECRET="${getRandomString(16)}"`,
-    );
+    const envExampleFiles = await glob("**/.env.example", {
+      cwd: rootDirectory,
+      absolute: true,
+      ignore: [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/.turbo/**",
+        "**/build/**",
+      ],
+      nodir: true,
+    });
 
-    await fs.writeFile(ENV_PATH, newEnv);
-    await fs.writeFile(ENV_DOCKER_PATH, newEnv);
+    if (envExampleFiles.length === 0) {
+      console.log(chalk.yellow(`${spaces()}⚠️  No .env.example files found`));
+      return;
+    }
 
-    console.log(
-      `${spaces()}${chalk.green("✔  Created .env and .env.docker files")}`,
-    );
+    const writePromises = [];
+    const successfulFiles = [];
+    const failedFiles = [];
+
+    for (const examplePath of envExampleFiles) {
+      try {
+        const envPath = examplePath.replace(".env.example", ".env");
+        let content = await fs.readFile(examplePath, "utf-8");
+
+        // Apply replacer function if provided
+        if (replacer && typeof replacer === "function") {
+          content = replacer(content);
+        }
+
+        writePromises.push(
+          fs
+            .writeFile(envPath, content, "utf-8")
+            .then(() => {
+              successfulFiles.push(path.relative(rootDirectory, envPath));
+            })
+            .catch(() => {
+              failedFiles.push(path.relative(rootDirectory, envPath));
+            }),
+        );
+      } catch (error) {
+        failedFiles.push(path.relative(rootDirectory, examplePath));
+      }
+    }
+
+    await Promise.all(writePromises);
+
+    if (successfulFiles.length > 0) {
+      console.log(
+        `${spaces()}${chalk.green(`✔  Created ${successfulFiles.length} .env file(s):`)}`,
+      );
+      successfulFiles.forEach((file) => {
+        console.log(`${spaces(9)}${chalk.dim(file)}`);
+      });
+    }
+
+    if (failedFiles.length > 0) {
+      console.log(
+        chalk.yellow(
+          `${spaces()}⚠️  Could not create ${failedFiles.length} .env file(s) (you may need to copy manually)`,
+        ),
+      );
+    }
   } catch (error) {
     console.log(
       chalk.yellow(
