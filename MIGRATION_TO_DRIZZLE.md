@@ -107,12 +107,18 @@ The package exports both ORMs simultaneously:
 
 ```typescript
 // Drizzle (default exports)
-import { users, createClient } from "@react-router-gospel-stack/database";
-import type { User, NewUser } from "@react-router-gospel-stack/database";
-
 // Prisma (alternative exports)
-import { createPrismaClient, PrismaClient } from "@react-router-gospel-stack/database";
-import type { PrismaUser } from "@react-router-gospel-stack/database";
+import {
+  createClient,
+  createPrismaClient,
+  PrismaClient,
+  users,
+} from "@react-router-gospel-stack/database";
+import type {
+  NewUser,
+  PrismaUser,
+  User,
+} from "@react-router-gospel-stack/database";
 ```
 
 ### Switching ORMs
@@ -124,6 +130,7 @@ pnpm turbo gen scaffold-database
 ```
 
 This updates:
+
 - Default exports in `src/index.ts`
 - Package scripts
 - App package.json scripts
@@ -152,6 +159,7 @@ All existing Prisma functionality remains intact and fully supported. Users can 
 ### Separation of Concerns
 
 The generator now properly separates:
+
 1. **Database selection** (Turso vs PostgreSQL)
 2. **ORM selection** (Drizzle vs Prisma)
 
@@ -162,6 +170,7 @@ This makes it clear that these are two independent choices, and users select dat
 All code generation now uses HBS templates instead of string concatenation:
 
 **Before:**
+
 ```javascript
 const drizzleIndex = `// Drizzle (default)
 export * from "../drizzle/schema";
@@ -170,6 +179,7 @@ fs.writeFileSync(indexPath, drizzleIndex);
 ```
 
 **After:**
+
 ```javascript
 {
   type: "add",
@@ -180,6 +190,7 @@ fs.writeFileSync(indexPath, drizzleIndex);
 ```
 
 Benefits:
+
 - ✅ Easier to maintain and update
 - ✅ Proper syntax highlighting in HBS files
 - ✅ No escaping issues with strings
@@ -201,7 +212,7 @@ Benefits:
 ## Next Steps
 
 Users should:
+
 1. Read [Why Drizzle Over Prisma?](./docs/why-drizzle-over-prisma.md)
 2. Follow the [Database Guide](./docs/database.md) for setup
 3. Try the recommended Drizzle + Turso stack for new projects
-

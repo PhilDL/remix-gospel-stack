@@ -1,5 +1,6 @@
 import { createClient as createLibsqlClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+
 import * as schema from "../drizzle/schema";
 
 export const createClient = ({
@@ -22,4 +23,3 @@ export const createClient = ({
 };
 
 export type DrizzleClient = ReturnType<typeof createClient>;
-

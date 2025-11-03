@@ -21,6 +21,7 @@ For developers who understand SQL, Drizzle feels natural and requires less menta
 Drizzle has zero runtime overhead - it's a thin TypeScript wrapper around your database driver. Prisma includes a runtime query engine that adds ~5MB to your bundle and additional runtime complexity.
 
 This means:
+
 - Smaller bundle sizes
 - Faster cold starts
 - Simpler deployment (no binary dependencies)
@@ -47,12 +48,14 @@ With Prisma, you must run `prisma generate` after every schema change to regener
 **Critical for Turso users:** Drizzle fully supports migrations for Turso/LibSQL databases. Prisma does not.
 
 With Drizzle and Turso:
+
 ```bash
 pnpm db:generate  # Generate migration files
 pnpm db:push      # Apply directly to remote Turso database
 ```
 
 With Prisma and Turso:
+
 ```bash
 pnpm prisma:migrate:dev  # Generate SQL files
 # Must manually apply: turso db shell <db> < migration.sql
@@ -63,6 +66,7 @@ Drizzle's `drizzle-kit push` can apply migrations directly to remote Turso datab
 ## When to Use Prisma Instead
 
 Consider Prisma if you:
+
 - Prefer Prisma's abstracted syntax and DSL
 - Already have a large Prisma codebase to migrate
 - Need Prisma-specific features like middleware or extensions
@@ -71,6 +75,7 @@ Consider Prisma if you:
 ## Summary
 
 Drizzle provides:
+
 - ✅ SQL-like syntax that's easier to learn and predict
 - ✅ Zero runtime overhead (no query engine binary)
 - ✅ Pure TypeScript with no generation step
@@ -79,4 +84,3 @@ Drizzle provides:
 - ✅ Smaller bundle sizes
 
 Both ORMs are excellent choices. We default to Drizzle for its simplicity, TypeScript-first approach, and superior Turso support.
-
