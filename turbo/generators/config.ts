@@ -1,11 +1,13 @@
 import { execSync } from "child_process";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import type { Config } from "@react-router/dev/config";
 import type { PlopTypes } from "@turbo/gen";
 import { glob } from "glob";
 import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
+
+import { editPackageJson } from "./actions/utils";
 
 type SupportedDatabases = "postgres" | "turso";
 type SupportedOrms = "drizzle" | "prisma";
@@ -31,6 +33,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         dirname: dirname.split("/").pop(),
       };
     });
+  const rootPath = plop.getDestBasePath();
+  console.log("rootPath", rootPath);
   plop.setGenerator("scaffold-database", {
     description: "Configure database and ORM setup",
     prompts: [
@@ -62,7 +66,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
     ],
     actions: [
-      function debugAnswers(answers: {
+      async function debugAnswers(answers: {
         appDirname?: string;
         appPckgName?: string;
         dbType?: "postgres" | "turso";
@@ -81,7 +85,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFile: "templates/Dockerfile.hbs",
         force: true,
       },
-      function updatePackageJson(answers: {
+      async function updateAppScripts(answers: {
         appPckgName?: string;
         appDirname?: string;
         dbType?: "postgres" | "turso";
@@ -89,41 +93,33 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       }) {
         const appPackageJsonPath = path.join(
           // resolves to the root of the current workspace
-          plop.getDestBasePath(),
+          rootPath,
           "apps",
           answers.appDirname ?? "",
-          "package.json",
         );
-        const packageJson = JSON.parse(
-          fs.readFileSync(appPackageJsonPath, "utf8"),
-        );
-
         const migrateCmd =
           answers.ormType === "drizzle" ? "db:push" : "prisma:migrate:dev";
-
-        if (answers.dbType === "postgres") {
-          packageJson.scripts["docker:db"] =
-            "docker compose -f docker-compose.yml up -d";
-          packageJson.scripts["docker:run:webapp"] =
-            "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp";
-          packageJson.scripts["setup"] =
-            `pnpm run docker:db && pnpm run ${migrateCmd} && turbo run db:seed build`;
-          fs.writeFileSync(
-            appPackageJsonPath,
-            JSON.stringify(packageJson, null, 2),
-          );
-          return `Updated package.json for PostgreSQL + ${answers.ormType}`;
-        } else {
-          delete packageJson.scripts["docker:db"];
-          delete packageJson.scripts["docker:run:webapp"];
-          packageJson.scripts["setup"] =
-            `pnpm run ${migrateCmd} && turbo run db:seed build`;
-          fs.writeFileSync(
-            appPackageJsonPath,
-            JSON.stringify(packageJson, null, 2),
-          );
-          return `Updated package.json for Turso + ${answers.ormType}`;
+        switch (answers.dbType) {
+          case "postgres":
+            await editPackageJson(appPackageJsonPath, {
+              addScripts: {
+                "docker:db": "docker compose -f docker-compose.yml up -d",
+                "docker:run:webapp":
+                  "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp",
+                setup: `pnpm run docker:db && pnpm run ${migrateCmd} && turbo run db:seed build`,
+              },
+            });
+            break;
+          case "turso":
+            await editPackageJson(appPackageJsonPath, {
+              removeScripts: ["docker:db", "docker:run:webapp", "setup"],
+              addScripts: {
+                setup: `pnpm run ${migrateCmd} && turbo run db:seed build`,
+              },
+            });
+            break;
         }
+        return `Updated package.json for Turso + ${answers.ormType}`;
       },
       function createOrDeleteDockerCompose(answers: {
         appPckgName?: string;
@@ -167,16 +163,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       }) {
         if (answers.dbType === "turso") {
           try {
-            fs.unlinkSync(
-              path.join(plop.getDestBasePath(), "docker-compose-ci.yml"),
-            );
+            fs.unlinkSync(path.join(rootPath, "docker-compose-ci.yml"));
           } catch (err) {
             // ignore if file doesn't exist
           }
           try {
-            fs.unlinkSync(
-              path.join(plop.getDestBasePath(), "docker-compose.yml"),
-            );
+            fs.unlinkSync(path.join(rootPath, "docker-compose.yml"));
           } catch (err) {
             // ignore if file doesn't exist
           }
@@ -189,7 +181,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "add",
         path: "{{ turbo.paths.root }}/packages/database/drizzle/schema.ts",
-        templateFile: "templates/drizzle-schema.ts.hbs",
+        templateFile: "templates/drizzle/schema.ts.hbs",
         force: true,
         skip: (answers: { ormType?: SupportedOrms }) =>
           answers.ormType === "prisma"
@@ -199,7 +191,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "add",
         path: "{{ turbo.paths.root }}/packages/database/src/drizzle-client.ts",
-        templateFile: "templates/drizzle-client.ts.hbs",
+        templateFile: "templates/drizzle/client.ts.hbs",
         force: true,
         skip: (answers: { ormType?: SupportedOrms }) =>
           answers.ormType === "prisma"
@@ -213,7 +205,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       }) {
         if (answers.ormType === "prisma") {
           const prismaSchemaPath = path.join(
-            plop.getDestBasePath(),
+            rootPath,
             "packages",
             "database",
             "prisma",
@@ -252,14 +244,14 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "add",
         path: "{{ turbo.paths.root }}/packages/database/src/index.ts",
-        templateFile: "templates/database-index-{{ ormType }}.ts.hbs",
+        templateFile: "templates/{{ ormType }}/index.ts.hbs",
         force: true,
       },
       // Update seed file based on ORM choice
       {
         type: "add",
         path: "{{ turbo.paths.root }}/packages/database/src/seed.ts",
-        templateFile: "templates/seed-{{ ormType }}.ts.hbs",
+        templateFile: "templates/{{ ormType }}/seed.ts.hbs",
         force: true,
       },
       async function githubDeployWorkflow(answers: {
@@ -271,18 +263,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           // copy deploy-with-turso.yml to .github/workflows/deploy.yml
           fs.copyFileSync(
             path.join(
-              plop.getDestBasePath(),
+              rootPath,
               "turbo",
               "generators",
               "templates",
               "deploy-with-turso.yml",
             ),
-            path.join(
-              plop.getDestBasePath(),
-              ".github",
-              "workflows",
-              "deploy.yml",
-            ),
+            path.join(rootPath, ".github", "workflows", "deploy.yml"),
           );
           return "Copied deploy-with-turso.yml to .github/workflows/deploy.yml";
         }
@@ -290,18 +277,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           // copy deploy-with-postgres.yml to .github/workflows/deploy.yml
           fs.copyFileSync(
             path.join(
-              plop.getDestBasePath(),
+              rootPath,
               "turbo",
               "generators",
               "templates",
               "deploy-with-postgres.yml",
             ),
-            path.join(
-              plop.getDestBasePath(),
-              ".github",
-              "workflows",
-              "deploy.yml",
-            ),
+            path.join(rootPath, ".github", "workflows", "deploy.yml"),
           );
           return "Copied deploy-with-postgres.yml to .github/workflows/deploy.yml";
         }

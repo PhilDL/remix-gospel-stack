@@ -50,7 +50,9 @@
     "turbo": "^2.5.8",
     "typescript": "^5.9.3",
     "prisma": "catalog:prisma",
-    "@prisma/adapter-libsql": "catalog:prisma"
+    "@prisma/adapter-libsql": "catalog:prisma",
+    "@npmcli/package-json": "7.0.1",
+    "@types/npmcli__package-json": "4.0.4"
   },
   "packageManager": "pnpm@10.20.0",
   "pnpm": {

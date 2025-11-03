@@ -1,6 +1,13 @@
+{{#if dbType === "postgres"}}
+import { pgTable, text } from "drizzle-orm/pg-core";
+
+export const users = pgTable("User", {
+{{/if}}
+{{#if ormType === "drizzle"}}
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("User", {
+{{/if}}
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
@@ -11,4 +18,3 @@ export const users = sqliteTable("User", {
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
-
