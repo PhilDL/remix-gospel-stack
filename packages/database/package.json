@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
-    "drizzle-orm": "^0.36.4"
+    "drizzle-orm": "catalog:drizzle"
   },
   "devDependencies": {
     "@prisma/adapter-libsql": "catalog:prisma",
@@ -32,7 +32,7 @@
     "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
-    "drizzle-kit": "^0.28.1",
+    "drizzle-kit": "catalog:drizzle",
     "prisma": "catalog:prisma",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",
