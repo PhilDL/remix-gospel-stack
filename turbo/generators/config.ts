@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import type { Config } from "@react-router/dev/config";
 import type { PlopTypes } from "@turbo/gen";
+import { glob } from "glob";
 import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
 
@@ -13,19 +14,26 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setHelper("ifEquals", function (arg1, arg2, options) {
     return arg1 == arg2 ? options.fn(this) : options.inverse(this);
   });
+  const apps = glob
+    .sync("apps/**/package.json", {
+      ignore: [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/.turbo/**",
+        "**/build/**",
+      ],
+    })
+    .map((app) => {
+      const dirname = path.dirname(app);
+      const packageJson = JSON.parse(fs.readFileSync(app, "utf8"));
+      return {
+        name: packageJson.name,
+        dirname: dirname.split("/").pop(),
+      };
+    });
   plop.setGenerator("scaffold-database", {
     description: "Configure database and ORM setup",
     prompts: [
-      {
-        type: "input",
-        name: "appPckgName",
-        message: "Name entry in package.json of the app",
-      },
-      {
-        type: "input",
-        name: "appDirname",
-        message: "Directory name of the app",
-      },
       {
         type: "list",
         name: "dbType",
@@ -46,8 +54,27 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         ],
         default: "drizzle",
       },
+      {
+        type: "list",
+        name: "appDirname",
+        message: "Which app do you want to update with database and ORM setup?",
+        choices: apps.map((app) => `[./apps/${app.dirname}] ${app.name}`),
+      },
     ],
     actions: [
+      function debugAnswers(answers: {
+        appDirname?: string;
+        appPckgName?: string;
+        dbType?: "postgres" | "turso";
+        ormType?: "drizzle" | "prisma";
+      }) {
+        const app = apps.find((app) => app.dirname === answers.appDirname);
+        if (!app) {
+          throw new Error(`App ${answers.appDirname} not found`);
+        }
+        answers.appPckgName = app.name;
+        return `App ${answers.appDirname} found: ${app.name}`;
+      },
       {
         type: "add",
         path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/other/Dockerfile",
