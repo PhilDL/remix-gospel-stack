@@ -1,0 +1,10 @@
+// Prisma (default)
+export * from "./generated/client";
+export { createClient } from "./client";
+
+// Drizzle (alternative)
+export { users } from "../drizzle/schema";
+export type { User as DrizzleUser, NewUser } from "../drizzle/schema";
+export { createClient as createDrizzleClient } from "./drizzle-client";
+export type { DrizzleClient } from "./drizzle-client";
+

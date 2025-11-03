@@ -1,423 +1,398 @@
 # Database Guide
 
-This stack supports two database options: **PostgreSQL**, and **Turso** for edge-optimized SQLite with embedded replicas that promotes the one-database-per-tenant architecture.
+This stack supports two ORMs (Drizzle and Prisma) and two databases (Turso and PostgreSQL). During setup, you choose your preferred ORM and database.
 
-> **Future:** We plan to support choosing between Prisma and Drizzle ORM during setup.
+## Recommended Stack: Drizzle + Turso
 
-## Choosing a Database
+**Drizzle ORM** is the default for its SQL-like syntax, zero runtime overhead, and full Turso migration support.
 
-During the initial setup, you choose between:
+**Turso** provides edge-optimized SQLite with embedded replicas, generous free tiers, and built-in backups.
 
-1. **PostgreSQL**
-   - Multi-region support via Fly.io PostgreSQL clusters
-   - Full Prisma migration support
-   - Familiar for most developers
+See [Why Drizzle Over Prisma?](./why-drizzle-over-prisma.md) for our reasoning.
 
-2. **Turso Cloud**
-   - LibSQL flavor of SQLite with generous free tiers
-   - Instant reads with embedded replicas (copy of the database on the volume)
-   - Automatic sync between local and remote database
-   - Writes go to the remote database first, then sync locally
-   - Built-in backups and point-in-time recovery
-   - Prisma doesn't support libSQL migrations, you have to apply them manually.
-   - We used to have LiteFS here but since I was not using it in production, I switched to Turso. See [Why Turso instead of LiteFS?](./why-turso-instead-of-litefs.md)
+## Choosing Your Stack
 
-## Switching Between Databases
+During `pnpm run setup`, you'll choose:
 
-You can switch between PostgreSQL and Turso at any time using the Turborepo generator:
+1. **ORM**: Drizzle (default) or Prisma
+2. **Database**: Turso (default) or PostgreSQL
+
+You can switch anytime using:
 
 ```bash
 pnpm turbo gen scaffold-database
 ```
 
-Follow the prompts to select your desired database.
+## Working with Drizzle (Default)
 
-> **⚠️ Important:** When switching databases, you must delete the `packages/database/prisma/migrations` folder since Prisma migrations are database-specific.
+### Schema Definition
 
-After switching, run the setup again:
+Schemas are defined in `packages/database/drizzle/schema.ts`:
+
+```typescript
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+export const users = sqliteTable("User", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name"),
+  email: text("email").unique(),
+  emailVerified: text("emailVerified"),
+});
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+```
+
+No code generation needed - edit the schema and immediately use it.
+
+### Querying with Drizzle
+
+```typescript
+import { eq } from "drizzle-orm";
+
+import { users } from "@react-router-gospel-stack/database";
+
+import { db } from "~/db.server";
+
+export const loader = async () => {
+  // Select all users
+  const allUsers = await db.select().from(users);
+
+  // Find by email
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, "test@example.com"));
+
+  // Insert
+  await db.insert(users).values({ name: "John", email: "john@example.com" });
+
+  // Update
+  await db.update(users).set({ name: "Jane" }).where(eq(users.id, userId));
+
+  // Delete
+  await db.delete(users).where(eq(users.id, userId));
+
+  return { allUsers };
+};
+```
+
+### Migrations with Drizzle
+
+#### Generate Migration Files
+
+After modifying `drizzle/schema.ts`:
 
 ```bash
-pnpm run generate
-pnpm run db:migrate:dev  # Create a new initial migration
+pnpm --filter @react-router-gospel-stack/database db:generate
+```
+
+This creates migration SQL files in `drizzle/migrations/`.
+
+#### Apply Migrations
+
+**Local SQLite:**
+
+```bash
+pnpm --filter @react-router-gospel-stack/database db:push
+```
+
+**Remote Turso:**
+
+```bash
+pnpm --filter @react-router-gospel-stack/database db:push
+```
+
+Drizzle's `push` command works with both local and remote Turso databases.
+
+### Drizzle Studio
+
+View and edit your database with Drizzle Studio:
+
+```bash
+pnpm --filter @react-router-gospel-stack/database db:studio
+```
+
+Opens at `https://local.drizzle.studio`
+
+## Working with Prisma (Alternative)
+
+### Schema Definition
+
+Schemas are defined in `packages/database/prisma/schema.prisma`:
+
+```prisma
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+}
+```
+
+After changes, regenerate the client:
+
+```bash
+pnpm --filter @react-router-gospel-stack/database prisma:generate
+```
+
+### Querying with Prisma
+
+```typescript
+import { db } from "~/db.server";
+
+export const loader = async () => {
+  const allUsers = await db.user.findMany();
+  const user = await db.user.findUnique({
+    where: { email: "test@example.com" },
+  });
+  await db.user.create({ data: { name: "John", email: "john@example.com" } });
+  return { allUsers };
+};
+```
+
+### Migrations with Prisma
+
+**PostgreSQL:**
+
+```bash
+pnpm --filter @react-router-gospel-stack/database prisma:migrate:dev
+```
+
+**Turso:** Prisma cannot apply migrations directly to Turso. You must apply manually:
+
+```bash
+pnpm prisma:migrate:dev  # Generate SQL
+sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
+```
+
+For remote Turso:
+
+```bash
+turso db shell <database-name> < packages/database/prisma/migrations/<folder>/migration.sql
+```
+
+### Prisma Studio
+
+```bash
+pnpm --filter @react-router-gospel-stack/database prisma:studio
 ```
 
 ## Turso Setup
 
 ### Local Development
 
-For local development, use a simple local SQLite file—no remote connection needed.
-
-#### 1. Configure Environment Variables
-
-In your `.env` file:
+Configure `.env`:
 
 ```bash
 DATABASE_URL="file:./local.db"
-# No need for DATABASE_SYNC_URL or DATABASE_AUTH_TOKEN in development
+# No sync URL or auth token needed for local dev
 ```
 
-#### 2. Generate Prisma Client
+Apply your initial migration:
 
 ```bash
-pnpm run generate
+# With Drizzle
+pnpm db:push
+
+# With Prisma
+pnpm prisma:migrate:dev
+sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
 ```
 
-#### 3. Apply Migrations Manually
+### Production with Turso
 
-**Important:** Prisma's automatic migrations don't work with libSQL/Turso. You must manually apply SQL migration files.
+1. **Install Turso CLI:**
 
-```bash
-# Create the migration (generates SQL file)
-pnpm run db:migrate:dev
-
-# Apply it to your local database using sqlite3 or turso CLI
-sqlite3 local.db < packages/database/prisma/migrations/<migration-folder>/migration.sql
-```
-
-### Prisma Migrations with Turso
-
-Since Prisma's `migrate deploy` command doesn't support libSQL/Turso, follow this workflow:
-
-#### Creating Migrations
-
-1. Modify your Prisma schema as needed
-2. Generate the migration:
    ```bash
-   pnpm run db:migrate:dev
+   curl -sSfL https://get.tur.so/install.sh | bash
+   turso auth login
    ```
-3. Prisma creates SQL files in `packages/database/prisma/migrations/<timestamp>_<name>/migration.sql`
 
-#### Applying Migrations Locally
+2. **Create Database:**
 
-```bash
-sqlite3 local.db < packages/database/prisma/migrations/<migration-folder>/migration.sql
-```
+   ```bash
+   turso group create <group-name>
+   turso db create <database-name> --group <group-name>
+   ```
 
-Or with Turso CLI:
+3. **Get Credentials:**
 
-```bash
-turso db shell local < packages/database/prisma/migrations/<migration-folder>/migration.sql
-```
+   ```bash
+   turso db show --url <database-name>
+   turso db tokens create <database-name>
+   ```
 
-#### Applying Migrations to Production
+4. **Configure Environment:**
 
-For production Turso databases:
+   ```bash
+   DATABASE_URL="file:/data/libsql/local.db"
+   DATABASE_SYNC_URL="libsql://[db].turso.io"
+   DATABASE_AUTH_TOKEN="<token>"
+   ```
 
-```bash
-turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
-```
+5. **Apply Migrations:**
 
-> **Tip:** For the initial setup, you'll typically have a migration like `20251027155525_first/migration.sql`. Apply each new migration SQL file in order.
+   ```bash
+   # With Drizzle - direct push to remote
+   pnpm db:push
 
-### Production Setup with Turso
-
-#### 1. Install Turso CLI
-
-```bash
-curl -sSfL https://get.tur.so/install.sh | bash
-```
-
-#### 2. Login to Turso
-
-```bash
-turso auth login
-```
-
-#### 3. Create a Database Group
-
-Database groups allow you to create multiple databases that share the same schema:
-
-```bash
-turso group create <group-name>
-```
-
-#### 4. Create Production Database
-
-```bash
-turso db create <database-name> --group <group-name>
-```
-
-#### 5. Get Database Credentials
-
-```bash
-# Get the database URL (sync URL for embedded replicas)
-turso db show --url <database-name>
-
-# Create an auth token
-turso db tokens create <database-name>
-```
-
-Save these for your production environment configuration.
-
-#### 6. Apply Initial Migration
-
-```bash
-turso db shell <database-name> < packages/database/prisma/migrations/<initial-migration>/migration.sql
-```
+   # With Prisma - manual application
+   turso db shell <database-name> < packages/database/prisma/migrations/<folder>/migration.sql
+   ```
 
 ### Embedded Replicas
 
-Turso's embedded replicas provide local-first resilience with automatic syncing to the remote database.
+Turso's embedded replicas provide local-first resilience:
 
-#### How It Works
-
-1. **Local SQLite file** serves reads (fast, disk-based)
-2. **Automatic sync** with remote Turso database
-3. **Writes** go to the remote database first, then sync locally
+1. **Local SQLite file** serves reads (fast)
+2. **Automatic sync** with remote database (every 60s)
+3. **Writes** go to remote first, then sync locally
 4. **Offline resilience** - reads work even if remote is unavailable
 
-#### Configuration
-
-In `apps/webapp/app/db.server.ts`:
-
-```typescript
-import { createClient } from "@react-router-gospel-stack/database";
-
-export const db = remember("db", () => {
-  return createClient({
-    url: env.DATABASE_URL, // Local file path or remote URL
-    authToken: env.DATABASE_AUTH_TOKEN, // Optional in dev
-    syncUrl: env.DATABASE_SYNC_URL, // Optional in dev
-  });
-});
-```
-
-**Environment variables:**
-
-```bash
-# Development (local SQLite only)
-DATABASE_URL="file:./local.db"
-
-# Production with embedded replicas
-DATABASE_URL="file:/data/libsql/local.db"      # Local replica path
-DATABASE_SYNC_URL="libsql://[db].turso.io"     # Remote Turso URL
-DATABASE_AUTH_TOKEN="eyJhbG..."                 # Turso auth token
-```
-
-> **Note:** In development, omitting `DATABASE_SYNC_URL` and `DATABASE_AUTH_TOKEN` gives you a purely local SQLite database.
-
-For Fly.io deployment with embedded replicas, see the [Deployment Guide](./deployment.md#turso-deployment).
+The client automatically handles this when you provide `syncUrl`.
 
 ## PostgreSQL Setup
 
 ### Local Development
 
-#### 1. Start the Database
+1. **Start PostgreSQL:**
 
-Use the provided Docker Compose setup:
+   ```bash
+   pnpm run docker:db
+   ```
 
-```bash
-pnpm run docker:db
-```
+2. **Configure `.env`:**
 
-This starts a PostgreSQL container with the configuration from `.env.docker`.
+   ```bash
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
+   ```
 
-#### 2. Configure Environment Variables
+3. **Run Migrations:**
 
-In your `.env` file:
+   ```bash
+   # With Drizzle
+   pnpm db:push
 
-```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
-```
+   # With Prisma
+   pnpm prisma:migrate:deploy
+   ```
 
-#### 3. Run Migrations
+### Production PostgreSQL
 
-```bash
-# Generate Prisma Client
-pnpm run generate
-
-# Deploy migrations
-pnpm run db:migrate:deploy
-```
-
-#### 4. (Optional) Seed the Database
-
-```bash
-pnpm run db:seed
-```
-
-### Creating Migrations
-
-When you change the Prisma schema (`packages/database/prisma/schema.prisma`):
-
-```bash
-# Create a new migration
-pnpm run db:migrate:dev
-
-# Give it a descriptive name when prompted
-```
-
-This will:
-
-1. Generate SQL migration files
-2. Apply the migration to your local database
-3. Regenerate the Prisma Client
-
-### Production Setup
-
-For production PostgreSQL on Fly.io, see the [Deployment Guide](./deployment.md#postgresql-deployment).
-
-## Working with Prisma
-
-### Prisma Studio
-
-Launch Prisma Studio to view and edit your database:
-
-```bash
-pnpm --filter @react-router-gospel-stack/database prisma studio
-```
-
-### Prisma Client
-
-The `@react-router-gospel-stack/database` package exports a configured Prisma Client:
-
-```typescript
-import { db } from "@react-router-gospel-stack/database";
-
-// Use in your React Router loaders/actions
-export async function loader() {
-  const users = await db.user.findMany();
-  return json({ users });
-}
-```
-
-### Schema Location
-
-The Prisma schema is located at:
-
-```
-packages/database/prisma/schema.prisma
-```
-
-### Regenerating Prisma Client
-
-After changing the schema:
-
-```bash
-pnpm run generate
-```
-
-This is automatically run as part of the build process, but you may need it during development.
+For production on Fly.io, see [Deployment Guide](./deployment.md).
 
 ## Database Package Structure
 
 ```
 packages/database/
+├── drizzle/
+│   ├── schema.ts              # Drizzle schema (default)
+│   └── migrations/            # Drizzle migrations
 ├── prisma/
-│   ├── schema.prisma          # Prisma schema definition
-│   └── migrations/            # Migration files
-│       ├── 20251027155525_first/
-│       │   └── migration.sql
-│       └── migration_lock.toml
+│   ├── schema.prisma          # Prisma schema (alternative)
+│   └── migrations/            # Prisma migrations
 ├── src/
-│   ├── client.ts              # Database client factory
-│   ├── seed.ts                # Seed data
+│   ├── drizzle-client.ts      # Drizzle client factory
+│   ├── client.ts              # Prisma client factory
+│   ├── seed.ts                # Seed script
 │   └── index.ts               # Package exports
-├── package.json
-└── tsconfig.json
+├── drizzle.config.ts          # Drizzle configuration
+└── package.json
 ```
 
 ## Seeding Data
 
-To seed your database with initial data:
+The seed script adapts to your chosen ORM:
 
 ```bash
-pnpm run db:seed
+pnpm --filter @react-router-gospel-stack/database db:seed
 ```
 
-Edit the seed script at `packages/database/src/seed.ts` to customize the data.
+Edit `packages/database/src/seed.ts` to customize seed data.
 
-## Common Database Tasks
+## Common Tasks
 
-### Reset Database (Caution!)
+### View Database
+
+**Drizzle:**
+
+```bash
+pnpm --filter @react-router-gospel-stack/database db:studio
+```
+
+**Prisma:**
+
+```bash
+pnpm --filter @react-router-gospel-stack/database prisma:studio
+```
+
+### Reset Database
+
+**Local SQLite:**
+
+```bash
+rm local.db
+pnpm db:push  # Reapply migrations
+```
 
 **PostgreSQL:**
 
 ```bash
-pnpm run db:reset
+docker compose down -v
+pnpm run docker:db
+pnpm db:push  # or prisma:migrate:deploy
 ```
 
-**Turso:**
+**Remote Turso:**
 
 ```bash
-# Delete and recreate the database
 turso db destroy <database-name>
 turso db create <database-name> --group <group-name>
-# Reapply all migrations
+pnpm db:push  # or apply migrations manually
 ```
 
-### View All Migrations
+### Switch ORMs
+
+To switch between Drizzle and Prisma:
 
 ```bash
-ls packages/database/prisma/migrations
+pnpm turbo gen scaffold-database
 ```
 
-### Check Migration Status
-
-**PostgreSQL:**
-
-```bash
-pnpm --filter @react-router-gospel-stack/database prisma migrate status
-```
-
-**Turso:**
-Prisma's migrate status doesn't work with Turso. You'll need to track applied migrations manually or use a migration tracking solution.
-
-## Future: Drizzle ORM Support
-
-We plan to add Drizzle ORM as an alternative to Prisma during setup. Drizzle offers:
-
-- Better TypeScript inference
-- Smaller bundle size
-- SQL-like query syntax
-- Full libSQL/Turso support
-
-Stay tuned for updates!
+Select your preferred ORM. The generator updates `src/index.ts` to export the correct client as default.
 
 ## Troubleshooting
 
-### Prisma Client Generation Errors
+### "Cannot find module" errors
 
-If you see errors about missing Prisma Client:
+Regenerate the client:
 
 ```bash
-pnpm run generate
-pnpm run build --filter=@react-router-gospel-stack/database
+# Drizzle
+pnpm db:generate
+
+# Prisma
+pnpm prisma:generate
 ```
 
-### Migration Conflicts
-
-If you have migration conflicts after switching databases or pulling changes:
+### Migration conflicts after switching databases
 
 1. Backup your data
-2. Delete the `migrations` folder
-3. Create a fresh migration: `pnpm run db:migrate:dev`
+2. Delete the migrations folder for your ORM
+3. Create a fresh initial migration
 
-### Turso Connection Issues
+### Turso connection issues
 
-If you can't connect to Turso:
-
-1. Check your auth token is valid: `turso db tokens create <database-name>`
-2. Verify the database URL: `turso db show --url <database-name>`
-3. Ensure your organization is selected: `turso org list`
-
-### PostgreSQL Docker Container Issues
-
-If the PostgreSQL container won't start:
-
-```bash
-# Check container status
-docker ps -a
-
-# View logs
-docker logs <container-id>
-
-# Restart the container
-docker restart <container-id>
-```
+1. Verify credentials: `turso db show --url <database-name>`
+2. Check token: `turso db tokens create <database-name>`
+3. Ensure correct org: `turso org list`
 
 ## Next Steps
 
-- Learn about [Deployment](./deployment.md) with your chosen database
-- Explore the [Architecture](./architecture.md) to understand how the database package fits in
-- Check the [Development Guide](./development.md) for workflow tips
+- [Why Drizzle Over Prisma?](./why-drizzle-over-prisma.md) - Understanding our ORM choice
+- [Deployment](./deployment.md) - Deploy with your chosen stack
+- [Architecture](./architecture.md) - How the database package fits in
+- [Development](./development.md) - Workflow tips

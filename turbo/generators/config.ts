@@ -7,13 +7,14 @@ import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
 
 type SupportedDatabases = "postgres" | "turso";
+type SupportedOrms = "drizzle" | "prisma";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setHelper("ifEquals", function (arg1, arg2, options) {
     return arg1 == arg2 ? options.fn(this) : options.inverse(this);
   });
   plop.setGenerator("scaffold-database", {
-    description: "Create a Dockerfile",
+    description: "Configure database and ORM setup",
     prompts: [
       {
         type: "input",
@@ -28,9 +29,22 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "list",
         name: "dbType",
-        message: "What type of database does the app use?",
-        choices: ["turso", "postgres"],
-        default: "postgres",
+        message: "Which database do you want to use?",
+        choices: [
+          { name: "Turso (SQLite with libSQL)", value: "turso" },
+          { name: "PostgreSQL", value: "postgres" },
+        ],
+        default: "turso",
+      },
+      {
+        type: "list",
+        name: "ormType",
+        message: "Which ORM do you want to use?",
+        choices: [
+          { name: "Drizzle (recommended)", value: "drizzle" },
+          { name: "Prisma", value: "prisma" },
+        ],
+        default: "drizzle",
       },
     ],
     actions: [
@@ -44,6 +58,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         appPckgName?: string;
         appDirname?: string;
         dbType?: "postgres" | "turso";
+        ormType?: "drizzle" | "prisma";
       }) {
         const appPackageJsonPath = path.join(
           // resolves to the root of the current workspace
@@ -56,28 +71,31 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           fs.readFileSync(appPackageJsonPath, "utf8"),
         );
 
+        const migrateCmd =
+          answers.ormType === "drizzle" ? "db:push" : "prisma:migrate:dev";
+
         if (answers.dbType === "postgres") {
           packageJson.scripts["docker:db"] =
             "docker compose -f docker-compose.yml up -d";
           packageJson.scripts["docker:run:webapp"] =
             "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp";
           packageJson.scripts["setup"] =
-            "pnpm run docker:db && pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
+            `pnpm run docker:db && pnpm run ${migrateCmd} && turbo run db:seed build`;
           fs.writeFileSync(
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),
           );
-          return "Updated package.json for PostgreSQL";
+          return `Updated package.json for PostgreSQL + ${answers.ormType}`;
         } else {
           delete packageJson.scripts["docker:db"];
           delete packageJson.scripts["docker:run:webapp"];
           packageJson.scripts["setup"] =
-            "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build";
+            `pnpm run ${migrateCmd} && turbo run db:seed build`;
           fs.writeFileSync(
             appPackageJsonPath,
             JSON.stringify(packageJson, null, 2),
           );
-          return "Updated package.json for Turso";
+          return `Updated package.json for Turso + ${answers.ormType}`;
         }
       },
       function createOrDeleteDockerCompose(answers: {
@@ -140,42 +158,81 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 
         return "Postgres docker-compose files kept";
       },
+      // Generate Drizzle schema and client files
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/database/drizzle/schema.ts",
+        templateFile: "templates/drizzle-schema.ts.hbs",
+        force: true,
+        skip: (answers: { ormType?: SupportedOrms }) =>
+          answers.ormType === "prisma"
+            ? "Skipping Drizzle schema (using Prisma)"
+            : false,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/database/src/drizzle-client.ts",
+        templateFile: "templates/drizzle-client.ts.hbs",
+        force: true,
+        skip: (answers: { ormType?: SupportedOrms }) =>
+          answers.ormType === "prisma"
+            ? "Skipping Drizzle client (using Prisma)"
+            : false,
+      },
+      // Update Prisma schema if using Prisma
       async function updatePrismaSchema(answers: {
         dbType?: SupportedDatabases;
+        ormType?: SupportedOrms;
       }) {
-        const prismaSchemaPath = path.join(
-          // resolves to the root of the current workspace
-          plop.getDestBasePath(),
-          "packages",
-          "database",
-          "prisma",
-          "schema.prisma",
-        );
-        const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
-        if (answers.dbType === "turso") {
-          fs.writeFileSync(
-            prismaSchemaPath,
-            prismaSchema.replace(
-              /provider = "postgresql"/g,
-              'provider = "sqlite"',
-            ),
+        if (answers.ormType === "prisma") {
+          const prismaSchemaPath = path.join(
+            plop.getDestBasePath(),
+            "packages",
+            "database",
+            "prisma",
+            "schema.prisma",
           );
-          return "Updated prisma schema to use sqlite for Turso";
-        } else {
-          fs.writeFileSync(
-            prismaSchemaPath,
-            prismaSchema.replace(
-              /provider = "sqlite"/g,
-              'provider = "postgresql"',
-            ),
-          );
-          return "Updated prisma schema to use postgresql";
+          const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
+          if (answers.dbType === "turso") {
+            fs.writeFileSync(
+              prismaSchemaPath,
+              prismaSchema.replace(
+                /provider = "postgresql"/g,
+                'provider = "sqlite"',
+              ),
+            );
+            return "Updated Prisma schema to use sqlite for Turso";
+          } else {
+            fs.writeFileSync(
+              prismaSchemaPath,
+              prismaSchema.replace(
+                /provider = "sqlite"/g,
+                'provider = "postgresql"',
+              ),
+            );
+            return "Updated Prisma schema to use postgresql";
+          }
         }
+        return "Using Drizzle (Prisma schema not updated)";
       },
       {
         type: "add",
         path: "{{ turbo.paths.root }}/.env.example",
-        templateFile: "templates/.env.example.hbs",
+        templateFile: "templates/env.example.hbs",
+        force: true,
+      },
+      // Update database package index based on ORM choice
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/database/src/index.ts",
+        templateFile: "templates/database-index-{{ ormType }}.ts.hbs",
+        force: true,
+      },
+      // Update seed file based on ORM choice
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/database/src/seed.ts",
+        templateFile: "templates/seed-{{ ormType }}.ts.hbs",
         force: true,
       },
       async function githubDeployWorkflow(answers: {

@@ -1,4 +1,4 @@
-import { createClient, users } from "./index";
+import { createPrismaClient } from "./index";
 
 const seed = async () => {
   const url = process.env.DATABASE_URL;
@@ -9,18 +9,20 @@ const seed = async () => {
     throw new Error("DATABASE_URL is not set");
   }
 
-  console.log("🌱 Seeding database...");
+  console.log("🌱 Seeding database with Prisma...");
 
-  const db = createClient({
+  const db = createPrismaClient({
     url,
     syncUrl,
     authToken,
   });
 
   // Example: Create a test user
-  await db.insert(users).values({
-    name: "Test User",
-    email: "test@example.com",
+  await db.user.create({
+    data: {
+      name: "Test User",
+      email: "test@example.com",
+    },
   });
 
   console.log("✅ Database seeded successfully");
@@ -34,3 +36,4 @@ seed()
   .finally(() => {
     process.exit(0);
   });
+

@@ -36,6 +36,14 @@ yarn-error.log*
 .env.production.local
 !packages/database/.env
 
+# local database files
+local.db
+local.db-shm
+local.db-wal
+*.db
+*.db-shm
+*.db-wal
+
 # turbo
 .turbo
 .vercel

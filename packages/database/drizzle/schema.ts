@@ -1,0 +1,15 @@
+import { sql } from "drizzle-orm";
+import { text, sqliteTable } from "drizzle-orm/sqlite-core";
+
+export const users = sqliteTable("User", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name"),
+  email: text("email").unique(),
+  emailVerified: text("emailVerified"),
+});
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+

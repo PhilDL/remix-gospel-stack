@@ -9,7 +9,7 @@ const seed = async () => {
     throw new Error("DATABASE_URL is not set");
   }
 
-  console.log("🌱 Seeding database...");
+  console.log("🌱 Seeding database with Drizzle...");
 
   const db = createClient({
     url,
@@ -34,3 +34,4 @@ seed()
   .finally(() => {
     process.exit(0);
   });
+
