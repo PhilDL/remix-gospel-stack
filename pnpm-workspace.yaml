@@ -59,6 +59,7 @@ catalogs:
     "@prisma/adapter-better-sqlite3": 6.18.0
     "@prisma/adapter-libsql": 6.18.0
     "@prisma/client": 6.18.0
+    "@prisma/adapter-pg": 6.18.0
   drizzle:
     drizzle-orm: 0.44.7
     drizzle-kit: 0.31.6

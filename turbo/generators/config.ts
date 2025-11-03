@@ -7,6 +7,7 @@ import { glob } from "glob";
 import JSON5 from "json5";
 import { loadFile, writeFile } from "magicast";
 
+import { setOrmDatabasePackage } from "./actions/set-orm-database-package";
 import { editPackageJson } from "./actions/utils";
 
 type SupportedDatabases = "postgres" | "turso";
@@ -34,7 +35,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       };
     });
   const rootPath = plop.getDestBasePath();
-  console.log("rootPath", rootPath);
   plop.setGenerator("scaffold-database", {
     description: "Configure database and ORM setup",
     prompts: [
@@ -60,34 +60,23 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: "list",
-        name: "appDirname",
+        name: "app",
         message: "Which app do you want to update with database and ORM setup?",
-        choices: apps.map((app) => `[./apps/${app.dirname}] ${app.name}`),
+        choices: apps.map((app) => ({
+          name: `[./apps/${app.dirname}] ${app.name}`,
+          value: { dirname: app.dirname, pkgName: app.name },
+        })),
       },
     ],
     actions: [
-      async function debugAnswers(answers: {
-        appDirname?: string;
-        appPckgName?: string;
-        dbType?: "postgres" | "turso";
-        ormType?: "drizzle" | "prisma";
-      }) {
-        const app = apps.find((app) => app.dirname === answers.appDirname);
-        if (!app) {
-          throw new Error(`App ${answers.appDirname} not found`);
-        }
-        answers.appPckgName = app.name;
-        return `App ${answers.appDirname} found: ${app.name}`;
-      },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/other/Dockerfile",
+        path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/other/Dockerfile",
         templateFile: "templates/Dockerfile.hbs",
         force: true,
       },
       async function updateAppScripts(answers: {
-        appPckgName?: string;
-        appDirname?: string;
+        app?: { dirname: string; pkgName: string };
         dbType?: "postgres" | "turso";
         ormType?: "drizzle" | "prisma";
       }) {
@@ -95,7 +84,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           // resolves to the root of the current workspace
           rootPath,
           "apps",
-          answers.appDirname ?? "",
+          answers.app?.dirname ?? "",
         );
         const migrateCmd =
           answers.ormType === "drizzle" ? "db:push" : "prisma:migrate:dev";
@@ -121,22 +110,27 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         }
         return `Updated package.json for Turso + ${answers.ormType}`;
       },
-      function createOrDeleteDockerCompose(answers: {
-        appPckgName?: string;
-        appDirname?: string;
+      async function ormDatabasePackageSetup(answers: {
+        app?: { dirname: string; pkgName: string };
         dbType?: SupportedDatabases;
+        ormType?: SupportedOrms;
       }) {
-        return "done";
+        return await setOrmDatabasePackage({
+          rootPath,
+          appDirname: answers.app?.dirname ?? "",
+          ormType: answers.ormType ?? "drizzle",
+          dbType: answers.dbType ?? "turso",
+        });
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/app/entry.server.tsx",
+        path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/app/entry.server.tsx",
         templateFile: "templates/entry.server.tsx.hbs",
         force: true,
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/apps/{{ appDirname }}/fly.toml",
+        path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/fly.toml",
         templateFile: "templates/fly.toml.hbs",
         force: true,
       },
@@ -157,8 +151,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           answers.dbType !== "postgres",
       },
       function cleanupDockerCompose(answers: {
-        appPckgName?: string;
-        appDirname?: string;
+        app?: { dirname: string; pkgName: string };
         dbType?: SupportedDatabases;
       }) {
         if (answers.dbType === "turso") {
@@ -255,8 +248,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         force: true,
       },
       async function githubDeployWorkflow(answers: {
-        appPckgName?: string;
-        appDirname?: string;
+        app?: { dirname: string; pkgName: string };
         dbType?: SupportedDatabases;
       }) {
         if (answers.dbType === "turso") {

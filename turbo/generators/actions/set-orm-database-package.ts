@@ -6,16 +6,14 @@ import { editPackageJson, readPackageName } from "./utils";
 type SetOrmDatabasePackageProps = {
   rootPath: string;
   appDirname: string;
-  appPckgName: string;
-  dbType: "postgres" | "turso";
   ormType: "drizzle" | "prisma";
+  dbType: "turso" | "postgres";
 };
 export const setOrmDatabasePackage = async ({
   rootPath,
   appDirname,
-  appPckgName,
-  dbType,
   ormType,
+  dbType,
 }: SetOrmDatabasePackageProps) => {
   const databasePackagePath = path.join(rootPath, "packages", "database");
   const databasePackageName = await readPackageName(databasePackagePath);
@@ -36,7 +34,15 @@ export const setOrmDatabasePackage = async ({
           "@prisma/adapter-libsql",
           "@prisma/client",
           "@prisma/adapter-better-sqlite3",
+          "@prisma/adapter-pg",
         ],
+        addScripts: {
+          "db:generate": "pnpm with-env drizzle-kit generate",
+          "db:migrate": "pnpm with-env drizzle-kit migrate",
+          "db:migrate:production": "pnpm with-production-env drizzle-kit push",
+          "db:seed": "pnpm with-env tsx src/seed.ts",
+          "db:studio": "pnpm with-env drizzle-kit studio",
+        },
       });
       await editPackageJson(rootPath, {
         removeDependencies: [
@@ -44,6 +50,7 @@ export const setOrmDatabasePackage = async ({
           "@prisma/adapter-libsql",
           "@prisma/client",
           "@prisma/adapter-better-sqlite3",
+          "@prisma/adapter-pg",
         ],
       });
       break;
@@ -53,11 +60,32 @@ export const setOrmDatabasePackage = async ({
         addDependencies: {
           prisma: "prisma:catalog",
         },
-        addDevDependencies: {
-          "@prisma/adapter-libsql": "prisma:catalog",
-          "@prisma/client": "prisma:catalog",
-        },
+        addDevDependencies:
+          dbType === "turso"
+            ? {
+                "@prisma/adapter-libsql": "prisma:catalog",
+                "@prisma/client": "prisma:catalog",
+              }
+            : dbType === "postgres"
+              ? {
+                  "@prisma/adapter-pg": "prisma:catalog",
+                  "@prisma/client": "prisma:catalog",
+                }
+              : {},
         removeDependencies: ["drizzle-orm", "drizzle-kit"],
+        addScripts: {
+          "db:generate": "pnpm with-env prisma generate",
+          "db:migrate":
+            dbType === "turso"
+              ? "echo 'Prisma migrations are not supported for Turso'"
+              : "pnpm with-env prisma migrate dev",
+          "db:migrate:production":
+            dbType === "turso"
+              ? "echo 'Prisma migrations are not supported for Turso'"
+              : "pnpm with-production-env prisma migrate deploy",
+          "db:seed": "pnpm with-env tsx src/seed.ts",
+          "db:studio": "pnpm with-env prisma studio",
+        },
       });
       break;
     }
