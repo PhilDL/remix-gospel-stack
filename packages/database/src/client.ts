@@ -1,12 +1,8 @@
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { createClient as createLibsqlClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
 
-import { PrismaClient } from "./generated/client";
+import * as schema from "../drizzle/schema";
 
-/**
- * Prisma is not really ready for Turso Embedded Replica,
- * you don't have access to the inner libsql client, so
- * you cannot call the initial sync method.
- */
 export const createClient = ({
   url,
   syncUrl,
@@ -16,11 +12,14 @@ export const createClient = ({
   syncUrl?: string;
   authToken?: string;
 }) => {
-  const adapter = new PrismaLibSQL({
+  const client = createLibsqlClient({
     url,
     syncUrl,
     authToken,
     syncInterval: syncUrl ? 60 : undefined,
   });
-  return new PrismaClient({ adapter });
+
+  return drizzle(client, { schema });
 };
+
+export type DrizzleClient = ReturnType<typeof createClient>;

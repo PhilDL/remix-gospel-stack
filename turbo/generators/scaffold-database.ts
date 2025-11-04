@@ -255,13 +255,9 @@ export const registerScaffoldDatabaseGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/src/drizzle-client.ts",
-        templateFile: "templates/drizzle/client.ts.hbs",
+        path: "{{ turbo.paths.root }}/packages/database/src/client.ts",
+        templateFile: "templates/{{ ormType }}/client.ts.hbs",
         force: true,
-        skip: (answers: { ormType?: SupportedOrms }) =>
-          answers.ormType === "prisma"
-            ? "Skipping Drizzle client (using Prisma)"
-            : false,
       },
       // Update Prisma schema if using Prisma
       async function updatePrismaSchema(answers: {
