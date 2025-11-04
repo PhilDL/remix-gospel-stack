@@ -3,13 +3,25 @@ import "dotenv/config"; // make sure to install dotenv package
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
+{{#ifEquals dbType "turso"}}
   dialect: "turso",
+{{/ifEquals}}
+{{#ifEquals dbType "postgres"}}
+  dialect: "postgresql",
+{{/ifEquals}}
   out: "./drizzle/migrations",
   schema: "./drizzle/schema.ts",
+{{#ifEquals dbType "turso"}}
   dbCredentials: {
     url: process.env.DATABASE_URL!,
     authToken: process.env.DATABASE_AUTH_TOKEN!,
   },
+{{/ifEquals}}
+{{#ifEquals dbType "postgres"}}
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+{{/ifEquals}}
   // Print all statements
   verbose: true,
   // Always ask for confirmation
