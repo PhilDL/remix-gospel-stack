@@ -449,7 +449,10 @@ export const registerScaffoldInfrastructureDbGenerator = (
           console.log(
             `Generating ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}...`,
           );
-          execSync(`pnpm db:generate`, { cwd: rootPath });
+          execSync(
+            `pnpm db:generate ${answers.ormType === "prisma" ? "-- --name init" : ""}`,
+            { cwd: rootPath },
+          );
           return `Generated ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}`;
         } catch (err) {
           return "Failed to generate database client and migrations";
