@@ -1,4 +1,4 @@
-import { createPrismaClient } from "./index";
+import { createClient } from "./index";
 
 const seed = async () => {
   const url = process.env.DATABASE_URL;
@@ -11,7 +11,7 @@ const seed = async () => {
 
   console.log("🌱 Seeding database...");
 
-  const db = createPrismaClient({
+  const db = createClient({
     url,
     syncUrl,
     authToken,
@@ -36,4 +36,3 @@ seed()
   .finally(() => {
     process.exit(0);
   });
-
