@@ -1,20 +1,28 @@
 {{#ifEquals dbType  "postgres"}}
-import { pgTable, text } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const users = pgTable("User", {
-{{/ifEquals}}
-{{#ifEquals dbType  "turso"}}
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
-
-export const users = sqliteTable("User", {
-{{/ifEquals}}
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").unique(),
-  emailVerified: text("emailVerified"),
+  emailVerified: timestamp("emailVerified"),
 });
+{{/ifEquals}}
+{{#ifEquals dbType  "turso"}}
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+export const users = sqliteTable("User", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name"),
+  email: text("email").unique(),
+  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
+});
+{{/ifEquals}}
+
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;

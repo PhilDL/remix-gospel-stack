@@ -8,7 +8,7 @@ import { editPackageJson, readPackageName } from "./utils";
 type SupportedDatabases = "postgres" | "turso";
 type SupportedOrms = "drizzle" | "prisma";
 
-export const registerScaffoldDatabaseGenerator = (
+export const registerScaffoldInfrastructureDbGenerator = (
   plop: PlopTypes.NodePlopAPI,
 ) => {
   const rootPath = plop.getDestBasePath();
@@ -107,14 +107,20 @@ export const registerScaffoldDatabaseGenerator = (
         dbType?: SupportedDatabases;
         ormType?: SupportedOrms;
       }) {
-        const databasePackagePath = path.join(rootPath, "packages", "database");
-        const databasePackageName = await readPackageName(databasePackagePath);
-        if (!databasePackageName) {
+        const infrastructurePkgPath = path.join(
+          rootPath,
+          "packages",
+          "infrastructure",
+        );
+        const infrastructurePkgName = await readPackageName(
+          infrastructurePkgPath,
+        );
+        if (!infrastructurePkgName) {
           throw new Error("Database package not found");
         }
         switch (answers.ormType) {
           case "drizzle": {
-            await editPackageJson(databasePackagePath, {
+            await editPackageJson(infrastructurePkgPath, {
               addDependencies: {
                 "drizzle-orm": "catalog:drizzle",
               },
@@ -149,7 +155,7 @@ export const registerScaffoldDatabaseGenerator = (
             break;
           }
           case "prisma": {
-            await editPackageJson(databasePackagePath, {
+            await editPackageJson(infrastructurePkgPath, {
               addDependencies: {
                 prisma: "catalog:prisma",
               },
@@ -188,7 +194,7 @@ export const registerScaffoldDatabaseGenerator = (
           path.join(rootPath, "apps", answers.app?.dirname ?? ""),
           {
             addDependencies: {
-              [databasePackageName]: `workspace:*`,
+              [infrastructurePkgName]: `workspace:*`,
             },
           },
         );
@@ -245,7 +251,7 @@ export const registerScaffoldDatabaseGenerator = (
       // Generate Drizzle schema and client files
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/drizzle/schema.ts",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/database/drizzle/schema.ts",
         templateFile: "templates/drizzle/schema.ts.hbs",
         force: true,
         skip: (answers: { ormType?: SupportedOrms }) =>
@@ -255,7 +261,7 @@ export const registerScaffoldDatabaseGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/src/client.ts",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/client.ts",
         templateFile: "templates/{{ ormType }}/client.ts.hbs",
         force: true,
       },
@@ -268,6 +274,7 @@ export const registerScaffoldDatabaseGenerator = (
           const prismaSchemaPath = path.join(
             rootPath,
             "packages",
+            "infrastructure",
             "database",
             "prisma",
             "schema.prisma",
@@ -303,21 +310,21 @@ export const registerScaffoldDatabaseGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/.env.example",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/database/.env.example",
         templateFile: "templates/env.example.hbs",
         force: true,
       },
       // Update database package index based on ORM choice
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/src/index.ts",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/index.ts",
         templateFile: "templates/{{ ormType }}/index.ts.hbs",
         force: true,
       },
       // Update seed file based on ORM choice
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/database/src/seed.ts",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/seed.ts",
         templateFile: "templates/{{ ormType }}/seed.ts.hbs",
         force: true,
       },

@@ -113,12 +113,12 @@ import {
   createPrismaClient,
   PrismaClient,
   users,
-} from "@react-router-gospel-stack/database";
+} from "@react-router-gospel-stack/infrastructure";
 import type {
   NewUser,
   PrismaUser,
   User,
-} from "@react-router-gospel-stack/database";
+} from "@react-router-gospel-stack/infrastructure";
 ```
 
 ### Switching ORMs

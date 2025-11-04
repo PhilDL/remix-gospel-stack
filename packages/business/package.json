@@ -10,7 +10,6 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@react-router-gospel-stack/database": "workspace:*",
     "tiny-invariant": "^1.3.3"
   },
   "devDependencies": {
@@ -21,8 +20,7 @@
     "typescript": "catalog:typescript"
   },
   "exports": {
-    ".": "./src/index.ts",
-    "./repositories": "./src/repositories/index.ts",
-    "./infrastructure": "./src/infrastructure/index.ts"
+    "./shared/*": "./src/shared/*.ts",
+    "./repositories": "./src/repositories/index.ts"
   }
 }

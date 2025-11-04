@@ -125,7 +125,7 @@ pnpm run dev --filter=@your-org/webapp
 ```bash
 # 1. Configure .env for local development
 # Edit .env and set:
-# DATABASE_URL="file:./local.db"
+# DATABASE_URL="file:../../local.db"
 
 # 2. Generate Prisma client
 pnpm run generate

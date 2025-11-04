@@ -33,11 +33,11 @@
       "@react-router-gospel-stack/business": [
         "../../packages/business/src/index"
       ],
-      "@react-router-gospel-stack/database/*": [
-        "../../packages/database/src/*"
+      "@react-router-gospel-stack/infrastructure/*": [
+        "../../packages/infrastructure/src/*"
       ],
-      "@react-router-gospel-stack/database": [
-        "../../packages/database/src/index"
+      "@react-router-gospel-stack/infrastructure": [
+        "../../packages/infrastructure/src/index"
       ],
       "@react-router-gospel-stack/internal-nobuild": [
         "../../packages/internal-nobuild/src/index"

@@ -144,7 +144,7 @@ The setup differs based on your ORM and database choice. Follow the appropriate 
 
 ```bash
 # In your .env file
-DATABASE_URL="file:./local.db"
+DATABASE_URL="file:../../local.db"
 # No sync URL or auth token needed for local dev
 ```
 
@@ -195,7 +195,7 @@ pnpm run db:migrate
 Configure your `.env`:
 
 ```bash
-DATABASE_URL="file:./local.db"
+DATABASE_URL="file:../../local.db"
 ```
 
 Generate Prisma client & migrations:
@@ -311,7 +311,7 @@ pnpm run db:migrate      # Apply to database
 **View database:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:studio
+pnpm --filter @react-router-gospel-stack/infrastructure db:studio
 ```
 
 ### With Prisma (Alternative)
@@ -328,7 +328,7 @@ For Turso with Prisma, see the [Database Guide](./database.md#working-with-prism
 **View database:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database prisma:studio
+pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
 ### Switching ORM or Database
@@ -413,7 +413,7 @@ React Router's dev server supports HMR. Changes to your code will be reflected i
 The monorepo uses TypeScript path mappings for internal packages. This allows you to import from packages without building them first during development:
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 ```
 
 React Router's build step handles compiling these dependencies.

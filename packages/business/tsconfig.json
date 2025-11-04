@@ -2,10 +2,7 @@
   "extends": "@react-router-gospel-stack/tsconfig/node22.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "compilerOptions": {
-    "paths": {
-      "@react-router-gospel-stack/database/*": ["../database/src/*"],
-      "@react-router-gospel-stack/database": ["../database/src/index"]
-    },
+    "paths": {},
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "exclude": ["node_modules"]

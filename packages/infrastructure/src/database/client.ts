@@ -1,7 +1,7 @@
 import { createClient as createLibsqlClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import * as schema from "../drizzle/schema";
+import * as schema from "../../drizzle/schema";
 
 export const createClient = ({
   url,

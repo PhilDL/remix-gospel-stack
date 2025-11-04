@@ -73,7 +73,7 @@ apps/webapp/
 
 **Dependencies:**
 
-- `@react-router-gospel-stack/database` - Database access
+- `@react-router-gospel-stack/infrastructure` - Database access
 - `@react-router-gospel-stack/business` - Business logic
 - `@react-router-gospel-stack/ui` - UI components
 - `@react-router-gospel-stack/internal-nobuild` - Internal utilities
@@ -114,7 +114,7 @@ packages/database/
 **Usage:**
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 
 const users = await db.user.findMany();
 ```
@@ -414,7 +414,9 @@ The monorepo uses TypeScript path aliases for imports.
 {
   "compilerOptions": {
     "paths": {
-      "@react-router-gospel-stack/database": ["../../packages/database/src"],
+      "@react-router-gospel-stack/infrastructure": [
+        "../../packages/database/src"
+      ],
       "@react-router-gospel-stack/ui": ["../../packages/ui/src"]
     }
   }
@@ -424,7 +426,7 @@ The monorepo uses TypeScript path aliases for imports.
 This allows importing from source during development:
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 ```
 
 React Router's build step compiles these imports.
@@ -616,7 +618,7 @@ If TypeScript can't find types:
 pnpm run generate
 
 # Build packages
-pnpm run build --filter=@react-router-gospel-stack/database
+pnpm run build --filter=@react-router-gospel-stack/infrastructure
 ```
 
 ### Cache Issues

@@ -1,0 +1,21 @@
+import { count } from "drizzle-orm";
+
+import type { UserRepository } from "@react-router-gospel-stack/business/repositories";
+
+import { users, type DrizzleClient } from "../database/index.ts";
+
+export const DrizzleUserRepository = (db: DrizzleClient): UserRepository => ({
+  getUsers: async () => {
+    const users = await db.query.users.findMany({});
+    return users.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      emailVerified: user.emailVerified,
+    }));
+  },
+  getUsersCount: async () => {
+    const result = await db.select({ count: count() }).from(users);
+    return result[0]?.count ?? 0;
+  },
+});

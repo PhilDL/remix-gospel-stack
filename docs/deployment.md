@@ -280,7 +280,7 @@ The GitHub Action will build and deploy your app to production. Push to `dev` br
 Your database client is configured in `apps/webapp/app/db.server.ts`:
 
 ```typescript
-import { createClient } from "@react-router-gospel-stack/database";
+import { createClient } from "@react-router-gospel-stack/infrastructure/database";
 
 export const db = remember("db", () => {
   return createClient({

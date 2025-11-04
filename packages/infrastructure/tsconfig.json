@@ -8,7 +8,11 @@
     "**/*.ts",
     "**/*.tsx",
     "tsup.config.ts",
-    "../../prisma.config.ts"
+    "../../prisma.config.ts",
+    "./drizzle.config.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "paths": {
+    "@react-router-gospel-stack/business/*": ["../../packages/business/src/*"]
+  }
 }

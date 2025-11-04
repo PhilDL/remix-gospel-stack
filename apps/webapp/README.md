@@ -117,7 +117,7 @@ Learn more: [React Router Routing Guide](https://reactrouter.com/start/framework
 Import the database client from the database package:
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 
 export async function loader() {
   const users = await db.user.findMany();

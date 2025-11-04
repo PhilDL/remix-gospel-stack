@@ -52,7 +52,7 @@ No code generation needed - edit the schema and immediately use it.
 ```typescript
 import { eq } from "drizzle-orm";
 
-import { users } from "@react-router-gospel-stack/database";
+import { users } from "@react-router-gospel-stack/infrastructure";
 
 import { db } from "~/db.server";
 
@@ -86,7 +86,7 @@ export const loader = async () => {
 After modifying `drizzle/schema.ts`:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:generate
+pnpm --filter @react-router-gospel-stack/infrastructure db:generate
 ```
 
 This creates migration SQL files in `drizzle/migrations/`.
@@ -96,13 +96,13 @@ This creates migration SQL files in `drizzle/migrations/`.
 **Local SQLite:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:migrate
+pnpm --filter @react-router-gospel-stack/infrastructure db:migrate
 ```
 
 **Remote Turso:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:migrate:production
+pnpm --filter @react-router-gospel-stack/infrastructure db:migrate:production
 ```
 
 Drizzle's `push` command works with both local and remote Turso databases.
@@ -112,7 +112,7 @@ Drizzle's `push` command works with both local and remote Turso databases.
 View and edit your database with Drizzle Studio:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:studio
+pnpm --filter @react-router-gospel-stack/infrastructure db:studio
 ```
 
 Opens at `https://local.drizzle.studio`
@@ -135,7 +135,7 @@ model User {
 After changes, regenerate the client:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:generate
+pnpm --filter @react-router-gospel-stack/infrastructure db:generate
 ```
 
 ### Querying with Prisma
@@ -158,7 +158,7 @@ export const loader = async () => {
 **PostgreSQL:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:migrate
+pnpm --filter @react-router-gospel-stack/infrastructure db:migrate
 ```
 
 **Turso:** Prisma cannot apply migrations directly to Turso. You must apply manually:
@@ -177,7 +177,7 @@ turso db shell <database-name> < packages/database/prisma/migrations/<folder>/mi
 ### Prisma Studio
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database prisma:studio
+pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
 ## Turso Setup
@@ -187,7 +187,7 @@ pnpm --filter @react-router-gospel-stack/database prisma:studio
 Configure `.env`:
 
 ```bash
-DATABASE_URL="file:./local.db"
+DATABASE_URL="file:../../local.db"
 # No sync URL or auth token needed for local dev
 ```
 
@@ -306,7 +306,7 @@ packages/database/
 The seed script adapts to your chosen ORM:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:seed
+pnpm --filter @react-router-gospel-stack/infrastructure db:seed
 ```
 
 Edit `packages/database/src/seed.ts` to customize seed data.
@@ -318,13 +318,13 @@ Edit `packages/database/src/seed.ts` to customize seed data.
 **Drizzle:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:studio
+pnpm --filter @react-router-gospel-stack/infrastructure db:studio
 ```
 
 **Prisma:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database prisma:studio
+pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
 ### Reset Database

@@ -1,4 +1,4 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("User", {
   id: text("id")
@@ -6,7 +6,7 @@ export const users = sqliteTable("User", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").unique(),
-  emailVerified: text("emailVerified"),
+  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
 });
 
 export type User = typeof users.$inferSelect;
