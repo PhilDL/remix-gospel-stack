@@ -1,6 +1,12 @@
 datasource db {
+{{#ifEquals dbType "turso"}}
   provider = "sqlite"
   url      = env("DATABASE_URL")
+{{/ifEquals}}
+{{#ifEquals dbType "postgres"}}
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+{{/ifEquals}}
 }
 
 generator client {

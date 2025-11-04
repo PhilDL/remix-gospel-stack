@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { PlopTypes } from "@turbo/gen";
@@ -249,42 +250,42 @@ export const registerScaffoldInfrastructureDbGenerator = (
         return "Postgres docker-compose files kept";
       },
       // Update Prisma schema if using Prisma
-      async function updatePrismaSchema(answers: {
-        dbType?: SupportedDatabases;
-        ormType?: SupportedOrms;
-      }) {
-        if (answers.ormType === "prisma") {
-          const prismaSchemaPath = path.join(
-            rootPath,
-            "packages",
-            "infrastructure",
-            "database",
-            "prisma",
-            "schema.prisma",
-          );
-          const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
-          if (answers.dbType === "turso") {
-            fs.writeFileSync(
-              prismaSchemaPath,
-              prismaSchema.replace(
-                /provider = "postgresql"/g,
-                'provider = "sqlite"',
-              ),
-            );
-            return "Updated Prisma schema to use sqlite for Turso";
-          } else {
-            fs.writeFileSync(
-              prismaSchemaPath,
-              prismaSchema.replace(
-                /provider = "sqlite"/g,
-                'provider = "postgresql"',
-              ),
-            );
-            return "Updated Prisma schema to use postgresql";
-          }
-        }
-        return "Using Drizzle (Prisma schema not updated)";
-      },
+      // async function updatePrismaSchema(answers: {
+      //   dbType?: SupportedDatabases;
+      //   ormType?: SupportedOrms;
+      // }) {
+      //   if (answers.ormType === "prisma") {
+      //     const prismaSchemaPath = path.join(
+      //       rootPath,
+      //       "packages",
+      //       "infrastructure",
+      //       "database",
+      //       "prisma",
+      //       "schema.prisma",
+      //     );
+      //     const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
+      //     if (answers.dbType === "turso") {
+      //       fs.writeFileSync(
+      //         prismaSchemaPath,
+      //         prismaSchema.replace(
+      //           /provider = "postgresql"/g,
+      //           'provider = "sqlite"',
+      //         ),
+      //       );
+      //       return "Updated Prisma schema to use sqlite for Turso";
+      //     } else {
+      //       fs.writeFileSync(
+      //         prismaSchemaPath,
+      //         prismaSchema.replace(
+      //           /provider = "sqlite"/g,
+      //           'provider = "postgresql"',
+      //         ),
+      //       );
+      //       return "Updated Prisma schema to use postgresql";
+      //     }
+      //   }
+      //   return "Using Drizzle (Prisma schema not updated)";
+      // },
       {
         type: "add",
         path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/.env.example",
@@ -296,6 +297,55 @@ export const registerScaffoldInfrastructureDbGenerator = (
         path: "{{ turbo.paths.root }}/packages/infrastructure/.env.example",
         templateFile: "templates/env.example.hbs",
         force: true,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/{{ ormType}}.config.ts",
+        templateFile: "templates/{{ ormType }}/config.ts.hbs",
+        force: true,
+      },
+      function deleteUnusedORMFiles(answers: {
+        app?: { dirname: string; pkgName: string };
+        ormType?: SupportedOrms;
+      }) {
+        switch (answers.ormType) {
+          case "drizzle":
+            try {
+              fs.unlinkSync(
+                path.join(
+                  rootPath,
+                  "packages",
+                  "infrastructure",
+                  "prisma.config.ts",
+                ),
+              );
+            } catch {}
+            try {
+              fs.rmdirSync(
+                path.join(rootPath, "packages", "infrastructure", "prisma"),
+              );
+            } catch {}
+            return "Removed Prisma config file and folder";
+          case "prisma":
+            try {
+              fs.unlinkSync(
+                path.join(
+                  rootPath,
+                  "packages",
+                  "infrastructure",
+                  "drizzle.config.ts",
+                ),
+              );
+            } catch {}
+            try {
+              fs.rmdirSync(
+                path.join(rootPath, "packages", "infrastructure", "drizzle"),
+              );
+            } catch {}
+            return "Removed Drizzle config file and folder";
+          default:
+            return "Removed unused ORM files";
+        }
       },
       {
         type: "add",
@@ -382,6 +432,22 @@ export const registerScaffoldInfrastructureDbGenerator = (
         }
 
         return "No deploy workflow added";
+      },
+      (): string => {
+        try {
+          execSync(`pnpm install --fix-lockfile`, { cwd: rootPath });
+          return "Installed new dependencies";
+        } catch (err) {
+          return "install failed";
+        }
+      },
+      (answers: { ormType?: SupportedOrms }): string => {
+        try {
+          execSync(`pnpm db:generate`, { cwd: rootPath });
+          return `Generated ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}`;
+        } catch (err) {
+          return "Failed to generate database client and migrations";
+        }
       },
     ],
   });

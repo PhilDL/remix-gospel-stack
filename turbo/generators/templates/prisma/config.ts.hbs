@@ -1,0 +1,20 @@
+import "dotenv/config";
+
+import { join } from "node:path";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { defineConfig } from "prisma/config";
+
+export default defineConfig({
+  migrations: {
+    path: join("prisma", "migrations"),
+    seed: `node ${join("src", "seed.ts")}`,
+  },
+  schema: join("prisma", "schema.prisma"),
+  async adapter() {
+    return new PrismaLibSQL({
+      url: process.env.DATABASE_URL!,
+      authToken: process.env.DATABASE_AUTH_TOKEN,
+      syncUrl: process.env.DATABASE_SYNC_URL,
+    });
+  },
+});
