@@ -301,7 +301,13 @@ export const registerScaffoldDatabaseGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/.env.example",
+        path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/.env.example",
+        templateFile: "templates/env.example.hbs",
+        force: true,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/database/.env.example",
         templateFile: "templates/env.example.hbs",
         force: true,
       },
