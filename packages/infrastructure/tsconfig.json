@@ -1,7 +1,10 @@
 {
   "extends": "@react-router-gospel-stack/tsconfig/node22.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {
+      "@react-router-gospel-stack/business/*": ["../../packages/business/src/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -11,8 +14,5 @@
     "./prisma.config.ts",
     "./drizzle.config.ts"
   ],
-  "exclude": ["node_modules"],
-  "paths": {
-    "@react-router-gospel-stack/business/*": ["../../packages/business/src/*"]
-  }
+  "exclude": ["node_modules"]
 }
