@@ -17,14 +17,14 @@
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
-    "drizzle-orm": "drizzle:catalog"
+    "drizzle-orm": "catalog:drizzle"
   },
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
-    "drizzle-kit": "drizzle:catalog",
+    "drizzle-kit": "catalog:drizzle",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "tsx": "catalog:typescript",

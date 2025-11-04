@@ -116,10 +116,10 @@ export const registerScaffoldDatabaseGenerator = (
           case "drizzle": {
             await editPackageJson(databasePackagePath, {
               addDependencies: {
-                "drizzle-orm": "drizzle:catalog",
+                "drizzle-orm": "catalog:drizzle",
               },
               addDevDependencies: {
-                "drizzle-kit": "drizzle:catalog",
+                "drizzle-kit": "catalog:drizzle",
               },
               removeDependencies: [
                 "prisma",
@@ -151,18 +151,18 @@ export const registerScaffoldDatabaseGenerator = (
           case "prisma": {
             await editPackageJson(databasePackagePath, {
               addDependencies: {
-                prisma: "prisma:catalog",
+                prisma: "catalog:prisma",
               },
               addDevDependencies:
                 answers.dbType === "turso"
                   ? {
-                      "@prisma/adapter-libsql": "prisma:catalog",
-                      "@prisma/client": "prisma:catalog",
+                      "@prisma/adapter-libsql": "catalog:prisma",
+                      "@prisma/client": "catalog:prisma",
                     }
                   : answers.dbType === "postgres"
                     ? {
-                        "@prisma/adapter-pg": "prisma:catalog",
-                        "@prisma/client": "prisma:catalog",
+                        "@prisma/adapter-pg": "catalog:prisma",
+                        "@prisma/client": "catalog:prisma",
                       }
                     : {},
               removeDependencies: ["drizzle-orm", "drizzle-kit"],
