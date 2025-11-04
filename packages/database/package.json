@@ -6,34 +6,26 @@
   "scripts": {
     "db:generate": "pnpm with-env drizzle-kit generate",
     "db:migrate": "pnpm with-env drizzle-kit migrate",
+    "db:migrate:production": "pnpm with-production-env drizzle-kit push",
     "db:push": "pnpm with-env drizzle-kit push",
     "db:seed": "pnpm with-env tsx src/seed.ts",
     "db:studio": "pnpm with-env drizzle-kit studio",
     "nuke": "rimraf .turbo node_modules src/generated drizzle/migrations",
     "clean": "rimraf .turbo src/generated drizzle/migrations",
     "lint": "eslint ./src",
-    "with-env": "dotenv -e ../../.env --",
-    "prisma:generate": "pnpm with-env prisma generate",
-    "prisma:migrate:deploy": "pnpm with-env prisma migrate deploy",
-    "prisma:migrate:dev": "pnpm with-env prisma migrate dev",
-    "prisma:push": "pnpm with-env prisma db push",
-    "prisma:migrate:force": "pnpm with-env prisma migrate reset --force",
-    "prisma:format": "pnpm with-env prisma format",
-    "prisma:studio": "pnpm with-env prisma studio"
+    "with-env": "dotenv -e ./.env --",
+    "with-production-env": "dotenv -e ./.env.production --"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
-    "drizzle-orm": "catalog:drizzle"
+    "drizzle-orm": "drizzle:catalog"
   },
   "devDependencies": {
-    "@prisma/adapter-libsql": "catalog:prisma",
-    "@prisma/client": "catalog:prisma",
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
     "@types/node": "^24.9.1",
     "dotenv-cli": "^10.0.0",
-    "drizzle-kit": "catalog:drizzle",
-    "prisma": "catalog:prisma",
+    "drizzle-kit": "drizzle:catalog",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",
     "tsx": "catalog:typescript",
