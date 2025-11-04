@@ -317,6 +317,18 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       {
         type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/repositories/index.ts",
+        templateFile: "templates/{{ ormType }}/repositories/index.ts.hbs",
+        force: true,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/repositories/user.ts",
+        templateFile: "templates/{{ ormType }}/repositories/user.ts.hbs",
+        force: true,
+      },
+      {
+        type: "add",
         path: "{{ turbo.paths.root }}/packages/infrastructure/drizzle/schema.ts",
         templateFile: "templates/drizzle/schema.ts.hbs",
         force: true,

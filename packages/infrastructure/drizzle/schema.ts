@@ -9,5 +9,6 @@ export const users = sqliteTable("User", {
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
 });
 
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
