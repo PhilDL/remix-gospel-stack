@@ -3,8 +3,7 @@ import path from "node:path";
 import { PlopTypes } from "@turbo/gen";
 import { glob } from "glob";
 
-import { setOrmDatabasePackage } from "./actions/set-orm-database-package";
-import { editPackageJson } from "./actions/utils";
+import { editPackageJson, readPackageName } from "./utils";
 
 type SupportedDatabases = "postgres" | "turso";
 type SupportedOrms = "drizzle" | "prisma";
@@ -108,12 +107,92 @@ export const registerScaffoldDatabaseGenerator = (
         dbType?: SupportedDatabases;
         ormType?: SupportedOrms;
       }) {
-        return await setOrmDatabasePackage({
-          rootPath,
-          appDirname: answers.app?.dirname ?? "",
-          ormType: answers.ormType ?? "drizzle",
-          dbType: answers.dbType ?? "turso",
-        });
+        const databasePackagePath = path.join(rootPath, "packages", "database");
+        const databasePackageName = await readPackageName(databasePackagePath);
+        if (!databasePackageName) {
+          throw new Error("Database package not found");
+        }
+        switch (answers.ormType) {
+          case "drizzle": {
+            await editPackageJson(databasePackagePath, {
+              addDependencies: {
+                "drizzle-orm": "drizzle:catalog",
+              },
+              addDevDependencies: {
+                "drizzle-kit": "drizzle:catalog",
+              },
+              removeDependencies: [
+                "prisma",
+                "@prisma/adapter-libsql",
+                "@prisma/client",
+                "@prisma/adapter-better-sqlite3",
+                "@prisma/adapter-pg",
+              ],
+              addScripts: {
+                "db:generate": "pnpm with-env drizzle-kit generate",
+                "db:migrate": "pnpm with-env drizzle-kit migrate",
+                "db:migrate:production":
+                  "pnpm with-production-env drizzle-kit push",
+                "db:seed": "pnpm with-env tsx src/seed.ts",
+                "db:studio": "pnpm with-env drizzle-kit studio",
+              },
+            });
+            await editPackageJson(rootPath, {
+              removeDependencies: [
+                "prisma",
+                "@prisma/adapter-libsql",
+                "@prisma/client",
+                "@prisma/adapter-better-sqlite3",
+                "@prisma/adapter-pg",
+              ],
+            });
+            break;
+          }
+          case "prisma": {
+            await editPackageJson(databasePackagePath, {
+              addDependencies: {
+                prisma: "prisma:catalog",
+              },
+              addDevDependencies:
+                answers.dbType === "turso"
+                  ? {
+                      "@prisma/adapter-libsql": "prisma:catalog",
+                      "@prisma/client": "prisma:catalog",
+                    }
+                  : answers.dbType === "postgres"
+                    ? {
+                        "@prisma/adapter-pg": "prisma:catalog",
+                        "@prisma/client": "prisma:catalog",
+                      }
+                    : {},
+              removeDependencies: ["drizzle-orm", "drizzle-kit"],
+              addScripts: {
+                "db:generate":
+                  "pnpm with-env prisma generate && pnpm with-env prisma migrate dev --create-only",
+                "db:migrate":
+                  answers.dbType === "turso"
+                    ? "pnpm with-env prisma migrate dev"
+                    : "pnpm with-env prisma migrate dev",
+                "db:migrate:production":
+                  answers.dbType === "turso"
+                    ? "pnpm with-env prisma migrate dev"
+                    : "pnpm with-production-env prisma migrate deploy",
+                "db:seed": "pnpm with-env tsx src/seed.ts",
+                "db:studio": "pnpm with-env prisma studio",
+              },
+            });
+            break;
+          }
+        }
+        await editPackageJson(
+          path.join(rootPath, "apps", answers.app?.dirname ?? ""),
+          {
+            addDependencies: {
+              [databasePackageName]: `workspace:*`,
+            },
+          },
+        );
+        return "Updated package.json";
       },
       {
         type: "add",
