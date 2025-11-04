@@ -1,8 +1,8 @@
 import { PassThrough } from "stream";
+import { ServerRouter, type HandleDocumentRequestFunction } from "react-router";
 import { createReadableStreamFromReadable } from "@react-router/node";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { ServerRouter, type HandleDocumentRequestFunction } from "react-router";
 
 export const streamTimeout = 5000;
 
