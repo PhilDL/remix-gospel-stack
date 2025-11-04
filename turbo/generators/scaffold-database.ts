@@ -323,8 +323,9 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/src/repositories/user.ts",
-        templateFile: "templates/{{ ormType }}/repositories/user.ts.hbs",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/repositories/user-repository.ts",
+        templateFile:
+          "templates/{{ ormType }}/repositories/user-repository.ts.hbs",
         force: true,
       },
       {
