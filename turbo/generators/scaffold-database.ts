@@ -248,23 +248,6 @@ export const registerScaffoldInfrastructureDbGenerator = (
 
         return "Postgres docker-compose files kept";
       },
-      // Generate Drizzle schema and client files
-      {
-        type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/database/drizzle/schema.ts",
-        templateFile: "templates/drizzle/schema.ts.hbs",
-        force: true,
-        skip: (answers: { ormType?: SupportedOrms }) =>
-          answers.ormType === "prisma"
-            ? "Skipping Drizzle schema (using Prisma)"
-            : false,
-      },
-      {
-        type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/client.ts",
-        templateFile: "templates/{{ ormType }}/client.ts.hbs",
-        force: true,
-      },
       // Update Prisma schema if using Prisma
       async function updatePrismaSchema(answers: {
         dbType?: SupportedDatabases;
@@ -310,23 +293,47 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/database/.env.example",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/.env.example",
         templateFile: "templates/env.example.hbs",
         force: true,
       },
-      // Update database package index based on ORM choice
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/index.ts",
-        templateFile: "templates/{{ ormType }}/index.ts.hbs",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/database/index.ts",
+        templateFile: "templates/{{ ormType }}/database/index.ts.hbs",
         force: true,
       },
-      // Update seed file based on ORM choice
       {
         type: "add",
-        path: "{{ turbo.paths.root }}/packages/infrastructure/database/src/seed.ts",
-        templateFile: "templates/{{ ormType }}/seed.ts.hbs",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/database/seed.ts",
+        templateFile: "templates/{{ ormType }}/database/seed.ts.hbs",
         force: true,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/src/database/client.ts",
+        templateFile: "templates/{{ ormType }}/database/client.ts.hbs",
+        force: true,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/drizzle/schema.ts",
+        templateFile: "templates/drizzle/schema.ts.hbs",
+        force: true,
+        skip: (answers: { ormType?: SupportedOrms }) =>
+          answers.ormType === "prisma"
+            ? "Skipping Drizzle schema (using Prisma)"
+            : false,
+      },
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/packages/infrastructure/prisma/schema.prisma",
+        templateFile: "templates/prisma/schema.prisma.hbs",
+        force: true,
+        skip: (answers: { ormType?: SupportedOrms }) =>
+          answers.ormType === "drizzle"
+            ? "Skipping Prisma schema (using Drizzle)"
+            : false,
       },
       async function githubDeployWorkflow(answers: {
         app?: { dirname: string; pkgName: string };
