@@ -231,6 +231,12 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       {
         type: "add",
+        path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/app/db.server.ts",
+        templateFile: "templates/db.server.ts.hbs",
+        force: true,
+      },
+      {
+        type: "add",
         path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/fly.toml",
         templateFile: "templates/fly.toml.hbs",
         force: true,

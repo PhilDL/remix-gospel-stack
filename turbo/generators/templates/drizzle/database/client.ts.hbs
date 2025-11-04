@@ -1,8 +1,19 @@
+{{#ifEquals dbType  "turso"}}
 import { createClient as createLibsqlClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+{{/ifEquals}}
+{{#ifEquals dbType  "postgres"}}
+import { drizzle } from "drizzle-orm/node-postgres"
+{{/ifEquals}}
 
 import * as schema from "../../drizzle/schema";
 
+{{#ifEquals dbType  "postgres"}}
+export const createClient = ({ url }: { url: string }) => {
+  return drizzle(url, { schema });
+};
+{{/ifEquals}}
+{{#ifEquals dbType  "turso"}}
 export const createClient = ({
   url,
   syncUrl,
@@ -21,5 +32,5 @@ export const createClient = ({
 
   return drizzle(client, { schema });
 };
-
+{{/ifEquals}}
 export type DrizzleClient = ReturnType<typeof createClient>;
