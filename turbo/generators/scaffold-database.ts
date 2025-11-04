@@ -323,6 +323,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
             try {
               fs.rmdirSync(
                 path.join(rootPath, "packages", "infrastructure", "prisma"),
+                { recursive: true },
               );
             } catch {}
             return "Removed Prisma config file and folder";
@@ -340,6 +341,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
             try {
               fs.rmdirSync(
                 path.join(rootPath, "packages", "infrastructure", "drizzle"),
+                { recursive: true },
               );
             } catch {}
             return "Removed Drizzle config file and folder";
@@ -435,6 +437,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       (): string => {
         try {
+          console.log("Installing new dependencies...");
           execSync(`pnpm install --fix-lockfile`, { cwd: rootPath });
           return "Installed new dependencies";
         } catch (err) {
@@ -443,6 +446,9 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       (answers: { ormType?: SupportedOrms }): string => {
         try {
+          console.log(
+            `Generating ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}...`,
+          );
           execSync(`pnpm db:generate`, { cwd: rootPath });
           return `Generated ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}`;
         } catch (err) {
