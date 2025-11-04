@@ -133,7 +133,7 @@ jobs:
         run: pnpm install
 
       - name: 🛠 Setup Database
-        run: pnpm run db:migrate:force
+        run: pnpm run db:migrate
 
       - name: ⚙️ Build
         run: pnpm run build

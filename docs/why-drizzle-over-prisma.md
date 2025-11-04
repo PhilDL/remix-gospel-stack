@@ -51,13 +51,13 @@ With Drizzle and Turso:
 
 ```bash
 pnpm db:generate  # Generate migration files
-pnpm db:push      # Apply directly to remote Turso database
+pnpm db:migrate:production      # Apply directly to remote Turso database
 ```
 
 With Prisma and Turso:
 
 ```bash
-pnpm prisma:migrate:dev  # Generate SQL files
+pnpm db:migrate  # Generate SQL files
 # Must manually apply: turso db shell <db> < migration.sql
 ```
 

@@ -96,13 +96,13 @@ This creates migration SQL files in `drizzle/migrations/`.
 **Local SQLite:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:push
+pnpm --filter @react-router-gospel-stack/database db:migrate
 ```
 
 **Remote Turso:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database db:push
+pnpm --filter @react-router-gospel-stack/database db:migrate:production
 ```
 
 Drizzle's `push` command works with both local and remote Turso databases.
@@ -135,7 +135,7 @@ model User {
 After changes, regenerate the client:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database prisma:generate
+pnpm --filter @react-router-gospel-stack/database db:generate
 ```
 
 ### Querying with Prisma
@@ -158,13 +158,13 @@ export const loader = async () => {
 **PostgreSQL:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/database prisma:migrate:dev
+pnpm --filter @react-router-gospel-stack/database db:migrate
 ```
 
 **Turso:** Prisma cannot apply migrations directly to Turso. You must apply manually:
 
 ```bash
-pnpm prisma:migrate:dev  # Generate SQL
+pnpm db:migrate  # Generate SQL
 sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
 ```
 
@@ -195,10 +195,10 @@ Apply your initial migration:
 
 ```bash
 # With Drizzle
-pnpm db:push
+pnpm db:migrate
 
 # With Prisma
-pnpm prisma:migrate:dev
+pnpm db:migrate
 sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
 ```
 
@@ -237,9 +237,10 @@ sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
 
    ```bash
    # With Drizzle - direct push to remote
-   pnpm db:push
+   pnpm db:migrate:production
 
    # With Prisma - manual application
+   pnpm db:migrate:production
    turso db shell <database-name> < packages/database/prisma/migrations/<folder>/migration.sql
    ```
 
@@ -273,11 +274,8 @@ The client automatically handles this when you provide `syncUrl`.
 3. **Run Migrations:**
 
    ```bash
-   # With Drizzle
-   pnpm db:push
-
-   # With Prisma
-   pnpm prisma:migrate:deploy
+   # With Drizzle or Prisma
+   pnpm db:migrate:production
    ```
 
 ### Production PostgreSQL
@@ -295,11 +293,11 @@ packages/database/
 │   ├── schema.prisma          # Prisma schema (alternative)
 │   └── migrations/            # Prisma migrations
 ├── src/
-│   ├── drizzle-client.ts      # Drizzle client factory
-│   ├── client.ts              # Prisma client factory
+│   ├── client.ts              # Client factory (Drizzle or Prisma)
 │   ├── seed.ts                # Seed script
 │   └── index.ts               # Package exports
-├── drizzle.config.ts          # Drizzle configuration
+├── drizzle.config.ts          # Drizzle configuration (optional)
+├── prisma.config.ts          # Prisma configuration (optional)
 └── package.json
 ```
 
@@ -335,7 +333,7 @@ pnpm --filter @react-router-gospel-stack/database prisma:studio
 
 ```bash
 rm local.db
-pnpm db:push  # Reapply migrations
+pnpm db:migrate  # Reapply migrations
 ```
 
 **PostgreSQL:**
@@ -343,7 +341,7 @@ pnpm db:push  # Reapply migrations
 ```bash
 docker compose down -v
 pnpm run docker:db
-pnpm db:push  # or prisma:migrate:deploy
+pnpm db:migrate
 ```
 
 **Remote Turso:**
@@ -351,7 +349,7 @@ pnpm db:push  # or prisma:migrate:deploy
 ```bash
 turso db destroy <database-name>
 turso db create <database-name> --group <group-name>
-pnpm db:push  # or apply migrations manually
+pnpm db:migrate:production  # or apply migrations manually
 ```
 
 ### Switch ORMs
@@ -371,12 +369,9 @@ Select your preferred ORM. The generator updates `src/index.ts` to export the co
 Regenerate the client:
 
 ```bash
-# Drizzle
+# Drizzle or Prisma
 pnpm db:generate
 
-# Prisma
-pnpm prisma:generate
-```
 
 ### Migration conflicts after switching databases
 
@@ -396,3 +391,4 @@ pnpm prisma:generate
 - [Deployment](./deployment.md) - Deploy with your chosen stack
 - [Architecture](./architecture.md) - How the database package fits in
 - [Development](./development.md) - Workflow tips
+```

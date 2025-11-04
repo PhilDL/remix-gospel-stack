@@ -74,14 +74,15 @@ export const setOrmDatabasePackage = async ({
               : {},
         removeDependencies: ["drizzle-orm", "drizzle-kit"],
         addScripts: {
-          "db:generate": "pnpm with-env prisma generate",
+          "db:generate":
+            "pnpm with-env prisma generate && pnpm with-env prisma migrate dev --create-only",
           "db:migrate":
             dbType === "turso"
-              ? "echo 'Prisma migrations are not supported for Turso'"
+              ? "pnpm with-env prisma migrate dev"
               : "pnpm with-env prisma migrate dev",
           "db:migrate:production":
             dbType === "turso"
-              ? "echo 'Prisma migrations are not supported for Turso'"
+              ? "pnpm with-env prisma migrate dev"
               : "pnpm with-production-env prisma migrate deploy",
           "db:seed": "pnpm with-env tsx src/seed.ts",
           "db:studio": "pnpm with-env prisma studio",

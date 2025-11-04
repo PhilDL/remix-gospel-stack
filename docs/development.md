@@ -148,10 +148,10 @@ DATABASE_URL="file:./local.db"
 # No sync URL or auth token needed for local dev
 ```
 
-Push schema to database:
+Migrate database:
 
 ```bash
-pnpm run db:push
+pnpm run db:migrate
 ```
 
 **For PostgreSQL:**
@@ -162,10 +162,10 @@ Start the PostgreSQL Docker container:
 pnpm run docker:db
 ```
 
-Push schema to database:
+Migrate database:
 
 ```bash
-pnpm run db:push
+pnpm run db:migrate
 ```
 
 #### With Prisma (Alternative)
@@ -178,16 +178,16 @@ Start the PostgreSQL Docker container:
 pnpm run docker:db
 ```
 
-Generate Prisma client:
+Generate Prisma client & migrations:
 
 ```bash
-pnpm run prisma:generate
+pnpm run db:generate
 ```
 
 Run migration:
 
 ```bash
-pnpm run prisma:migrate:deploy
+pnpm run db:migrate
 ```
 
 **For Turso:**
@@ -198,10 +198,10 @@ Configure your `.env`:
 DATABASE_URL="file:./local.db"
 ```
 
-Generate Prisma client:
+Generate Prisma client & migrations:
 
 ```bash
-pnpm run prisma:generate
+pnpm run db:generate
 ```
 
 **Important:** Prisma's automatic migrations don't work with Turso. See the [Database Guide](./database.md#working-with-prisma-alternative) for manual migration steps.
@@ -305,7 +305,7 @@ Once a task completes, Turborepo caches its output. If you run the same task aga
 
 ```bash
 pnpm run db:generate  # Generate migration files
-pnpm run db:push      # Apply to database
+pnpm run db:migrate      # Apply to database
 ```
 
 **View database:**
@@ -319,8 +319,8 @@ pnpm --filter @react-router-gospel-stack/database db:studio
 **After changing the Prisma schema:**
 
 ```bash
-pnpm run prisma:generate           # Regenerate client
-pnpm run prisma:migrate:dev        # Create & apply migration (PostgreSQL)
+pnpm run db:generate           # Regenerate client
+pnpm run db:migrate        # Create & apply migration (PostgreSQL)
 ```
 
 For Turso with Prisma, see the [Database Guide](./database.md#working-with-prisma-alternative) for manual migration steps.

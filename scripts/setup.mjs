@@ -215,25 +215,19 @@ async function main() {
     cwd: rootDirectory,
     stdio: "ignore",
   });
-  // Generate ORM client
-  if (orm === "drizzle") {
-    console.log(`${spaces()}◼  Generating Drizzle migrations...`);
-    try {
-      execSync("pnpm db:generate", {
-        cwd: rootDirectory,
-        stdio: "ignore",
-      });
-    } catch (error) {
-      console.log(
-        chalk.yellow(`${spaces()}⚠️  Could not generate migrations (skipping)`),
-      );
-    }
-  } else {
-    console.log(`${spaces()}◼  Generating Prisma client...`);
-    execSync("pnpm prisma:generate", {
+  // Generate migration
+  console.log(
+    `${spaces()}◼  Generating ${orm === "drizzle" ? "Drizzle" : "Prisma client & "} migrations...`,
+  );
+  try {
+    execSync("pnpm db:generate", {
       cwd: rootDirectory,
       stdio: "ignore",
     });
+  } catch (error) {
+    console.log(
+      chalk.yellow(`${spaces()}⚠️  Could not generate migrations (skipping)`),
+    );
   }
 
   // Print next steps
@@ -337,8 +331,8 @@ ${spaces()}📋 Next steps to start developing:
     console.log(`${spaces(9)}1. Start PostgreSQL:
 ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 
-${spaces(9)}2. Apply database schema:
-${spaces(12)}${chalk.yellow(orm === "drizzle" ? "pnpm run db:push" : "pnpm run prisma:migrate:deploy")}
+${spaces(9)}2. Migrate database schema:
+${spaces(12)}${chalk.yellow("pnpm run db:migrate")}
 
 ${spaces(9)}3. Build packages:
 ${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
@@ -351,7 +345,7 @@ ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 
 ${spaces(9)}2. Apply database schema:
-${spaces(12)}${chalk.yellow(orm === "drizzle" ? "pnpm run db:push" : "pnpm run prisma:generate && pnpm run prisma:push")}
+${spaces(12)}${chalk.yellow("pnpm run db:migrate")}
 
 ${spaces(9)}3. Build packages:
 ${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
