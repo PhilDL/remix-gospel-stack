@@ -53,16 +53,6 @@ catalogs:
     remix-hono:
       specifier: ^0.0.18
       version: 0.0.18
-  prisma:
-    '@prisma/adapter-libsql':
-      specifier: 6.18.0
-      version: 6.18.0
-    '@prisma/client':
-      specifier: 6.18.0
-      version: 6.18.0
-    prisma:
-      specifier: 6.18.0
-      version: 6.18.0
   react-router:
     '@react-router/dev':
       specifier: ^7.9.3
@@ -161,9 +151,6 @@ importers:
       '@npmcli/package-json':
         specifier: 7.0.1
         version: 7.0.1
-      '@prisma/adapter-libsql':
-        specifier: catalog:prisma
-        version: 6.18.0
       '@turbo/gen':
         specifier: ^2.5.8
         version: 2.5.8(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@24.9.1)(typescript@5.9.3)
@@ -191,9 +178,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: catalog:tailwindcss
         version: 0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(prettier@3.6.2))(prettier@3.6.2)
-      prisma:
-        specifier: catalog:prisma
-        version: 6.18.0(magicast@0.5.1)(typescript@5.9.3)
       replace-in-file:
         specifier: ^8.3.0
         version: 8.3.0
@@ -458,12 +442,6 @@ importers:
         specifier: catalog:drizzle
         version: 0.44.7(@libsql/client@0.15.15)(@opentelemetry/api@1.9.0)(@prisma/client@6.18.0(prisma@6.18.0(magicast@0.3.5)(typescript@5.9.3))(typescript@5.9.3))(@types/pg@8.15.5)(prisma@6.18.0(magicast@0.3.5)(typescript@5.9.3))
     devDependencies:
-      '@prisma/adapter-libsql':
-        specifier: catalog:prisma
-        version: 6.18.0
-      '@prisma/client':
-        specifier: catalog:prisma
-        version: 6.18.0(prisma@6.18.0(magicast@0.3.5)(typescript@5.9.3))(typescript@5.9.3)
       '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint
@@ -479,9 +457,6 @@ importers:
       drizzle-kit:
         specifier: catalog:drizzle
         version: 0.31.6
-      prisma:
-        specifier: catalog:prisma
-        version: 6.18.0(magicast@0.3.5)(typescript@5.9.3)
       rimraf:
         specifier: 'catalog:'
         version: 6.0.1
@@ -1748,9 +1723,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@prisma/adapter-libsql@6.18.0':
-    resolution: {integrity: sha512-AjmAK8QEnSHRwg0yXWFhI2yomqiZDwBlDCowDl3fItyWQ+ceTwQ0yZdV/Dbu1Yc4hPTNFfCs9QYHELaQqfRARA==}
-
   '@prisma/client@6.18.0':
     resolution: {integrity: sha512-jnL2I9gDnPnw4A+4h5SuNn8Gc+1mL1Z79U/3I9eE2gbxJG1oSA+62ByPW4xkeDgwE0fqMzzpAZ7IHxYnLZ4iQA==}
     engines: {node: '>=18.18'}
@@ -1768,9 +1740,6 @@ packages:
 
   '@prisma/debug@6.18.0':
     resolution: {integrity: sha512-PMVPMmxPj0ps1VY75DIrT430MoOyQx9hmm174k6cmLZpcI95rAPXOQ+pp8ANQkJtNyLVDxnxVJ0QLbrm/ViBcg==}
-
-  '@prisma/driver-adapter-utils@6.18.0':
-    resolution: {integrity: sha512-9wgSriEKs4j1ePxlv1/RNfJV9Gu5rzG37Neshg+DfrCcUY3amroERvTjyR04w5J1THdGdOTgGL9VdJcVaKRMmQ==}
 
   '@prisma/engines-version@6.18.0-8.34b5a692b7bd79939a9a2c3ef97d816e749cda2f':
     resolution: {integrity: sha512-T7Af4QsJQnSgWN1zBbX+Cha5t4qjHRxoeoWpK4JugJzG/ipmmDMY5S+O0N1ET6sCBNVkf6lz+Y+ZNO9+wFU8pQ==}
@@ -3008,9 +2977,6 @@ packages:
   async-function@1.0.0:
     resolution: {integrity: sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==}
     engines: {node: '>= 0.4'}
-
-  async-mutex@0.5.0:
-    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
 
   autoprefixer@10.4.21:
     resolution: {integrity: sha512-O+A6LWV5LDHSJD3LjHYoNi4VLsj/Whi7k6zG12xTYaU4cQ8oxQGckXNX8cRHK5yOZ/ppVHe0ZBXGzSV9jXdVbQ==}
@@ -7473,19 +7439,11 @@ snapshots:
     dependencies:
       playwright: 1.56.1
 
-  '@prisma/adapter-libsql@6.18.0':
-    dependencies:
-      '@libsql/client': 0.15.15
-      '@prisma/driver-adapter-utils': 6.18.0
-      async-mutex: 0.5.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@prisma/client@6.18.0(prisma@6.18.0(magicast@0.3.5)(typescript@5.9.3))(typescript@5.9.3)':
     optionalDependencies:
       prisma: 6.18.0(magicast@0.3.5)(typescript@5.9.3)
       typescript: 5.9.3
+    optional: true
 
   '@prisma/config@6.18.0(magicast@0.3.5)':
     dependencies:
@@ -7495,23 +7453,13 @@ snapshots:
       empathic: 2.0.0
     transitivePeerDependencies:
       - magicast
+    optional: true
 
-  '@prisma/config@6.18.0(magicast@0.5.1)':
-    dependencies:
-      c12: 3.1.0(magicast@0.5.1)
-      deepmerge-ts: 7.1.5
-      effect: 3.18.4
-      empathic: 2.0.0
-    transitivePeerDependencies:
-      - magicast
+  '@prisma/debug@6.18.0':
+    optional: true
 
-  '@prisma/debug@6.18.0': {}
-
-  '@prisma/driver-adapter-utils@6.18.0':
-    dependencies:
-      '@prisma/debug': 6.18.0
-
-  '@prisma/engines-version@6.18.0-8.34b5a692b7bd79939a9a2c3ef97d816e749cda2f': {}
+  '@prisma/engines-version@6.18.0-8.34b5a692b7bd79939a9a2c3ef97d816e749cda2f':
+    optional: true
 
   '@prisma/engines@6.18.0':
     dependencies:
@@ -7519,16 +7467,19 @@ snapshots:
       '@prisma/engines-version': 6.18.0-8.34b5a692b7bd79939a9a2c3ef97d816e749cda2f
       '@prisma/fetch-engine': 6.18.0
       '@prisma/get-platform': 6.18.0
+    optional: true
 
   '@prisma/fetch-engine@6.18.0':
     dependencies:
       '@prisma/debug': 6.18.0
       '@prisma/engines-version': 6.18.0-8.34b5a692b7bd79939a9a2c3ef97d816e749cda2f
       '@prisma/get-platform': 6.18.0
+    optional: true
 
   '@prisma/get-platform@6.18.0':
     dependencies:
       '@prisma/debug': 6.18.0
+    optional: true
 
   '@prisma/instrumentation@6.15.0(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -8844,10 +8795,6 @@ snapshots:
 
   async-function@1.0.0: {}
 
-  async-mutex@0.5.0:
-    dependencies:
-      tslib: 2.8.1
-
   autoprefixer@10.4.21(postcss@8.5.6):
     dependencies:
       browserslist: 4.27.0
@@ -8940,23 +8887,7 @@ snapshots:
       rc9: 2.1.2
     optionalDependencies:
       magicast: 0.3.5
-
-  c12@3.1.0(magicast@0.5.1):
-    dependencies:
-      chokidar: 4.0.3
-      confbox: 0.2.2
-      defu: 6.1.4
-      dotenv: 16.6.1
-      exsolve: 1.0.7
-      giget: 2.0.0
-      jiti: 2.6.1
-      ohash: 2.0.11
-      pathe: 2.0.3
-      perfect-debounce: 1.0.0
-      pkg-types: 2.3.0
-      rc9: 2.1.2
-    optionalDependencies:
-      magicast: 0.5.1
+    optional: true
 
   cac@6.7.14: {}
 
@@ -9068,6 +8999,7 @@ snapshots:
   citty@0.1.6:
     dependencies:
       consola: 3.4.2
+    optional: true
 
   cjs-module-lexer@1.4.3: {}
 
@@ -9128,7 +9060,8 @@ snapshots:
 
   confbox@0.1.8: {}
 
-  confbox@0.2.2: {}
+  confbox@0.2.2:
+    optional: true
 
   consola@3.4.2: {}
 
@@ -9225,7 +9158,8 @@ snapshots:
 
   deep-is@0.1.4: {}
 
-  deepmerge-ts@7.1.5: {}
+  deepmerge-ts@7.1.5:
+    optional: true
 
   defaults@1.0.4:
     dependencies:
@@ -9243,7 +9177,8 @@ snapshots:
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
 
-  defu@6.1.4: {}
+  defu@6.1.4:
+    optional: true
 
   degenerator@5.0.1:
     dependencies:
@@ -9264,7 +9199,8 @@ snapshots:
 
   dequal@2.0.3: {}
 
-  destr@2.0.5: {}
+  destr@2.0.5:
+    optional: true
 
   detect-libc@2.0.2: {}
 
@@ -9338,6 +9274,7 @@ snapshots:
     dependencies:
       '@standard-schema/spec': 1.0.0
       fast-check: 3.23.2
+    optional: true
 
   electron-to-chromium@1.5.240: {}
 
@@ -9808,7 +9745,8 @@ snapshots:
 
   expect-type@1.2.2: {}
 
-  exsolve@1.0.7: {}
+  exsolve@1.0.7:
+    optional: true
 
   external-editor@3.1.0:
     dependencies:
@@ -9819,6 +9757,7 @@ snapshots:
   fast-check@3.23.2:
     dependencies:
       pure-rand: 6.1.0
+    optional: true
 
   fast-deep-equal@3.1.3: {}
 
@@ -10006,6 +9945,7 @@ snapshots:
       node-fetch-native: 1.6.7
       nypm: 0.6.2
       pathe: 2.0.3
+    optional: true
 
   glob-parent@5.1.2:
     dependencies:
@@ -10848,7 +10788,8 @@ snapshots:
 
   node-domexception@1.0.0: {}
 
-  node-fetch-native@1.6.7: {}
+  node-fetch-native@1.6.7:
+    optional: true
 
   node-fetch@2.7.0:
     dependencies:
@@ -10951,6 +10892,7 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 2.3.0
       tinyexec: 1.0.1
+    optional: true
 
   object-assign@4.1.1: {}
 
@@ -11003,7 +10945,8 @@ snapshots:
       define-properties: 1.2.1
       es-object-atoms: 1.1.1
 
-  ohash@2.0.11: {}
+  ohash@2.0.11:
+    optional: true
 
   once@1.4.0:
     dependencies:
@@ -11132,7 +11075,8 @@ snapshots:
 
   pathval@2.0.1: {}
 
-  perfect-debounce@1.0.0: {}
+  perfect-debounce@1.0.0:
+    optional: true
 
   pg-int8@1.0.1: {}
 
@@ -11169,6 +11113,7 @@ snapshots:
       confbox: 0.2.2
       exsolve: 1.0.7
       pathe: 2.0.3
+    optional: true
 
   playwright-core@1.56.1: {}
 
@@ -11242,15 +11187,7 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - magicast
-
-  prisma@6.18.0(magicast@0.5.1)(typescript@5.9.3):
-    dependencies:
-      '@prisma/config': 6.18.0(magicast@0.5.1)
-      '@prisma/engines': 6.18.0
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - magicast
+    optional: true
 
   proc-log@3.0.0: {}
 
@@ -11290,7 +11227,8 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  pure-rand@6.1.0: {}
+  pure-rand@6.1.0:
+    optional: true
 
   queue-microtask@1.2.3: {}
 
@@ -11298,6 +11236,7 @@ snapshots:
     dependencies:
       defu: 6.1.4
       destr: 2.0.5
+    optional: true
 
   rc@1.2.8:
     dependencies:
@@ -11904,7 +11843,8 @@ snapshots:
 
   tinyexec@0.3.2: {}
 
-  tinyexec@1.0.1: {}
+  tinyexec@1.0.1:
+    optional: true
 
   tinyglobby@0.2.15:
     dependencies:
