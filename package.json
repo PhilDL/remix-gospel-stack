@@ -8,7 +8,7 @@
   "scripts": {
     "init": "node scripts/setup.mjs",
     "build": "turbo run build",
-    "db:generate": "turbo run db:generate",
+    "db:generate": "turbo run db:generate --",
     "db:seed": "turbo run db:seed --no-cache",
     "db:migrate": "turbo run db:migrate --no-cache",
     "db:migrate:production": "turbo run db:migrate:production --no-cache",
