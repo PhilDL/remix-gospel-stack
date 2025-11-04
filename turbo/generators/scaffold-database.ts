@@ -4,7 +4,7 @@ import path from "node:path";
 import { PlopTypes } from "@turbo/gen";
 import { glob } from "glob";
 
-import { editPackageJson, readPackageName } from "./utils";
+import { editPackageJson, merge, readPackageName } from "./utils";
 
 type SupportedDatabases = "postgres" | "turso";
 type SupportedOrms = "drizzle" | "prisma";
@@ -108,6 +108,8 @@ export const registerScaffoldInfrastructureDbGenerator = (
         dbType?: SupportedDatabases;
         ormType?: SupportedOrms;
       }) {
+        const isTurso = answers.dbType === "turso";
+        const isPostgres = answers.dbType === "postgres";
         const infrastructurePkgPath = path.join(
           rootPath,
           "packages",
@@ -122,19 +124,35 @@ export const registerScaffoldInfrastructureDbGenerator = (
         switch (answers.ormType) {
           case "drizzle": {
             await editPackageJson(infrastructurePkgPath, {
-              addDependencies: {
-                "drizzle-orm": "catalog:drizzle",
-              },
-              addDevDependencies: {
-                "drizzle-kit": "catalog:drizzle",
-              },
+              addDependencies: merge(
+                {
+                  "drizzle-orm": "catalog:drizzle",
+                },
+                isTurso && {
+                  "@libsql/client": "catalog:sqlite",
+                },
+                isPostgres && {
+                  pg: "catalog:postgresql",
+                },
+              ),
+              addDevDependencies: merge(
+                {
+                  "drizzle-kit": "catalog:drizzle",
+                },
+                isPostgres && {
+                  "@types/pg": "catalog:postgresql",
+                },
+              ),
               removeDependencies: [
                 "prisma",
-                "@prisma/adapter-libsql",
                 "@prisma/client",
+                "@prisma/adapter-libsql",
                 "@prisma/adapter-better-sqlite3",
                 "@prisma/adapter-pg",
-              ],
+                isTurso && "@types/pg",
+                isTurso && "pg",
+                isPostgres && "@libsql/client",
+              ].filter((dep): dep is string => dep !== false),
               addScripts: {
                 "db:generate": "pnpm with-env drizzle-kit generate",
                 "db:migrate": "pnpm with-env drizzle-kit migrate",
@@ -160,19 +178,23 @@ export const registerScaffoldInfrastructureDbGenerator = (
               addDependencies: {
                 prisma: "catalog:prisma",
               },
-              addDevDependencies:
-                answers.dbType === "turso"
-                  ? {
-                      "@prisma/adapter-libsql": "catalog:prisma",
-                      "@prisma/client": "catalog:prisma",
-                    }
-                  : answers.dbType === "postgres"
-                    ? {
-                        "@prisma/adapter-pg": "catalog:prisma",
-                        "@prisma/client": "catalog:prisma",
-                      }
-                    : {},
-              removeDependencies: ["drizzle-orm", "drizzle-kit"],
+              addDevDependencies: merge(
+                isTurso && {
+                  "@prisma/adapter-libsql": "catalog:prisma",
+                  "@prisma/client": "catalog:prisma",
+                },
+                isPostgres && {
+                  "@prisma/adapter-pg": "catalog:prisma",
+                  "@prisma/client": "catalog:prisma",
+                },
+              ),
+              removeDependencies: [
+                "drizzle-orm",
+                "drizzle-kit",
+                isTurso && "@types/pg",
+                isTurso && "pg",
+                isPostgres && "@libsql/client",
+              ].filter((dep): dep is string => dep !== false),
               addScripts: {
                 "db:generate":
                   "pnpm with-env prisma generate && pnpm with-env prisma migrate dev --create-only",

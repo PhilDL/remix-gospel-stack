@@ -18,9 +18,10 @@ export const editPackageJson = async (
   operations?: PackageJsonOperations,
 ) => {
   const pkgJson = await PackageJson.load(packageJsonPath);
-  const newDependencies = pkgJson.content.dependencies
-    ? { ...pkgJson.content.dependencies, ...operations?.addDependencies }
-    : operations?.addDependencies;
+  const newDependencies = merge(
+    pkgJson.content.dependencies as Record<string, string>,
+    operations?.addDependencies,
+  );
   if (newDependencies) {
     for (const toRemove of operations?.removeDependencies ?? []) {
       if (newDependencies[toRemove]) {
@@ -29,9 +30,10 @@ export const editPackageJson = async (
     }
   }
 
-  const newDevDependencies = pkgJson.content.devDependencies
-    ? { ...pkgJson.content.devDependencies, ...operations?.addDevDependencies }
-    : operations?.addDevDependencies;
+  const newDevDependencies = merge(
+    pkgJson.content.devDependencies as Record<string, string>,
+    operations?.addDevDependencies,
+  );
   if (newDevDependencies) {
     for (const toRemove of operations?.removeDependencies ?? []) {
       if (newDevDependencies[toRemove]) {
@@ -39,9 +41,10 @@ export const editPackageJson = async (
       }
     }
   }
-  const newScripts = pkgJson.content.scripts
-    ? { ...pkgJson.content.scripts, ...operations?.addScripts }
-    : operations?.addScripts;
+  const newScripts = merge(
+    pkgJson.content.scripts as Record<string, string>,
+    operations?.addScripts as Record<string, string>,
+  );
   if (newScripts) {
     for (const toRemove of operations?.removeScripts ?? []) {
       if (newScripts[toRemove]) {
@@ -57,3 +60,14 @@ export const editPackageJson = async (
   await pkgJson.save();
   return pkgJson.content;
 };
+
+export function merge<T extends Record<string, string>>(
+  ...objects: (T | null | false | undefined)[]
+): T {
+  return objects.reduce<T>((acc, obj) => {
+    if (obj && typeof obj === "object") {
+      Object.assign(acc, obj);
+    }
+    return acc;
+  }, {} as T);
+}
