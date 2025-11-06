@@ -139,7 +139,7 @@ jobs:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/gospel_stack_db"
 
       - name: 🛠 Setup Database
-        run: pnpm run db:migrate
+        run: pnpm run db:migrate:apply
 
       - name: ⚙️ Build
         run: pnpm run build

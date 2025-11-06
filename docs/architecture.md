@@ -614,8 +614,8 @@ pnpm run build
 If TypeScript can't find types:
 
 ```bash
-# Regenerate Prisma Client
-pnpm run generate
+# Regenerate Prisma Client (if using Prisma)
+pnpm run db:generate
 
 # Build packages
 pnpm run build --filter=@react-router-gospel-stack/infrastructure

@@ -10,8 +10,9 @@
     "build": "turbo run build",
     "db:generate": "turbo run db:generate --",
     "db:seed": "turbo run db:seed --no-cache",
-    "db:migrate": "turbo run db:migrate --no-cache",
-    "db:migrate:production": "turbo run db:migrate:production --no-cache",
+    "db:migrate:new": "turbo run db:migrate:new --",
+    "db:migrate:apply": "turbo run db:migrate:apply --",
+    "db:migrate:apply:production": "turbo run db:migrate:apply:production --no-cache",
     "dev": "turbo run dev --parallel",
     "storybook": "turbo run storybook",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -31,7 +32,7 @@
     "typecheck": "turbo run typecheck",
     "test:e2e:dev": "turbo run test:e2e:dev",
     "test:e2e:ci": "turbo run test:e2e:ci",
-    "setup": "pnpm run db:migrate:dev && turbo run db:migrate:force db:seed build",
+    "setup": "pnpm run db:migrate:dev && turbo db:seed build",
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {

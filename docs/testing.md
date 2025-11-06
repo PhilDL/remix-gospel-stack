@@ -372,7 +372,7 @@ TypeScript configs are in the `config/tsconfig` package:
 If Prisma types are missing:
 
 ```bash
-pnpm run generate
+pnpm run db:generate
 ```
 
 #### Module Not Found
@@ -698,8 +698,8 @@ pnpm run typecheck && pnpm run lint && pnpm run test
 ### Type Errors After Package Update
 
 ```bash
-# Regenerate types
-pnpm run generate
+# Regenerate types (if using Prisma)
+pnpm run db:generate
 
 # Rebuild packages
 pnpm run build

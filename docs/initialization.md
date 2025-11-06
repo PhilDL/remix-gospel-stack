@@ -103,15 +103,14 @@ pnpm run init
 
 Once the init script completes, follow these steps to get your app running:
 
-### For PostgreSQL
+### For PostgreSQL with Drizzle (Default)
 
 ```bash
 # 1. Start PostgreSQL container
 pnpm run docker:db
 
-# 2. Generate database client and run migrations
-pnpm run db:generate
-pnpm run db:migrate
+# 2. Apply initial migrations
+pnpm run db:migrate:apply
 
 # 3. Build packages
 pnpm run build --filter=@your-org/webapp...
@@ -124,19 +123,63 @@ Your app should now be running at `http://localhost:5173`
 
 > 💡 **For more info:** See the [Database Guide](./database.md) for advanced PostgreSQL configuration and [Development Guide](./development.md) for detailed workflow information.
 
-### For Turso
+### For PostgreSQL with Prisma
+
+```bash
+# 1. Start PostgreSQL container
+pnpm run docker:db
+
+# 2. Generate Prisma client
+pnpm run db:generate
+
+# 3. Apply initial migrations
+pnpm run db:migrate:apply
+
+# 4. Build packages
+pnpm run build --filter=@your-org/webapp...
+
+# 5. Start dev server
+pnpm run dev --filter=@your-org/webapp
+```
+
+Your app should now be running at `http://localhost:5173`
+
+> 💡 **For more info:** See the [Database Guide](./database.md) for advanced PostgreSQL configuration and [Development Guide](./development.md) for detailed workflow information.
+
+### For Turso with Drizzle (Default)
 
 ```bash
 # 1. No setup needed - local SQLite file will be created automatically
 
-# 2. Generate database client and run migrations
-pnpm run db:generate
-pnpm run db:migrate
+# 2. Apply initial migrations
+pnpm run db:migrate:apply
 
 # 3. Build packages
 pnpm run build --filter=@your-org/webapp...
 
 # 4. Start dev server
+pnpm run dev --filter=@your-org/webapp
+```
+
+Your app should now be running at `http://localhost:5173`
+
+> 💡 **For more info:** See the [Database Guide](./database.md) for Turso production setup with embedded replicas and [Development Guide](./development.md) for detailed workflow information.
+
+### For Turso with Prisma
+
+```bash
+# 1. No setup needed - local SQLite file will be created automatically
+
+# 2. Generate Prisma client
+pnpm run db:generate
+
+# 3. Apply initial migrations
+pnpm run db:migrate:apply
+
+# 4. Build packages
+pnpm run build --filter=@your-org/webapp...
+
+# 5. Start dev server
 pnpm run dev --filter=@your-org/webapp
 ```
 

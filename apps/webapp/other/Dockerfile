@@ -30,7 +30,6 @@ FROM bookworm-turbopm AS base
 WORKDIR /app
 COPY .gitignore .gitignore
 COPY .npmrc .npmrc
-COPY prisma.config.ts prisma.config.ts
 COPY turbo.json turbo.json
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml

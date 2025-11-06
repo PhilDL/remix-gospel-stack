@@ -81,31 +81,37 @@ export const loader = async () => {
 
 ### Migrations with Drizzle
 
-#### Generate Migration Files
+Drizzle doesn't require a client generation step - edit the schema and use it directly.
 
-After modifying `drizzle/schema.ts`:
+#### Generate New Migration
+
+After modifying `drizzle/schema.ts`, create a new migration:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/infrastructure db:generate
+pnpm run db:migrate:new
 ```
 
-This creates migration SQL files in `drizzle/migrations/`.
+This is an interactive command that will:
+
+1. Compare your schema with the database
+2. Generate migration SQL files in `drizzle/migrations/`
+3. Prompt you to name the migration
 
 #### Apply Migrations
 
-**Local SQLite:**
+**Local (SQLite or PostgreSQL):**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/infrastructure db:migrate
+pnpm run db:migrate:apply
 ```
 
-**Remote Turso:**
+**Production (reads from `.env.production`):**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/infrastructure db:migrate:production
+pnpm run db:migrate:apply:production
 ```
 
-Drizzle's `push` command works with both local and remote Turso databases.
+This works with both local and remote Turso databases, as well as PostgreSQL.
 
 ### Drizzle Studio
 
@@ -132,11 +138,13 @@ model User {
 }
 ```
 
-After changes, regenerate the client:
+After schema changes, regenerate the TypeScript client:
 
 ```bash
-pnpm --filter @react-router-gospel-stack/infrastructure db:generate
+pnpm run db:generate
 ```
+
+> **Note:** With Prisma, `db:generate` only generates the TypeScript client. It does not create migrations.
 
 ### Querying with Prisma
 
@@ -155,22 +163,38 @@ export const loader = async () => {
 
 ### Migrations with Prisma
 
+#### Generate New Migration
+
+After modifying the Prisma schema, create a new migration:
+
+```bash
+pnpm run db:migrate:new
+```
+
+This will:
+
+1. Compare your schema with the database
+2. Generate migration SQL files in `prisma/migrations/`
+3. Prompt you to name the migration
+
+#### Apply Migrations
+
 **PostgreSQL:**
 
 ```bash
-pnpm --filter @react-router-gospel-stack/infrastructure db:migrate
+pnpm run db:migrate:apply
 ```
 
-**Turso:** Prisma cannot apply migrations directly to Turso. You must apply manually:
+**Turso:** Prisma cannot apply migrations directly to Turso. Generate the migration first, then apply manually:
 
 ```bash
-pnpm db:migrate  # Generate SQL
+# 1. Generate the migration (creates SQL file)
+pnpm run db:migrate:new
+
+# 2. Apply manually to local Turso
 sqlite3 local.db < packages/infrastructure/prisma/migrations/<folder>/migration.sql
-```
 
-For remote Turso:
-
-```bash
+# 3. Or apply to remote Turso
 turso db shell <database-name> < packages/infrastructure/prisma/migrations/<folder>/migration.sql
 ```
 
@@ -195,10 +219,10 @@ Apply your initial migration:
 
 ```bash
 # With Drizzle
-pnpm db:migrate
+pnpm db:migrate:apply
 
 # With Prisma
-pnpm db:migrate
+pnpm db:migrate:apply
 sqlite3 local.db < packages/infrastructure/prisma/migrations/<folder>/migration.sql
 ```
 
@@ -237,10 +261,10 @@ sqlite3 local.db < packages/infrastructure/prisma/migrations/<folder>/migration.
 
    ```bash
    # With Drizzle - direct push to remote
-   pnpm db:migrate:production
+   pnpm db:migrate:apply:production
 
    # With Prisma - manual application
-   pnpm db:migrate:production
+   pnpm db:migrate:apply:production
    turso db shell <database-name> < packages/infrastructure/prisma/migrations/<folder>/migration.sql
    ```
 
@@ -270,26 +294,26 @@ The client automatically handles this when you provide `syncUrl`.
    This starts a PostgreSQL container with:
    - Username: `postgres`
    - Password: `postgres`
-   - Database: `gospel_stack_db` (automatically created)
+   - Database: `remix_gospel` (automatically created)
    - Port: `5432`
 
    > **Note:** If you're using an existing PostgreSQL installation, you'll need to create the database manually:
    >
    > ```bash
-   > psql -U postgres -c "CREATE DATABASE gospel_stack_db;"
+   > psql -U postgres -c "CREATE DATABASE remix_gospel;"
    > ```
 
 2. **Configure `.env`:**
 
    ```bash
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/gospel_stack_db"
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
    ```
 
 3. **Run Migrations:**
 
    ```bash
    # With Drizzle or Prisma
-   pnpm db:migrate
+   pnpm db:migrate:apply
    ```
 
 ### Production PostgreSQL
@@ -347,7 +371,7 @@ pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 
 ```bash
 rm local.db
-pnpm db:migrate  # Reapply migrations
+pnpm db:migrate:apply  # Reapply migrations
 ```
 
 **PostgreSQL:**
@@ -355,7 +379,7 @@ pnpm db:migrate  # Reapply migrations
 ```bash
 docker compose down -v
 pnpm run docker:db
-pnpm db:migrate
+pnpm db:migrate:apply
 ```
 
 **Remote Turso:**
@@ -363,7 +387,7 @@ pnpm db:migrate
 ```bash
 turso db destroy <database-name>
 turso db create <database-name> --group <group-name>
-pnpm db:migrate:production  # or apply migrations manually
+pnpm db:migrate:apply:production  # or apply migrations manually
 ```
 
 ### Switch ORMs
@@ -380,12 +404,13 @@ Select your preferred ORM. The generator updates `src/index.ts` to export the co
 
 ### "Cannot find module" errors
 
-Regenerate the client:
+**With Prisma:** Regenerate the TypeScript client:
 
 ```bash
-# Drizzle or Prisma
-pnpm db:generate
+pnpm run db:generate
+```
 
+**With Drizzle:** No client generation needed. Check that your schema is properly imported.
 
 ### Migration conflicts after switching databases
 
@@ -405,4 +430,7 @@ pnpm db:generate
 - [Deployment](./deployment.md) - Deploy with your chosen stack
 - [Architecture](./architecture.md) - How the database package fits in
 - [Development](./development.md) - Workflow tips
+
+```
+
 ```

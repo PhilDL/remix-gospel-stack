@@ -141,8 +141,9 @@ Database setup varies based on your ORM (Drizzle or Prisma) and database (Turso 
 **For complete database setup instructions, see the [Database Guide](./database.md).**
 
 Quick reference:
-- **Turso**: Configure `.env` with `DATABASE_URL="file:../../local.db"`, then run `pnpm run db:migrate`
-- **PostgreSQL**: Run `pnpm run docker:db`, then run `pnpm run db:migrate`
+
+- **Turso**: Configure `.env` with `DATABASE_URL="file:../../local.db"`, then run `pnpm run db:migrate:apply`
+- **PostgreSQL**: Run `pnpm run docker:db`, then run `pnpm run db:migrate:apply`
 
 ### 4. Build the Project
 
@@ -242,12 +243,21 @@ For detailed database operations, see the [Database Guide](./database.md).
 **Quick reference:**
 
 After schema changes:
+
 ```bash
-pnpm run db:generate  # Generate migrations
-pnpm run db:migrate   # Apply migrations
+# Drizzle: Generate new migration (interactive)
+pnpm run db:migrate:new
+
+# Prisma: Generate TypeScript client first
+pnpm run db:generate
+pnpm run db:migrate:new
+
+# Apply migrations (both ORMs)
+pnpm run db:migrate:apply
 ```
 
 View your database:
+
 ```bash
 # Drizzle
 pnpm --filter @react-router-gospel-stack/infrastructure db:studio
@@ -257,6 +267,7 @@ pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
 Switch ORM or database:
+
 ```bash
 pnpm turbo gen scaffold-database
 ```

@@ -88,7 +88,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 "docker:db": "docker compose -f docker-compose.yml up -d",
                 "docker:run:webapp":
                   "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp",
-                setup: `pnpm run docker:db && pnpm run db:migrate && turbo run db:seed build`,
+                setup: `pnpm run docker:db && pnpm run db:migrate:new && turbo run db:seed build`,
               },
             });
             break;
@@ -154,9 +154,9 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 isPostgres && "@libsql/client",
               ].filter((dep): dep is string => dep !== false),
               addScripts: {
-                "db:generate": "pnpm with-env drizzle-kit generate",
-                "db:migrate": "pnpm with-env drizzle-kit migrate",
-                "db:migrate:production":
+                "db:migrate:new": "pnpm with-env drizzle-kit generate",
+                "db:migrate:apply": "pnpm with-env drizzle-kit migrate",
+                "db:migrate:apply:production":
                   "pnpm with-production-env drizzle-kit migrate",
                 "db:seed": "pnpm with-env tsx src/seed.ts",
                 "db:studio": "pnpm with-env drizzle-kit studio",
@@ -196,13 +196,11 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 isPostgres && "@libsql/client",
               ].filter((dep): dep is string => dep !== false),
               addScripts: {
-                "db:generate":
-                  "pnpm with-env prisma generate && pnpm with-env prisma migrate dev --create-only",
-                "db:migrate":
-                  answers.dbType === "turso"
-                    ? "pnpm with-env prisma migrate dev"
-                    : "pnpm with-env prisma migrate dev",
-                "db:migrate:production":
+                "db:generate": "pnpm with-env prisma generate",
+                "db:migrate:new":
+                  "pnpm with-env prisma migrate dev --create-only",
+                "db:migrate:apply": "pnpm with-env prisma migrate dev",
+                "db:migrate:apply:production":
                   answers.dbType === "turso"
                     ? "pnpm with-env prisma migrate dev"
                     : "pnpm with-production-env prisma migrate deploy",

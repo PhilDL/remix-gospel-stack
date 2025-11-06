@@ -46,11 +46,15 @@
     "db:generate": {
       "cache": false
     },
-    "db:migrate": {
+    "db:migrate:new": {
       "outputs": [],
       "cache": false
     },
-    "db:migrate:production": {
+    "db:migrate:apply": {
+      "outputs": [],
+      "cache": false
+    },
+    "db:migrate:apply:production": {
       "outputs": [],
       "cache": false
     },

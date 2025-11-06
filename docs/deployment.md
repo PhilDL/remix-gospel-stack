@@ -106,7 +106,7 @@ Before your first deployment, apply the migrations:
 fly postgres connect --app react-router-gospel-stack-db
 
 # In another terminal, run migrations
-DATABASE_URL="<connection-string>" pnpm run db:migrate
+DATABASE_URL="<connection-string>" pnpm run db:migrate:apply
 ```
 
 ### 4. Deploy!
@@ -183,7 +183,7 @@ Save these values for the next step.
 
 ```bash
 # Apply directly to remote Turso database
-pnpm db:migrate:production
+pnpm db:migrate:apply:production
 ```
 
 **With Prisma:**
@@ -473,7 +473,7 @@ For migration workflows, see the [Database Guide](./database.md#migrations-with-
 **Quick reference:**
 
 - **PostgreSQL:** Migrations are automatically applied during deployment by the GitHub Action
-- **Turso with Drizzle:** `pnpm db:migrate:production`
+- **Turso with Drizzle:** `pnpm db:migrate:apply:production`
 - **Turso with Prisma:** Apply manually using `turso db shell`
 
 ## Security Best Practices

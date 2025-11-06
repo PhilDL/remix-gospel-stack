@@ -50,14 +50,14 @@ With Prisma, you must run `prisma generate` after every schema change to regener
 With Drizzle and Turso:
 
 ```bash
-pnpm db:generate  # Generate migration files
-pnpm db:migrate:production      # Apply directly to remote Turso database
+pnpm run db:migrate:new              # Generate migration files (interactive)
+pnpm run db:migrate:apply:production # Apply directly to remote Turso database
 ```
 
 With Prisma and Turso:
 
 ```bash
-pnpm db:migrate  # Generate SQL files
+pnpm run db:migrate:new  # Generate SQL files
 # Must manually apply: turso db shell <db> < migration.sql
 ```
 
