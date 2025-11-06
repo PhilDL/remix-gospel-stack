@@ -61,6 +61,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
           name: `[./apps/${app.dirname}] ${app.name}`,
           value: { dirname: app.dirname, pkgName: app.name },
         })),
+        default: apps[0],
       },
     ],
     actions: [

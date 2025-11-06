@@ -94,7 +94,7 @@ async function main() {
   // Run database scaffold generator
   try {
     execSync(
-      `pnpm turbo gen scaffold-database --args ${ORG_NAME}/webapp webapp ${db} ${orm}`,
+      `pnpm turbo gen scaffold-database --args ${db} ${orm} ${ORG_NAME}/webapp webapp`,
       {
         cwd: rootDirectory,
         stdio: "inherit",
