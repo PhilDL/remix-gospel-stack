@@ -13,10 +13,13 @@
     "clean": "rimraf .turbo src/generated drizzle/migrations",
     "lint": "eslint ./src",
     "with-env": "dotenv -e ./.env --",
-    "with-production-env": "dotenv -e ./.env.production --"
+    "with-production-env": "dotenv -e ./.env.production --",
+    "db:migrate:new": "pnpm with-env drizzle-kit generate",
+    "db:migrate:apply": "pnpm with-env drizzle-kit migrate",
+    "db:migrate:apply:production": "pnpm with-production-env drizzle-kit migrate"
   },
   "dependencies": {
-    "@libsql/client": "^0.14.0",
+    "@libsql/client": "catalog:sqlite",
     "@react-router-gospel-stack/business": "workspace:*",
     "drizzle-orm": "catalog:drizzle"
   },

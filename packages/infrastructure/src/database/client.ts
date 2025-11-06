@@ -21,5 +21,4 @@ export const createClient = ({
 
   return drizzle(client, { schema });
 };
-
 export type DrizzleClient = ReturnType<typeof createClient>;

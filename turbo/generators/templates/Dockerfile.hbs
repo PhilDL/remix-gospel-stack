@@ -40,7 +40,6 @@ FROM base AS dev-deps
 WORKDIR /app
 ENV CI true
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
-RUN pnpm run db:generate
 
 FROM base AS production-deps
 ARG APP_DIRNAME
