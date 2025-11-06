@@ -270,18 +270,19 @@ The client automatically handles this when you provide `syncUrl`.
    This starts a PostgreSQL container with:
    - Username: `postgres`
    - Password: `postgres`
-   - Database: `remix_gospel` (automatically created)
+   - Database: `gospel_stack_db` (automatically created)
    - Port: `5432`
 
    > **Note:** If you're using an existing PostgreSQL installation, you'll need to create the database manually:
+   >
    > ```bash
-   > psql -U postgres -c "CREATE DATABASE remix_gospel;"
+   > psql -U postgres -c "CREATE DATABASE gospel_stack_db;"
    > ```
 
 2. **Configure `.env`:**
 
    ```bash
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/remix_gospel"
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/gospel_stack_db"
    ```
 
 3. **Run Migrations:**
