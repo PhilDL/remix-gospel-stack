@@ -48,10 +48,10 @@ This is a **monorepo** for building modern web applications with React Router, o
 - 🚀 **[React Router v7+](https://reactrouter.com)** - Modern full-stack React framework
 - 📦 **[Turborepo](https://turborepo.org/)** - High-performance build system for monorepos
 - 🗄️ **Database** - Choose between:
-  - [Turso](https://turso.tech/) - Distributed SQLite with libSQL (recommended)
+  - [Turso](https://turso.tech/) - Distributed SQLite with libSQL
   - [PostgreSQL](https://www.postgresql.org/) - Multi-region Fly PostgreSQL Cluster
 - 🛠️ **ORM** - Choose between:
-  - [Drizzle](https://orm.drizzle.team/) - SQL-like TypeScript ORM (recommended)
+  - [Drizzle](https://orm.drizzle.team/) - SQL-like TypeScript ORM
   - [Prisma](https://prisma.io) - Type-safe database toolkit
 - 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - UI Components system
 - 🎯 **[TailwindCSS 4](https://tailwindcss.com/)** - Utility-first CSS framework

@@ -62,7 +62,7 @@ async function main() {
       message: `Which database do you want to use?`,
       choices: [
         {
-          name: `${spaces(6)}Turso (SQLite with libSQL) - recommended`,
+          name: `${spaces(6)}Turso (SQLite with libSQL)`,
           value: "turso",
         },
         { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
@@ -79,7 +79,7 @@ async function main() {
       type: "list",
       message: `Which ORM do you want to use with ${db === "turso" ? "Turso" : "PostgreSQL"}?`,
       choices: [
-        { name: `${spaces(6)}Drizzle - recommended`, value: "drizzle" },
+        { name: `${spaces(6)}Drizzle`, value: "drizzle" },
         { name: `${spaces(6)}Prisma`, value: "prisma" },
       ],
       default: "drizzle",

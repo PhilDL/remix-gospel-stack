@@ -48,7 +48,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
         name: "ormType",
         message: "Which ORM do you want to use?",
         choices: [
-          { name: "Drizzle (recommended)", value: "drizzle" },
+          { name: "Drizzle", value: "drizzle" },
           { name: "Prisma", value: "prisma" },
         ],
         default: "drizzle",
