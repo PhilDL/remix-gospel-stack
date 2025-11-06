@@ -136,75 +136,13 @@ Edit `.env` to match your setup. See the [Database Guide](./database.md) for dat
 
 ### 3. Set Up Your Database
 
-The setup differs based on your ORM and database choice. Follow the appropriate guide:
+Database setup varies based on your ORM (Drizzle or Prisma) and database (Turso or PostgreSQL) choices.
 
-#### With Drizzle (Default)
+**For complete database setup instructions, see the [Database Guide](./database.md).**
 
-**For Turso (Recommended):**
-
-```bash
-# In your .env file
-DATABASE_URL="file:../../local.db"
-# No sync URL or auth token needed for local dev
-```
-
-Migrate database:
-
-```bash
-pnpm run db:migrate
-```
-
-**For PostgreSQL:**
-
-Start the PostgreSQL Docker container:
-
-```bash
-pnpm run docker:db
-```
-
-Migrate database:
-
-```bash
-pnpm run db:migrate
-```
-
-#### With Prisma (Alternative)
-
-**For PostgreSQL:**
-
-Start the PostgreSQL Docker container:
-
-```bash
-pnpm run docker:db
-```
-
-Generate Prisma client & migrations:
-
-```bash
-pnpm run db:generate
-```
-
-Run migration:
-
-```bash
-pnpm run db:migrate
-```
-
-**For Turso:**
-
-Configure your `.env`:
-
-```bash
-DATABASE_URL="file:../../local.db"
-```
-
-Generate Prisma client & migrations:
-
-```bash
-pnpm run db:generate
-```
-
-**Important:** Prisma's automatic migrations don't work with Turso. See the [Database Guide](./database.md#working-with-prisma-alternative) for manual migration steps.
+Quick reference:
+- **Turso**: Configure `.env` with `DATABASE_URL="file:../../local.db"`, then run `pnpm run db:migrate`
+- **PostgreSQL**: Run `pnpm run docker:db`, then run `pnpm run db:migrate`
 
 ### 4. Build the Project
 
@@ -299,47 +237,29 @@ Once a task completes, Turborepo caches its output. If you run the same task aga
 
 ## Working with the Database
 
-### With Drizzle (Default)
+For detailed database operations, see the [Database Guide](./database.md).
 
-**After changing the Drizzle schema:**
+**Quick reference:**
 
+After schema changes:
 ```bash
-pnpm run db:generate  # Generate migration files
-pnpm run db:migrate      # Apply to database
+pnpm run db:generate  # Generate migrations
+pnpm run db:migrate   # Apply migrations
 ```
 
-**View database:**
-
+View your database:
 ```bash
+# Drizzle
 pnpm --filter @react-router-gospel-stack/infrastructure db:studio
-```
 
-### With Prisma (Alternative)
-
-**After changing the Prisma schema:**
-
-```bash
-pnpm run db:generate           # Regenerate client
-pnpm run db:migrate        # Create & apply migration (PostgreSQL)
-```
-
-For Turso with Prisma, see the [Database Guide](./database.md#working-with-prisma-alternative) for manual migration steps.
-
-**View database:**
-
-```bash
+# Prisma
 pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
-### Switching ORM or Database
-
-To switch between ORMs or databases:
-
+Switch ORM or database:
 ```bash
 pnpm turbo gen scaffold-database
 ```
-
-Follow the prompts. See the [Database Guide](./database.md) for more details.
 
 ## Docker Development
 

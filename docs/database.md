@@ -261,9 +261,22 @@ The client automatically handles this when you provide `syncUrl`.
 
 1. **Start PostgreSQL:**
 
+   The stack includes a Docker Compose configuration that automatically creates the database:
+
    ```bash
    pnpm run docker:db
    ```
+
+   This starts a PostgreSQL container with:
+   - Username: `postgres`
+   - Password: `postgres`
+   - Database: `remix_gospel` (automatically created)
+   - Port: `5432`
+
+   > **Note:** If you're using an existing PostgreSQL installation, you'll need to create the database manually:
+   > ```bash
+   > psql -U postgres -c "CREATE DATABASE remix_gospel;"
+   > ```
 
 2. **Configure `.env`:**
 
@@ -275,7 +288,7 @@ The client automatically handles this when you provide `syncUrl`.
 
    ```bash
    # With Drizzle or Prisma
-   pnpm db:migrate:production
+   pnpm db:migrate
    ```
 
 ### Production PostgreSQL

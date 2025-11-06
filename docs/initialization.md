@@ -101,17 +101,17 @@ pnpm run init
 
 ## After Initialization
 
-Once the init script completes, follow the printed instructions.
+Once the init script completes, follow these steps to get your app running:
 
 ### For PostgreSQL
 
 ```bash
-# 1. Start PostgreSQL
+# 1. Start PostgreSQL container
 pnpm run docker:db
 
-# 2. Generate Prisma client and run migrations
-pnpm run generate
-pnpm run db:migrate:deploy
+# 2. Generate database client and run migrations
+pnpm run db:generate
+pnpm run db:migrate
 
 # 3. Build packages
 pnpm run build --filter=@your-org/webapp...
@@ -120,26 +120,29 @@ pnpm run build --filter=@your-org/webapp...
 pnpm run dev --filter=@your-org/webapp
 ```
 
+Your app should now be running at `http://localhost:5173`
+
+> 💡 **For more info:** See the [Database Guide](./database.md) for advanced PostgreSQL configuration and [Development Guide](./development.md) for detailed workflow information.
+
 ### For Turso
 
 ```bash
-# 1. Configure .env for local development
-# Edit .env and set:
-# DATABASE_URL="file:../../local.db"
+# 1. No setup needed - local SQLite file will be created automatically
 
-# 2. Generate Prisma client
-pnpm run generate
+# 2. Generate database client and run migrations
+pnpm run db:generate
+pnpm run db:migrate
 
-# 3. Create and apply migration
-pnpm run db:migrate:dev
-sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
-
-# 4. Build packages
+# 3. Build packages
 pnpm run build --filter=@your-org/webapp...
 
-# 5. Start dev server
+# 4. Start dev server
 pnpm run dev --filter=@your-org/webapp
 ```
+
+Your app should now be running at `http://localhost:5173`
+
+> 💡 **For more info:** See the [Database Guide](./database.md) for Turso production setup with embedded replicas and [Development Guide](./development.md) for detailed workflow information.
 
 ## Manual Setup (Without Init Script)
 
@@ -248,10 +251,15 @@ This stack previously used Remix's automatic initialization system (`pnpm create
 
 ## Next Steps
 
-After initialization:
+🎉 **You're all set!** Your app should be running.
 
-1. **Review the [Development Guide](./development.md)** for local setup
-2. **Configure your [Database](./database.md)** fully
-3. **Understand the [Architecture](./architecture.md)** of the monorepo
-4. **Set up [Deployment](./deployment.md)** to Fly.io
-5. **Start building!** 🚀
+**Optional reading to learn more:**
+
+- **[Development Guide](./development.md)** - Learn about the development workflow, monorepo tools, and best practices
+- **[Database Guide](./database.md)** - Deep dive into database operations, migrations, and switching ORMs
+- **[Architecture](./architecture.md)** - Understand the monorepo structure and how packages work together
+- **[Deployment](./deployment.md)** - When you're ready to deploy to production on Fly.io
+- **[Testing Guide](./testing.md)** - Set up unit tests and E2E tests
+- **[UI Package](./ui-package.md)** - Work with shadcn/ui components
+
+**Start building!** 🚀
