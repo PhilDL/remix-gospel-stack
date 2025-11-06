@@ -30,12 +30,6 @@ FROM bookworm-turbopm AS base
 WORKDIR /app
 COPY .gitignore .gitignore
 COPY .npmrc .npmrc
-{{#ifEquals ormType "drizzle"}}
-COPY packages/infrastructure/drizzle.config.ts packages/infrastructure/drizzle.config.ts
-{{/ifEquals}}
-{{#ifEquals ormType "prisma"}}
-COPY packages/infrastructure/prisma.config.ts packages/infrastructure/prisma.config.ts
-{{/ifEquals}}
 COPY turbo.json turbo.json
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
@@ -81,5 +75,4 @@ COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
 COPY --from=bookworm /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-# release_command = "pnpx prisma migrate deploy --schema packages/infrastructure/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-webapp"]

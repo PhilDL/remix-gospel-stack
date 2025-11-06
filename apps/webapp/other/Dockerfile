@@ -74,5 +74,4 @@ COPY --from=builder /app/apps/$APP_DIRNAME/index.js ./apps/$APP_DIRNAME/index.js
 COPY --from=builder /app/apps/$APP_DIRNAME/build ./apps/$APP_DIRNAME/build
 COPY --from=bookworm /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-# release_command = "pnpx prisma migrate deploy --schema packages/infrastructure/prisma/schema.prisma"
 CMD ["pnpm", "run", "start-webapp"]
