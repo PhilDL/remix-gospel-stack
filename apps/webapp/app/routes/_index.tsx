@@ -149,7 +149,7 @@ export default function Index() {
               <CardTitle>Server packages</CardTitle>
               <CardDescription>
                 {" "}
-                packages/business, packages/database
+                packages/business, packages/infrastructure
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

@@ -1,0 +1,39 @@
+{
+  "name": "@react-router-gospel-stack/infrastructure",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "db:generate": "pnpm with-env drizzle-kit generate",
+    "db:migrate": "pnpm with-env drizzle-kit migrate",
+    "db:migrate:production": "pnpm with-production-env drizzle-kit migrate",
+    "db:seed": "pnpm with-env tsx src/seed.ts",
+    "db:studio": "pnpm with-env drizzle-kit studio",
+    "nuke": "rimraf .turbo node_modules src/generated drizzle/migrations",
+    "clean": "rimraf .turbo src/generated drizzle/migrations",
+    "lint": "eslint ./src",
+    "with-env": "dotenv -e ./.env --",
+    "with-production-env": "dotenv -e ./.env.production --"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "@react-router-gospel-stack/business": "workspace:*",
+    "drizzle-orm": "catalog:drizzle"
+  },
+  "devDependencies": {
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
+    "@types/node": "^24.9.1",
+    "dotenv-cli": "^10.0.0",
+    "drizzle-kit": "catalog:drizzle",
+    "rimraf": "catalog:",
+    "tsup": "catalog:typescript",
+    "tsx": "catalog:typescript",
+    "typescript": "catalog:typescript"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./database": "./src/database/index.ts",
+    "./repositories": "./src/repositories/index.ts"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "extends": "@react-router-gospel-stack/tsconfig/node22.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {
+      "@react-router-gospel-stack/business/*": ["../../packages/business/src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "tsup.config.ts",
+    "./prisma.config.ts",
+    "./drizzle.config.ts"
+  ],
+  "exclude": ["node_modules"]
+}

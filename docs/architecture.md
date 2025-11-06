@@ -73,51 +73,51 @@ apps/webapp/
 
 **Dependencies:**
 
-- `@react-router-gospel-stack/database` - Database access
+- `@react-router-gospel-stack/infrastructure` - Database access
 - `@react-router-gospel-stack/business` - Business logic
 - `@react-router-gospel-stack/ui` - UI components
 - `@react-router-gospel-stack/internal-nobuild` - Internal utilities
 
 ## Packages (`packages/`)
 
-### `database` - Prisma ORM Wrapper
+### `infrastructure` - Database Package
 
-A bundled package that wraps Prisma Client and provides a type-safe database interface.
+A bundled package that provides database access using either Drizzle ORM (default) or Prisma.
 
 **Why it exists:**
 
 - Centralizes database schema and migrations
 - Provides a single source of truth for data models
 - Can be imported by multiple apps or packages
-- Bundles the Prisma Client for distribution
+- Supports both Drizzle and Prisma ORMs
+- Works with both Turso (SQLite) and PostgreSQL
 
 **Key Files:**
 
 ```
-packages/database/
+packages/infrastructure/
+├── drizzle/
+│   ├── schema.ts            # Drizzle schema (default)
+│   └── migrations/          # Drizzle migration files
 ├── prisma/
-│   ├── schema.prisma        # Database schema
-│   └── migrations/          # Migration files
+│   ├── schema.prisma        # Prisma schema (alternative)
+│   └── migrations/          # Prisma migration files
 ├── src/
 │   ├── client.ts            # Client factory
 │   ├── seed.ts              # Seed data
 │   └── index.ts             # Exports
-└── package.json             # Build with tsup
+└── package.json
 ```
-
-**Build:**
-
-- Bundled with [tsup](https://tsup.egoist.dev/)
-- Generates CommonJS and ESM builds
-- Includes Prisma Client in the bundle
 
 **Usage:**
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 
-const users = await db.user.findMany();
+// Usage depends on your ORM choice
 ```
+
+For complete database setup and usage, see the [Database Guide](./database.md).
 
 ### `business` - Business Logic Layer
 
@@ -414,7 +414,9 @@ The monorepo uses TypeScript path aliases for imports.
 {
   "compilerOptions": {
     "paths": {
-      "@react-router-gospel-stack/database": ["../../packages/database/src"],
+      "@react-router-gospel-stack/infrastructure": [
+        "../../packages/infrastructure/src"
+      ],
       "@react-router-gospel-stack/ui": ["../../packages/ui/src"]
     }
   }
@@ -424,7 +426,7 @@ The monorepo uses TypeScript path aliases for imports.
 This allows importing from source during development:
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 ```
 
 React Router's build step compiles these imports.
@@ -616,7 +618,7 @@ If TypeScript can't find types:
 pnpm run generate
 
 # Build packages
-pnpm run build --filter=@react-router-gospel-stack/database
+pnpm run build --filter=@react-router-gospel-stack/infrastructure
 ```
 
 ### Cache Issues

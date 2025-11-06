@@ -34,3 +34,4 @@ cypress/screenshots
 cypress/videos
 
 packages/**/styles/tailwind.css
+.react-router

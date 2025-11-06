@@ -7,8 +7,8 @@ import { requestId } from "hono/request-id";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { createHonoServer } from "react-router-hono-server/node";
 
-import { PrismaUserRepository } from "@react-router-gospel-stack/business/infrastructure";
 import type { UserRepository } from "@react-router-gospel-stack/business/repositories";
+import { resolveRepositories } from "@react-router-gospel-stack/infrastructure/repositories";
 
 import { db } from "~/db.server.ts";
 import { sessionStorage } from "~/session.server.ts";
@@ -63,9 +63,7 @@ export default createHonoServer({
       serverBuild: build,
       session,
       sessionStorage,
-      repositories: {
-        user: PrismaUserRepository(db),
-      },
+      repositories: resolveRepositories(db),
     };
   },
   async beforeAll(app) {
@@ -117,13 +115,5 @@ export default createHonoServer({
         }),
       );
     }
-    // server.onError(async (err, c) => {
-    //   console.error(err);
-    //   if (SENTRY_ENABLED) {
-    //     Sentry.captureException(err);
-    //     await Sentry.flush(500);
-    //   }
-    //   return c.text("Internal Server Error", 500);
-    // });
   },
 });

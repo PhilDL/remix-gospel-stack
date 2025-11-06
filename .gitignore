@@ -34,7 +34,15 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-!packages/database/.env
+!packages/infrastructure/.env
+
+# local database files
+local.db
+local.db-shm
+local.db-wal
+*.db
+*.db-shm
+*.db-wal
 
 # turbo
 .turbo
@@ -44,3 +52,4 @@ yarn-error.log*
 .output
 apps/**/public/build
 apps/**/server-build
+.react-router

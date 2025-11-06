@@ -54,30 +54,47 @@ async function main() {
     ORG_NAME = `@${ORG_NAME}`;
   }
 
-  // Prompt for database choice
+  // Prompt for database choice first
   const { db } = await inquirer.prompt([
     {
       name: "db",
       type: "list",
-      message: `Which database do you want to use? (Deployed to Fly.io)`,
+      message: `Which database do you want to use?`,
       choices: [
-        { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
         {
           name: `${spaces(6)}Turso (SQLite with libSQL)`,
           value: "turso",
         },
+        { name: `${spaces(6)}PostgreSQL`, value: "postgres" },
       ],
-      default: "postgres",
+      default: "turso",
       prefix: `${spaces(6)}◼ `,
     },
   ]);
 
-  console.log(`${spaces()}◼  Preparing monorepo for ${db}...`);
+  // Then prompt for ORM choice
+  const { orm } = await inquirer.prompt([
+    {
+      name: "orm",
+      type: "list",
+      message: `Which ORM do you want to use with ${db === "turso" ? "Turso" : "PostgreSQL"}?`,
+      choices: [
+        { name: `${spaces(6)}Drizzle`, value: "drizzle" },
+        { name: `${spaces(6)}Prisma`, value: "prisma" },
+      ],
+      default: "drizzle",
+      prefix: `${spaces(6)}◼ `,
+    },
+  ]);
+
+  console.log(
+    `${spaces()}◼  Preparing monorepo with ${db === "turso" ? "Turso" : "PostgreSQL"} + ${orm === "drizzle" ? "Drizzle" : "Prisma"}...`,
+  );
 
   // Run database scaffold generator
   try {
     execSync(
-      `pnpm turbo gen scaffold-database --args ${ORG_NAME}/webapp webapp ${db}`,
+      `pnpm turbo gen scaffold-database --args ${ORG_NAME}/webapp webapp ${db} ${orm}`,
       {
         cwd: rootDirectory,
         stdio: "inherit",
@@ -198,14 +215,23 @@ async function main() {
     cwd: rootDirectory,
     stdio: "ignore",
   });
-  console.log(`${spaces()}◼  Generating Prisma client...`);
-  execSync("pnpm db:generate", {
-    cwd: rootDirectory,
-    stdio: "ignore",
-  });
+  // Generate migration
+  console.log(
+    `${spaces()}◼  Generating ${orm === "drizzle" ? "Drizzle" : "Prisma client & "} migrations...`,
+  );
+  try {
+    execSync("pnpm db:generate", {
+      cwd: rootDirectory,
+      stdio: "ignore",
+    });
+  } catch (error) {
+    console.log(
+      chalk.yellow(`${spaces()}⚠️  Could not generate migrations (skipping)`),
+    );
+  }
 
   // Print next steps
-  printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory);
+  printNextSteps(db, orm, ORG_NAME, APP_NAME, rootDirectory);
 }
 
 /**
@@ -289,45 +315,48 @@ async function setupEnvFile({ rootDirectory, replacer }) {
   }
 }
 
-function printNextSteps(db, ORG_NAME, APP_NAME, rootDirectory) {
+function printNextSteps(db, orm, ORG_NAME, APP_NAME, rootDirectory) {
+  const dbName = db === "turso" ? "Turso" : "PostgreSQL";
+  const ormName = orm === "drizzle" ? "Drizzle" : "Prisma";
+
   console.log(
     chalk.green(`
-${spaces()}✔  Setup is complete! Follow these steps to start developing:
+${spaces()}✔  Setup complete! Your stack: ${dbName} + ${ormName}
+${spaces()}
+${spaces()}📋 Next steps to start developing:
 `),
   );
 
   if (db === "postgres") {
-    console.log(`${spaces(9)}2. Start PostgreSQL:
+    console.log(`${spaces(9)}1. Start PostgreSQL:
 ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 
-${spaces(9)}3. Run migrations:
-${spaces(12)}${chalk.yellow("pnpm run db:migrate:deploy")}
+${spaces(9)}2. Migrate database schema:
+${spaces(12)}${chalk.yellow("pnpm run db:migrate")}
 
-${spaces(9)}4. Build packages:
+${spaces(9)}3. Build packages:
 ${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
 
-${spaces(9)}5. Start development server:
+${spaces(9)}4. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 `);
   } else {
-    console.log(`${spaces(9)}2. Configure your .env file for Turso:
+    console.log(`${spaces(9)}1. Your .env file is configured for local Turso:
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 
-${spaces(9)}4. Create and apply migrations manually:
-${spaces(12)}${chalk.yellow("pnpm run db:migrate:dev")}
-${spaces(12)}${chalk.yellow("sqlite3 ./apps/webapp/local.db < packages/database/prisma/migrations/<folder>/migration.sql")}
+${spaces(9)}2. Apply database schema:
+${spaces(12)}${chalk.yellow("pnpm run db:migrate")}
 
-${spaces(9)}5. Build packages:
+${spaces(9)}3. Build packages:
 ${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
 
-${spaces(9)}6. Start development server:
+${spaces(9)}4. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 
-${spaces()}${chalk.cyan("ℹ️  Turso Notes:")}
-${spaces()}   - For local dev: DATABASE_URL=file:./local.db (no auth needed)
-${spaces()}   - For production: Use embedded replicas with DATABASE_SYNC_URL and DATABASE_AUTH_TOKEN
-${spaces()}   - Prisma migrations must be applied manually: turso db shell <db> < migration.sql
-${spaces()}   - See docs/database.md for full details
+${spaces()}${chalk.cyan("💡 Turso Tips:")}
+${spaces()}   - Local dev uses a simple SQLite file (no remote connection needed)
+${spaces()}   - For production: Add DATABASE_SYNC_URL and DATABASE_AUTH_TOKEN
+${orm === "prisma" ? `${spaces()}   - Prisma + Turso requires manual migration application\n` : ""}${spaces()}   - See docs/database.md and docs/why-drizzle-over-prisma.md
 `);
   }
 

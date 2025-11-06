@@ -8,12 +8,10 @@
   "scripts": {
     "init": "node scripts/setup.mjs",
     "build": "turbo run build",
-    "db:generate": "turbo run db:generate",
-    "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:migrate:dev": "pnpm run --filter @react-router-gospel-stack/database db:migrate:dev",
-    "db:push": "turbo run db:push",
+    "db:generate": "turbo run db:generate --",
     "db:seed": "turbo run db:seed --no-cache",
-    "db:migrate:force": "turbo run db:migrate:force --no-cache",
+    "db:migrate": "turbo run db:migrate --no-cache",
+    "db:migrate:production": "turbo run db:migrate:production --no-cache",
     "dev": "turbo run dev --parallel",
     "storybook": "turbo run storybook",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -38,7 +36,9 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@npmcli/package-json": "7.0.1",
     "@turbo/gen": "^2.5.8",
+    "@types/npmcli__package-json": "4.0.4",
     "chalk": "catalog:",
     "glob": "catalog:",
     "inquirer": "^12.4.0",
@@ -48,9 +48,7 @@
     "prettier-plugin-tailwindcss": "catalog:tailwindcss",
     "replace-in-file": "^8.3.0",
     "turbo": "^2.5.8",
-    "typescript": "^5.9.3",
-    "prisma": "catalog:prisma",
-    "@prisma/adapter-libsql": "catalog:prisma"
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.20.0",
   "pnpm": {

@@ -43,21 +43,20 @@
       "dependsOn": ["^build"],
       "outputs": ["public/build/**"]
     },
-    "db:migrate:deploy": {
-      "outputs": []
+    "db:generate": {
+      "cache": false
     },
-    "db:migrate:dev": {
-      "outputs": []
+    "db:migrate": {
+      "outputs": [],
+      "cache": false
     },
-    "db:push": {
-      "outputs": []
+    "db:migrate:production": {
+      "outputs": [],
+      "cache": false
     },
     "db:seed": {
       "outputs": [],
       "cache": false
-    },
-    "db:migrate:force": {
-      "outputs": []
     },
     "dev": {
       "cache": false,
@@ -66,9 +65,6 @@
     "storybook": {
       "outputs": [],
       "persistent": false
-    },
-    "db:generate": {
-      "cache": false
     },
     "lint": {
       "dependsOn": ["^build"],

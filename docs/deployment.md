@@ -69,6 +69,8 @@ git remote add origin <ORIGIN_URL>
 
 ## PostgreSQL Deployment
 
+> For PostgreSQL setup details, see the [Database Guide](./database.md#postgresql-setup).
+
 ### 1. Create PostgreSQL Databases
 
 Create databases for both environments:
@@ -97,14 +99,14 @@ This automatically sets the `DATABASE_URL` secret in your apps.
 
 ### 3. Run Initial Migration
 
-Before your first deployment, apply the Prisma migrations:
+Before your first deployment, apply the migrations:
 
 ```bash
 # Get a connection string
 fly postgres connect --app react-router-gospel-stack-db
 
 # In another terminal, run migrations
-DATABASE_URL="<connection-string>" pnpm run db:migrate:deploy
+DATABASE_URL="<connection-string>" pnpm run db:migrate
 ```
 
 ### 4. Deploy!
@@ -131,91 +133,69 @@ To scale your PostgreSQL database across regions:
 
 ## Turso Deployment
 
+> For Turso setup details and concepts, see the [Database Guide](./database.md#turso-setup).
+
 Turso uses embedded replicas for optimal performance—a local SQLite file that syncs with the remote Turso database.
 
-### 1. Install Turso CLI
+### 1. Install and Login to Turso
 
 ```bash
 curl -sSfL https://get.tur.so/install.sh | bash
-```
-
-### 2. Login to Turso
-
-```bash
 turso auth login
 ```
 
-### 3. Select Your Organization
+### 2. Select Your Organization
 
 ```bash
-# List organizations
 turso org list
-
-# Switch to the one you want
 turso org switch <organization-name>
 ```
 
-### 4. Create Database Groups
-
-Database groups allow you to manage multiple databases with shared schemas:
+### 3. Create Database Groups and Databases
 
 ```bash
-# Production group
+# Create groups
 turso group create production-group
-
-# Staging group
 turso group create staging-group
-```
 
-### 5. Create Databases
-
-```bash
-# Production database
+# Create databases
 turso db create react-router-gospel-stack-db --group production-group
-
-# Staging database
 turso db create react-router-gospel-stack-staging-db --group staging-group
 ```
 
-### 6. Get Database Credentials
-
-**Production:**
-
-```bash
-# Get the sync URL
-turso db show --url react-router-gospel-stack-db
-
-# Create auth token
-turso db tokens create react-router-gospel-stack-db
-```
-
-**Staging:**
-
-```bash
-# Get the sync URL
-turso db show --url react-router-gospel-stack-staging-db
-
-# Create auth token
-turso db tokens create react-router-gospel-stack-staging-db
-```
-
-Save these values—you'll need them in the next step.
-
-### 7. Apply Prisma Migrations
-
-Since Prisma's automatic migrations don't work with Turso, apply the SQL files manually:
+### 4. Get Database Credentials
 
 ```bash
 # Production
-turso db shell react-router-gospel-stack-db < packages/database/prisma/migrations/<migration-folder>/migration.sql
+turso db show --url react-router-gospel-stack-db
+turso db tokens create react-router-gospel-stack-db
 
 # Staging
-turso db shell react-router-gospel-stack-staging-db < packages/database/prisma/migrations/<migration-folder>/migration.sql
+turso db show --url react-router-gospel-stack-staging-db
+turso db tokens create react-router-gospel-stack-staging-db
 ```
 
-> **Tip:** For the initial setup, use the first migration (e.g., `20251027155525_first/migration.sql`).
+Save these values for the next step.
 
-### 8. Create Persistent Volumes
+### 5. Apply Migrations
+
+**With Drizzle:**
+
+```bash
+# Apply directly to remote Turso database
+pnpm db:migrate:production
+```
+
+**With Prisma:**
+
+Apply migrations manually (Prisma cannot apply automatically to Turso):
+
+```bash
+turso db shell react-router-gospel-stack-db < packages/infrastructure/prisma/migrations/<migration-folder>/migration.sql
+turso db shell react-router-gospel-stack-staging-db < packages/infrastructure/prisma/migrations/<migration-folder>/migration.sql
+```
+
+### 6. Create Persistent Volumes
 
 Embedded replicas need persistent storage on Fly.io:
 
@@ -227,13 +207,9 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-stack-staging
 ```
 
-> **Note:**
->
-> - Change the `--region` to your preferred region (see [Fly.io regions](https://fly.io/docs/reference/regions/))
-> - Adjust `--size` (in GB) based on your needs
-> - Ensure the region matches `primary_region` in `fly.toml`
+> **Note:** Change the `--region` to match your `primary_region` in `fly.toml`. Adjust `--size` (in GB) based on your needs.
 
-### 9. Set Secrets in Fly Apps
+### 7. Set Secrets in Fly Apps
 
 Set the environment variables for embedded replicas:
 
@@ -263,7 +239,7 @@ fly secrets set \
 > - `DATABASE_SYNC_URL` is the remote Turso database URL
 > - `DATABASE_AUTH_TOKEN` is the Turso authentication token
 
-### 10. Deploy!
+### 8. Deploy!
 
 Commit and push your changes:
 
@@ -275,28 +251,9 @@ git push -u origin main
 
 The GitHub Action will build and deploy your app to production. Push to `dev` branch to deploy to staging.
 
-### Turso Embedded Replicas Configuration
+### Turso Embedded Replicas
 
-Your database client is configured in `apps/webapp/app/db.server.ts`:
-
-```typescript
-import { createClient } from "@react-router-gospel-stack/database";
-
-export const db = remember("db", () => {
-  return createClient({
-    url: env.DATABASE_URL, // Local file path
-    authToken: env.DATABASE_AUTH_TOKEN, // Turso auth token
-    syncUrl: env.DATABASE_SYNC_URL, // Remote sync URL
-  });
-});
-```
-
-**How it works:**
-
-1. Reads happen from the local SQLite file (fast, disk-based)
-2. Writes go to the remote Turso database first
-3. Changes automatically sync between local and remote
-4. Works offline—reads continue even if remote is unavailable
+With the above configuration, your app uses Turso's embedded replicas for optimal performance. See the [Database Guide](./database.md#embedded-replicas) for details on how this works.
 
 Learn more: [Turso Embedded Replicas on Fly.io](https://docs.turso.tech/features/embedded-replicas/with-fly)
 
@@ -511,15 +468,13 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 
 ### Applying New Migrations
 
-**PostgreSQL:**
-Migrations are automatically applied during deployment by the GitHub Action.
+For migration workflows, see the [Database Guide](./database.md#migrations-with-drizzle).
 
-**Turso:**
-Apply migrations manually before deploying:
+**Quick reference:**
 
-```bash
-turso db shell react-router-gospel-stack-db < packages/database/prisma/migrations/<new-migration>/migration.sql
-```
+- **PostgreSQL:** Migrations are automatically applied during deployment by the GitHub Action
+- **Turso with Drizzle:** `pnpm db:migrate:production`
+- **Turso with Prisma:** Apply manually using `turso db shell`
 
 ## Security Best Practices
 

@@ -1,0 +1,8 @@
+import type { UserRepository } from "@react-router-gospel-stack/business/repositories";
+
+import type { PrismaClient } from "../database/index.ts";
+
+export const PrismaUserRepository = (prisma: PrismaClient): UserRepository => ({
+  getUsers: async () => prisma.user.findMany(),
+  getUsersCount: async () => prisma.user.count(),
+});

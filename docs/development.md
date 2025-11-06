@@ -8,7 +8,7 @@ This guide will help you set up your local development environment and understan
 
 - **Node.js** (v22+ recommended)
 - **pnpm** (required package manager)
-- **Docker** (for local PostgreSQL database)
+- **Docker** (optional, for local PostgreSQL database)
 - **Git**
 
 ## Initial Setup
@@ -22,7 +22,8 @@ pnpm run init
 This interactive script will:
 
 - Prompt for your organization name (e.g., `@my-company`)
-- Let you choose between PostgreSQL or Turso database
+- Let you choose between Drizzle or Prisma ORM
+- Let you choose between Turso or PostgreSQL database
 - Update all package names throughout the monorepo
 - Generate a secure SESSION_SECRET
 - Copy `.env.example` to `.env` and `.env.docker`
@@ -117,7 +118,7 @@ The stack uses named catalogs to group related dependencies:
 - **`react19`** - React and related packages
 - **`react-router`** - React Router framework
 - **`tailwindcss`** - Tailwind and styling tools
-- **`prisma`** - Prisma ORM packages
+- **`prisma`** - Prisma ORM packages (if using Prisma)
 - **`hono`** - Server middleware
 
 This organization makes it easy to upgrade entire technology stacks together.
@@ -135,47 +136,13 @@ Edit `.env` to match your setup. See the [Database Guide](./database.md) for dat
 
 ### 3. Set Up Your Database
 
-The setup differs based on your database choice. Follow the appropriate guide:
+Database setup varies based on your ORM (Drizzle or Prisma) and database (Turso or PostgreSQL) choices.
 
-#### For PostgreSQL
+**For complete database setup instructions, see the [Database Guide](./database.md).**
 
-Start the PostgreSQL Docker container:
-
-```bash
-pnpm run docker:db
-```
-
-> **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
-
-Generate Prisma schema:
-
-```bash
-pnpm run generate
-```
-
-Run Prisma migration:
-
-```bash
-pnpm run db:migrate:deploy
-```
-
-#### For Turso (SQLite)
-
-For local development, use a simple local SQLite file:
-
-```bash
-# In your .env file
-DATABASE_URL="file:./local.db"
-# No need for DATABASE_SYNC_URL or DATABASE_AUTH_TOKEN in development
-```
-
-Generate Prisma schema:
-
-```bash
-pnpm run generate
-```
-
-**Important:** Prisma's automatic migrations don't work with Turso. See the [Database Guide](./database.md#prisma-migrations-with-turso) for manual migration steps.
+Quick reference:
+- **Turso**: Configure `.env` with `DATABASE_URL="file:../../local.db"`, then run `pnpm run db:migrate`
+- **PostgreSQL**: Run `pnpm run docker:db`, then run `pnpm run db:migrate`
 
 ### 4. Build the Project
 
@@ -270,46 +237,29 @@ Once a task completes, Turborepo caches its output. If you run the same task aga
 
 ## Working with the Database
 
-### Generate Prisma Client
+For detailed database operations, see the [Database Guide](./database.md).
 
-After changing the Prisma schema:
+**Quick reference:**
 
+After schema changes:
 ```bash
-pnpm run generate
+pnpm run db:generate  # Generate migrations
+pnpm run db:migrate   # Apply migrations
 ```
 
-### Create a Migration
-
-**For PostgreSQL:**
-
+View your database:
 ```bash
-pnpm run db:migrate:dev
+# Drizzle
+pnpm --filter @react-router-gospel-stack/infrastructure db:studio
+
+# Prisma
+pnpm --filter @react-router-gospel-stack/infrastructure prisma:studio
 ```
 
-**For Turso:**
-
-1. Generate the migration:
-
-   ```bash
-   pnpm run db:migrate:dev
-   ```
-
-2. Apply it manually to your Turso database:
-   ```bash
-   turso db shell <database-name> < packages/database/prisma/migrations/<migration-folder>/migration.sql
-   ```
-
-See the [Database Guide](./database.md) for more details.
-
-### Switching Databases
-
-To switch between PostgreSQL and Turso:
-
+Switch ORM or database:
 ```bash
 pnpm turbo gen scaffold-database
 ```
-
-Follow the prompts. **Note:** You'll need to delete the `packages/database/prisma/migrations` folder when switching.
 
 ## Docker Development
 
@@ -383,7 +333,7 @@ React Router's dev server supports HMR. Changes to your code will be reflected i
 The monorepo uses TypeScript path mappings for internal packages. This allows you to import from packages without building them first during development:
 
 ```typescript
-import { db } from "@react-router-gospel-stack/database";
+import { db } from "@react-router-gospel-stack/infrastructure";
 ```
 
 React Router's build step handles compiling these dependencies.

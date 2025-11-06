@@ -1,0 +1,13 @@
+
+import type { UserRepository } from "@react-router-gospel-stack/business/repositories";
+
+import type { PrismaClient } from "../database/index.ts";
+import { PrismaUserRepository } from "./user-repository.ts";
+
+export { PrismaUserRepository } from "./user-repository.ts";
+
+export const resolveRepositories = (
+  db: PrismaClient,
+): { user: UserRepository } => ({
+  user: PrismaUserRepository(db),
+});

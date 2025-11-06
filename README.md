@@ -2,7 +2,7 @@
 
 ![The React Router Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
 
-React Router TypeScript monorepo with Turborepo pipelines, Prisma ORM, PostgreSQL OR SQLite (Turso), Docker deploy to Fly.io, pnpm, shadcn/ui, and TailwindCSS.
+React Router TypeScript monorepo with Turborepo pipelines, Drizzle/Prisma ORM, Turso/PostgreSQL database, Docker deploy to Fly.io, pnpm, shadcn/ui, and TailwindCSS.
 
 > [!IMPORTANT]  
 > This used to be the `remix-gospel-stack` (Remix v2) but to follow remix merging back into react router, the stack was converted to **React Router v7+**. And the name was changed to `react-router-gospel-stack`.
@@ -48,9 +48,11 @@ This is a **monorepo** for building modern web applications with React Router, o
 - 🚀 **[React Router v7+](https://reactrouter.com)** - Modern full-stack React framework
 - 📦 **[Turborepo](https://turborepo.org/)** - High-performance build system for monorepos
 - 🗄️ **Database** - Choose between:
+  - [Turso](https://turso.tech/) - Distributed SQLite with libSQL
   - [PostgreSQL](https://www.postgresql.org/) - Multi-region Fly PostgreSQL Cluster
-  - [Turso](https://turso.tech/) - Distributed SQLite with libSQL (recommended)
-- 🛠️ **[Prisma](https://prisma.io)** - Type-safe ORM (future: Drizzle option)
+- 🛠️ **ORM** - Choose between:
+  - [Drizzle](https://orm.drizzle.team/) - SQL-like TypeScript ORM
+  - [Prisma](https://prisma.io) - Type-safe database toolkit
 - 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - UI Components system
 - 🎯 **[TailwindCSS 4](https://tailwindcss.com/)** - Utility-first CSS framework
 - 🐳 **[Docker](https://www.docker.com/)** - Containerized deployment
@@ -85,6 +87,7 @@ This is a **monorepo** for building modern web applications with React Router, o
 
 If you knew this stack from a previous version, here are some decisions documents that explain why certain things changed:
 
+- [Why Drizzle Over Prisma?](./docs/why-drizzle-over-prisma.md)
 - [Why Turso instead of LiteFS?](./docs/why-turso-instead-of-litefs.md)
 
 ## Support & Contributing
