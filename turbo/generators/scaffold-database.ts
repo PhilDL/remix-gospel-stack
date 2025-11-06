@@ -157,7 +157,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 "db:generate": "pnpm with-env drizzle-kit generate",
                 "db:migrate": "pnpm with-env drizzle-kit migrate",
                 "db:migrate:production":
-                  "pnpm with-production-env drizzle-kit push",
+                  "pnpm with-production-env drizzle-kit migrate",
                 "db:seed": "pnpm with-env tsx src/seed.ts",
                 "db:studio": "pnpm with-env drizzle-kit studio",
               },

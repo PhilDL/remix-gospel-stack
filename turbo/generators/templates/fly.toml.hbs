@@ -9,7 +9,7 @@ auto_rollback = true
 
 {{#ifEquals dbType "postgres"}}
 [deploy]
-release_command = "bash ./apps/webapp/scripts/migrate.sh"
+# release_command = "bash ./apps/webapp/scripts/migrate.sh"
 {{/ifEquals}}
 
 {{#ifEquals dbType "turso"}}
