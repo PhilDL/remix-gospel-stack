@@ -1,5 +1,5 @@
 export type User = {
-  id: string;
+  id: string | number;
   name: string | null;
   email: string | null;
   emailVerified: Date | null;
