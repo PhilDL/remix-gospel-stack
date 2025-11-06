@@ -415,7 +415,7 @@ The monorepo uses TypeScript path aliases for imports.
   "compilerOptions": {
     "paths": {
       "@react-router-gospel-stack/infrastructure": [
-        "../../packages/database/src"
+        "../../packages/infrastructure/src"
       ],
       "@react-router-gospel-stack/ui": ["../../packages/ui/src"]
     }

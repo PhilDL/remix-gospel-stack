@@ -191,8 +191,8 @@ pnpm db:migrate:production
 Apply migrations manually (Prisma cannot apply automatically to Turso):
 
 ```bash
-turso db shell react-router-gospel-stack-db < packages/database/prisma/migrations/<migration-folder>/migration.sql
-turso db shell react-router-gospel-stack-staging-db < packages/database/prisma/migrations/<migration-folder>/migration.sql
+turso db shell react-router-gospel-stack-db < packages/infrastructure/prisma/migrations/<migration-folder>/migration.sql
+turso db shell react-router-gospel-stack-staging-db < packages/infrastructure/prisma/migrations/<migration-folder>/migration.sql
 ```
 
 ### 6. Create Persistent Volumes
@@ -471,6 +471,7 @@ fly volumes create libsql_data --region cdg --size 1 --app react-router-gospel-s
 For migration workflows, see the [Database Guide](./database.md#migrations-with-drizzle).
 
 **Quick reference:**
+
 - **PostgreSQL:** Migrations are automatically applied during deployment by the GitHub Action
 - **Turso with Drizzle:** `pnpm db:migrate:production`
 - **Turso with Prisma:** Apply manually using `turso db shell`

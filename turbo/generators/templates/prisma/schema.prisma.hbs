@@ -4,7 +4,7 @@ datasource db {
   url      = env("DATABASE_URL")
 {{/ifEquals}}
 {{#ifEquals dbType "postgres"}}
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 {{/ifEquals}}
 }
@@ -16,8 +16,16 @@ generator client {
 }
 
 model User {
+{{#ifEquals dbType "turso"}}
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
+{{/ifEquals}}
+{{#ifEquals dbType "postgres"}}
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+{{/ifEquals}}
 }

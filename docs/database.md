@@ -27,7 +27,7 @@ pnpm turbo gen scaffold-database
 
 ### Schema Definition
 
-Schemas are defined in `packages/database/drizzle/schema.ts`:
+Schemas are defined in `packages/infrastructure/drizzle/schema.ts`:
 
 ```typescript
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
@@ -121,7 +121,7 @@ Opens at `https://local.drizzle.studio`
 
 ### Schema Definition
 
-Schemas are defined in `packages/database/prisma/schema.prisma`:
+Schemas are defined in `packages/infrastructure/prisma/schema.prisma`:
 
 ```prisma
 model User {
@@ -165,13 +165,13 @@ pnpm --filter @react-router-gospel-stack/infrastructure db:migrate
 
 ```bash
 pnpm db:migrate  # Generate SQL
-sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
+sqlite3 local.db < packages/infrastructure/prisma/migrations/<folder>/migration.sql
 ```
 
 For remote Turso:
 
 ```bash
-turso db shell <database-name> < packages/database/prisma/migrations/<folder>/migration.sql
+turso db shell <database-name> < packages/infrastructure/prisma/migrations/<folder>/migration.sql
 ```
 
 ### Prisma Studio
@@ -199,7 +199,7 @@ pnpm db:migrate
 
 # With Prisma
 pnpm db:migrate
-sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
+sqlite3 local.db < packages/infrastructure/prisma/migrations/<folder>/migration.sql
 ```
 
 ### Production with Turso
@@ -241,7 +241,7 @@ sqlite3 local.db < packages/database/prisma/migrations/<folder>/migration.sql
 
    # With Prisma - manual application
    pnpm db:migrate:production
-   turso db shell <database-name> < packages/database/prisma/migrations/<folder>/migration.sql
+   turso db shell <database-name> < packages/infrastructure/prisma/migrations/<folder>/migration.sql
    ```
 
 ### Embedded Replicas
@@ -299,7 +299,7 @@ For production on Fly.io, see [Deployment Guide](./deployment.md).
 ## Database Package Structure
 
 ```
-packages/database/
+packages/infrastructure/
 ├── drizzle/
 │   ├── schema.ts              # Drizzle schema (default)
 │   └── migrations/            # Drizzle migrations
@@ -323,7 +323,7 @@ The seed script adapts to your chosen ORM:
 pnpm --filter @react-router-gospel-stack/infrastructure db:seed
 ```
 
-Edit `packages/database/src/seed.ts` to customize seed data.
+Edit `packages/infrastructure/src/seed.ts` to customize seed data.
 
 ## Common Tasks
 
