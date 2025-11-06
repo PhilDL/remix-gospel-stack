@@ -34,7 +34,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-!packages/database/.env
+!packages/infrastructure/.env
 
 # local database files
 local.db

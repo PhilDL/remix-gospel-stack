@@ -1,4 +1,4 @@
 #!/bin/bash
 
 set -ex
-npx --yes prisma migrate deploy --schema packages/database/prisma/schema.prisma
+npx --yes prisma migrate deploy --schema packages/infrastructure/prisma/schema.prisma
