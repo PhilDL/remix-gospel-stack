@@ -59,16 +59,6 @@ export default function Index() {
                 on how to get this project deployed.{" "}
               </p>
               <div className="mx-auto flex w-full flex-row items-center justify-center gap-8">
-                {/* <a
-                  href="https://turborepo.org"
-                  className="flex flex-1 items-center justify-end"
-                >
-                  <img
-                    src="https://user-images.githubusercontent.com/4941205/189468691-7b1f3967-2470-4bd2-923f-0be0041151dc.svg"
-                    alt="Turborepo"
-                    className="max-w-60 fill-white md:max-w-76"
-                  />
-                </a> */}
                 <a
                   href="https://reactrouter.com/home"
                   className="items-center justify-start"
@@ -103,9 +93,19 @@ export default function Index() {
                 href: "https://turso.tech",
               },
               {
+                src: "/postgresql.svg",
+                alt: "PostgreSQL",
+                href: "https://www.postgresql.org",
+              },
+              {
                 src: "/prisma.svg",
                 alt: "Prisma",
                 href: "https://prisma.io",
+              },
+              {
+                src: "/drizzle-orm_light.svg",
+                alt: "Drizzle",
+                href: "https://orm.drizzle.team",
               },
               {
                 src: "/tailwindcss.svg",

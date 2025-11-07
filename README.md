@@ -1,6 +1,6 @@
 # React Router Gospel Stack with Turborepo
 
-![The React Router Gospel Stack](https://repository-images.githubusercontent.com/533426847/134e6276-a6a8-41f1-94d3-f6dcb8f58b5f)
+![The React Router Gospel Stack](https://github.com/user-attachments/assets/9810e030-6333-4378-b813-6d74b01c84c5)
 
 React Router TypeScript monorepo with Turborepo pipelines, Drizzle/Prisma ORM, Turso/PostgreSQL database, Docker deploy to Fly.io, pnpm, shadcn/ui, and TailwindCSS.
 
