@@ -354,10 +354,7 @@ ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 ${spaces(9)}2. Migrate database schema:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:apply")}
 
-${spaces(9)}3. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
-
-${spaces(9)}4. Start development server:
+${spaces(9)}3. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 `);
   } else {
@@ -367,10 +364,7 @@ ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 ${spaces(9)}2. Apply database schema:
 ${spaces(12)}${chalk.yellow("pnpm run db:migrate:apply")}
 
-${spaces(9)}3. Build packages:
-${spaces(12)}${chalk.yellow(`pnpm run build --filter=${ORG_NAME}/webapp...`)}
-
-${spaces(9)}4. Start development server:
+${spaces(9)}3. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 
 ${spaces()}${chalk.cyan("💡 Turso Tips:")}

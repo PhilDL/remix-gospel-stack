@@ -441,17 +441,29 @@ export const registerScaffoldInfrastructureDbGenerator = (
         }
       },
       (answers: { ormType?: SupportedOrms }): string => {
-        try {
-          console.log(
-            `Generating ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}...`,
-          );
-          execSync(
-            `pnpm db:generate ${answers.ormType === "prisma" ? "--name=init" : ""}`,
-            { cwd: rootPath },
-          );
-          return `Generated ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}`;
-        } catch (err) {
-          return "Failed to generate database client and migrations";
+        switch (answers.ormType) {
+          case "drizzle":
+            try {
+              console.log(`Generating Drizzle migrations...`);
+              execSync(`pnpm db:migrate:new`, { cwd: rootPath });
+              return `Generated Drizzle migrations`;
+            } catch (err) {
+              return "Failed to generate database client and migrations";
+            }
+          case "prisma":
+            try {
+              console.log(
+                `Generating ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}...`,
+              );
+              execSync(`pnpm db:generate && pnpm db:migrate:new --name=init"`, {
+                cwd: rootPath,
+              });
+              return `Generated Prisma database client and migrations`;
+            } catch (err) {
+              return "Failed to generate database client and migrations";
+            }
+          default:
+            return "Skipping database client and migrations generation";
         }
       },
     ],
