@@ -169,21 +169,21 @@ async function main() {
     rootDirectory,
     replacements: [
       {
-        glob: "apps/**/*.{json,js,ts,tsx,md}",
+        glob: "apps/**/*.{json,js,ts,tsx,md,css}",
         replacer: (content) =>
           content
             .replace(globalOrgNameRegex, ORG_NAME)
             .replace(globalAppNameRegex, APP_NAME),
       },
       {
-        glob: "packages/**/*.{json,js,ts,tsx,md}",
+        glob: "packages/**/*.{json,js,ts,tsx,md,css}",
         replacer: (content) =>
           content
             .replace(globalOrgNameRegex, ORG_NAME)
             .replace(globalAppNameRegex, APP_NAME),
       },
       {
-        glob: "config/**/*.{json,js,ts,tsx,md}",
+        glob: "config/**/*.{json,js,ts,tsx,md,css}",
         replacer: (content) =>
           content
             .replace(globalOrgNameRegex, ORG_NAME)
