@@ -451,17 +451,14 @@ export const registerScaffoldInfrastructureDbGenerator = (
               return "Failed to generate database client and migrations";
             }
           case "prisma":
-            try {
-              console.log(
-                `Generating Prisma database client and migrations...`,
-              );
-              execSync(`pnpm db:generate && pnpm db:migrate:new --name=init`, {
-                cwd: rootPath,
-              });
-              return `Generated Prisma database client and migrations...`;
-            } catch (err) {
-              return "Failed to generate database client and migrations";
-            }
+            console.log(`Generating Prisma database client and migrations...`);
+            execSync(`pnpm db:generate`, {
+              cwd: rootPath,
+            });
+            execSync(`pnpm db:migrate:new --name=init`, {
+              cwd: rootPath,
+            });
+            return `Generated Prisma database client and migrations...`;
           default:
             return "Skipping database client and migrations generation";
         }
