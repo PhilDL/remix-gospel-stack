@@ -101,7 +101,7 @@ async function main() {
     rootDirectory,
     replacements: [
       {
-        glob: "./package.json",
+        glob: "./**/package.json",
         replacer: (content) =>
           content
             .replace(globalOrgNameRegex, ORG_NAME)
@@ -147,6 +147,13 @@ async function main() {
       },
       {
         glob: ".github/workflows/deploy.yml",
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
+      },
+      {
+        glob: "./docs/**/*.md",
         replacer: (content) =>
           content
             .replace(globalOrgNameRegex, ORG_NAME)
