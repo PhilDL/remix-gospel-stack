@@ -30,6 +30,20 @@ export const registerScaffoldInfrastructureDbGenerator = (
         dirname: dirname.split("/").pop(),
       };
     });
+  let orgName = JSON.parse(
+    fs.readFileSync(path.join(rootPath, "package.json"), "utf8"),
+  ).name as string;
+  if (!orgName || typeof orgName !== "string" || !orgName.endsWith("/root")) {
+    throw new Error("Organization name not found in package.json");
+  }
+  orgName = orgName.replace("/root", "").replace("@", "");
+  const databaseName =
+    orgName
+      .toLowerCase()
+      .replaceAll("/", "_")
+      .replaceAll("-", "_")
+      .replaceAll(" ", "_") + "_db";
+
   plop.setGenerator("scaffold-database", {
     description: "Configure database and ORM setup",
     prompts: [
@@ -55,16 +69,38 @@ export const registerScaffoldInfrastructureDbGenerator = (
       },
       {
         type: "list",
-        name: "app",
+        name: "appDirname",
         message: "Which app do you want to update with database and ORM setup?",
         choices: apps.map((app) => ({
           name: `[./apps/${app.dirname}] ${app.name}`,
-          value: { dirname: app.dirname, pkgName: app.name },
+          value: app.dirname,
         })),
-        default: apps[0],
+        default: apps[0].dirname,
       },
     ],
     actions: [
+      function resolveAppFromAnswers(answers: {
+        appDirname?: string;
+        dbType?: "postgres" | "turso";
+        ormType?: "drizzle" | "prisma";
+        turbo?: { paths: { workspace: string } };
+        workspaceDirname?: string;
+        orgName?: string;
+        databaseName?: string;
+      }) {
+        const app = apps.find((a) => a.dirname === answers.appDirname);
+        if (!app) {
+          throw new Error(`App with dirname "${answers.appDirname}" not found`);
+        }
+        // Add the full app object to answers for use in templates
+        (answers as any).app = { dirname: app.dirname, pkgName: app.name };
+        answers.workspaceDirname = answers.turbo?.paths.workspace
+          .split("/")
+          .pop();
+        answers.orgName = orgName;
+        answers.databaseName = databaseName;
+        return `Resolved app: ${app.name}`;
+      },
       {
         type: "add",
         path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/other/Dockerfile",
@@ -87,8 +123,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
             await editPackageJson(appPackageJsonPath, {
               addScripts: {
                 "docker:db": "docker compose -f docker-compose.yml up -d",
-                "docker:run:webapp":
-                  "docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/postgres' --network=app_network coraalt-webapp",
+                "docker:run:webapp": `docker run -it --init --rm -p 3000:3000 --env-file .env.docker --env DATABASE_URL='postgresql://postgres:postgres@db:5432/${databaseName}' --network=app_network coraalt-webapp`,
                 setup: `pnpm run docker:db && pnpm run db:migrate:new && turbo run db:seed build`,
               },
             });
@@ -276,43 +311,6 @@ export const registerScaffoldInfrastructureDbGenerator = (
 
         return "Postgres docker-compose files kept";
       },
-      // Update Prisma schema if using Prisma
-      // async function updatePrismaSchema(answers: {
-      //   dbType?: SupportedDatabases;
-      //   ormType?: SupportedOrms;
-      // }) {
-      //   if (answers.ormType === "prisma") {
-      //     const prismaSchemaPath = path.join(
-      //       rootPath,
-      //       "packages",
-      //       "infrastructure",
-      //       "database",
-      //       "prisma",
-      //       "schema.prisma",
-      //     );
-      //     const prismaSchema = fs.readFileSync(prismaSchemaPath, "utf8");
-      //     if (answers.dbType === "turso") {
-      //       fs.writeFileSync(
-      //         prismaSchemaPath,
-      //         prismaSchema.replace(
-      //           /provider = "postgresql"/g,
-      //           'provider = "sqlite"',
-      //         ),
-      //       );
-      //       return "Updated Prisma schema to use sqlite for Turso";
-      //     } else {
-      //       fs.writeFileSync(
-      //         prismaSchemaPath,
-      //         prismaSchema.replace(
-      //           /provider = "sqlite"/g,
-      //           'provider = "postgresql"',
-      //         ),
-      //       );
-      //       return "Updated Prisma schema to use postgresql";
-      //     }
-      //   }
-      //   return "Using Drizzle (Prisma schema not updated)";
-      // },
       {
         type: "add",
         path: "{{ turbo.paths.root }}/apps/{{ app.dirname }}/.env.example",
@@ -427,40 +425,11 @@ export const registerScaffoldInfrastructureDbGenerator = (
             ? "Skipping Prisma schema (using Drizzle)"
             : false,
       },
-      async function githubDeployWorkflow(answers: {
-        app?: { dirname: string; pkgName: string };
-        dbType?: SupportedDatabases;
-      }) {
-        if (answers.dbType === "turso") {
-          // copy deploy-with-turso.yml to .github/workflows/deploy.yml
-          fs.copyFileSync(
-            path.join(
-              rootPath,
-              "turbo",
-              "generators",
-              "templates",
-              "deploy-with-turso.yml",
-            ),
-            path.join(rootPath, ".github", "workflows", "deploy.yml"),
-          );
-          return "Copied deploy-with-turso.yml to .github/workflows/deploy.yml";
-        }
-        if (answers.dbType === "postgres") {
-          // copy deploy-with-postgres.yml to .github/workflows/deploy.yml
-          fs.copyFileSync(
-            path.join(
-              rootPath,
-              "turbo",
-              "generators",
-              "templates",
-              "deploy-with-postgres.yml",
-            ),
-            path.join(rootPath, ".github", "workflows", "deploy.yml"),
-          );
-          return "Copied deploy-with-postgres.yml to .github/workflows/deploy.yml";
-        }
-
-        return "No deploy workflow added";
+      {
+        type: "add",
+        path: "{{ turbo.paths.root }}/.github/workflows/deploy.yml",
+        templateFile: "templates/deploy-with-{{ dbType }}.yml.hbs",
+        force: true,
       },
       (): string => {
         try {

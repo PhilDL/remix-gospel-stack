@@ -7,12 +7,12 @@ volumes:
 services:
   db:
     image: postgres:latest
-    container_name: "react-router-gospel-stack-postgres"
+    container_name: "{{orgName}}-postgres"
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=gospel_stack_db
+      - POSTGRES_DB={{databaseName}}
     ports:
       - "5432:5432"
     volumes:
@@ -23,7 +23,7 @@ services:
   # If you want to run the remix app also inside Docker
   # webapp:
   #   environment:
-  #     DATABASE_URL: postgresql://postgres:postgres@db:5432/gospel_stack_db
+  #     DATABASE_URL: postgresql://postgres:postgres@db:5432/{{databaseName}}
   #   container_name: webapp
   #   build:
   #     context: .

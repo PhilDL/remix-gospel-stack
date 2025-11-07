@@ -91,21 +91,34 @@ async function main() {
     `${spaces()}◼  Preparing monorepo with ${db === "turso" ? "Turso" : "PostgreSQL"} + ${orm === "drizzle" ? "Drizzle" : "Prisma"}...`,
   );
 
+  const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
+  const globalAppNameRegex = new RegExp(appNameRegex, "g");
+
+  // This is to update the ROOT package.json with the correct organization name
+  // We need to do this because the scaffold-database generator run just down below
+  // will need to know the organization name to generate multiple other files.
+  await processFilesWithGlobs({
+    rootDirectory,
+    replacements: [
+      {
+        glob: "./package.json",
+        replacer: (content) =>
+          content
+            .replace(globalOrgNameRegex, ORG_NAME)
+            .replace(globalAppNameRegex, APP_NAME),
+      },
+    ],
+  });
+
   // Run database scaffold generator
   try {
-    execSync(
-      `pnpm turbo gen scaffold-database --args ${db} ${orm} ${ORG_NAME}/webapp webapp`,
-      {
-        cwd: rootDirectory,
-        stdio: "inherit",
-      },
-    );
+    execSync(`pnpm turbo gen scaffold-database --args ${db} ${orm} webapp`, {
+      cwd: rootDirectory,
+      stdio: "inherit",
+    });
   } catch (error) {
     console.error(chalk.red("Failed to scaffold database. Continuing..."));
   }
-
-  const globalOrgNameRegex = new RegExp(orgNameRegex, "g");
-  const globalAppNameRegex = new RegExp(appNameRegex, "g");
 
   // Update configuration files
   await processFilesWithGlobs({
