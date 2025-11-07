@@ -446,19 +446,19 @@ export const registerScaffoldInfrastructureDbGenerator = (
             try {
               console.log(`Generating Drizzle migrations...`);
               execSync(`pnpm db:migrate:new`, { cwd: rootPath });
-              return `Generated Drizzle migrations`;
+              return `Generated Drizzle migrations...`;
             } catch (err) {
               return "Failed to generate database client and migrations";
             }
           case "prisma":
             try {
               console.log(
-                `Generating ${answers.ormType === "prisma" ? "database client and " : ""}migrations for ${answers.ormType}...`,
+                `Generating Prisma database client and migrations...`,
               );
-              execSync(`pnpm db:generate && pnpm db:migrate:new --name=init"`, {
+              execSync(`pnpm db:generate && pnpm db:migrate:new --name=init`, {
                 cwd: rootPath,
               });
-              return `Generated Prisma database client and migrations`;
+              return `Generated Prisma database client and migrations...`;
             } catch (err) {
               return "Failed to generate database client and migrations";
             }
