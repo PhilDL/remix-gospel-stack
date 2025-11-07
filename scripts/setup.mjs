@@ -354,6 +354,12 @@ function printNextSteps(db, orm, ORG_NAME, APP_NAME, rootDirectory) {
   const dbName = db === "turso" ? "Turso" : "PostgreSQL";
   const ormName = orm === "drizzle" ? "Drizzle" : "Prisma";
 
+  let applyMigrationsCommand = "pnpm run db:migrate:apply";
+  if (orm === "prisma" && db === "turso") {
+    applyMigrationsCommand =
+      "Migration are manual with Prisma and Turso, run sqlite3 local.db < packages/infrastructure/prisma/migrations/[FOLDER_NAME]/migration.sql";
+  }
+
   console.log(
     chalk.green(`
 ${spaces()}✔  Setup complete! Your stack: ${dbName} + ${ormName}
@@ -377,7 +383,7 @@ ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
 
 ${spaces(9)}2. Apply database schema:
-${spaces(12)}${chalk.yellow("pnpm run db:migrate:apply")}
+${spaces(12)}${chalk.yellow(applyMigrationsCommand)}
 
 ${spaces(9)}3. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}

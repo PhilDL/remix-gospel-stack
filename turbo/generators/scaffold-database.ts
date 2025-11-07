@@ -235,10 +235,13 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 "db:generate": "pnpm with-env prisma generate",
                 "db:migrate:new":
                   "pnpm with-env prisma migrate dev --create-only",
-                "db:migrate:apply": "pnpm with-env prisma migrate dev",
+                "db:migrate:apply":
+                  answers.dbType === "turso"
+                    ? "echo 'Migration are manual with Prisma and Turso, run \nsqlite3 local.db < packages/infrastructure/prisma/migrations/[FOLDER_NAME]/migration.sql'"
+                    : "pnpm with-env prisma migrate dev",
                 "db:migrate:apply:production":
                   answers.dbType === "turso"
-                    ? "pnpm with-env prisma migrate dev"
+                    ? "echo 'Migration are manual with Prisma and Turso, run \nturso db shell turso-prisma-db < packages/infrastructure/prisma/migrations/[FOLDER_NAME]/migration.sql'"
                     : "pnpm with-production-env prisma migrate deploy",
                 "db:seed": "pnpm with-env tsx src/seed.ts",
                 "db:studio": "pnpm with-env prisma studio",
