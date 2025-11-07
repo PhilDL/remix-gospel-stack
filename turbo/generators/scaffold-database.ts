@@ -346,7 +346,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
               );
             } catch {}
             try {
-              fs.rmdirSync(
+              fs.rmSync(
                 path.join(rootPath, "packages", "infrastructure", "prisma"),
                 { recursive: true },
               );
@@ -364,7 +364,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
               );
             } catch {}
             try {
-              fs.rmdirSync(
+              fs.rmSync(
                 path.join(rootPath, "packages", "infrastructure", "drizzle"),
                 { recursive: true },
               );
@@ -440,29 +440,29 @@ export const registerScaffoldInfrastructureDbGenerator = (
           return "install failed";
         }
       },
-      (answers: { ormType?: SupportedOrms }): string => {
-        switch (answers.ormType) {
-          case "drizzle":
-            try {
-              console.log(`Generating Drizzle migrations...`);
-              execSync(`pnpm db:migrate:new`, { cwd: rootPath });
-              return `Generated Drizzle migrations...`;
-            } catch (err) {
-              return "Failed to generate database client and migrations";
-            }
-          case "prisma":
-            console.log(`Generating Prisma database client and migrations...`);
-            execSync(`pnpm db:generate`, {
-              cwd: rootPath,
-            });
-            execSync(`pnpm db:migrate:new --name=init`, {
-              cwd: rootPath,
-            });
-            return `Generated Prisma database client and migrations...`;
-          default:
-            return "Skipping database client and migrations generation";
-        }
-      },
+      // (answers: { ormType?: SupportedOrms }): string => {
+      //   switch (answers.ormType) {
+      //     case "drizzle":
+      //       try {
+      //         console.log(`Generating Drizzle migrations...`);
+      //         execSync(`pnpm db:migrate:new`, { cwd: rootPath });
+      //         return `Generated Drizzle migrations...`;
+      //       } catch (err) {
+      //         return "Failed to generate database client and migrations";
+      //       }
+      //     case "prisma":
+      //       console.log(`Generating Prisma database client and migrations...`);
+      //       execSync(`pnpm db:generate`, {
+      //         cwd: rootPath,
+      //       });
+      //       execSync(`pnpm db:migrate:new --name=init`, {
+      //         cwd: rootPath,
+      //       });
+      //       return `Generated Prisma database client and migrations...`;
+      //     default:
+      //       return "Skipping database client and migrations generation";
+      //   }
+      // },
     ],
   });
 };

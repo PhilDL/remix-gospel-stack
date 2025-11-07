@@ -239,17 +239,32 @@ async function main() {
   console.log(
     `${spaces()}◼  Generating ${orm === "drizzle" ? "Drizzle" : "Prisma client & "} migrations...`,
   );
-  try {
-    execSync("pnpm db:generate", {
-      cwd: rootDirectory,
-      stdio: "ignore",
-    });
-  } catch (error) {
-    console.log(
-      chalk.yellow(`${spaces()}⚠️  Could not generate migrations (skipping)`),
-    );
+  switch (orm) {
+    case "drizzle":
+      try {
+        execSync("pnpm db:migrate:new", {
+          cwd: rootDirectory,
+          stdio: "ignore",
+        });
+      } catch (error) {
+        console.log(
+          chalk.yellow(
+            `${spaces()}⚠️  Could not generate Drizzle migrations (skipping)`,
+          ),
+        );
+      }
+      break;
+    case "prisma":
+      execSync("pnpm db:generate", {
+        cwd: rootDirectory,
+        stdio: "ignore",
+      });
+      execSync("pnpm db:migrate:new --name=init", {
+        cwd: rootDirectory,
+        stdio: "ignore",
+      });
+      break;
   }
-
   // Print next steps
   printNextSteps(db, orm, ORG_NAME, APP_NAME, rootDirectory);
 }
