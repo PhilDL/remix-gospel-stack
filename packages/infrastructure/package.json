@@ -16,15 +16,15 @@
     "with-production-env": "dotenv -e ./.env.production --"
   },
   "dependencies": {
-    "@libsql/client": "catalog:sqlite",
+    "@libsql/client": "0.15.15",
     "@react-router-gospel-stack/business": "workspace:*",
     "drizzle-orm": "catalog:drizzle"
   },
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^24.9.1",
-    "dotenv-cli": "^10.0.0",
+    "@types/node": "^24.10.0",
+    "dotenv-cli": "^11.0.0",
     "drizzle-kit": "catalog:drizzle",
     "rimraf": "catalog:",
     "tsup": "catalog:typescript",

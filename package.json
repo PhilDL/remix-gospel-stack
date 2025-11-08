@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@npmcli/package-json": "7.0.1",
-    "@turbo/gen": "^2.5.8",
+    "@npmcli/package-json": "7.0.2",
+    "@turbo/gen": "^2.6.0",
     "@types/npmcli__package-json": "4.0.4",
     "chalk": "catalog:",
     "glob": "catalog:",
@@ -47,7 +47,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "catalog:tailwindcss",
     "replace-in-file": "^8.3.0",
-    "turbo": "^2.5.8",
+    "turbo": "^2.6.0",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.20.0",

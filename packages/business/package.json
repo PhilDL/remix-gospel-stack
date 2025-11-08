@@ -15,7 +15,7 @@
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^24.9.1",
+    "@types/node": "^24.10.0",
     "rimraf": "catalog:",
     "typescript": "catalog:typescript"
   },
