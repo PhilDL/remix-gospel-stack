@@ -54,7 +54,7 @@ async function main() {
     ORG_NAME = `@${ORG_NAME}`;
   }
 
-  // Prompt for database choice first
+  /** @type {{ db: "turso" | "postgres" }} */
   const { db } = await inquirer.prompt([
     {
       name: "db",
@@ -72,7 +72,7 @@ async function main() {
     },
   ]);
 
-  // Then prompt for ORM choice
+  /** @type {{ orm: "drizzle" | "prisma" }} */
   const { orm } = await inquirer.prompt([
     {
       name: "orm",
@@ -259,10 +259,15 @@ async function main() {
         cwd: rootDirectory,
         stdio: "ignore",
       });
-      execSync("pnpm db:migrate:new --name=init", {
-        cwd: rootDirectory,
-        stdio: "ignore",
-      });
+      // DB need to be up and running to generate migrations, so for postgres
+      // we need the container to be up and running
+      if (db !== "postgres") {
+        execSync("pnpm db:migrate:new --name=init", {
+          cwd: rootDirectory,
+          stdio: "ignore",
+        });
+      }
+
       break;
   }
   // Print next steps
@@ -369,7 +374,21 @@ ${spaces()}📋 Next steps to start developing:
   );
 
   if (db === "postgres") {
-    console.log(`${spaces(9)}1. Start PostgreSQL:
+    if (orm === "prisma") {
+      console.log(`${spaces(9)}1. Start PostgreSQL container:
+${spaces(12)}${chalk.yellow("pnpm run docker:db")}
+
+${spaces(9)}2. Create the first migration:
+${spaces(12)}${chalk.yellow("pnpm run db:migrate:new --name=init")}
+
+${spaces(9)}2. Migrate database schema:
+${spaces(12)}${chalk.yellow("pnpm run db:migrate:apply")}
+
+${spaces(9)}3. Start development server:
+${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
+  `);
+    } else {
+      console.log(`${spaces(9)}1. Start PostgreSQL container:
 ${spaces(12)}${chalk.yellow("pnpm run docker:db")}
 
 ${spaces(9)}2. Migrate database schema:
@@ -377,7 +396,8 @@ ${spaces(12)}${chalk.yellow("pnpm run db:migrate:apply")}
 
 ${spaces(9)}3. Start development server:
 ${spaces(12)}${chalk.yellow(`pnpm run dev --filter=${ORG_NAME}/webapp`)}
-`);
+  `);
+    }
   } else {
     console.log(`${spaces(9)}1. Your .env file is configured for local Turso:
 ${spaces(12)}${chalk.cyan("DATABASE_URL")}=file:./local.db
