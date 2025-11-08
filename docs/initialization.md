@@ -8,14 +8,14 @@ After cloning or downloading the template:
 
 ```bash
 pnpm install
-pnpm run init
+pnpm run setup
 ```
 
-The `init` script runs an interactive setup that customizes the stack for your project.
+The `setup` script runs an interactive setup that customizes the stack for your project.
 
-## What the Init Script Does
+## What the Setup Script Does
 
-The initialization script (`scripts/setup.mjs`) performs several important tasks:
+The setup script (`scripts/setup.mjs`) performs several important tasks:
 
 ### 1. Organization Name
 
@@ -73,7 +73,7 @@ Runs Prettier to format all updated files consistently.
 
 Updates `pnpm-lock.yaml` to ensure all dependencies are properly resolved.
 
-## Running the Init Script
+## Running the Setup Script
 
 ### Using degit (Recommended)
 
@@ -84,7 +84,7 @@ cd my-app
 
 # Install and initialize
 pnpm install
-pnpm run init
+pnpm run setup
 ```
 
 ### Alternative: Clone the Repository
@@ -96,7 +96,7 @@ cd my-app
 
 # Install and initialize
 pnpm install
-pnpm run init
+pnpm run setup
 ```
 
 ## After Initialization
@@ -258,9 +258,9 @@ Make the script executable:
 chmod +x scripts/setup.mjs
 ```
 
-## Re-running Initialization
+## Re-running Setup
 
-You can re-run the init script if needed, but be aware:
+You can re-run the setup script if needed, but be aware:
 
 - **It will overwrite** your customizations
 - **Backup your changes** first
@@ -269,10 +269,10 @@ You can re-run the init script if needed, but be aware:
 To re-run:
 
 ```bash
-pnpm run init
+pnpm run setup
 ```
 
-## Skipping Initialization
+## Skipping Setup
 
 If you're:
 

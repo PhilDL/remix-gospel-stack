@@ -6,7 +6,6 @@
     "packages/*"
   ],
   "scripts": {
-    "init": "node scripts/setup.mjs",
     "build": "turbo run build",
     "db:generate": "turbo run db:generate --",
     "db:seed": "turbo run db:seed --no-cache",
@@ -32,7 +31,7 @@
     "typecheck": "turbo run typecheck",
     "test:e2e:dev": "turbo run test:e2e:dev",
     "test:e2e:ci": "turbo run test:e2e:ci",
-    "setup": "pnpm run db:migrate:dev && turbo db:seed build",
+    "setup": "node scripts/setup.mjs",
     "validate": "turbo run lint typecheck test"
   },
   "dependencies": {

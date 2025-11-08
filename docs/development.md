@@ -16,7 +16,7 @@ This guide will help you set up your local development environment and understan
 If you just cloned the repository, run the initialization script first:
 
 ```bash
-pnpm run init
+pnpm run setup
 ```
 
 This interactive script will:

@@ -21,7 +21,7 @@ React Router TypeScript monorepo with Turborepo pipelines, Drizzle/Prisma ORM, T
 pnpm dlx degit PhilDL/react-router-gospel-stack my-app
 cd my-app
 pnpm install
-pnpm run init
+pnpm run setup
 ```
 
 ### Alternative: Clone the Repository
@@ -30,7 +30,7 @@ pnpm run init
 git clone git@github.com:PhilDL/react-router-gospel-stack.git my-app
 cd my-app
 pnpm install
-pnpm run init
+pnpm run setup
 ```
 
 > :minidisc: This repository is opiniated:
