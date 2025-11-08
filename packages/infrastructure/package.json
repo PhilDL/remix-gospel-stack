@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "db:seed": "pnpm with-env tsx src/seed.ts",
-    "nuke": "rimraf .turbo node_modules src/generated drizzle/migrations",
-    "clean": "rimraf .turbo src/generated drizzle/migrations",
-    "lint": "eslint ./src",
-    "with-env": "dotenv -e ./.env --",
-    "with-production-env": "dotenv -e ./.env.production --",
     "db:migrate:new": "pnpm with-env drizzle-kit generate",
     "db:migrate:apply": "pnpm with-env drizzle-kit migrate",
-    "db:migrate:apply:production": "pnpm with-production-env drizzle-kit migrate"
+    "db:migrate:apply:production": "pnpm with-production-env drizzle-kit migrate",
+    "db:studio": "pnpm with-env drizzle-kit studio",
+    "nuke": "rimraf .turbo node_modules src/generated",
+    "clean": "rimraf .turbo src/generated",
+    "lint": "eslint ./src",
+    "with-env": "dotenv -e ./.env --",
+    "with-production-env": "dotenv -e ./.env.production --"
   },
   "dependencies": {
     "@libsql/client": "catalog:sqlite",
