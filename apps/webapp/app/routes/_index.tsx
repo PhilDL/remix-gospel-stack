@@ -37,6 +37,10 @@ export const loader = async ({
 
 export default function Index() {
   const { users } = useLoaderData<typeof loader>();
+  const ogImageUrl = new URL(
+    "/og-image.png",
+    ENV.APP_URL ?? "http://localhost:5173",
+  ).toString();
 
   const hasUsers = users.length > 0;
 
@@ -51,6 +55,9 @@ export default function Index() {
         name="keywords"
         content="React Router, Gospel Stack, Monorepo, Turborepo, Tailwind CSS, Shadcn/UI, Drizzle, Prisma, PostgreSQL, Turso"
       />
+      <meta property="og:image" content={ogImageUrl} />
+      <meta property="og:image:url" content={ogImageUrl} />
+      <meta property="og:image:alt" content="React Router Gospel Stack" />
       <div className="relative sm:pt-8 sm:pb-16">
         <HeroSection />
         <div className="mx-auto mt-12 max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
@@ -562,12 +569,8 @@ cd my-app`,
   {
     id: "generate-env",
     title: "Set up your stack",
-    description: (
-      <p>
-        When you are in your project folder, install the dependencies and run
-        the setup script.
-      </p>
-    ),
+    description:
+      "When you are in your project folder, install the dependencies and run the setup script.",
     command: "pnpm install && pnpm run setup",
     commandExplainer: (
       <div className="flex flex-col gap-2">

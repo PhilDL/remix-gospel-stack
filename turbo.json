@@ -4,6 +4,7 @@
   "globalEnv": [
     "NODE_ENV",
     "APP_PORT",
+    "APP_URL",
     "FLY_REGION",
     "PRIMARY_REGION",
     "CI",

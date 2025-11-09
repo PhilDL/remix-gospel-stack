@@ -28,6 +28,7 @@ export function getEnv() {
   return {
     MODE: process.env.NODE_ENV,
     ALLOW_INDEXING: process.env.ALLOW_INDEXING,
+    APP_URL: process.env.APP_URL,
   };
 }
 
