@@ -5,7 +5,12 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@react-router-gospel-stack/ui/*": ["./src/*"]
+    }
   },
   "include": [
     "eslint.config.js",

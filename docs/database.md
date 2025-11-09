@@ -347,7 +347,7 @@ The seed script adapts to your chosen ORM:
 pnpm --filter @react-router-gospel-stack/infrastructure db:seed
 ```
 
-Edit `packages/infrastructure/src/seed.ts` to customize seed data.
+Edit `packages/infrastructure/src/database/seed.ts` to customize seed data.
 
 ## Common Tasks
 

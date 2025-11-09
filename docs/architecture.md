@@ -26,7 +26,7 @@ react-router-gospel-stack/
 ├── packages/                # Shared packages
 │   ├── business/            # Business logic layer
 │   ├── database/            # Prisma ORM wrapper
-│   ├── internal-nobuild/    # TypeScript-only package
+│   ├── web-utils/    # TypeScript-only package
 │   └── ui/                  # shadcn/ui components
 ├── config/                  # Shared configurations
 │   ├── eslint/              # ESLint configurations
@@ -76,7 +76,7 @@ apps/webapp/
 - `@react-router-gospel-stack/infrastructure` - Database access
 - `@react-router-gospel-stack/business` - Business logic
 - `@react-router-gospel-stack/ui` - UI components
-- `@react-router-gospel-stack/internal-nobuild` - Internal utilities
+- `@react-router-gospel-stack/web-utils` - Internal utilities
 
 ## Packages (`packages/`)
 
@@ -164,7 +164,7 @@ export class PrismaUserRepository implements UserRepository {
 - Bundled with tsup
 - Depends on the `database` package
 
-### `internal-nobuild` - TypeScript-Only Package
+### `web-utils` - TypeScript-Only Package
 
 Example of a **pure TypeScript package** with no build step.
 
@@ -203,7 +203,7 @@ React Router's build process (using esbuild) compiles this package when building
 **Structure:**
 
 ```
-packages/internal-nobuild/
+packages/web-utils/
 ├── src/
 │   ├── index.ts             # Main entry
 │   ├── client/              # Client-side code
@@ -463,9 +463,9 @@ React Router's build step compiles these imports.
 
 4. Add to `pnpm-workspace.yaml` if needed (usually automatic)
 
-### No-Build Package (like internal-nobuild)
+### No-Build Package (like web-utils)
 
-1. Copy the `internal-nobuild` structure
+1. Copy the `web-utils` structure
 2. Update `package.json`:
    ```json
    {

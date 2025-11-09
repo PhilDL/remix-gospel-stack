@@ -1,0 +1,31 @@
+{
+  "name": "@react-router-gospel-stack/web-utils",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf .turbo",
+    "nuke": "rimraf .turbo node_modules",
+    "lint": "eslint ./src",
+    "test": "vitest run",
+    "test:dev": "vitest",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@tusbar/cache-control": "^1.0.2"
+  },
+  "devDependencies": {
+    "@react-router-gospel-stack/eslint-config": "workspace:*",
+    "@react-router-gospel-stack/tsconfig": "workspace:*",
+    "rimraf": "catalog:",
+    "typescript": "catalog:typescript",
+    "vite": "^7.2.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.0.8",
+    "@total-typescript/ts-reset": "^0.6.1"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./http/headers": "./src/http/headers.ts"
+  }
+}

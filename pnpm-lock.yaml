@@ -199,12 +199,12 @@ importers:
       '@react-router-gospel-stack/infrastructure':
         specifier: workspace:*
         version: link:../../packages/infrastructure
-      '@react-router-gospel-stack/internal-nobuild':
-        specifier: workspace:*
-        version: link:../../packages/internal-nobuild
       '@react-router-gospel-stack/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@react-router-gospel-stack/web-utils':
+        specifier: workspace:*
+        version: link:../../packages/web-utils
       '@react-router/node':
         specifier: catalog:react-router
         version: 7.9.5(react-router@7.9.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
@@ -470,33 +470,6 @@ importers:
         specifier: catalog:typescript
         version: 5.9.3
 
-  packages/internal-nobuild:
-    devDependencies:
-      '@react-router-gospel-stack/eslint-config':
-        specifier: workspace:*
-        version: link:../../config/eslint
-      '@react-router-gospel-stack/tsconfig':
-        specifier: workspace:*
-        version: link:../../config/tsconfig
-      rimraf:
-        specifier: 'catalog:'
-        version: 6.1.0
-      tsup:
-        specifier: catalog:typescript
-        version: 8.5.0(@swc/core@1.13.5(@swc/helpers@0.5.17))(jiti@2.6.1)(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
-      typescript:
-        specifier: catalog:typescript
-        version: 5.9.3
-      vite:
-        specifier: ^7.2.2
-        version: 7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)
-      vite-tsconfig-paths:
-        specifier: ^5.1.4
-        version: 5.1.4(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.8(@types/debug@4.1.12)(@types/node@24.10.0)(happy-dom@20.0.10)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(tsx@4.20.6)(yaml@2.8.1)
-
   packages/ui:
     dependencies:
       '@radix-ui/react-checkbox':
@@ -608,6 +581,37 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
+
+  packages/web-utils:
+    dependencies:
+      '@tusbar/cache-control':
+        specifier: ^1.0.2
+        version: 1.0.2
+    devDependencies:
+      '@react-router-gospel-stack/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint
+      '@react-router-gospel-stack/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+      '@total-typescript/ts-reset':
+        specifier: ^0.6.1
+        version: 0.6.1
+      rimraf:
+        specifier: 'catalog:'
+        version: 6.1.0
+      typescript:
+        specifier: catalog:typescript
+        version: 5.9.3
+      vite:
+        specifier: ^7.2.2
+        version: 7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)
+      vite-tsconfig-paths:
+        specifier: ^5.1.4
+        version: 5.1.4(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
+      vitest:
+        specifier: ^4.0.8
+        version: 4.0.8(@types/debug@4.1.12)(@types/node@24.10.0)(happy-dom@20.0.10)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(tsx@4.20.6)(yaml@2.8.1)
 
 packages:
 
@@ -2649,6 +2653,9 @@ packages:
   '@turbo/workspaces@2.6.0':
     resolution: {integrity: sha512-Kh6KBcHgEUy+dPzePzGxhxDVY4QsxD7PKAJM3srbHESOILTh2LahU7IhwDFUvr1SzCQj2y0DSFUQ4h+Vu6fYKQ==}
     hasBin: true
+
+  '@tusbar/cache-control@1.0.2':
+    resolution: {integrity: sha512-PXfjYTYBVvMPYCLDWj+xIOA9ITFbbhWCHzLcqUCJ5TPGm4JO4cxpGb7x3K8Q1K1ADgNgfBxLsDcTMVRydtZB9A==}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -8532,6 +8539,8 @@ snapshots:
       update-check: 1.5.4
     transitivePeerDependencies:
       - '@types/node'
+
+  '@tusbar/cache-control@1.0.2': {}
 
   '@tybys/wasm-util@0.10.1':
     dependencies:

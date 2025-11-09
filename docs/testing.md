@@ -27,7 +27,7 @@ pnpm run test
 pnpm run test:dev
 
 # Run tests for a specific package
-pnpm run test --filter=@react-router-gospel-stack/internal-nobuild
+pnpm run test --filter=@react-router-gospel-stack/web-utils
 
 # Run tests with coverage
 pnpm run test -- --coverage
@@ -136,7 +136,7 @@ export default defineConfig({
 
 ### Example Packages with Tests
 
-- **`internal-nobuild`** - Unit tests for TypeScript utilities
+- **`web-utils`** - Unit tests for TypeScript utilities
 - **`webapp`** - React component tests with Testing Library
 
 ## End-to-End Testing with Playwright

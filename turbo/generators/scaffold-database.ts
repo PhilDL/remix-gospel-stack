@@ -194,7 +194,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
                 "db:migrate:apply": "pnpm with-env drizzle-kit migrate",
                 "db:migrate:apply:production":
                   "pnpm with-production-env drizzle-kit migrate",
-                "db:seed": "pnpm with-env tsx src/seed.ts",
+                "db:seed": "pnpm with-env tsx src/database/seed.ts",
                 "db:studio": "pnpm with-env drizzle-kit studio",
               },
             });
@@ -243,7 +243,7 @@ export const registerScaffoldInfrastructureDbGenerator = (
                   answers.dbType === "turso"
                     ? "echo 'Migration are manual with Prisma and Turso, run \nturso db shell turso-prisma-db < packages/infrastructure/prisma/migrations/[FOLDER_NAME]/migration.sql'"
                     : "pnpm with-production-env prisma migrate deploy",
-                "db:seed": "pnpm with-env tsx src/seed.ts",
+                "db:seed": "pnpm with-env tsx src/database/seed.ts",
                 "db:studio": "pnpm with-env prisma studio",
               },
             });

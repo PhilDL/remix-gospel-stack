@@ -1,6 +1,6 @@
 {
   "extends": "@react-router-gospel-stack/tsconfig/node22.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["./reset.d.ts", "src/**/*", "vitest.config.ts"],
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

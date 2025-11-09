@@ -215,7 +215,7 @@ pnpm add -w <package-name>
 turbo gen workspace --name @react-router-gospel-stack/foobarbaz --type package --copy
 ```
 
-Then follow the prompts. See the `internal-nobuild` package as an example.
+Then follow the prompts. See the `web-utils` package as an example.
 
 #### Built Package
 

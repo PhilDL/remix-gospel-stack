@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "db:seed": "pnpm with-env tsx src/seed.ts",
+    "db:seed": "pnpm with-env tsx src/database/seed.ts",
     "db:migrate:new": "pnpm with-env drizzle-kit generate",
     "db:migrate:apply": "pnpm with-env drizzle-kit migrate",
     "db:migrate:apply:production": "pnpm with-production-env drizzle-kit migrate",

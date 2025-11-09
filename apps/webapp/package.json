@@ -29,7 +29,7 @@
     "@epic-web/remember": "^1.1.0",
     "@react-router-gospel-stack/business": "workspace:*",
     "@react-router-gospel-stack/infrastructure": "workspace:*",
-    "@react-router-gospel-stack/internal-nobuild": "workspace:*",
+    "@react-router-gospel-stack/web-utils": "workspace:*",
     "@react-router-gospel-stack/ui": "workspace:*",
     "@react-router/node": "catalog:react-router",
     "@sentry/profiling-node": "catalog:sentry",

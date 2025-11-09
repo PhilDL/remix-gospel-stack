@@ -39,14 +39,11 @@
       "@react-router-gospel-stack/infrastructure": [
         "../../packages/infrastructure/src/index"
       ],
-      "@react-router-gospel-stack/internal-nobuild": [
-        "../../packages/internal-nobuild/src/index"
+      "@react-router-gospel-stack/web-utils": [
+        "../../packages/web-utils/src/index"
       ],
-      "@react-router-gospel-stack/internal-nobuild/*": [
-        "../../packages/internal-nobuild/src/*"
-      ],
-      "@react-router-gospel-stack/tailwind-config": [
-        "../../config/tailwind-config/src/index"
+      "@react-router-gospel-stack/web-utils/*": [
+        "../../packages/web-utils/src/*"
       ]
     },
     "noEmit": true,
