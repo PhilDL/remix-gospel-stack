@@ -11,15 +11,15 @@ catalog:
   dotenv: 17.2.3
   glob: 11.0.3
   isbot: 5.1.32
-  rimraf: 6.1.0
+  rimraf: 6.1.2
   source-map-support: 0.5.21
 
 catalogs:
   drizzle:
-    drizzle-kit: 0.31.6
+    drizzle-kit: 0.31.7
     drizzle-orm: 0.44.7
   hono:
-    hono: 4.10.4
+    hono: 4.10.7
     hono-rate-limiter: ^0.4.2
     react-router-hono-server: 2.22.0
     remix-hono: ^0.0.18
@@ -40,31 +40,31 @@ catalogs:
     react-router: ^7.9.5
     react-router-dom: ^7.9.5
   react19:
-    '@types/react': 19.2.2
+    '@types/react': 19.2.7
     '@types/react-dom': ^19.1.9
     react: 19.2.0
     react-dom: 19.2.0
   sentry:
-    '@sentry/profiling-node': 10.23.0
-    '@sentry/react-router': 10.23.0
-    '@sentry/vite-plugin': 4.6.0
+    '@sentry/profiling-node': 10.27.0
+    '@sentry/react-router': 10.27.0
+    '@sentry/vite-plugin': 4.6.1
   sqlite:
-    '@libsql/client': 0.14.0
+    '@libsql/client': 0.15.15
   storybook:
-    '@storybook/addon-docs': 10.0.6
-    '@storybook/addon-onboarding': 10.0.6
-    '@storybook/builder-vite': 10.0.6
-    '@storybook/react-vite': 10.0.6
-    eslint-plugin-storybook: 10.0.6
-    storybook: 10.0.6
+    '@storybook/addon-docs': 10.0.8
+    '@storybook/addon-onboarding': 10.0.8
+    '@storybook/builder-vite': 10.0.8
+    '@storybook/react-vite': 10.0.8
+    eslint-plugin-storybook: 10.0.8
+    storybook: 10.0.8
   tailwindcss:
     '@tailwindcss/typography': 0.5.19
     '@tailwindcss/vite': 4.1.17
     prettier-plugin-tailwindcss: 0.7.1
-    tailwind-merge: 3.3.1
+    tailwind-merge: 3.4.0
     tailwindcss: 4.1.17
     tw-animate-css: 1.4.0
   typescript:
-    tsup: 8.5.0
+    tsup: 8.5.1
     tsx: 4.20.6
     typescript: 5.9.3

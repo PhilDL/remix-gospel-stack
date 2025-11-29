@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@npmcli/package-json": "7.0.2",
+    "@npmcli/package-json": "7.0.4",
     "@turbo/gen": "^2.6.0",
     "@types/npmcli__package-json": "4.0.4",
     "chalk": "catalog:",
@@ -50,7 +50,7 @@
     "turbo": "^2.6.0",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.23.0",
   "pnpm": {
     "overrides": {
       "@libsql/client": "0.15.15"
