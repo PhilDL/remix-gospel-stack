@@ -4,8 +4,8 @@ packages:
   - apps/*
 
 catalog:
-  '@t3-oss/env-core': 0.13.8
-  '@types/source-map-support': 0.5.10
+  "@t3-oss/env-core": 0.13.8
+  "@types/source-map-support": 0.5.10
   chalk: 5.6.2
   cross-env: 10.1.0
   dotenv: 17.2.3
@@ -24,42 +24,42 @@ catalogs:
     react-router-hono-server: 2.22.0
     remix-hono: ^0.0.18
   postgresql:
-    '@types/pg': 8.15.6
+    "@types/pg": 8.15.6
     pg: 8.16.3
   prisma:
-    '@prisma/adapter-better-sqlite3': 6.18.0
-    '@prisma/adapter-libsql': 6.18.0
-    '@prisma/adapter-pg': 6.18.0
-    '@prisma/client': 6.18.0
+    "@prisma/adapter-better-sqlite3": 6.18.0
+    "@prisma/adapter-libsql": 6.18.0
+    "@prisma/adapter-pg": 6.18.0
+    "@prisma/client": 6.18.0
     prisma: 6.18.0
   react-router:
-    '@react-router/dev': ^7.9.5
-    '@react-router/fs-routes': ^7.9.3
-    '@react-router/node': ^7.9.5
-    '@react-router/remix-routes-option-adapter': ^7.9.3
-    react-router: ^7.9.5
-    react-router-dom: ^7.9.5
+    "@react-router/dev": 7.10.0
+    "@react-router/fs-routes": 7.10.0
+    "@react-router/node": 7.10.0
+    "@react-router/remix-routes-option-adapter": 7.10.0
+    react-router: 7.10.0
+    react-router-dom: 7.10.0
   react19:
-    '@types/react': 19.2.7
-    '@types/react-dom': ^19.1.9
-    react: 19.2.0
-    react-dom: 19.2.0
+    "@types/react": 19.2.7
+    "@types/react-dom": ^19.1.9
+    react: 19.2.1
+    react-dom: 19.2.1
   sentry:
-    '@sentry/profiling-node': 10.27.0
-    '@sentry/react-router': 10.27.0
-    '@sentry/vite-plugin': 4.6.1
+    "@sentry/profiling-node": 10.27.0
+    "@sentry/react-router": 10.27.0
+    "@sentry/vite-plugin": 4.6.1
   sqlite:
-    '@libsql/client': 0.15.15
+    "@libsql/client": 0.15.15
   storybook:
-    '@storybook/addon-docs': 10.0.8
-    '@storybook/addon-onboarding': 10.0.8
-    '@storybook/builder-vite': 10.0.8
-    '@storybook/react-vite': 10.0.8
+    "@storybook/addon-docs": 10.0.8
+    "@storybook/addon-onboarding": 10.0.8
+    "@storybook/builder-vite": 10.0.8
+    "@storybook/react-vite": 10.0.8
     eslint-plugin-storybook: 10.0.8
     storybook: 10.0.8
   tailwindcss:
-    '@tailwindcss/typography': 0.5.19
-    '@tailwindcss/vite': 4.1.17
+    "@tailwindcss/typography": 0.5.19
+    "@tailwindcss/vite": 4.1.17
     prettier-plugin-tailwindcss: 0.7.1
     tailwind-merge: 3.4.0
     tailwindcss: 4.1.17
