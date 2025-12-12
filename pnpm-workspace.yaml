@@ -40,10 +40,10 @@ catalogs:
     react-router: 7.10.0
     react-router-dom: 7.10.0
   react19:
+    react: 19.2.3
+    react-dom: 19.2.3
     "@types/react": 19.2.7
-    "@types/react-dom": ^19.1.9
-    react: 19.2.1
-    react-dom: 19.2.1
+    "@types/react-dom": 19.2.3
   sentry:
     "@sentry/profiling-node": 10.28.0
     "@sentry/react-router": 10.28.0
