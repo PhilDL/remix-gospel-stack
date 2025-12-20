@@ -22,7 +22,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.555.0",
+    "lucide-react": "^0.561.0",
     "npm-run-all2": "^8.0.4",
     "tailwind-merge": "catalog:tailwindcss"
   },
@@ -51,7 +51,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.21",
     "concurrently": "^9.2.1",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "eslint-plugin-storybook": "catalog:storybook",
     "postcss": "^8.5.6",
     "react": "catalog:react19",
