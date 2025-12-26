@@ -83,7 +83,7 @@
     "tw-animate-css": "catalog:tailwindcss",
     "typescript": "catalog:typescript",
     "vite": "^7.2.2",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^6.0.0",
     "vitest": "^4.0.8"
   },
   "engines": {
