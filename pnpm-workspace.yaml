@@ -19,7 +19,7 @@ catalogs:
     drizzle-kit: 0.31.8
     drizzle-orm: 0.45.1
   hono:
-    hono: 4.11.1
+    hono: 4.11.2
     hono-rate-limiter: ^0.5.0
     react-router-hono-server: 2.22.0
     remix-hono: ^0.0.18
