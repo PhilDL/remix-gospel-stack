@@ -50,10 +50,10 @@
     "turbo": "^2.6.0",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.28.0",
   "pnpm": {
     "overrides": {
-      "@libsql/client": "0.15.15"
+      "@libsql/client": "0.17.0"
     },
     "onlyBuiltDependencies": []
   }

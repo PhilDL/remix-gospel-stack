@@ -19,7 +19,7 @@ catalogs:
     drizzle-kit: 0.31.8
     drizzle-orm: 0.45.1
   hono:
-    hono: 4.11.2
+    hono: 4.11.4
     hono-rate-limiter: ^0.5.0
     react-router-hono-server: 2.22.0
     remix-hono: ^0.0.18
@@ -33,30 +33,30 @@ catalogs:
     "@prisma/client": 6.18.0
     prisma: 6.18.0
   react-router:
-    "@react-router/dev": 7.11.0
-    "@react-router/fs-routes": 7.11.0
-    "@react-router/node": 7.11.0
-    "@react-router/remix-routes-option-adapter": 7.11.0
-    react-router: 7.11.0
-    react-router-dom: 7.11.0
+    "@react-router/dev": 7.12.0
+    "@react-router/fs-routes": 7.12.0
+    "@react-router/node": 7.12.0
+    "@react-router/remix-routes-option-adapter": 7.12.0
+    react-router: 7.12.0
+    react-router-dom: 7.12.0
   react19:
     react: 19.2.3
     react-dom: 19.2.3
-    "@types/react": 19.2.7
+    "@types/react": 19.2.8
     "@types/react-dom": 19.2.3
   sentry:
-    "@sentry/profiling-node": 10.32.1
-    "@sentry/react-router": 10.32.1
+    "@sentry/profiling-node": 10.33.0
+    "@sentry/react-router": 10.33.0
     "@sentry/vite-plugin": 4.6.1
   sqlite:
-    "@libsql/client": 0.15.15
+    "@libsql/client": 0.17.0
   storybook:
-    "@storybook/addon-docs": 10.1.10
-    "@storybook/addon-onboarding": 10.1.10
-    "@storybook/builder-vite": 10.1.10
-    "@storybook/react-vite": 10.1.10
-    eslint-plugin-storybook: 10.1.10
-    storybook: 10.1.10
+    "@storybook/addon-docs": 10.1.11
+    "@storybook/addon-onboarding": 10.1.11
+    "@storybook/builder-vite": 10.1.11
+    "@storybook/react-vite": 10.1.11
+    eslint-plugin-storybook: 10.1.11
+    storybook: 10.1.11
   tailwindcss:
     "@tailwindcss/typography": 0.5.19
     "@tailwindcss/vite": 4.1.18
