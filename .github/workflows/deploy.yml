@@ -190,7 +190,7 @@ jobs:
           password: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🐳 Docker build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: apps/webapp/other/Dockerfile
