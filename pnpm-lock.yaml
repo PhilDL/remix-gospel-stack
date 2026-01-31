@@ -585,8 +585,8 @@ importers:
   packages/web-utils:
     dependencies:
       '@tusbar/cache-control':
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^2.0.0
+        version: 2.0.0
     devDependencies:
       '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
@@ -2620,8 +2620,8 @@ packages:
     resolution: {integrity: sha512-Kh6KBcHgEUy+dPzePzGxhxDVY4QsxD7PKAJM3srbHESOILTh2LahU7IhwDFUvr1SzCQj2y0DSFUQ4h+Vu6fYKQ==}
     hasBin: true
 
-  '@tusbar/cache-control@1.0.2':
-    resolution: {integrity: sha512-PXfjYTYBVvMPYCLDWj+xIOA9ITFbbhWCHzLcqUCJ5TPGm4JO4cxpGb7x3K8Q1K1ADgNgfBxLsDcTMVRydtZB9A==}
+  '@tusbar/cache-control@2.0.0':
+    resolution: {integrity: sha512-9qYH+H1IQUseyJxhkDHLgtkMyi/OyY3GIFHkB3OBZkK8q4jXqCBzWdRB+7TYtWeEMDip/97bx8boB1FIHWNSiA==}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -8508,7 +8508,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@tusbar/cache-control@1.0.2': {}
+  '@tusbar/cache-control@2.0.0': {}
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
