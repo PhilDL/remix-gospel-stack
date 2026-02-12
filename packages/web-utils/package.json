@@ -12,7 +12,7 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@tusbar/cache-control": "^1.0.2"
+    "@tusbar/cache-control": "^2.0.0"
   },
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
