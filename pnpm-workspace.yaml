@@ -8,24 +8,24 @@ catalog:
   "@types/source-map-support": 0.5.10
   chalk: 5.6.2
   cross-env: 10.1.0
-  dotenv: 17.2.3
-  glob: 13.0.0
-  isbot: 5.1.32
+  dotenv: 17.2.4
+  glob: 13.0.2
+  isbot: 5.1.35
   rimraf: 6.1.2
   source-map-support: 0.5.21
 
 catalogs:
   drizzle:
-    drizzle-kit: 0.31.8
+    drizzle-kit: 0.31.9
     drizzle-orm: 0.45.1
   hono:
-    hono: 4.11.4
+    hono: 4.11.9
     hono-rate-limiter: ^0.5.0
-    react-router-hono-server: 2.22.0
+    react-router-hono-server: 2.24.1
     remix-hono: ^0.0.18
   postgresql:
     "@types/pg": 8.16.0
-    pg: 8.16.3
+    pg: 8.18.0
   prisma:
     "@prisma/adapter-better-sqlite3": 6.18.0
     "@prisma/adapter-libsql": 6.18.0
@@ -33,30 +33,30 @@ catalogs:
     "@prisma/client": 6.18.0
     prisma: 6.18.0
   react-router:
-    "@react-router/dev": 7.12.0
-    "@react-router/fs-routes": 7.12.0
-    "@react-router/node": 7.12.0
-    "@react-router/remix-routes-option-adapter": 7.12.0
-    react-router: 7.12.0
-    react-router-dom: 7.12.0
+    "@react-router/dev": 7.13.0
+    "@react-router/fs-routes": 7.13.0
+    "@react-router/node": 7.13.0
+    "@react-router/remix-routes-option-adapter": 7.13.0
+    react-router: 7.13.0
+    react-router-dom: 7.13.0
   react19:
-    react: 19.2.3
-    react-dom: 19.2.3
-    "@types/react": 19.2.8
+    react: 19.2.4
+    react-dom: 19.2.4
+    "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
   sentry:
-    "@sentry/profiling-node": 10.33.0
-    "@sentry/react-router": 10.33.0
-    "@sentry/vite-plugin": 4.6.1
+    "@sentry/profiling-node": 10.38.0
+    "@sentry/react-router": 10.38.0
+    "@sentry/vite-plugin": 4.9.1
   sqlite:
     "@libsql/client": 0.17.0
   storybook:
-    "@storybook/addon-docs": 10.1.11
-    "@storybook/addon-onboarding": 10.1.11
-    "@storybook/builder-vite": 10.1.11
-    "@storybook/react-vite": 10.1.11
-    eslint-plugin-storybook: 10.1.11
-    storybook: 10.1.11
+    "@storybook/addon-docs": 10.2.8
+    "@storybook/addon-onboarding": 10.2.8
+    "@storybook/builder-vite": 10.2.8
+    "@storybook/react-vite": 10.2.8
+    eslint-plugin-storybook: 10.2.8
+    storybook: 10.2.8
   tailwindcss:
     "@tailwindcss/typography": 0.5.19
     "@tailwindcss/vite": 4.1.18
