@@ -585,8 +585,8 @@ importers:
   packages/web-utils:
     dependencies:
       '@tusbar/cache-control':
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
       '@react-router-gospel-stack/eslint-config':
         specifier: workspace:*
@@ -2620,8 +2620,8 @@ packages:
     resolution: {integrity: sha512-Kh6KBcHgEUy+dPzePzGxhxDVY4QsxD7PKAJM3srbHESOILTh2LahU7IhwDFUvr1SzCQj2y0DSFUQ4h+Vu6fYKQ==}
     hasBin: true
 
-  '@tusbar/cache-control@1.0.2':
-    resolution: {integrity: sha512-PXfjYTYBVvMPYCLDWj+xIOA9ITFbbhWCHzLcqUCJ5TPGm4JO4cxpGb7x3K8Q1K1ADgNgfBxLsDcTMVRydtZB9A==}
+  '@tusbar/cache-control@3.0.0':
+    resolution: {integrity: sha512-N8jaRB6s6sFebZJLUk2WQnk3UM+lEu1DAwMtZCKEZnzgYjioS9SEAjQiK3h/crtV9h4baZFih7Y/q3eu5RW2MA==}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -4147,11 +4147,13 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@13.0.0:
@@ -4160,7 +4162,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
@@ -8508,7 +8510,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@tusbar/cache-control@1.0.2': {}
+  '@tusbar/cache-control@3.0.0': {}
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
