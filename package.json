@@ -41,7 +41,7 @@
     "@types/npmcli__package-json": "4.0.4",
     "chalk": "catalog:",
     "glob": "catalog:",
-    "inquirer": "^12.4.0",
+    "inquirer": "^13.0.0",
     "json5": "^2.2.3",
     "magicast": "^0.5.0",
     "prettier": "^3.6.2",
