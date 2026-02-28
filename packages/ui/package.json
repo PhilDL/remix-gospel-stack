@@ -22,7 +22,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.575.0",
     "npm-run-all2": "^8.0.4",
     "tailwind-merge": "catalog:tailwindcss"
   },

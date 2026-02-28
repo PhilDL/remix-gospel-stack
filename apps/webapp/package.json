@@ -71,7 +71,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/coverage-v8": "^4.0.8",
     "concurrently": "^9.2.1",
-    "esbuild": "0.27.2",
+    "esbuild": "0.27.3",
     "eslint": "9.39.2",
     "glob": "catalog:",
     "happy-dom": "^20.0.10",
