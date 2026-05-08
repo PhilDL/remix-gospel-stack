@@ -27,6 +27,7 @@ const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
 const spaces = (count = 6) => Array(count).fill(" ").join("");
+const nonInteractiveInstallEnv = { ...process.env, CI: "true" };
 
 async function main() {
   console.log(chalk.bold.cyan("\n🎉 React Router Gospel Stack Setup\n"));
@@ -241,6 +242,7 @@ async function main() {
   console.log(`${spaces()}◼  Installing dependencies...`);
   execSync("pnpm i --fix-lockfile", {
     cwd: rootDirectory,
+    env: nonInteractiveInstallEnv,
     stdio: "ignore",
   });
   // Generate migration

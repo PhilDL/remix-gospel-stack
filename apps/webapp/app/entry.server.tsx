@@ -36,7 +36,7 @@ export default async function handleRequest(...args: DocRequestArgs) {
           pipe(body);
         },
         onShellError: (err) => {
-          reject(err as Error);
+          reject(err);
         },
         onError: (error) => {
           didError = true;
