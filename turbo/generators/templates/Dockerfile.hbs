@@ -11,10 +11,11 @@ RUN apt-get update -qq && \
 
 FROM bookworm AS bookworm-turbopm
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ENV TURBO_TELEMETRY_MESSAGE_DISABLED=1
 RUN npm install -g corepack@latest
 RUN corepack enable
+RUN corepack prepare pnpm@10.28.0 --activate
 RUN pnpm add turbo@^2 --global
 RUN pnpm config set store-dir ~/.pnpm-store
 
