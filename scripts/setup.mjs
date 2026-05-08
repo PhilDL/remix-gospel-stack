@@ -216,6 +216,14 @@ async function main() {
       ),
   });
 
+  await setupAgentsFile({
+    rootDirectory,
+    replacer: (content) =>
+      content
+        .replace(globalOrgNameRegex, ORG_NAME)
+        .replace(globalAppNameRegex, APP_NAME),
+  });
+
   // Format code
   console.log(`${spaces()}◼  Formatting code...`);
   try {
@@ -351,6 +359,38 @@ async function setupEnvFile({ rootDirectory, replacer }) {
       chalk.yellow(
         `${spaces()}⚠️  Could not create .env files (you may need to copy .env.example manually)`,
       ),
+    );
+  }
+}
+
+/**
+ * Replace the maintainer AGENTS.md with the consumer-facing guide for generated projects.
+ * @param {Object} options
+ * @param {string} options.rootDirectory - Base directory for resolving paths
+ * @param {(content: string) => string} [options.replacer] - Optional function to transform file content
+ */
+async function setupAgentsFile({ rootDirectory, replacer }) {
+  const templatePath = path.join(
+    rootDirectory,
+    "templates",
+    "AGENTS.consumer.md",
+  );
+  const agentsPath = path.join(rootDirectory, "AGENTS.md");
+
+  try {
+    let content = await fs.readFile(templatePath, "utf-8");
+    if (replacer && typeof replacer === "function") {
+      content = replacer(content);
+    }
+
+    await fs.writeFile(agentsPath, content, "utf-8");
+    await fs.rm(templatePath, { force: true });
+    await fs.rmdir(path.dirname(templatePath)).catch(() => {});
+
+    console.log(`${spaces()}${chalk.green("✔  Created AGENTS.md")}`);
+  } catch (error) {
+    console.log(
+      chalk.yellow(`${spaces()}⚠️  Could not create AGENTS.md (skipping)`),
     );
   }
 }
