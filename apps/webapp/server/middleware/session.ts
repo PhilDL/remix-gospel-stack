@@ -66,7 +66,7 @@ export function getSessionStorage<
   if (!sessionStorage) {
     throw new Error("A session middleware was not set.");
   }
-  return sessionStorage as unknown as SessionStorage<Data, FlashData>;
+  return sessionStorage;
 }
 
 export function getSession<
@@ -80,5 +80,5 @@ export function getSession<
   if (!session) {
     throw new Error("A session middleware was not set.");
   }
-  return session as Session<Data, FlashData>;
+  return session;
 }

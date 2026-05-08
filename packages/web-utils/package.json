@@ -12,17 +12,16 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@tusbar/cache-control": "^1.0.2"
+    "@tusbar/cache-control": "^3.0.0"
   },
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "^0.6.1",
     "rimraf": "catalog:",
     "typescript": "catalog:typescript",
-    "vite": "^7.2.2",
-    "vite-tsconfig-paths": "^6.0.0",
-    "vitest": "^4.0.8",
-    "@total-typescript/ts-reset": "^0.6.1"
+    "vite": "^8.0.11",
+    "vitest": "^4.1.5"
   },
   "exports": {
     "./package.json": "./package.json",
