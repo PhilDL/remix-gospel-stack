@@ -48,7 +48,7 @@
     "prettier-plugin-tailwindcss": "catalog:tailwindcss",
     "replace-in-file": "^8.4.0",
     "turbo": "^2.9.10",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.0"
   },
   "packageManager": "pnpm@10.28.0",
   "pnpm": {

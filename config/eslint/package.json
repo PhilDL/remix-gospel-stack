@@ -33,6 +33,6 @@
     "@next/eslint-plugin-next": "^16.2.6",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
     "eslint": "9.39.4",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.0"
   }
 }
