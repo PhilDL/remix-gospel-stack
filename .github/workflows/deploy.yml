@@ -21,7 +21,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -48,7 +48,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -81,7 +81,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🏄 Copy test env vars
         run: |
@@ -114,7 +114,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v4.2.0
 
@@ -159,7 +159,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 👀 Read app name
         uses: SebRollen/toml-action@v1.2.0
@@ -223,7 +223,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.13.0
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 👀 Read app name
         uses: SebRollen/toml-action@v1.2.0
