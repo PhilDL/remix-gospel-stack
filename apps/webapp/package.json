@@ -64,7 +64,7 @@
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/eslint": "^9.6.1",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.19.18",
+    "@types/node": "^24.0.0",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "@types/source-map-support": "catalog:",
