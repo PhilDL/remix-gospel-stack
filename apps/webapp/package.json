@@ -72,7 +72,7 @@
     "@vitest/coverage-v8": "^4.1.5",
     "concurrently": "^9.2.1",
     "esbuild": "0.28.0",
-    "eslint": "9.39.4",
+    "eslint": "10.10.0",
     "glob": "catalog:",
     "happy-dom": "^20.9.0",
     "msw": "^2.14.5",
