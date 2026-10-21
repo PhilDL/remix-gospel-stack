@@ -23,7 +23,7 @@
   "devDependencies": {
     "@react-router-gospel-stack/eslint-config": "workspace:*",
     "@react-router-gospel-stack/tsconfig": "workspace:*",
-    "@types/node": "^22.19.18",
+    "@types/node": "^24.0.0",
     "dotenv-cli": "^11.0.0",
     "drizzle-kit": "catalog:drizzle",
     "rimraf": "catalog:",
