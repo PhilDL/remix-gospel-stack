@@ -45,7 +45,7 @@
     "@storybook/react-vite": "catalog:storybook",
     "@tailwindcss/typography": "catalog:tailwindcss",
     "@tailwindcss/vite": "catalog:tailwindcss",
-    "@types/node": "^22.19.18",
+    "@types/node": "^24.0.0",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "@vitejs/plugin-react": "^6.0.1",
