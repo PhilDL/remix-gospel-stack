@@ -16,7 +16,7 @@
     "with-production-env": "dotenv -e ./.env.production --"
   },
   "dependencies": {
-    "@libsql/client": "0.17.3",
+    "@libsql/client": "0.18.0",
     "@react-router-gospel-stack/business": "workspace:*",
     "drizzle-orm": "catalog:drizzle"
   },
